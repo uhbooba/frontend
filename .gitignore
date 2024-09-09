@@ -202,7 +202,7 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,windows,java,react
 
-.idea
+.idea/
 backend/.idea/
 .env.**
 db/
