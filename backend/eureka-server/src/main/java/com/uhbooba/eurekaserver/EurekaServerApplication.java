@@ -1,4 +1,4 @@
-package com.ssafy.uhbooba.eurekaserver;
+package com.uhbooba.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

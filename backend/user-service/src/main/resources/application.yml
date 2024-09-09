@@ -1,11 +1,11 @@
 server:
-  port: 8083
+  port: 8081
 
 spring:
   application:
-    name: external-service
+    name: user-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3309/uhbooba}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3307/uhbooba}
     username: ${SPRING_DATASOURCE_USERNAME:uhbooba}
     password: ${SPRING_DATASOURCE_PASSWORD:42seoul}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -19,13 +19,13 @@ spring:
 
 openapi:
   service:
-    title: external-service doc
+    title: user-service doc
     version: 1.0.0
 springdoc:
   api-docs:
-    path: /external-service/v3/api-docs
+    path: /user-service/v3/api-docs
   swagger-ui:
-    path: /external-service/swagger-ui.html
+    path: /user-service/swagger-ui.html
 
 
 eureka:
@@ -42,7 +42,7 @@ eureka:
 #        include: prometheus, health, info
 #  metrics:
 #    tags:
-#      application: external-service
+#      application: user-service
 
 logging:
   level:

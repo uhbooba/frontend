@@ -1,4 +1,4 @@
-package com.ssafy.uhbooba.externalservice;
+package com.uhbooba.externalservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

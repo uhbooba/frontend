@@ -1,0 +1,102 @@
+services:
+
+  user-db:
+    image: mariadb:latest
+    env_file:
+      - .env.db
+    ports:
+      - "3307:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./db/user:/var/lib/mysql
+
+  finance-db:
+    image: mariadb:latest
+    env_file:
+      - .env.db
+    ports:
+      - "3308:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./db/finance:/var/lib/mysql
+
+  external-db:
+    image: mariadb:latest
+    env_file:
+      - .env.db
+    ports:
+      - "3309:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./db/external:/var/lib/mysql
+
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./backend/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+
+  user-service:
+    container_name: user-service
+    env_file:
+      - .env.user
+    build:
+      context: ./backend/user-service
+    ports:
+      - "8081:8081"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/user-service:/app/logs
+
+  finance-service:
+    container_name: finance-service
+    env_file:
+      - .env.finance
+    build:
+      context: ./backend/finance-service
+    ports:
+      - "8082:8082"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/finance-service:/app/logs
+
+  external-service:
+    container_name: external-service
+    env_file:
+      - .env.external
+    build:
+      context: ./backend/external-service
+    ports:
+      - "8083:8083"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/external-service:/app/logs
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./backend/api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/gateway-service:/app/logs
+
+networks:
+  uhbooba-net:
+    driver: bridge
