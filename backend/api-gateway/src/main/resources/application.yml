@@ -72,9 +72,12 @@ springdoc:
       - url: /external-service/v3/api-docs
         name: External Service
 
-#logging:
-#  level:
-#    org.springframework.web: "info"
-#    org.hibernate: "info"
-#  file:
-#    name: app/logs/application.log
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true

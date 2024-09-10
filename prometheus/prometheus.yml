@@ -18,3 +18,9 @@ scrape_configs:
       - targets: ['prometheus:9090', 'node_exporter:9100']
         labels:
           service: 'monitor'
+
+  - job_name: 'spring-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['api-gateway:8080', 'user-service:8081', 'finance-service:8082', 'external-service:8083']

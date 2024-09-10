@@ -46,6 +46,11 @@ dependencies {
 
 	// swagger for spring cloud(중앙에서 관리)
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: '2.2.0'
+
+	// micrometer, actuator for prometheus metric
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 }
 
 dependencyManagement {
