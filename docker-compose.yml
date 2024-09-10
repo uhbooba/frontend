@@ -1,7 +1,54 @@
 services:
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    ports:
+      - "9000:9090"
+    command: 
+      - '--storage.tsdb.path=/prometheus'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+    networks:
+      - uhbooba-net
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    restart: always
+    depends_on:
+      - prometheus
+    networks:
+      - uhbooba-net
+
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
+    networks:
+      - uhbooba-net
+
   user-db:
     image: mariadb:latest
+    container_name: user-db
     env_file:
       - .env.db
     ports:
@@ -13,6 +60,7 @@ services:
 
   finance-db:
     image: mariadb:latest
+    container_name: finance-db
     env_file:
       - .env.db
     ports:
@@ -24,6 +72,7 @@ services:
 
   external-db:
     image: mariadb:latest
+    container_name: external-db
     env_file:
       - .env.db
     ports:
@@ -102,3 +151,7 @@ services:
 networks:
   uhbooba-net:
     driver: bridge
+
+volumes:
+  grafana-data:
+  prometheus-data:
