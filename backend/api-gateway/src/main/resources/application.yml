@@ -50,11 +50,6 @@ spring:
           predicates:
             - Path=/finance-service/**,/finances/**
 
-        - id: external-service
-          uri: lb://external-service
-          predicates:
-            - Path=/external-service/**,/externals/**
-
 springdoc:
   api-docs:
     enabled: true
@@ -69,8 +64,6 @@ springdoc:
         name: User Service
       - url: /finance-service/v3/api-docs
         name: Finance Service
-      - url: /external-service/v3/api-docs
-        name: External Service
 
 management:
   endpoints:

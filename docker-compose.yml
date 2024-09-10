@@ -4,7 +4,7 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     volumes:
-      - ./prometheus/:/etc/prometheus/
+      - /var/jenkins_home/workspace/uhbooba/S11P21A402/prometheus/:/etc/prometheus/
     ports:
       - "9000:9090"
     restart: always
@@ -115,19 +115,19 @@ services:
     volumes:
       - ./logs/finance-service:/app/logs
 
-  external-service:
-    container_name: external-service
-    env_file:
-      - .env.external
-    build:
-      context: ./backend/external-service
-    ports:
-      - "8083:8083"
-    networks:
-      - uhbooba-net
-    restart: on-failure
-    volumes:
-      - ./logs/external-service:/app/logs
+  # external-service:
+  #   container_name: external-service
+  #   env_file:
+  #     - .env.external
+  #   build:
+  #     context: ./backend/external-service
+  #   ports:
+  #     - "8083:8083"
+  #   networks:
+  #     - uhbooba-net
+  #   restart: on-failure
+  #   volumes:
+  #     - ./logs/external-service:/app/logs
 
   api-gateway:
     container_name: api-gateway
