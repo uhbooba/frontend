@@ -9,7 +9,7 @@ services:
     networks:
       - uhbooba-net
     volumes:
-      - ./db/user:/var/lib/mysql
+      - ./db/user:/var/lib/mariadb
 
   finance-db:
     image: mariadb:latest
@@ -20,7 +20,7 @@ services:
     networks:
       - uhbooba-net
     volumes:
-      - ./db/finance:/var/lib/mysql
+      - ./db/finance:/var/lib/mariadb
 
   external-db:
     image: mariadb:latest
@@ -31,7 +31,7 @@ services:
     networks:
       - uhbooba-net
     volumes:
-      - ./db/external:/var/lib/mysql
+      - ./db/external:/var/lib/mariadb
 
   eureka-server:
     container_name: eureka-server
@@ -87,6 +87,8 @@ services:
 
   api-gateway:
     container_name: api-gateway
+    env_file:
+      - .env.gateway
     build:
       context: ./backend/api-gateway
     ports:
