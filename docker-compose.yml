@@ -8,9 +8,6 @@ services:
       - prometheus-data:/prometheus
     ports:
       - "9000:9090"
-    command: 
-      - '--storage.tsdb.path=/prometheus'
-      - '--config.file=/etc/prometheus/prometheus.yml'
     restart: always
     networks:
       - uhbooba-net
