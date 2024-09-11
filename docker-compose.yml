@@ -87,6 +87,8 @@ services:
     restart: on-failure
     volumes:
       - ./logs/user-service:/app/logs
+    depends_on:
+      - eureka-server
 
   finance-service:
     container_name: finance-service
@@ -101,20 +103,24 @@ services:
     restart: on-failure
     volumes:
       - ./logs/finance-service:/app/logs
+    depends_on:
+      - eureka-server
 
-  # external-service:
-  #   container_name: external-service
-  #   env_file:
-  #     - .env.external
-  #   build:
-  #     context: ./backend/external-service
-  #   ports:
-  #     - "8083:8083"
-  #   networks:
-  #     - uhbooba-net
-  #   restart: on-failure
-  #   volumes:
-  #     - ./logs/external-service:/app/logs
+  external-service:
+    container_name: external-service
+    env_file:
+      - .env.external
+    build:
+      context: ./backend/external-service
+    ports:
+      - "8083:8083"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/external-service:/app/logs
+    depends_on:
+      - eureka-server
 
   api-gateway:
     container_name: api-gateway
@@ -129,6 +135,11 @@ services:
     restart: on-failure
     volumes:
       - ./logs/gateway-service:/app/logs
+    depends_on:
+      - eureka-server
+      - user-service
+      - finance-service
+      - external-service
 
 networks:
   uhbooba-net:

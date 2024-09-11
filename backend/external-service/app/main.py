@@ -11,10 +11,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 
-from config.database import SessionLocal, engine, Base
+from .config.database import SessionLocal, engine, Base
+from .eureka_register import register_with_eureka
+from .controllers import quiz
+
 from fastapi import FastAPI
-from config.database import engine, Base
-from controllers import quiz
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,6 +26,10 @@ app.include_router(quiz.router)
 @app.get("/health-check")
 def read_root():
     return {"Hello": "World"}
+
+@app.on_event("startup")
+def startup_event():
+    register_with_eureka()
 
 # Dependency
 def get_db():
