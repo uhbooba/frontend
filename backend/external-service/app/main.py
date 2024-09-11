@@ -19,7 +19,10 @@ from fastapi import FastAPI
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+    openapi_url="/external-service/v3/api-docs",  # OpenAPI 문서 경로 설정
+    docs_url="/external-service/docs",            # Swagger UI 경로 설정
+)
 
 app.include_router(quiz.router)
 
