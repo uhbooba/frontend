@@ -18,6 +18,13 @@ def register_with_eureka():
             "statusPageUrl": "http://external-service:8083/health-check",
         }
     }
-    response = requests.post(eureka_server, json=data, headers=headers)
+
+    while True:
+        try:
+            response = requests.post(eureka_server, json=data, headers=headers)
+            if response.status_code == 204:
+                break
+        except Exception as e:
+        time.sleep(30)  # 재시도 간격 설정
 
 register_with_eureka()
