@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type BackButtonProps = {
   onClick?: () => void;
@@ -6,15 +7,25 @@ type BackButtonProps = {
 };
 
 const BackButton: React.FC<BackButtonProps> = ({ onClick, className }) => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (onClick) {
+      onClick();
+    }
+    navigate(-1);
+  };
+
   return (
-    <button onClick={onClick} className={className}>
+    <button onClick={handleBack} className={className}>
       <svg
         xmlns='http://www.w3.org/2000.svg'
         fill='none'
         viewBox='0 0 24 24'
         strokeWidth={2}
         stroke='black'
-        className='h-7 w-7 hover:h-10 hover:w-10'
+        className='h-7 w-7'
+        // className='h-7 w-7 hover:h-10 hover:w-10'
       >
         <path
           strokeLinecap='round'

@@ -7,6 +7,9 @@ export default {
         38: '9.5rem',
         15: '3.5rem',
       },
+      height: {
+        88: '22rem',
+      },
     },
   },
   plugins: [],
