@@ -1,4 +1,5 @@
 import requests
+import time
 
 def register_with_eureka():
     eureka_server = "http://eureka-server:8761/eureka/apps/EXTERNAL-SERVICE"
@@ -25,6 +26,7 @@ def register_with_eureka():
             if response.status_code == 204:
                 break
         except Exception as e:
+            pass
         time.sleep(30)  # 재시도 간격 설정
 
 register_with_eureka()
