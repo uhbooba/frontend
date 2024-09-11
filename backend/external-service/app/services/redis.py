@@ -1,7 +1,7 @@
 # app/services/redis.py
 
 import redis
-from app.config.logger import setup_logger
+from ..config.logger import setup_logger
 
 logger = setup_logger("app")
 

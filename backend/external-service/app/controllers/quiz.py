@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.schemas.error import ErrorResponse
+from ..schemas.error import ErrorResponse
 from fastapi.responses import JSONResponse
-from app.config.database import get_db
-from app.schemas.quiz import QuizResponse
-from app.services.quiz import QuizService
+from ..config.database import get_db
+from ..schemas.quiz import QuizResponse
+from ..services.quiz import QuizService
 
 router = APIRouter(
     prefix="/quiz",

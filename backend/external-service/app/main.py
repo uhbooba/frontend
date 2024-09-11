@@ -1,12 +1,12 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# import sys
+# import os
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #####################################################################################
-from config.database import SessionLocal, engine, Base
+from .config.database import SessionLocal, engine, Base
 from .eureka_register import register_with_eureka
 from fastapi import FastAPI
-from config.database import engine, Base
-from controllers import quiz
+from .config.database import engine, Base
+from .controllers import quiz, tts
 #####################################################################################c
 Base.metadata.create_all(bind=engine)
 app = FastAPI(
@@ -15,6 +15,8 @@ app = FastAPI(
 )
 #####################################################################################c
 app.include_router(quiz.router)
+app.include_router(tts.router)
+
 
 @app.get("/health-check")
 def read_root():

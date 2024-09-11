@@ -2,8 +2,8 @@ import hashlib
 from gtts import gTTS
 import asyncio
 import io
-from app.config.logger import setup_logger
-from app.services.redis import redis_service  # 새로 만든 RedisService 임포트
+from ..config.logger import setup_logger
+from ..services.redis import redis_service  # 새로 만든 RedisService 임포트
 
 logger = setup_logger("app")
 

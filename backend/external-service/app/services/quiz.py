@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.quiz import Quiz
-from app.schemas.quiz import QuizItem, QuizPartResponse, QuizResponse
+from ..models.quiz import Quiz
+from ..schemas.quiz import QuizItem, QuizPartResponse, QuizResponse
 from itertools import groupby
 from operator import attrgetter
 
