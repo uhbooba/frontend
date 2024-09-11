@@ -1,33 +1,46 @@
-import Button from '../components/common/Button';
-import XButton from '@/components/common/XButton';
-import BackButton from '@/components/common/BackButton';
-import CheckButton from '@/components/common/CheckButton';
+import { useNavigate } from 'react-router';
+import Button, { ButtonConfigType } from '../components/common/Button';
+// import XButton from '@/components/common/XButton';
+// import BackButton from '@/components/common/BackButton';
+// import CheckButton from '@/components/common/CheckButton';
+// import Layout from '@/components/common/layouts/Layout';
+
+const ButtonConfig: ButtonConfigType[] = [
+  {
+    label: '예금 가입',
+    route: '/deposit',
+    size: 'small',
+    color: 'orange',
+    className: 'absolute top-10 left-10',
+  },
+  {
+    label: '적금 가입',
+    route: '/savings',
+    size: 'small',
+    color: 'orange',
+    className: 'absolute top-10 right-10',
+  },
+];
 
 const Main = () => {
-  console.log('메인 컴포넌트 렌더링 확인영');
+  const navigate = useNavigate();
+
+  const handleButtonClick = (route: string) => {
+    navigate(route);
+  };
+
   return (
     <div>
-      main
-      <br />
-      <br />
-      <Button label='큰 버튼' size='large' color='orange' className='ml-4' />
-      <br />
-      <br />
-      <br />
-      <Button label='작은 버튼' size='small' color='red' className='ml-4' />
-      <Button label='작은 버튼' size='small' color='green' className='ml-4' />
-      <br />
-      <br />
-      <br />
-      <XButton className='ml-4' />
-      <br />
-      <br />
-      <br />
-      <BackButton className='ml-4' />
-      <br />
-      <br />
-      <br />
-      <CheckButton />
+      {ButtonConfig.map((button, index) => (
+        <Button
+          key={index}
+          label={button.label}
+          size={button.size}
+          color={button.color}
+          onClick={() => handleButtonClick(button.route)}
+          className={button.className}
+        />
+      ))}
     </div>
   );
 };
