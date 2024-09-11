@@ -1,6 +1,6 @@
 // import Button from '../components/common/Button';
 // import XButton from '@/components/common/XButton';
-import BackButton from '@/components/common/BackButton';
+import BackButton from '@/components/common/buttons/BackButton';
 // import CheckButton from '@/components/common/CheckButton';
 // import Layout from '@/components/common/layouts/Layout';
 
