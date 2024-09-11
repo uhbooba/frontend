@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import Button, { ButtonConfigType } from '../components/common/Button';
+import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 // import XButton from '@/components/common/XButton';
 // import BackButton from '@/components/common/BackButton';
 // import CheckButton from '@/components/common/CheckButton';

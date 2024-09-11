@@ -1,5 +1,5 @@
-import Button from '../components/common/Button';
-import BackButton from '@/components/common/BackButton';
+import Button from '../components/common/buttons/Button';
+import BackButton from '@/components/common/buttons/BackButton';
 
 const DepositExplain = () => {
   return (
