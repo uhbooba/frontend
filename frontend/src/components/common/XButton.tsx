@@ -26,5 +26,5 @@ const XButton: React.FC<XButtonProps> = ({ onClick, className }) => {
     </button>
   );
 };
-
+//
 export default XButton;
