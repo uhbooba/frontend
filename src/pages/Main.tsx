@@ -1,6 +1,7 @@
 import Button from '../components/common/Button';
 import XButton from '@/components/common/XButton';
 import BackButton from '@/components/common/BackButton';
+import CheckButton from '@/components/common/CheckButton';
 
 const Main = () => {
   console.log('메인 컴포넌트 렌더링 확인영');
@@ -18,11 +19,15 @@ const Main = () => {
       <br />
       <br />
       <br />
-      <XButton />
+      <XButton className='ml-4' />
       <br />
       <br />
       <br />
-      <BackButton />
+      <BackButton className='ml-4' />
+      <br />
+      <br />
+      <br />
+      <CheckButton />
     </div>
   );
 };
