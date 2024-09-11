@@ -1,7 +1,13 @@
-import Button from '../components/common/buttons/Button';
+import Button from '@/components/common/buttons/Button';
 import BackButton from '@/components/common/buttons/BackButton';
+import { useNavigate } from 'react-router';
 
 const DepositExplain = () => {
+  const navigate = useNavigate();
+
+  const GoSignup = () => {
+    navigate('/deposit/signup');
+  };
   return (
     <div>
       <div className='bg-gray-400 text-center'>
@@ -57,7 +63,12 @@ const DepositExplain = () => {
 
         {/* 확인 버튼 */}
         <div className='mt-2 flex items-center justify-center'>
-          <Button label='확인' size='large' color='orange' />
+          <Button
+            label='확인'
+            size='large'
+            color='orange'
+            onClick={() => GoSignup()}
+          />
         </div>
       </div>
     </div>

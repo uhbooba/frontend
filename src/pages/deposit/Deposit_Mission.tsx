@@ -1,11 +1,11 @@
-import Button from '../components/common/buttons/Button';
+import Button from '@/components/common/buttons/Button';
 import BackButton from '@/components/common/buttons/BackButton';
 import { useNavigate } from 'react-router';
 
 const DepositMission = () => {
   const navigate = useNavigate();
 
-  const GoClick = () => {
+  const GoExplain = () => {
     navigate('/explain');
   };
   return (
@@ -45,7 +45,7 @@ const DepositMission = () => {
               label='가입하러가기'
               size='small'
               color='orange'
-              onClick={() => GoClick()}
+              onClick={() => GoExplain()}
               className='mt-4'
             />
           </div>
