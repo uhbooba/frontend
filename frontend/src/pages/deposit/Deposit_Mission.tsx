@@ -1,6 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
+import { BottomTab } from '@/components/layouts/BottomTab';
 
 const DepositMission = () => {
   const navigate = useNavigate();
@@ -55,6 +56,9 @@ const DepositMission = () => {
             className='mt-4 h-56 w-56'
           />
         </div>
+      </div>
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
       </div>
     </div>
   );
