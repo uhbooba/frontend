@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BigModal from '@/components/modals/Big_Modal';
 import TopBar from '@/components/layouts/TopBar';
+import { BottomTab } from '@/components/layouts/BottomTab';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -127,7 +128,7 @@ const DepositSignup = () => {
         )}
       </div>
 
-      <div className='mx-4 mt-8 flex justify-between space-x-4'>
+      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
         <Button
           label='이전'
           size='large'
@@ -164,6 +165,9 @@ const DepositSignup = () => {
           </>
         }
       />
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
+      </div>
     </div>
   );
 };

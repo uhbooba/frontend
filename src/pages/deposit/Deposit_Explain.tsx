@@ -1,6 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
+import { BottomTab } from '@/components/layouts/BottomTab';
 
 const DepositExplain = () => {
   const navigate = useNavigate();
@@ -61,6 +62,9 @@ const DepositExplain = () => {
             onClick={() => GoSignup()}
           />
         </div>
+      </div>
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
       </div>
     </div>
   );

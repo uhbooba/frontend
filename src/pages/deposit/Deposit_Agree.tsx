@@ -5,6 +5,7 @@ import BigModal from '@/components/modals/Big_Modal';
 import TopBar from '@/components/layouts/TopBar';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/No_Modal';
+import { BottomTab } from '@/components/layouts/BottomTab';
 
 const DepositAgree = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,9 +43,9 @@ const DepositAgree = () => {
       {/* 상단바 */}
       <TopBar title='예금 가입1 - 정보 동의 수락' />
 
-      <div className='mb-8 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
+      <div className='mb-6 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
 
-      <div className='m-4 mt-6'>
+      <div className='m-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 수집 및 이용 동의서</p>
         <div className='mb-2 border-2 border-black'>
           <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
@@ -61,7 +62,7 @@ const DepositAgree = () => {
         </div>
       </div>
 
-      <div className='m-4 mt-6'>
+      <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 제3자 제공 동의서</p>
         <div className='mb-2 border-2 border-black'>
           <p className='mb-1 mt-1'>개인정보 제3자 제공 동의하세요?</p>
@@ -78,7 +79,7 @@ const DepositAgree = () => {
         </div>
       </div>
 
-      <div className='m-4 mt-6'>
+      <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>싸피은행 약관 동의서</p>
         <div className='mb-2 border-2 border-black'>
           <p className='mb-1 mt-1'>싸피은행 약관에 동의하세요?</p>
@@ -95,7 +96,7 @@ const DepositAgree = () => {
         </div>
       </div>
 
-      <div className='mx-4 mt-8 flex justify-between space-x-4'>
+      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
         <Button
           label='이전'
           size='medium'
@@ -108,6 +109,10 @@ const DepositAgree = () => {
           color='orange'
           onClick={() => OpenModal()}
         />
+      </div>
+
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
       </div>
 
       <BigModal
