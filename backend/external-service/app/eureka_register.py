@@ -23,10 +23,11 @@ def register_with_eureka():
     while True:
         try:
             response = requests.post(eureka_server, json=data, headers=headers)
+            print(f"성공!!")
             if response.status_code == 204:
                 break
         except Exception as e:
-            pass
+            print(f"Error registering with Eureka: {e}")
         time.sleep(30)  # 재시도 간격 설정
 
 register_with_eureka()
