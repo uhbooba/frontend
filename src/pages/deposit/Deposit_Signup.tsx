@@ -1,17 +1,59 @@
 import Button from '@/components/common/buttons/Button';
-import BackButton from '@/components/common/buttons/BackButton';
 import { Input } from '@/components/common/Input';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-// import { useMediaQuery } from 'react-responsive';
 import BigModal from '@/components/modals/Big_Modal';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [errors, setErrors] = useState({
+    name: '',
+    idNumber: '',
+    phoneNumber: '',
+    accountNumber: '',
+  });
   const navigate = useNavigate();
 
+  const validateInputs = () => {
+    const newErrors = {
+      name: '',
+      idNumber: '',
+      phoneNumber: '',
+      accountNumber: '',
+    };
+
+    let isValid = true;
+
+    if (!name || !/^[가-힣]+$/.test(name)) {
+      newErrors.name = '한글만 입력이 가능합니다.';
+      isValid = false;
+    }
+    if (!idNumber || !/^\d+$/.test(idNumber)) {
+      newErrors.idNumber = '숫자만 입력 가능합니다.';
+      isValid = false;
+    }
+    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+      newErrors.phoneNumber = '숫자만 입력 가능합니다.';
+      isValid = false;
+    }
+    if (!accountNumber || !/^\d+$/.test(accountNumber)) {
+      newErrors.accountNumber = '숫자만 입력 가능합니다.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const OpenModal = () => {
-    setIsModalOpen(true);
+    if (validateInputs()) {
+      setIsModalOpen(true);
+    }
   };
 
   const GoBack = () => {
@@ -20,7 +62,7 @@ const DepositSignup = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/deposit/agree');
+    navigate('/deposit/money');
   };
 
   const ModalClose = () => {
@@ -29,21 +71,61 @@ const DepositSignup = () => {
 
   return (
     <div className='w-full overflow-x-hidden'>
-      <div className='bg-gray-400 text-center'>
-        <span>여기는 휴대폰 상단 상태바</span>
+      <TopBar title='예금 가입2 - 개인정보 입력' />
+
+      <div className='mb-8 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
+
+      <div className='ml-4 mr-4'>
+        <Input
+          label='이름'
+          variant='full'
+          placeholder='이름을 입력하세요'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          isError={!!errors.name}
+          className='mb-2'
+        />
+        {errors.name && <p className='mb-4 text-red-500'>{errors.name}</p>}
+
+        <Input
+          label='주민등록번호'
+          variant='full'
+          placeholder='주민등록번호를 입력하세요'
+          value={idNumber}
+          onChange={(e) => setIdNumber(e.target.value)}
+          isError={!!errors.idNumber}
+          className='mb-2'
+        />
+        {errors.idNumber && (
+          <p className='mb-4 text-red-500'>{errors.idNumber}</p>
+        )}
+
+        <Input
+          label='전화번호'
+          variant='full'
+          placeholder='전화번호를 입력하세요'
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          isError={!!errors.phoneNumber}
+          className='mb-2'
+        />
+        {errors.phoneNumber && (
+          <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
+        )}
+
+        <Input
+          label='계좌번호'
+          variant='full'
+          placeholder='계좌번호를 입력하세요'
+          value={accountNumber}
+          onChange={(e) => setAccountNumber(e.target.value)}
+          isError={!!errors.accountNumber}
+          className='mb-2'
+        />
+        {errors.accountNumber && (
+          <p className='mb-4 text-red-500'>{errors.accountNumber}</p>
+        )}
       </div>
-
-      {/* 상단바 */}
-      <div className='flex items-center justify-between border-b-4 bg-white py-4'>
-        <BackButton className='ml-4' />
-        <span className='absolute left-1/2 -translate-x-1/2 transform text-xl font-bold'>
-          예금 가입1 - 개인정보
-        </span>
-      </div>
-
-      <div className='bg-gray-400 py-4 text-center'>단계표시바</div>
-
-      <Input className='w-full' />
 
       <div className='mx-4 mt-8 flex justify-between space-x-4'>
         <Button
@@ -70,10 +152,15 @@ const DepositSignup = () => {
         title='교육용 어플입니다.'
         description={
           <>
+            <p className='font-bold'>
+              모든 정보를 정확하게 입력했는지 <br />
+              다시 한 번 확인해주세요.
+            </p>
+            <br />
             실제 은행 예금 상품을 가입할 때는 <br />
             더 많은 정보를 입력해야 합니다. <br />
             해당 어플은 교육용 어플이기 때문에 <br />
-            실제보다 적은 정보만 입력했습니다.
+            실제보다 적은 정보만 입력했습니다. <br />
           </>
         }
       />

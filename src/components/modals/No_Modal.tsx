@@ -4,16 +4,14 @@ import Button from '@/components/common/buttons/Button';
 interface ModalProps {
   isOpen: boolean;
   ModalClose: () => void;
-  GoNext?: () => void;
-  title: string;
+  title: React.ReactNode;
   description: React.ReactNode;
   imageSrc: string;
 }
 
-const BigModal: React.FC<ModalProps> = ({
+const NoModal: React.FC<ModalProps> = ({
   isOpen,
   ModalClose,
-  GoNext,
   title,
   description,
   imageSrc,
@@ -32,17 +30,10 @@ const BigModal: React.FC<ModalProps> = ({
         </p>
         <div className='flex justify-between space-x-4'>
           <Button
-            label='취소'
-            size='medium'
-            color='orange'
-            onClick={ModalClose}
-            className='flex-1'
-          />
-          <Button
             label='확인'
             size='medium'
             color='orange'
-            onClick={GoNext}
+            onClick={ModalClose}
             className='flex-1'
           />
         </div>
@@ -51,4 +42,4 @@ const BigModal: React.FC<ModalProps> = ({
   );
 };
 
-export default BigModal;
+export default NoModal;
