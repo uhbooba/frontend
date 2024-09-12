@@ -1,0 +1,11 @@
+networks:
+  uhbooba-net:
+    driver: bridge
+
+volumes:
+  user-db-data:
+  finance-db-data:
+  external-db-data:
+  redis-data:
+  zookeeper-data:
+  kafka-data:
