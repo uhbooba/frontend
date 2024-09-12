@@ -122,10 +122,10 @@ services:
       - ./backend/external-service:/code/
     depends_on:
       - eureka-server
-    working_dir: /code/
-    environment:
-      - PYTHONPATH=/code
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8083 --reload
+    # working_dir: /code/
+    # environment:
+    #   - PYTHONPATH=/code
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8083 --reload
 
   api-gateway:
     container_name: api-gateway
