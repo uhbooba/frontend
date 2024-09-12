@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Text, Boolean, DateTime
 from sqlalchemy.sql import func
-from app.config.database import Base
+from ..config.database import Base
 
 class Quiz(Base):
     __tablename__ = "quiz"
