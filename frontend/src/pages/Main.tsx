@@ -4,6 +4,7 @@ import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 // import BackButton from '@/components/common/BackButton';
 // import CheckButton from '@/components/common/CheckButton';
 // import Layout from '@/components/common/layouts/Layout';
+import LevelBar from '@/components/common/LevelBar';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
@@ -31,6 +32,7 @@ const Main = () => {
 
   return (
     <div>
+      <LevelBar currentLevel={2} totalLevel={5}/>
       {ButtonConfig.map((button, index) => (
         <Button
           key={index}
