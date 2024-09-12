@@ -3,7 +3,7 @@ import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 // import XButton from '@/components/common/XButton';
 // import BackButton from '@/components/common/BackButton';
 // import CheckButton from '@/components/common/CheckButton';
-// import Layout from '@/components/common/layouts/Layout';
+import Layout from '@/components/common/layouts/Layout';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
@@ -30,18 +30,20 @@ const Main = () => {
   };
 
   return (
-    <div>
-      {ButtonConfig.map((button, index) => (
-        <Button
+    <Layout>
+      <div className='relative'>
+        {ButtonConfig.map((button, index) => (
+          <Button
           key={index}
           label={button.label}
           size={button.size}
           color={button.color}
           onClick={() => handleButtonClick(button.route)}
           className={button.className}
-        />
-      ))}
-    </div>
+          />
+        ))}
+      </div>
+    </Layout>
   );
 };
 
