@@ -11,14 +11,14 @@ const ButtonConfig: ButtonConfigType[] = [
     route: '/deposit',
     size: 'small',
     color: 'orange',
-    className: 'absolute top-10 left-10',
+    className: 'flex-grow',
   },
   {
     label: '적금 가입',
     route: '/savings',
     size: 'small',
     color: 'orange',
-    className: 'absolute top-10 right-10',
+    className: 'flex-grow',
   },
 ];
 
@@ -30,17 +30,22 @@ const Main = () => {
   };
 
   return (
-    <div>
-      {ButtonConfig.map((button, index) => (
-        <Button
-          key={index}
-          label={button.label}
-          size={button.size}
-          color={button.color}
-          onClick={() => handleButtonClick(button.route)}
-          className={button.className}
-        />
-      ))}
+    <div className='flex min-h-screen flex-col justify-end'>
+      <div className='flex justify-between space-x-4 p-4'>
+        {ButtonConfig.map((button, index) => (
+          <Button
+            key={index}
+            label={button.label}
+            size={button.size}
+            color={button.color}
+            onClick={() => handleButtonClick(button.route)}
+            className={button.className}
+          />
+        ))}
+      </div>
+      <div className='bg-gray-400 py-8 text-center'>
+        <span>여기는 휴대폰 하단바</span>
+      </div>
     </div>
   );
 };

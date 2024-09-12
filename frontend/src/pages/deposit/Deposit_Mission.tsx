@@ -41,13 +41,15 @@ const DepositMission = () => {
               예금상품 하나를 <br />
               가입해보세요!
             </p>
-            <Button
-              label='가입하러가기'
-              size='small'
-              color='orange'
-              onClick={() => GoExplain()}
-              className='mt-4'
-            />
+            <div className='pl-8 pr-8'>
+              <Button
+                label='가입하러가기'
+                size='small'
+                color='orange'
+                onClick={() => GoExplain()}
+                className='mt-4'
+              />
+            </div>
           </div>
 
           {/* 말풍선 꼬리 부분 */}
