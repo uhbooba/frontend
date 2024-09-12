@@ -1,6 +1,10 @@
 import requests
 import time
 
+from .config.logger import setup_logger
+
+logger = setup_logger("app")
+
 def register_with_eureka():
     eureka_server = "http://eureka-server:8761/eureka/apps/EXTERNAL-SERVICE"
     headers = {"Content-Type": "application/json"}
@@ -23,11 +27,11 @@ def register_with_eureka():
     while True:
         try:
             response = requests.post(eureka_server, json=data, headers=headers)
-            print(f"성공!!")
+            logger.warning(f"성공!!")
             if response.status_code == 204:
                 break
         except Exception as e:
-            print(f"Error registering with Eureka: {e}")
-        time.sleep(30)  # 재시도 간격 설정
+            logger.warning(f"Error registering with Eureka: {e}")
+        time.sleep(10)  # 재시도 간격 설정
 
 register_with_eureka()
