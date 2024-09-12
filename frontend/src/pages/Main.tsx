@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
+import { BottomTab } from '@/components/layouts/BottomTab';
 // import XButton from '@/components/common/XButton';
 // import BackButton from '@/components/common/BackButton';
 // import CheckButton from '@/components/common/CheckButton';
@@ -30,7 +31,7 @@ const Main = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col justify-end'>
+    <div className='flex min-h-screen flex-col justify-end pb-20'>
       <div className='flex justify-between space-x-4 p-4'>
         {ButtonConfig.map((button, index) => (
           <Button
@@ -43,8 +44,8 @@ const Main = () => {
           />
         ))}
       </div>
-      <div className='bg-gray-400 py-8 text-center'>
-        <span>여기는 휴대폰 하단바</span>
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
       </div>
     </div>
   );

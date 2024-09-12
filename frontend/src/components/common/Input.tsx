@@ -5,7 +5,7 @@ const INPUT_VARIANTS = {
   full: 'h-14 w-full',
   check: 'h-4 w-4 shadow-md outline-none',
   disabled: 'bg-gray-300',
-  label: 'mb-2 block text-lg font-medium text-gray-600',
+  label: 'block text-xl font-bold text-gray-600',
   error: 'border-b border-red-500 outline-none',
 } as const;
 

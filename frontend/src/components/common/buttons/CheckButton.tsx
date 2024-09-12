@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-
-const CheckButton = () => {
-  const [selected, setSelected] = useState<string>('');
-
+const CheckButton = ({
+  name,
+  selected,
+  setSelected,
+}: {
+  name: string;
+  selected: string;
+  setSelected: (value: string) => void;
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(e.target.value);
   };
-
   return (
     <div className='ml-4 flex items-center space-x-4'>
       <label className='flex items-center space-x-2'>
         <input
           type='radio'
-          name='yes or no'
+          name={name}
           value='yes'
           checked={selected === 'yes'}
           onChange={handleChange}
@@ -23,7 +26,7 @@ const CheckButton = () => {
       <label className='flex items-center space-x-2'>
         <input
           type='radio'
-          name='yes or no'
+          name={name}
           value='no'
           checked={selected === 'no'}
           onChange={handleChange}
