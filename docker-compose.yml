@@ -119,7 +119,7 @@ services:
     restart: on-failure
     volumes:
       - ./logs/external-service:/app/logs
-      - ./backend/external-service:/code/
+      # - ./backend/external-service:/code/
     depends_on:
       - eureka-server
     # working_dir: /code/
