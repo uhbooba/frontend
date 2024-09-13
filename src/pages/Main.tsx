@@ -32,7 +32,8 @@ const Main = () => {
 
   return (
     <div>
-      <LevelBar currentLevel={2} totalLevel={5}/>
+      {/* LevelBar 사용법 1. currentLevel에 현재 단계, totalLevel에 전체 단계 값을 입력해서 사용하면 됩니다. */}
+      <LevelBar currentLevel={5} totalLevel={5}/>
       {ButtonConfig.map((button, index) => (
         <Button
           key={index}
