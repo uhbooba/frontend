@@ -2,12 +2,12 @@ services:
   redis:
     image: redis:7.2.3
     container_name: uhbooba-redis
-    ports:
-      - "6379:6379"
     networks:
       - uhbooba-net
     volumes:
       - ./redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
 
   user-db:
     image: mariadb:latest
