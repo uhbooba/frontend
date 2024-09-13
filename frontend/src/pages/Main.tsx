@@ -3,7 +3,7 @@ import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 // import XButton from '@/components/common/XButton';
 // import BackButton from '@/components/common/BackButton';
 // import CheckButton from '@/components/common/CheckButton';
-import Layout from '@/components/common/layouts/Layout';
+import Layout from '@/components/layouts/Layout';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
