@@ -2,15 +2,16 @@ import React from 'react';
 import clsx from 'clsx';
 
 export const BUTTON_SIZES = {
-  large: 'py-2 px-38 text-lg',
-  medium: 'py-2 px-16 text-md',
-  small: 'py-2 px-15 text-sm',
+  large: 'py-2 w-full text-lg',
+  medium: 'py-2 w-full text-md',
+  small: 'py-2 w-full text-sm',
 };
 
 export const BUTTON_COLORS = {
-  orange: 'bg-orange-500 hover:bg-orange-600 hover:text-white',
-  red: 'bg-red-500 hover:bg-red-600 hover:text-white',
-  green: 'bg-green-500 hover:bg-green-600 hover:text-white',
+  orange: 'bg-orange-500  focus:border-blue-400 focus:text-blue-400',
+  red: 'bg-red-500  focus:border-blue-400 focus:text-blue-400',
+  green: 'bg-green-500  focus:border-blue-400 focus:text-blue-400',
+  white: 'bg-white-500 focus:border-blue-300 focus:text-blue-400',
 };
 
 export type ButtonConfigType = {
@@ -54,5 +55,5 @@ const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
-//
+
 export default Button;
