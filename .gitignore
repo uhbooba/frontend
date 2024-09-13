@@ -216,3 +216,5 @@ prometheus/
 
 kafka-data/
 zookeeper-data/
+
+redis.conf
