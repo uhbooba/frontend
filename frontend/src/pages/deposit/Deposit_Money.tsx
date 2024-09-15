@@ -42,6 +42,7 @@ const DepositMoney = () => {
   // 얼마로 시작할까요? 버튼 클릭 함수
   const amountClick = (amount: string) => {
     setAmountBtnColor(amount);
+    console.log('Amount clicked:', amount);
 
     if (amount !== '직접입력') {
       setSelectMoney(formatMoney(amount.replace('원', '')));
@@ -55,6 +56,7 @@ const DepositMoney = () => {
   // 언제까지 모아볼까요? 버튼 클릭 함수
   const periodClick = (period: string) => {
     setperiodBtnColor(period);
+    console.log('Period clicked:', period);
     setSelectPeriod(period);
   };
 

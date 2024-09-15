@@ -21,11 +21,16 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ periods, onPeriodClick, perio
             label={period}
             color='white'
             size='small'
-            onClick={() => onPeriodClick(period)}
+            onClick={() => {
+              onPeriodClick(period);
+              console.log('Period clicked:', period);
+            }}
             className={clsx(
-                'border-2 border-gray-200', // 기본 테두리 스타일
-                periodBtnColor === period ? 'border-blue-400 text-blue-400' : '' // 선택된 버튼에만 파란색 테두리와 글씨색
-              )}
+              'border-2',
+              periodBtnColor === period 
+                ? 'border-blue-400 text-blue-400' 
+                : 'border-gray-200'
+            )}
           />
         ))}
       </div>
@@ -37,11 +42,16 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ periods, onPeriodClick, perio
             label={period}
             color='white'
             size='small'
-            onClick={() => onPeriodClick(period)}
+            onClick={() => {
+              onPeriodClick(period);
+              console.log('Period clicked:', period); 
+            }}
             className={clsx(
-                'border-2 border-gray-200', // 기본 테두리 스타일
-                periodBtnColor === period ? 'border-blue-400 text-blue-400' : '' // 선택된 버튼에만 파란색 테두리와 글씨색
-              )}
+              'border-2',
+              periodBtnColor === period 
+                ? 'border-blue-400 text-blue-400' 
+                : 'border-gray-200'
+            )}
           />
         ))}
       </div>

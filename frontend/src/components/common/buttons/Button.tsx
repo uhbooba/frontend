@@ -11,7 +11,7 @@ export const BUTTON_COLORS = {
   orange: 'bg-orange-500',
   red: 'bg-red-500',
   green: 'bg-green-500',
-  white: 'bg-white-500',
+  white: 'bg-white',
   blue: 'bg-blue-500',
 };
 
@@ -43,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={clsx(
-        'rounded-md font-bold transition duration-300 ease-in-out focus:outline-none',
+        'rounded-md font-bold ease-in-out focus:outline-none',
         BUTTON_COLORS[color],
         BUTTON_SIZES[size],
         disabled && 'cursor-not-allowed opacity-50',

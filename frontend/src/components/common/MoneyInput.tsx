@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './buttons/Button';
+import clsx from 'clsx';
 
 type MoneyInputProps = {
   amounts: string[];
@@ -20,9 +21,12 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
             color='white'
             size='small'
             onClick={() => onAmountClick(amount)}
-            className={`rounded border-2 border-gray-200 ${
-              amountBtnColor === amount ? 'border-blue-400 text-blue-400' : ''
-            }`}
+            className={clsx(
+              'border-2',
+              amountBtnColor === amount 
+                ? 'border-blue-400 text-blue-400' 
+                : 'border-gray-200'
+            )}
           />
         ))}
       </div>
@@ -35,9 +39,12 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
             color='white'
             size='small'
             onClick={() => onAmountClick(amount)}
-            className={`rounded border-2 border-gray-200 ${
-              amountBtnColor === amount ? 'border-blue-400 text-blue-400' : ''
-            }`}
+            className={clsx(
+              'border-2',
+              amountBtnColor === amount 
+                ? 'border-blue-400 text-blue-400' 
+                : 'border-gray-200'
+            )}
           />
         ))}
       </div>
