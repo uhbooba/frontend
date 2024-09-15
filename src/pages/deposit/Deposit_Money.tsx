@@ -1,6 +1,5 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import TopBar from '@/components/layouts/TopBar';
 import MoneyInput from '@/components/common/MoneyInput';
 import { Input } from '@/components/common/Input';
 import { useState } from 'react';
@@ -8,6 +7,7 @@ import PeriodInput from '@/components/common/PeriodInput';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/No_Modal';  
 import LevelBar from '@/components/common/LevelBar';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
@@ -112,7 +112,7 @@ const DepositMoney = () => {
 
   return (
     <div>
-      <TopBar title="예금 가입 - 상품 금액" />
+      <XTopBar title="예금 가입 - 상품 금액" />
 
       <div className='mt-2 mb-12'><LevelBar currentLevel={3} totalLevel={5}/></div>
 

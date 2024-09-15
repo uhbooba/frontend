@@ -1,38 +1,27 @@
+import XTopBar from '@/components/layouts/XTopbar';
+import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import { useNavigate } from 'react-router';
-import TopBar from '@/components/layouts/TopBar';
 
 const DepositSuccess = () => {
-  const navigate = useNavigate();
 
-  const GoBack = () => {
-    navigate(-1);
-  };
-
-  const GoNext = () => {
-    navigate('/');
-  };
 
   return (
     <div>
       {/* 상단바 */}
-      <TopBar title='예금 가입7 - 가입성공' />
+      <XTopBar title='예금 가입7 - 가입성공' />
 
-      <div className='bg-gray-400 py-4 text-center'>단계표시바</div>
+      <div className="absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4">
 
-      <div className='mx-4 mt-8 flex justify-between space-x-4'>
         <Button
-          label='이전'
-          size='medium'
-          color='orange'
-          onClick={() => GoBack()}
+          label="나의 계좌로 이동하기"
+          size="medium"
+          color="orange"
         />
-        <Button
-          label='다음'
-          size='medium'
-          color='orange'
-          onClick={() => GoNext()}
-        />
+      </div>
+
+      {/* 바텀탭 */}
+      <div className="fixed bottom-0 left-0 w-full">
+        <BottomTab />
       </div>
     </div>
   );

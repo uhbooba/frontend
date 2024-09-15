@@ -3,9 +3,9 @@ import { Input } from '@/components/common/Input';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BigModal from '@/components/modals/Big_Modal';
-import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,7 +73,7 @@ const DepositSignup = () => {
 
   return (
     <div className='w-full overflow-x-hidden'>
-      <TopBar title='예금 가입 - 개인정보' />
+      <XTopBar title='예금 가입 - 개인정보' />
 
       <div className='mt-2'><LevelBar currentLevel={2} totalLevel={5}/></div>
 
