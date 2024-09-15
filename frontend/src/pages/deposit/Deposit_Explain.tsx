@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositExplain = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const DepositExplain = () => {
   return (
     <div>
       {/* 상단바 */}
-      <TopBar title='예금 가입' />
+      <XTopBar title='예금 가입' />
 
       {/* 말풍선 스타일 적용 */}
       <div>

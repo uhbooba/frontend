@@ -2,11 +2,11 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import BigModal from '@/components/modals/Big_Modal';
-import TopBar from '@/components/layouts/TopBar';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/No_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositAgree = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,7 +42,7 @@ const DepositAgree = () => {
   return (
     <div>
       {/* 상단바 */}
-      <TopBar title='예금가입 - 동의페이지' />
+      <XTopBar title='예금가입 - 동의페이지' />
 
       <div className='mt-2 mb-6'><LevelBar currentLevel={1} totalLevel={5}/></div>
 

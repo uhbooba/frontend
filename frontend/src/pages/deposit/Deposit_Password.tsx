@@ -1,8 +1,8 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositPassword = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const DepositPassword = () => {
 
   return (
     <div>
-      <TopBar title='예금 가입 - 비밀번호' />
+      <XTopBar title='예금 가입 - 비밀번호' />
 
       <div className='mt-2 mb-12'><LevelBar currentLevel={5} totalLevel={5}/></div>
 
