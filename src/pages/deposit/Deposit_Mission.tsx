@@ -51,7 +51,7 @@ const DepositMission = () => {
         {/* 돼지 이미지 */}
         <div className='flex items-center justify-center'>
           <img
-            src='assets/images/pig.png'
+            src='/assets/images/pig.png'
             alt='Pig'
             className='mt-4 h-56 w-56'
           />
