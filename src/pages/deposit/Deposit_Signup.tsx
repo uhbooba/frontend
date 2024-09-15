@@ -5,6 +5,7 @@ import { useState } from 'react';
 import BigModal from '@/components/modals/Big_Modal';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import LevelBar from '@/components/common/LevelBar';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,11 +73,11 @@ const DepositSignup = () => {
 
   return (
     <div className='w-full overflow-x-hidden'>
-      <TopBar title='예금 가입2 - 개인정보 입력' />
+      <TopBar title='예금 가입 - 개인정보' />
 
-      <div className='mb-8 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
+      <div className='mt-2'><LevelBar currentLevel={2} totalLevel={5}/></div>
 
-      <div className='ml-4 mr-4'>
+      <div className='ml-4 mr-4 mt-12'>
         <Input
           label='이름'
           variant='full'
@@ -165,6 +166,7 @@ const DepositSignup = () => {
           </>
         }
       />
+      
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>

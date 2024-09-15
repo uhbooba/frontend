@@ -3,9 +3,11 @@ import Button from './buttons/Button';
 
 type MoneyInputProps = {
   amounts: string[];
+  onAmountClick: (amount: string) => void;
+  amountBtnColor: string;
 };
 
-const MoneyInput: React.FC<MoneyInputProps> = ({ amounts }) => {
+const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountBtnColor }) => {
   return (
     <div>
       
@@ -17,7 +19,10 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts }) => {
             label={amount}
             color='white'
             size='small'
-            className='rounded border-2 border-gray-200'
+            onClick={() => onAmountClick(amount)}
+            className={`rounded border-2 border-gray-200 ${
+              amountBtnColor === amount ? 'border-blue-400 text-blue-400' : ''
+            }`}
           />
         ))}
       </div>
@@ -29,7 +34,10 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts }) => {
             label={amount}
             color='white'
             size='small'
-            className='rounded border-2 border-gray-200'
+            onClick={() => onAmountClick(amount)}
+            className={`rounded border-2 border-gray-200 ${
+              amountBtnColor === amount ? 'border-blue-400 text-blue-400' : ''
+            }`}
           />
         ))}
       </div>

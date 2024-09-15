@@ -6,6 +6,7 @@ import TopBar from '@/components/layouts/TopBar';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/No_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import LevelBar from '@/components/common/LevelBar';
 
 const DepositAgree = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,9 +42,9 @@ const DepositAgree = () => {
   return (
     <div>
       {/* 상단바 */}
-      <TopBar title='예금 가입1 - 정보 동의 수락' />
+      <TopBar title='예금가입 - 동의페이지' />
 
-      <div className='mb-6 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
+      <div className='mt-2 mb-6'><LevelBar currentLevel={1} totalLevel={5}/></div>
 
       <div className='m-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 수집 및 이용 동의서</p>
