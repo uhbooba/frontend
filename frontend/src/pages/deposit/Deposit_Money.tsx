@@ -4,6 +4,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 // import { Input } from '@/components/common/Input';
 import MoneyInput from '@/components/common/MoneyInput';
+import { Input } from '@/components/common/Input';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
@@ -34,7 +35,19 @@ const DepositMoney = () => {
       <div className='mb-6 mt-4 bg-gray-400 py-4 text-center'>단계표시바</div>
 
       <div>
+
+      <div className='pb-4 pl-4 text-3xl font-bold'>
+        <span>얼마로 시작할까요?</span>
+      </div>
+
         <MoneyInput amounts={amounts} />
+
+        <div className='px-4'>
+        <Input
+          placeholder='금액을 입력하세요.'
+          className='rounded border-2 pl-4'
+        />
+      </div>
       </div>
 
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
@@ -51,6 +64,8 @@ const DepositMoney = () => {
           onClick={() => GoNext()}
         />
       </div>
+
+      
 
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
