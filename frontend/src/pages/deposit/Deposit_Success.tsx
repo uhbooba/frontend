@@ -1,12 +1,12 @@
-import XTopBar from '@/components/layouts/XTopbar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
+import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
 
 const DepositSuccess = () => {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* 상단바 */}
-      <XTopBar title="계좌 생성" />
+      <OnlyXTopBar title="계좌 생성" />
 
       {/* 배경 이미지 설정 */}
       <div
