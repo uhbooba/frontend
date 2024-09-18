@@ -23,7 +23,6 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ periods, onPeriodClick, perio
             size='small'
             onClick={() => {
               onPeriodClick(period);
-              console.log('Period clicked:', period);
             }}
             className={clsx(
               'border-2',
@@ -44,7 +43,6 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ periods, onPeriodClick, perio
             size='small'
             onClick={() => {
               onPeriodClick(period);
-              console.log('Period clicked:', period); 
             }}
             className={clsx(
               'border-2',

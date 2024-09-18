@@ -2,22 +2,34 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import MoneyInput from '@/components/common/MoneyInput';
 import { Input } from '@/components/common/Input';
-import { useState } from 'react';
 import PeriodInput from '@/components/common/PeriodInput';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/No_Modal';  
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
+import Keypad from '@/components/common/KeyPad';
+import { useAtom } from 'jotai';
+import { selectMoneyAtom, selectPeriodAtom, keyOpenAtom, amountBtnColorAtom, periodBtnColorAtom, isModalOpenAtom } from '@/atoms/deposit/depositMoneyAtoms';
+import { useEffect } from 'react';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
 
-  const [selectMoney, setSelectMoney] = useState('');
-  const [selectPeriod, setSelectPeriod] = useState('');
-  const [keyOpen, setKeyOpen] = useState(false);
-  const [amountBtnColor, setAmountBtnColor] = useState('');
-  const [periodBtnColor, setperiodBtnColor] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectMoney, setSelectMoney] = useAtom(selectMoneyAtom);
+  const [selectPeriod, setSelectPeriod] = useAtom(selectPeriodAtom);
+  const [keyOpen, setKeyOpen] = useAtom(keyOpenAtom);
+  const [amountBtnColor, setAmountBtnColor] = useAtom(amountBtnColorAtom);
+  const [periodBtnColor, setPeriodBtnColor] = useAtom(periodBtnColorAtom);
+  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
+
+  useEffect(() => {
+    setSelectMoney('');
+    setSelectPeriod('');
+    setKeyOpen(false);
+    setAmountBtnColor('');
+    setPeriodBtnColor('')
+    setIsModalOpen(false)
+  }, [setSelectMoney, setSelectPeriod, setKeyOpen, setAmountBtnColor, setPeriodBtnColor, setIsModalOpen]);
 
   // 뒤로가기
   const GoBack = () => {
@@ -42,7 +54,6 @@ const DepositMoney = () => {
   // 얼마로 시작할까요? 버튼 클릭 함수
   const amountClick = (amount: string) => {
     setAmountBtnColor(amount);
-    console.log('Amount clicked:', amount);
 
     if (amount !== '직접입력') {
       setSelectMoney(formatMoney(amount.replace('원', '')));
@@ -55,8 +66,7 @@ const DepositMoney = () => {
 
   // 언제까지 모아볼까요? 버튼 클릭 함수
   const periodClick = (period: string) => {
-    setperiodBtnColor(period);
-    console.log('Period clicked:', period);
+    setPeriodBtnColor(period);
     setSelectPeriod(period);
   };
 
@@ -129,6 +139,7 @@ const DepositMoney = () => {
           <Input
             value={selectMoney}
             onChange={(e) => setSelectMoney(formatMoney(e.target.value))}
+            onClick={() => setKeyOpen(true)}
             placeholder="금액을 입력하세요."
             className="rounded border-2 pl-4 w-full font-bold"
           />
@@ -166,54 +177,13 @@ const DepositMoney = () => {
         />
       </div>
 
-      {/* 트루일때만 키패드가 열리게 하기 */}
+      {/* 키패드 */}
       {keyOpen && (
-        <div className="fixed bottom-0 w-full bg-white rounded-t-lg p-4 z-50">
-          <div className="flex justify-end">
-            <button
-              className="text-sm font-bold text-gray-600 mb-2"
-              onClick={() => setKeyOpen(false)}
-            >
-              닫기
-            </button>
-          </div>
-
-          {/* 숫자 1~9까지만 3x3 배열로 만들기 */}
-          <div className="grid grid-cols-3 gap-4 text-center">
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((num) => (
-              <button
-                key={num}
-                className="p-4 text-3xl bg-transparent focus:outline-none"
-                onClick={() => keyClick(num)}
-              >
-                {num}
-              </button>
-            ))}
-
-            {/* 3x3 배열 밑에 지움, 0, 확인 버튼 만들기 */}
-            <button
-              className="p-4 text-3xl bg-transparent focus:outline-none"
-              onClick={handleDelete}
-            >
-              지움
-            </button>
-
-            <button
-              className="p-4 text-3xl bg-transparent focus:outline-none"
-              onClick={() => keyClick('0')}
-            >
-              0
-            </button>
-
-            <Button
-              label="확인"
-              size="small"
-              color="orange"
-              onClick={() => setKeyOpen(false)}
-              className="text-black"
-            />
-          </div>
-        </div>
+        <Keypad
+          onNumberClick={keyClick}
+          onDeleteClick={handleDelete}
+          onConfirmClick={() => setKeyOpen(false)}
+        />
       )}
 
       {/* 바텀탭 */}
