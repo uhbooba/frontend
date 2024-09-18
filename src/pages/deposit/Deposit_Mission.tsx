@@ -7,8 +7,9 @@ const DepositMission = () => {
   const navigate = useNavigate();
 
   const GoExplain = () => {
-    navigate('/explain');
+    navigate('/deposit/explain');
   };
+  
   return (
     <div className='bg-yellow-100'>
       {/* 상단바 */}

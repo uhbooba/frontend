@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
-// import XButton from '@/components/common/XButton';
-// import BackButton from '@/components/common/BackButton';
-// import CheckButton from '@/components/common/CheckButton';
-// import Layout from '@/components/common/layouts/Layout';
+
 
 const ButtonConfig: ButtonConfigType[] = [
   {
@@ -17,6 +14,20 @@ const ButtonConfig: ButtonConfigType[] = [
   {
     label: '적금 가입',
     route: '/savings',
+    size: 'small',
+    color: 'orange',
+    className: 'flex-grow',
+  },
+  {
+    label: '예금 중도 해지',
+    route: '/cancle/deposit/explain',
+    size: 'small',
+    color: 'orange',
+    className: 'flex-grow',
+  },
+  {
+    label: '적금 중도 해지',
+    route: '/cancle/savings/explain',
     size: 'small',
     color: 'orange',
     className: 'flex-grow',

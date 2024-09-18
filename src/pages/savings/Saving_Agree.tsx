@@ -7,11 +7,11 @@ import NoModal from '@/components/modals/No_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
-import { isModalOpenAtom, warningModalAtom, agree1Atom, agree2Atom, agree3Atom } from '@/atoms/deposit/depositAgreeAtoms';
+import { isModalOpenAtom, warningModalAtom, agree1Atom, agree2Atom, agree3Atom } from '@/atoms/savings/savingsAgreeAtoms';
 import { useEffect } from 'react';
 
 
-const DepositAgree = () => {
+const SavingsAgree = () => {
   const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
   const [warningModal, setWarningModal] = useAtom(warningModalAtom);
   const [agree1, setAgree1] = useAtom(agree1Atom);
@@ -42,7 +42,7 @@ const DepositAgree = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/deposit/signup');
+    navigate('/savings/signup');
   };
 
   const ModalClose = () => {
@@ -53,7 +53,7 @@ const DepositAgree = () => {
   return (
     <div>
       {/* 상단바 */}
-      <XTopBar title='예금가입 - 동의페이지' />
+      <XTopBar title='적금가입 - 동의페이지' />
 
       <div className='mt-2 mb-6'><LevelBar currentLevel={1} totalLevel={5}/></div>
 
@@ -163,4 +163,4 @@ const DepositAgree = () => {
   );
 };
 
-export default DepositAgree;
+export default SavingsAgree;
