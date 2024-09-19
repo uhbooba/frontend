@@ -2,6 +2,7 @@ import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import AccountHistory from '@/components/common/AccountHistory';
 
 
 const AccountCheck = () => {
@@ -61,15 +62,19 @@ const AccountCheck = () => {
                 <div className='mt-[5px] mx-[10px] flex justify-between font-bold text-[24px]'>
                     <div>전체 기간</div>
                     <div>전체</div>
-                    <input type='checkbox' id='filter' hidden/>
+                    {/* 임시로 select문으로 해두고 골자만 짜두고 토클로 바꿀 예정 */}
+                    <select name="" id="">
+                        <option>최신순▼</option>
+                        <option>오래된순▲</option>
+                    </select>
+                    {/* <input type='checkbox' id='filter' hidden/>
                     <label htmlFor="filter" className=''>
                         <span className=''>최신순▼</span>
                         <span className=''>오래된순▲</span>
-                    </label>
-                    {/* <select name="" id="">
-                        <option>최신순▼</option>
-                        <option>오래된순▲</option>
-                    </select> */}
+                    </label> */}
+                </div>
+                <div>
+                    <AccountHistory />
                 </div>
             </div>
             <div className='fixed bottom-0 left-0 w-full'>

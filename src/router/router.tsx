@@ -23,7 +23,7 @@ import CancelSavingsSuccess from '@/pages/savingsCancel/Cancel_savings_Success';
 import SavingsAgree from '@/pages/savings/Savings_Agree';
 import SavingsMoney from '@/pages/savings/Savings_Money';
 import SavingsAccount from '@/pages/savings/Savings_Account';
-import SavingsSignup from '@/pages/savings/Savings_Signup';
+import SavingsSignup from '@/pages/savings/savings_Signup';
 import SavingsProduct from '@/pages/savings/Savings_Product';
 import Savingspassword from '@/pages/savings/Savings_Password';
 import SavingsSuccess from '@/pages/savings/Savings_Success';
@@ -47,6 +47,22 @@ const router = createBrowserRouter([
       { path: 'deposit/product', element: <DepositProduct /> },
       { path: 'deposit/password', element: <DepositPassword /> },
       { path: 'deposit/success', element: <DepositSuccess /> },
+      { path: 'deposit/success2', element: <DepositSuccess2 /> },
+      { path: 'savings/agree', element: <SavingsAgree /> },
+      { path: 'savings/signup', element: <SavingsSignup /> },
+      { path: 'savings/money', element: <SavingsMoney /> },
+      { path: 'savings/account', element: <SavingsAccount /> },
+      { path: 'savings/product', element: <SavingsProduct /> },
+      { path: 'savings/password', element: <Savingspassword /> },
+      { path: 'savings/success', element: <SavingsSuccess /> },
+      { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
+      { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
+      { path: 'cancel/deposit/password', element: <CancelDepositPassword /> },
+      { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
+      { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
+      { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
+      { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
+      { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       { path: 'account/check', element: <AccountCheck /> },
     ],
   },
