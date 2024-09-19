@@ -5,11 +5,11 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
-import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
 
-const DepositAccount = () => {
+const SavingsAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const DepositAccount = () => {
     if (selectAccount === null) {
       setIsModalOpen(true);
     } else {
-      navigate('/deposit/product');
+      navigate('/savings/product');
     }
   };
 
@@ -41,7 +41,7 @@ const DepositAccount = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 출금 계좌' />
+      <XTopBar title='적금 가입' />
 
       <div className='mb-12 mt-2'>
         <LevelBar currentLevel={3} totalLevel={5} />
@@ -109,4 +109,4 @@ const DepositAccount = () => {
   );
 };
 
-export default DepositAccount;
+export default SavingsAccount;
