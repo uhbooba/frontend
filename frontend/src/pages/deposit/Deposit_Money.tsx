@@ -13,7 +13,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
   maturityDateAtom,
-} from '@/atoms/deposit/depoistAtoms';
+} from '@/atoms/deposit/depositAtoms';
 import { useEffect, useState } from 'react';
 
 const DepositMoney = () => {
@@ -28,20 +28,17 @@ const DepositMoney = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    resetState();
+  }, []);
+
+  const resetState = () => {
     setSelectMoney('');
     setSelectPeriod('');
     setKeyOpen(false);
     setAmountBtnColor('');
     setPeriodBtnColor('');
     setIsModalOpen(false);
-  }, [
-    setSelectMoney,
-    setSelectPeriod,
-    setKeyOpen,
-    setAmountBtnColor,
-    setPeriodBtnColor,
-    setIsModalOpen,
-  ]);
+  };
 
   // 뒤로가기
   const GoBack = () => {

@@ -20,14 +20,14 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '예금 중도 해지',
-    route: '/cancle/deposit/explain',
+    route: '/cancel/deposit/explain',
     size: 'small',
     color: 'orange',
     className: 'flex-grow',
   },
   {
     label: '적금 중도 해지',
-    route: '/cancle/savings/explain',
+    route: '/cancel/savings/explain',
     size: 'small',
     color: 'orange',
     className: 'flex-grow',

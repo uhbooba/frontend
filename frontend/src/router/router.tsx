@@ -12,14 +12,14 @@ import DepositProduct from '@/pages/deposit/Deposit_Product';
 import DepositAccount from '@/pages/deposit/Deposit_Account';
 import DepositPassword from '@/pages/deposit/Deposit_Password';
 import DepositSuccess from '@/pages/deposit/Deposit_Success';
-import CancleDepositExplain from '@/pages/depositCancle/Cancle_Deposit_Explain';
-import CancleDepositProduct from '@/pages/depositCancle/Cancle_Deposit_Product';
-import CancleDepositPassword from '@/pages/depositCancle/Cancle_Deposit_Password';
-import CancleDepositSuccess from '@/pages/depositCancle/Cancle_Deposit_Success';
-import CancleSavingsExplain from '@/pages/savingCancle/Cancle_savings_Explain';
-import CancleSavingsProduct from '@/pages/savingCancle/Cancle_savings_Product';
-import CancleSavingsPassword from '@/pages/savingCancle/Cancle_savings_Password';
-import CancleSavingsSuccess from '@/pages/savingCancle/Cancle_savings_Success';
+import CancelDepositExplain from '@/pages/depositCancel/Cancel_Deposit_Explain';
+import CancelDepositProduct from '@/pages/depositCancel/Cancel_Deposit_Product';
+import CancelDepositPassword from '@/pages/depositCancel/Cancel_Deposit_Password';
+import CancelDepositSuccess from '@/pages/depositCancel/Cancel_Deposit_Success';
+import CancelSavingsExplain from '@/pages/savingCancel/Cancel_savings_Explain';
+import CancelSavingsProduct from '@/pages/savingCancel/Cancel_savings_Product';
+import CancelSavingsPassword from '@/pages/savingCancel/Cancel_savings_Password';
+import CancelSavingsSuccess from '@/pages/savingCancel/Cancel_savings_Success';
 import SavingsAgree from '@/pages/savings/Savings_Agree';
 import SavingsMoney from '@/pages/savings/Savings_Money';
 import SavingsAccount from '@/pages/savings/Savings_Account';
@@ -54,14 +54,14 @@ const router = createBrowserRouter([
       { path: 'savings/product', element: <SavingsProduct /> },
       { path: 'savings/password', element: <Savingspassword /> },
       { path: 'savings/success', element: <SavingsSuccess /> },
-      { path: 'cancle/deposit/explain', element: <CancleDepositExplain /> },
-      { path: 'cancle/deposit/product', element: <CancleDepositProduct /> },
-      { path: 'cancle/deposit/password', element: <CancleDepositPassword /> },
-      { path: 'cancle/deposit/success', element: <CancleDepositSuccess /> },
-      { path: 'cancle/savings/explain', element: <CancleSavingsExplain /> },
-      { path: 'cancle/savings/product', element: <CancleSavingsProduct /> },
-      { path: 'cancle/savings/password', element: <CancleSavingsPassword /> },
-      { path: 'cancle/savings/success', element: <CancleSavingsSuccess /> },
+      { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
+      { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
+      { path: 'cancel/deposit/password', element: <CancelDepositPassword /> },
+      { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
+      { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
+      { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
+      { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
+      { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
     ],
   },
 ]);

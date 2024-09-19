@@ -9,7 +9,7 @@ import { useAtom } from 'jotai';
 import {
   maturityDateAtom,
   selectMoneyAtom,
-} from '@/atoms/deposit/depoistAtoms';
+} from '@/atoms/deposit/depositAtoms';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const DepositProduct = () => {
           <div className='flex'>
             <div className='mr-20 text-left'>
               <span className='text-2xl text-gray-500'>가입금액</span>
-              <div className='mt-2 text-xl font-bold'>{selectMoney}</div>
+              <div className='mt-2 text-xl font-bold'>{selectMoney} 원</div>
             </div>
             <div className='text-left'>
               <span className='text-2xl text-gray-500'>예상 이자</span>

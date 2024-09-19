@@ -5,50 +5,38 @@ import BigModal from '@/components/modals/Big_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
-import { useAtom } from 'jotai';
-import {
-  isModalOpenAtom,
-  nameAtom,
-  idNumberAtom,
-  phoneNumberAtom,
-  accountNumberAtom,
-  errorsAtom,
-} from '@/atoms/deposit/depositSignupAtoms';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
-import { checkAtom } from '@/atoms/savings/savingsSignupAtom';
+import { useAtom } from 'jotai';
+import { checkAtom } from '@/atoms/savings/savingsAtoms';
 
 const SavingsSignup = () => {
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
-  const [name, setName] = useAtom(nameAtom);
-  const [idNumber, setIdNumber] = useAtom(idNumberAtom);
-  const [phoneNumber, setPhoneNumber] = useAtom(phoneNumberAtom);
-  const [accountNumber, setAccountNumber] = useAtom(accountNumberAtom);
-  const [errors, setErrors] = useAtom(errorsAtom);
   const [check, setCheck] = useAtom(checkAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errors, setErrors] = useState({
+    name: '',
+    idNumber: '',
+    phoneNumber: '',
+    accountNumber: '',
+  });
 
   useEffect(() => {
     return () => {
+      setCheck('');
       setName('');
       setIdNumber('');
       setPhoneNumber('');
-      setAccountNumber('');
       setErrors({
         name: '',
         idNumber: '',
         phoneNumber: '',
         accountNumber: '',
       });
-      setCheck('');
     };
-  }, [
-    setName,
-    setIdNumber,
-    setPhoneNumber,
-    setAccountNumber,
-    setErrors,
-    setCheck,
-  ]);
+  }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
 
   const navigate = useNavigate();
 
@@ -72,10 +60,6 @@ const SavingsSignup = () => {
     }
     if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
       newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!accountNumber || !/^\d+$/.test(accountNumber)) {
-      newErrors.accountNumber = '숫자만 입력 가능합니다.';
       isValid = false;
     }
 
@@ -146,19 +130,6 @@ const SavingsSignup = () => {
         />
         {errors.phoneNumber && (
           <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
-        )}
-
-        <Input
-          label='계좌번호'
-          variant='full'
-          placeholder='계좌번호를 입력하세요'
-          value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
-          isError={!!errors.accountNumber}
-          className='mb-4'
-        />
-        {errors.accountNumber && (
-          <p className='mb-4 text-red-500'>{errors.accountNumber}</p>
         )}
       </div>
 
