@@ -8,7 +8,7 @@ import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 
-const DepositAgree = () => {
+const SavingsAgree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [agree1, setAgree1] = useState<string>('');
@@ -39,7 +39,7 @@ const DepositAgree = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/deposit/signup');
+    navigate('/savings/signup');
   };
 
   const ModalClose = () => {
@@ -50,7 +50,7 @@ const DepositAgree = () => {
   return (
     <div>
       {/* 상단바 */}
-      <XTopBar title='예금가입 - 동의페이지' />
+      <XTopBar title='적금가입 - 동의페이지' />
 
       <div className='mb-6 mt-2'>
         <LevelBar currentLevel={1} totalLevel={5} />
@@ -162,4 +162,4 @@ const DepositAgree = () => {
   );
 };
 
-export default DepositAgree;
+export default SavingsAgree;
