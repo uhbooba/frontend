@@ -12,20 +12,22 @@ import { useAtom } from 'jotai';
 import {
   selectMoneyAtom,
   selectPeriodAtom,
-  maturityDateAtom,
-} from '@/atoms/deposit/depoistAtoms';
-import { useEffect, useState } from 'react';
+  keyOpenAtom,
+  amountBtnColorAtom,
+  periodBtnColorAtom,
+  isModalOpenAtom,
+} from '@/atoms/deposit/depositMoneyAtoms';
+import { useEffect } from 'react';
 
-const DepositMoney = () => {
+const SavingsMoney = () => {
   const navigate = useNavigate();
 
   const [selectMoney, setSelectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod, setSelectPeriod] = useAtom(selectPeriodAtom);
-  const [maturityDate, setMaturityDate] = useAtom(maturityDateAtom);
-  const [keyOpen, setKeyOpen] = useState(false);
-  const [amountBtnColor, setAmountBtnColor] = useState('');
-  const [periodBtnColor, setPeriodBtnColor] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [keyOpen, setKeyOpen] = useAtom(keyOpenAtom);
+  const [amountBtnColor, setAmountBtnColor] = useAtom(amountBtnColorAtom);
+  const [periodBtnColor, setPeriodBtnColor] = useAtom(periodBtnColorAtom);
+  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
 
   useEffect(() => {
     setSelectMoney('');
@@ -54,7 +56,7 @@ const DepositMoney = () => {
     if (!selectMoney || !selectPeriod) {
       setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
     } else {
-      navigate('/deposit/account');
+      navigate('/savings/account');
     }
   };
 
@@ -119,13 +121,8 @@ const DepositMoney = () => {
     });
   };
 
-  // 금액과 기간 선택 시 만기일 업데이트
-  useEffect(() => {
-    if (selectPeriod) {
-      const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
-      setMaturityDate(calculatedMaturityDate); // maturityDateAtom에 저장
-    }
-  }, [selectPeriod, setMaturityDate]);
+  // 밑에서 나의 만기일에 보여줄 변수 (사용자가 선택한 개월 + 현재날짜 더한 값임))
+  const maturityDate = selectPeriod ? calculateMaturityDate(selectPeriod) : '';
 
   // 금액 직접 입력할 때 천단위 , 넣어주는 함수
   const formatMoney = (value: string) => {
@@ -136,7 +133,7 @@ const DepositMoney = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 상품 금액' />
+      <XTopBar title='적금 가입' />
 
       <div className='mb-12 mt-2'>
         <LevelBar currentLevel={3} totalLevel={5} />
@@ -219,4 +216,4 @@ const DepositMoney = () => {
   );
 };
 
-export default DepositMoney;
+export default SavingsMoney;

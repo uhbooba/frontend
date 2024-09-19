@@ -20,9 +20,14 @@ import CancleSavingsExplain from '@/pages/savingCancle/Cancle_savings_Explain';
 import CancleSavingsProduct from '@/pages/savingCancle/Cancle_savings_Product';
 import CancleSavingsPassword from '@/pages/savingCancle/Cancle_savings_Password';
 import CancleSavingsSuccess from '@/pages/savingCancle/Cancle_savings_Success';
-import SavingsAgree from '@/pages/savings/Saving_Agree';
-import SavingsSignup from '@/pages/savings/savings_Signup';
-
+import SavingsAgree from '@/pages/savings/Savings_Agree';
+import SavingsMoney from '@/pages/savings/Savings_Money';
+import SavingsAccount from '@/pages/savings/Savings_Account';
+import SavingsSignup from '@/pages/savings/Savings_Signup';
+import SavingsProduct from '@/pages/savings/Savings_Product';
+import Savingspassword from '@/pages/savings/Savings_Password';
+import SavingsSuccess from '@/pages/savings/Savings_Success';
+import DepositSuccess2 from '@/pages/deposit/Deposit_Success2';
 
 const router = createBrowserRouter([
   {
@@ -41,8 +46,14 @@ const router = createBrowserRouter([
       { path: 'deposit/product', element: <DepositProduct /> },
       { path: 'deposit/password', element: <DepositPassword /> },
       { path: 'deposit/success', element: <DepositSuccess /> },
+      { path: 'deposit/success2', element: <DepositSuccess2 /> },
       { path: 'savings/agree', element: <SavingsAgree /> },
       { path: 'savings/signup', element: <SavingsSignup /> },
+      { path: 'savings/money', element: <SavingsMoney /> },
+      { path: 'savings/account', element: <SavingsAccount /> },
+      { path: 'savings/product', element: <SavingsProduct /> },
+      { path: 'savings/password', element: <Savingspassword /> },
+      { path: 'savings/success', element: <SavingsSuccess /> },
       { path: 'cancle/deposit/explain', element: <CancleDepositExplain /> },
       { path: 'cancle/deposit/product', element: <CancleDepositProduct /> },
       { path: 'cancle/deposit/password', element: <CancleDepositPassword /> },
