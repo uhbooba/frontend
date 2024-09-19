@@ -6,11 +6,11 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className='bg-black'>
-      <div className='bg-white max-w-[360px] mx-auto h-[calc(100vh-108px)] pb-[calc(56px+2rem)] overflow-hidden bg-gray'>
-          {children}
+    <div className='bg-black min-h-screen flex justify-center'>
+      <div className='bg-white relative w-full max-w-[430px] h-full max-h-[950px] pb-[calc(56px+2rem)] overflow-y-auto'>
+        {children}
       </div>
-    </div> 
+    </div>
   );
 };
 
