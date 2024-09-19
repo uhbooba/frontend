@@ -41,9 +41,11 @@ const DepositProduct = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
-      <div className='mb-6 mt-2'>
+      <div className='mb-6 mt-20'>
         <LevelBar currentLevel={4} totalLevel={5} />
       </div>
       <div className='p-4'>

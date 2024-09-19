@@ -41,9 +41,11 @@ const DepositAccount = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 출금 계좌' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
-      <div className='mb-12 mt-2'>
+      <div className='mb-12 mt-20'>
         <LevelBar currentLevel={3} totalLevel={5} />
       </div>
 
