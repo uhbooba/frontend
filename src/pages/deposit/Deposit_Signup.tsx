@@ -5,32 +5,32 @@ import BigModal from '@/components/modals/Big_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
-import { useAtom } from 'jotai';
-import { isModalOpenAtom, nameAtom, idNumberAtom, phoneNumberAtom, accountNumberAtom, errorsAtom } from '@/atoms/deposit/depositSignupAtoms';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 
 const DepositSignup = () => {
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
-  const [name, setName] = useAtom(nameAtom);
-  const [idNumber, setIdNumber] = useAtom(idNumberAtom);
-  const [phoneNumber, setPhoneNumber] = useAtom(phoneNumberAtom);
-  const [accountNumber, setAccountNumber] = useAtom(accountNumberAtom);
-  const [errors, setErrors] = useAtom(errorsAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [idNumber, setIdNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errors, setErrors] = useState({
+    name: '',
+    idNumber: '',
+    phoneNumber: '',
+    accountNumber: '',
+  });
 
   useEffect(() => {
     setIsModalOpen(false);
     setName('');
     setIdNumber('');
     setPhoneNumber('');
-    setAccountNumber('');
     setErrors({
       name: '',
       idNumber: '',
       phoneNumber: '',
       accountNumber: '',
     });
-  }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setAccountNumber, setErrors]);
+  }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setErrors]);
 
   const navigate = useNavigate();
 
@@ -54,10 +54,6 @@ const DepositSignup = () => {
     }
     if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
       newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!accountNumber || !/^\d+$/.test(accountNumber)) {
-      newErrors.accountNumber = '숫자만 입력 가능합니다.';
       isValid = false;
     }
 
@@ -88,7 +84,9 @@ const DepositSignup = () => {
     <div className='w-full overflow-x-hidden'>
       <XTopBar title='예금 가입 - 개인정보' />
 
-      <div className='mt-2'><LevelBar currentLevel={2} totalLevel={5}/></div>
+      <div className='mt-2'>
+        <LevelBar currentLevel={2} totalLevel={5} />
+      </div>
 
       <div className='ml-4 mr-4 mt-12'>
         <Input
@@ -128,7 +126,7 @@ const DepositSignup = () => {
           <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
         )}
 
-        <Input
+        {/* <Input
           label='계좌번호'
           variant='full'
           placeholder='계좌번호를 입력하세요'
@@ -139,7 +137,7 @@ const DepositSignup = () => {
         />
         {errors.accountNumber && (
           <p className='mb-4 text-red-500'>{errors.accountNumber}</p>
-        )}
+        )} */}
       </div>
 
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
@@ -179,7 +177,7 @@ const DepositSignup = () => {
           </>
         }
       />
-      
+
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>

@@ -1,22 +1,19 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import { useAtom } from 'jotai';
 import BigModal from '@/components/modals/Big_Modal';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/No_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
-import { isModalOpenAtom, warningModalAtom, agree1Atom, agree2Atom, agree3Atom } from '@/atoms/deposit/depositAgreeAtoms';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 
 const DepositAgree = () => {
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
-  const [warningModal, setWarningModal] = useAtom(warningModalAtom);
-  const [agree1, setAgree1] = useAtom(agree1Atom);
-  const [agree2, setAgree2] = useAtom(agree2Atom);
-  const [agree3, setAgree3] = useAtom(agree3Atom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [warningModal, setWarningModal] = useState(false);
+  const [agree1, setAgree1] = useState<string>('');
+  const [agree2, setAgree2] = useState<string>('');
+  const [agree3, setAgree3] = useState<string>('');
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -55,7 +52,9 @@ const DepositAgree = () => {
       {/* 상단바 */}
       <XTopBar title='예금가입 - 동의페이지' />
 
-      <div className='mt-2 mb-6'><LevelBar currentLevel={1} totalLevel={5}/></div>
+      <div className='mb-6 mt-2'>
+        <LevelBar currentLevel={1} totalLevel={5} />
+      </div>
 
       <div className='m-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 수집 및 이용 동의서</p>
