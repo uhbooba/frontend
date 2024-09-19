@@ -11,6 +11,7 @@ import DepositProduct from '@/pages/deposit/Deposit_Product';
 import DepositAccount from '@/pages/deposit/Deposit_account';
 import DepositPassword from '@/pages/deposit/Deposit_Password';
 import DepositSuccess from '@/pages/deposit/Deposit_Success';
+import AccountCheck from '@/pages/account/AccountCheck';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: 'deposit/product', element: <DepositProduct /> },
       { path: 'deposit/password', element: <DepositPassword /> },
       { path: 'deposit/success', element: <DepositSuccess /> },
+      { path: 'account/check', element: <AccountCheck /> },
     ],
   },
 ]);
