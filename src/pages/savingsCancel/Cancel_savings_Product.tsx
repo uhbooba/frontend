@@ -10,7 +10,7 @@ import {
   selectAccountAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-} from '@/atoms/savings/savingsAtoms';
+} from '@/atoms/savings/savingsDataAtoms';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();

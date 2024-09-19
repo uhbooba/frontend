@@ -9,8 +9,8 @@ import { useAtom } from 'jotai';
 import {
   maturityDateAtom,
   selectMoneyAtom,
-} from '@/atoms/savings/savingsAtoms';
-import { selectPeriodAtom } from '@/atoms/savings/savingsAtoms';
+  selectPeriodAtom,
+} from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();

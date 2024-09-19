@@ -7,7 +7,7 @@ import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/savings/savingsAtoms';
+import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsAccount = () => {
   const navigate = useNavigate();

@@ -9,7 +9,7 @@ import {
   selectAccountAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-} from '@/atoms/deposit/depositAtoms';
+} from '@/atoms/deposit/depositDataAtoms';
 import { useAtom } from 'jotai';
 
 const CancelDepositProduct = () => {

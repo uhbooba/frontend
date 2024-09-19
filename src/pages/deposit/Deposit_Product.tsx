@@ -9,12 +9,14 @@ import { useAtom } from 'jotai';
 import {
   maturityDateAtom,
   selectMoneyAtom,
-} from '@/atoms/deposit/depositAtoms';
+  selectPeriodAtom,
+} from '@/atoms/deposit/depositDataAtoms';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
   const [maturityDate] = useAtom(maturityDateAtom);
   const [selectMoney] = useAtom(selectMoneyAtom);
+  const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const DepositProduct = () => {
             </div>
             <div>
               <span className='text-2xl text-gray-500'>약정 기간</span>
-              <div className='mt-2 text-xl font-bold'>24개월</div>
+              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
             </div>
           </div>
         </div>
