@@ -8,15 +8,15 @@ import NoModal from '@/components/modals/No_Modal';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import Keypad from '@/components/common/KeyPad';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
+  maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-  maturityDateAtom,
-} from '@/atoms/deposit/depositDataAtoms';
-import { useEffect, useState } from 'react';
+} from '@/atoms/savings/savingsDataAtoms';
 
-const DepositMoney = () => {
+const SavingsMoney = () => {
   const navigate = useNavigate();
 
   const [selectMoney, setSelectMoney] = useAtom(selectMoneyAtom);
@@ -50,8 +50,9 @@ const DepositMoney = () => {
     // 금액과 기간 선택 여부 확인
     if (!selectMoney || !selectPeriod) {
       setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
+      console.log(selectPeriod);
     } else {
-      navigate('/deposit/account');
+      navigate('/savings/account');
     }
   };
 
@@ -60,7 +61,7 @@ const DepositMoney = () => {
     setIsModalOpen(false);
   };
 
-  // 얼마로 시작할까요? 버튼 클릭 함수
+  // 얼마씩 적금할까요? 버튼 클릭 함수
   const amountClick = (amount: string) => {
     setAmountBtnColor(amount);
 
@@ -116,7 +117,6 @@ const DepositMoney = () => {
     });
   };
 
-  // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {
     if (selectPeriod) {
       const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
@@ -133,7 +133,7 @@ const DepositMoney = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 상품 금액' />
+      <XTopBar title='적금 가입' />
 
       <div className='mb-12 mt-2'>
         <LevelBar currentLevel={3} totalLevel={5} />
@@ -141,7 +141,7 @@ const DepositMoney = () => {
 
       <div>
         <div className='pb-4 pl-4 text-3xl font-bold'>
-          <span>얼마로 시작할까요?</span>
+          <span>얼마씩 적금할까요?</span>
         </div>
 
         <MoneyInput
@@ -216,4 +216,4 @@ const DepositMoney = () => {
   );
 };
 
-export default DepositMoney;
+export default SavingsMoney;
