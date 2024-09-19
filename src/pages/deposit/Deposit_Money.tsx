@@ -133,9 +133,11 @@ const DepositMoney = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 상품 금액' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
-      <div className='mb-12 mt-2'>
+      <div className='mb-12 mt-20'>
         <LevelBar currentLevel={3} totalLevel={5} />
       </div>
 
@@ -185,9 +187,21 @@ const DepositMoney = () => {
         </div>
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
-        <Button label='이전' size='medium' color='orange' onClick={GoBack} />
-        <Button label='다음' size='medium' color='orange' onClick={GoNext} />
+      <div className='mb-20 mt-8 flex w-full items-center justify-between p-4'>
+        <Button
+          label='이전'
+          size='medium'
+          color='orange'
+          onClick={GoBack}
+          className='mr-2'
+        />
+        <Button
+          label='다음'
+          size='medium'
+          color='orange'
+          onClick={GoNext}
+          className='ml-2'
+        />
       </div>
 
       {/* 키패드 */}

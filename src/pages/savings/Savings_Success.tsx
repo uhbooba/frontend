@@ -19,13 +19,13 @@ const SavingsSuccess = () => {
           // backgroundRepeat: "no-repeat",
         }}
       >
-        <div className='z-10 mt-4 text-center'>
+        <div className='mt-4 text-center'>
           <p className='text-5xl font-bold'>적금 상품</p>
           <p className='mt-2 text-5xl font-bold'>가입 성공</p>
         </div>
 
         {/* 말풍선 부분 */}
-        <div className='relative z-10 mt-24 w-[280px]'>
+        <div className='relative mt-24 w-[280px]'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
             <p className='text-start text-xl text-black'>
               적금 상품 가입 완료!
@@ -51,25 +51,23 @@ const SavingsSuccess = () => {
           </div>
         </div>
 
-        <div className='z-10 mt-auto'>
-          {/* 돼지 이미지 */}
-          <div className='mb-4 flex justify-end'>
-            <img
-              src='/assets/images/finish_j_pig.png'
-              alt='Pig'
-              className='h-60 w-60'
-            />
-          </div>
+        {/* 돼지 이미지 */}
+        <div className='mb-4 flex justify-end'>
+          <img
+            src='/assets/images/finish_j_pig.png'
+            alt='Pig'
+            className='h-60 w-60'
+          />
+        </div>
 
-          {/* 버튼 */}
-          <div className='mb-24'>
-            <Button
-              label='나의 계좌로 이동하기'
-              size='large'
-              color='orange'
-              className='w-full py-4'
-            />
-          </div>
+        {/* 버튼 */}
+        <div className='mb-24'>
+          <Button
+            label='나의 계좌로 이동하기'
+            size='large'
+            color='orange'
+            className='w-full py-4'
+          />
         </div>
       </div>
 
