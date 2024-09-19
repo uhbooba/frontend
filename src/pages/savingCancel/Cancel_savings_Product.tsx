@@ -5,10 +5,19 @@ import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import BigModal from '@/components/modals/Big_Modal';
 import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import {
+  selectAccountAtom,
+  selectMoneyAtom,
+  selectPeriodAtom,
+} from '@/atoms/savings/savingsAtoms';
 
-const CancleDepositProduct = () => {
+const CancelSavingsProduct = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectAccount] = useAtom(selectAccountAtom);
+  const [selectMoney] = useAtom(selectMoneyAtom);
+  const [selectPeriod] = useAtom(selectPeriodAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -19,7 +28,7 @@ const CancleDepositProduct = () => {
   };
 
   const GoNext = () => {
-    navigate('/cancle/deposit/password');
+    navigate('/cancel/savings/password');
   };
 
   const openModal = () => {
@@ -32,37 +41,51 @@ const CancleDepositProduct = () => {
 
   return (
     <div>
-      <XTopBar title='예금 중도해지' />
+      <XTopBar title='적금 중도해지' />
 
-      <div className='mb-6 mt-4'>
+      <div className='mb-4 mt-4'>
         <LevelBar currentLevel={1} totalLevel={2} />
       </div>
+
       <div className='p-4'>
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
-            <span className='text-xl font-bold'>정기예금 2번 상품</span>
+            <span className='text-xl font-bold'>정기적금 2번 상품</span>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
-          <div className='mt-2 text-xl font-bold'>111-222-333333</div>
+          <div className='mt-2 text-xl font-bold'>{selectAccount}</div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <div className='grid grid-cols-3 text-start'>
             <div>
-              <span className='text-2xl text-gray-500'>연 이자율</span>
-              <div className='mt-2 text-xl font-bold'>10%</div>
+              <span className='text-2xl text-gray-500'>이자율</span>
+              <div className='mt-2 text-xl font-bold'>5%</div>
             </div>
             <div>
-              <span className='text-2xl text-gray-500'>가입 금액</span>
-              <div className='mt-2 text-xl font-bold'>200 만 원</div>
+              <span className='text-2xl text-gray-500'>월 납입액</span>
+              <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>약정 기간</span>
-              <div className='mt-2 text-xl font-bold'>24개월</div>
+              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className='border-b border-gray-300 py-4'>
+          <div className='flex space-x-20'>
+            <div>
+              <span className='text-2xl text-gray-500'>납입 금액</span>
+              <div className='mt-2 text-xl font-bold'>660 만 원</div>
+            </div>
+            <div className=''>
+              <span className='text-2xl text-gray-500'>납입 개월</span>
+              <div className='mt-2 text-xl font-bold'>11개월</div>
             </div>
           </div>
         </div>
@@ -75,13 +98,14 @@ const CancleDepositProduct = () => {
             </div>
             <div className='ml-12 text-left'>
               <span className='text-2xl text-gray-500'>이자 금액</span>
-              <div className='mt-2 text-xl font-bold'>13만 8,750원</div>
+              <div className='mt-2 text-xl font-bold'>2,750원</div>
             </div>
           </div>
         </div>
+
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>받을 금액</span>
-          <div className='mt-2 text-xl font-bold'>213 만 8,750원</div>
+          <div className='mt-2 text-xl font-bold'>660만 2,750원</div>
         </div>
 
         <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
@@ -111,4 +135,4 @@ const CancleDepositProduct = () => {
   );
 };
 
-export default CancleDepositProduct;
+export default CancelSavingsProduct;

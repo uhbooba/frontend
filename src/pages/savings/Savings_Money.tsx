@@ -8,42 +8,37 @@ import NoModal from '@/components/modals/No_Modal';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import Keypad from '@/components/common/KeyPad';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
+  maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-  keyOpenAtom,
-  amountBtnColorAtom,
-  periodBtnColorAtom,
-  isModalOpenAtom,
-} from '@/atoms/deposit/depositMoneyAtoms';
-import { useEffect } from 'react';
+} from '@/atoms/savings/savingsAtoms';
 
 const SavingsMoney = () => {
   const navigate = useNavigate();
 
   const [selectMoney, setSelectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod, setSelectPeriod] = useAtom(selectPeriodAtom);
-  const [keyOpen, setKeyOpen] = useAtom(keyOpenAtom);
-  const [amountBtnColor, setAmountBtnColor] = useAtom(amountBtnColorAtom);
-  const [periodBtnColor, setPeriodBtnColor] = useAtom(periodBtnColorAtom);
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
+  const [maturityDate, setMaturityDate] = useAtom(maturityDateAtom);
+  const [keyOpen, setKeyOpen] = useState(false);
+  const [amountBtnColor, setAmountBtnColor] = useState('');
+  const [periodBtnColor, setPeriodBtnColor] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    resetState();
+  }, []);
+
+  const resetState = () => {
     setSelectMoney('');
     setSelectPeriod('');
     setKeyOpen(false);
     setAmountBtnColor('');
     setPeriodBtnColor('');
     setIsModalOpen(false);
-  }, [
-    setSelectMoney,
-    setSelectPeriod,
-    setKeyOpen,
-    setAmountBtnColor,
-    setPeriodBtnColor,
-    setIsModalOpen,
-  ]);
+  };
 
   // 뒤로가기
   const GoBack = () => {
@@ -55,6 +50,7 @@ const SavingsMoney = () => {
     // 금액과 기간 선택 여부 확인
     if (!selectMoney || !selectPeriod) {
       setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
+      console.log(selectPeriod);
     } else {
       navigate('/savings/account');
     }
@@ -65,7 +61,7 @@ const SavingsMoney = () => {
     setIsModalOpen(false);
   };
 
-  // 얼마로 시작할까요? 버튼 클릭 함수
+  // 얼마씩 적금할까요? 버튼 클릭 함수
   const amountClick = (amount: string) => {
     setAmountBtnColor(amount);
 
@@ -121,8 +117,12 @@ const SavingsMoney = () => {
     });
   };
 
-  // 밑에서 나의 만기일에 보여줄 변수 (사용자가 선택한 개월 + 현재날짜 더한 값임))
-  const maturityDate = selectPeriod ? calculateMaturityDate(selectPeriod) : '';
+  useEffect(() => {
+    if (selectPeriod) {
+      const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
+      setMaturityDate(calculatedMaturityDate); // maturityDateAtom에 저장
+    }
+  }, [selectPeriod, setMaturityDate]);
 
   // 금액 직접 입력할 때 천단위 , 넣어주는 함수
   const formatMoney = (value: string) => {
@@ -141,7 +141,7 @@ const SavingsMoney = () => {
 
       <div>
         <div className='pb-4 pl-4 text-3xl font-bold'>
-          <span>얼마로 시작할까요?</span>
+          <span>얼마씩 적금할까요?</span>
         </div>
 
         <MoneyInput

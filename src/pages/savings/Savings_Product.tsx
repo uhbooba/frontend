@@ -4,13 +4,20 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import BigModal from '@/components/modals/Big_Modal';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { isModalOpenAtom } from '@/atoms/deposit/depositProductAtoms';
-import { useEffect } from 'react';
+import {
+  maturityDateAtom,
+  selectMoneyAtom,
+} from '@/atoms/savings/savingsAtoms';
+import { selectPeriodAtom } from '@/atoms/savings/savingsAtoms';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
+  const [maturityDate] = useAtom(maturityDateAtom);
+  const [selectMoney] = useAtom(selectMoneyAtom);
+  const [selectPeriod] = useAtom(selectPeriodAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -58,11 +65,11 @@ const SavingsProduct = () => {
             </div>
             <div>
               <span className='text-2xl text-gray-500'>월 납입액</span>
-              <div className='mt-2 text-xl font-bold'>60 만 원</div>
+              <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>약정 기간</span>
-              <div className='mt-2 text-xl font-bold'>36개월</div>
+              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
             </div>
           </div>
         </div>
@@ -70,7 +77,7 @@ const SavingsProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <div>
             <span className='text-2xl text-gray-500'>만기일</span>
-            <div className='mt-2 text-xl font-bold'>2025.09.06</div>
+            <div className='mt-2 text-xl font-bold'>{maturityDate}</div>
           </div>
         </div>
 

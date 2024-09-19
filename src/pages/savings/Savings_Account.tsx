@@ -5,17 +5,14 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import {
-  selectAccountAtom,
-  isModalOpenAtom,
-} from '@/atoms/deposit/depositAccountAtoms';
-import { useEffect } from 'react';
+import { selectAccountAtom } from '@/atoms/savings/savingsAtoms';
 
 const SavingsAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
-  const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setSelectAccount(null);
