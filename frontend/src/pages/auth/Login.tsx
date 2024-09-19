@@ -1,5 +1,6 @@
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
+import TopBar from '@/components/layouts/TopBar';
 import { useState } from 'react';
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
 
   return (
     <div>
+      <TopBar title='로그인' />
       <Input
         label='아이디'
         value={userId}
