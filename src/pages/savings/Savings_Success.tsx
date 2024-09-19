@@ -5,12 +5,13 @@ import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
 const SavingsSuccess = () => {
   return (
     <div className='flex min-h-screen flex-col bg-white'>
-      {/* 상단바 */}
-      <OnlyXTopBar title='계좌 생성' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <OnlyXTopBar title='계좌 생성' />
+      </div>
 
       {/* 배경 이미지 설정 */}
       <div
-        className='relative flex flex-grow flex-col justify-between px-4 pt-8'
+        className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
         style={{
           backgroundImage: `url("/assets/images/coin_rain.png")`,
           backgroundSize: '440px auto',

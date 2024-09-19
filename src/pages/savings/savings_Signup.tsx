@@ -88,9 +88,11 @@ const SavingsSignup = () => {
 
   return (
     <div className='w-full overflow-x-hidden'>
-      <XTopBar title='적금 가입 - 개인정보' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='적금 가입' />
+      </div>
 
-      <div className='mt-2'>
+      <div className='mt-20'>
         <LevelBar currentLevel={2} totalLevel={5} />
       </div>
 
@@ -141,16 +143,14 @@ const SavingsSignup = () => {
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
         <Button
           label='이전'
-          size='large'
+          size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => GoBack()}
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => OpenModal()}
         />
       </div>
