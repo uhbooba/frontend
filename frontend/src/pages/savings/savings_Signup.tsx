@@ -8,7 +8,7 @@ import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import { useAtom } from 'jotai';
-import { checkAtom } from '@/atoms/savings/savingsAtoms';
+import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);

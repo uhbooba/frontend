@@ -13,7 +13,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
   maturityDateAtom,
-} from '@/atoms/deposit/depositAtoms';
+} from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
 
 const DepositMoney = () => {

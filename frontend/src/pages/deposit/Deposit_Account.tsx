@@ -6,7 +6,7 @@ import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/deposit/depositAtoms';
+import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
 
 const DepositAccount = () => {

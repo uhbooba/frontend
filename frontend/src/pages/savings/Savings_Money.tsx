@@ -14,7 +14,7 @@ import {
   maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-} from '@/atoms/savings/savingsAtoms';
+} from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsMoney = () => {
   const navigate = useNavigate();
