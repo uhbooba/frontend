@@ -51,3 +51,7 @@ logging:
     org.hibernate: "info"
   file:
     name: app/logs/application.log
+
+finopenapi:
+  key: ${FINOPENAPI_KEY}
+  base-url: ${FINOPENAPI_BASE_URL}
