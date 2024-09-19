@@ -25,7 +25,6 @@ const BackButton: React.FC<BackButtonProps> = ({ onClick, className }) => {
         strokeWidth={2}
         stroke='black'
         className='h-7 w-7'
-        // className='h-7 w-7 hover:h-10 hover:w-10'
       >
         <path
           strokeLinecap='round'
@@ -36,5 +35,5 @@ const BackButton: React.FC<BackButtonProps> = ({ onClick, className }) => {
     </button>
   );
 };
-//
+
 export default BackButton;
