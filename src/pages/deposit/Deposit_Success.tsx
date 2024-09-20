@@ -1,12 +1,12 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositSuccess = () => {
   return (
-    <div className=''>
+    <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TotalTopBar title='예금 가입' showXButton={true} />
+        <TopBar title='예금 가입' showXButton={true} />
       </div>
 
       {/* 배경 이미지 설정 */}

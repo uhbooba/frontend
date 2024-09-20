@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositExplain = () => {
   const navigate = useNavigate();
@@ -12,11 +12,7 @@ const DepositExplain = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
-          title='예금 가입'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       {/* 말풍선 스타일 적용 */}
@@ -59,7 +55,7 @@ const DepositExplain = () => {
         </div>
 
         {/* 확인 버튼 */}
-        <div className='mb-2 w-full items-center justify-center p-4'>
+        <div className='w-full items-center justify-center p-4'>
           <Button
             label='확인'
             size='large'

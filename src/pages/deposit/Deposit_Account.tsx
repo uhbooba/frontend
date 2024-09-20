@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositAccount = () => {
   const navigate = useNavigate();
@@ -40,13 +40,9 @@ const DepositAccount = () => {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TotalTopBar
-          title='예금 가입'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-12 mt-20'>

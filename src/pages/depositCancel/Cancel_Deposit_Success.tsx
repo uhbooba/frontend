@@ -1,12 +1,12 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelDepositSuccess = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar title='예금 중도해지' showXButton={true} />
+        <TopBar title='예금 중도해지' showXButton={true} />
       </div>
 
       <div className='mt-24 text-center'>

@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelDepositExplain = () => {
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ const CancelDepositExplain = () => {
   };
 
   return (
-    <div className='w-full'>
+    <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
+        <TopBar
           title='예금 중도해지'
           showBackButton={true}
           showXButton={true}
