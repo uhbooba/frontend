@@ -11,11 +11,11 @@ BOLD = "\033[1m"
 
 class ColoredFormatter(logging.Formatter):
     COLORS = {
-        'DEBUG': BOLD + GREEN,
-        'INFO': BOLD + GREEN,
-        'WARNING': BOLD + YELLOW,
-        'ERROR': BOLD + RED,
-        'CRITICAL': BOLD + RED,
+        "DEBUG": BOLD + GREEN,
+        "INFO": BOLD + GREEN,
+        "WARNING": BOLD + YELLOW,
+        "ERROR": BOLD + RED,
+        "CRITICAL": BOLD + RED,
     }
 
     def format(self, record):
@@ -25,13 +25,13 @@ class ColoredFormatter(logging.Formatter):
             return msg.replace(levelname, f"{self.COLORS[levelname]}{levelname}{RESET}")
         return msg
 
+
 class PlainFormatter(logging.Formatter):
     def format(self, record):
         return super().format(record)
 
 
 def setup_logger(name):
-
     # 로거 생성
     logger = logging.getLogger(name)
     if logger.hasHandlers():
@@ -40,13 +40,12 @@ def setup_logger(name):
 
     # 핸들러 생성 및 설정
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.DEBUG)
 
     file_handler = RotatingFileHandler(
-        'app.log', maxBytes=10*1024*1024, backupCount=5, encoding='utf-8'
+        "app.log", maxBytes=10 * 1024 * 1024, backupCount=5, encoding="utf-8"
     )
     file_handler.setLevel(logging.DEBUG)
-
 
     log_format = "%(asctime)s - %(levelname)s - %(message)s"
     colored_formatter = ColoredFormatter(log_format)

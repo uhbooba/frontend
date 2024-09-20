@@ -18,14 +18,16 @@ class QuizService:
                 part=quiz.part,
                 number=quiz.number,
                 question=quiz.question,
-                answer='O' if quiz.answer else 'X',
-                comment=quiz.comment
+                answer="O" if quiz.answer else "X",
+                comment=quiz.comment,
             )
             for quiz in quizzes
         ]
 
         # part로 그룹화
-        grouped_quizzes = groupby(sorted(quiz_items, key=attrgetter('part')), key=attrgetter('part'))
+        grouped_quizzes = groupby(
+            sorted(quiz_items, key=attrgetter("part")), key=attrgetter("part")
+        )
 
         quizzes_by_part = [
             QuizPartResponse(part=part, quizzes=list(items))
@@ -44,8 +46,8 @@ class QuizService:
                 part=quiz.part,
                 number=quiz.number,
                 question=quiz.question,
-                answer='O' if quiz.answer else 'X',
-                comment=quiz.comment
+                answer="O" if quiz.answer else "X",
+                comment=quiz.comment,
             )
             for quiz in quizzes
         ]

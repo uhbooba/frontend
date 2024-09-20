@@ -16,7 +16,7 @@ class VideoService:
                 title=video.title,
                 url=video.url,
                 description=video.description,
-                upload_at=video.upload_at
+                upload_at=video.upload_at,
             )
             for video in videos
         ]
@@ -31,7 +31,7 @@ class VideoService:
                 title=video.title,
                 url=video.url,
                 description=video.description,
-                upload_at=video.upload_at
+                upload_at=video.upload_at,
             )
             for video in videos
         ]

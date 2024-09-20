@@ -1,15 +1,14 @@
-from datetime import datetime
-from fastapi import APIRouter, Response, HTTPException
-from pydantic import BaseModel
 import io
+from datetime import datetime
+
+from fastapi import APIRouter, Response, HTTPException
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+
 from ..services.tts import TtsService
 
+router = APIRouter(prefix="/tts", tags=["tts"])
 
-router = APIRouter(
-    prefix="/tts",
-    tags=["tts"]
-)
 
 class TtsRequest(BaseModel):
     text: str
@@ -24,7 +23,9 @@ async def generate_tts(request: TtsRequest):
         return Response(
             content=audio_data,
             media_type="audio/mpeg",
-            headers={"Content-Disposition": f'attachment; filename="{current_time}.mp3"'}
+            headers={
+                "Content-Disposition": f'attachment; filename="{current_time}.mp3"'
+            },
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -44,7 +45,4 @@ async def get_audio(key: str):
     audio_data = TtsService.get_value_by_key(key)
     if audio_data is None:
         raise HTTPException(status_code=404, detail="Audio not found")
-    return StreamingResponse(
-        io.BytesIO(audio_data),
-        media_type="audio/mpeg"
-    )
+    return StreamingResponse(io.BytesIO(audio_data), media_type="audio/mpeg")
