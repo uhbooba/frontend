@@ -6,6 +6,7 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
+import { validateInputs } from '@/utils/validateInputs';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,7 +17,6 @@ const DepositSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
-    accountNumber: '',
   });
 
   useEffect(() => {
@@ -28,41 +28,16 @@ const DepositSignup = () => {
       name: '',
       idNumber: '',
       phoneNumber: '',
-      accountNumber: '',
     });
   }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setErrors]);
 
   const navigate = useNavigate();
 
-  const validateInputs = () => {
-    const newErrors = {
-      name: '',
-      idNumber: '',
-      phoneNumber: '',
-      accountNumber: '',
-    };
-
-    let isValid = true;
-
-    if (!name || !/^[가-힣]+$/.test(name)) {
-      newErrors.name = '한글만 입력이 가능합니다.';
-      isValid = false;
-    }
-    if (!idNumber || !/^\d+$/.test(idNumber)) {
-      newErrors.idNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-      newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const OpenModal = () => {
-    if (validateInputs()) {
+    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    setErrors(newErrors);
+
+    if (isValid) {
       setIsModalOpen(true);
     }
   };
