@@ -1,18 +1,20 @@
 import React from 'react';
 import clsx from 'clsx';
 
-export const BUTTON_SIZES = {
+const BUTTON_SIZES = {
   large: 'py-2 w-full text-lg',
   medium: 'py-2 w-full text-md',
   small: 'py-2 w-full text-sm',
 };
 
-export const BUTTON_COLORS = {
-  orange: 'bg-orange-500',
-  red: 'bg-red-500',
-  green: 'bg-green-500',
-  white: 'bg-white',
+<<<<<<< frontend/src/components/common/buttons/Button.tsx
+const BUTTON_COLORS = {
+  orange: 'bg-primary  focus:border-blue-400 focus:text-blue-400',
+  red: 'bg-red-main focus:border-blue-400 focus:text-blue-400',
+  green: 'bg-green-main  focus:border-blue-400 focus:text-blue-400',
+  white: 'bg-white-500 focus:border-blue-300 focus:text-blue-400',
   blue: 'bg-blue-500',
+
 };
 
 export type ButtonConfigType = {
@@ -27,9 +29,10 @@ type ButtonProps = {
   label: string;
   size?: keyof typeof BUTTON_SIZES;
   color?: keyof typeof BUTTON_COLORS;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   className?: string;
+  type?: 'submit' | 'reset' | 'button';
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -39,6 +42,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled = false,
   className,
+  type,
 }) => {
   return (
     <button
@@ -50,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
         className,
       )}
       onClick={onClick}
-      disabled={disabled}
+      type={type}
     >
       {label}
     </button>

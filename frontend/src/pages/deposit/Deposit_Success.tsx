@@ -19,13 +19,13 @@ const DepositSuccess = () => {
           // backgroundRepeat: "no-repeat",
         }}
       >
-        <div className='z-10 mt-4 text-center'>
+        <div className='mt-4 text-center'>
           <p className='text-5xl font-bold'>예금 상품</p>
           <p className='mt-2 text-5xl font-bold'>가입 성공</p>
         </div>
 
         {/* 말풍선 부분 */}
-        <div className='relative z-10 mx-auto mt-16 w-[360px] font-bold'>
+        <div className='relative mx-auto mt-16 w-[360px] font-bold'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
             <p className='text-start text-xl text-black'>축하합니다~</p>
             <p className='mt-2 text-start text-xl text-black'>
@@ -51,7 +51,7 @@ const DepositSuccess = () => {
           </div>
         </div>
 
-        <div className='z-10 mt-auto'>
+        <div className='mt-auto'>
           {/* 돼지 이미지 */}
           <div className='mb-4 flex justify-end'>
             <img
