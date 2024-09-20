@@ -1,16 +1,17 @@
 import React from 'react';
 import BackButton from '@/components/common/buttons/BackButton';
-import XButton from '@/components/common/buttons/XButton'; 
-import { useNavigate } from 'react-router-dom'; 
+import XButton from '@/components/common/buttons/XButton';
+import { useNavigate } from 'react-router-dom';
+
 type XTopBarProps = {
   title: string;
 };
 
 const XTopBar: React.FC<XTopBarProps> = ({ title }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate('/'); 
+    navigate('/');
   };
 
   return (
@@ -19,7 +20,7 @@ const XTopBar: React.FC<XTopBarProps> = ({ title }) => {
       <span className='absolute left-1/2 -translate-x-1/2 transform text-xl font-bold'>
         {title}
       </span>
-      <XButton className='mr-4' onClick={handleGoHome} /> 
+      <XButton className='mr-4' onClick={handleGoHome} />
     </div>
   );
 };

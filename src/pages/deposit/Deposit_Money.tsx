@@ -6,7 +6,6 @@ import PeriodInput from '@/components/common/PeriodInput';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/No_Modal';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import Keypad from '@/components/common/KeyPad';
 import { useAtom } from 'jotai';
 import {
@@ -16,6 +15,7 @@ import {
 } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
 import { calculateMaturityDate } from '@/utils/dateUtil';
+import TotalTopBar from '@/components/layouts/TotalTopBar';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
@@ -111,20 +111,6 @@ const DepositMoney = () => {
   // 기간 버튼 내용값
   const periods = ['6개월', '12개월', '24개월', '36개월'];
 
-  // // 나의 만기일 계산 함수
-  // const calculateMaturityDate = (months: string) => {
-  //   const currentDate = new Date(); // 현재 날짜 가져오기
-  //   const periodInMonths = parseInt(months.replace('개월', ''), 10); // 선택한 버튼 값 숫자로 변경
-  //   currentDate.setMonth(currentDate.getMonth() + periodInMonths); // 현재날짜 + 선택 개월수
-
-  //   // 한국식 날짜로 변환하기 (2222년 22월 22일처럼 바꾸는컷)
-  //   return currentDate.toLocaleDateString('ko-KR', {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //   });
-  // };
-
   // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {
     if (selectPeriod) {
@@ -141,9 +127,13 @@ const DepositMoney = () => {
   };
 
   return (
-    <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+    <div className='min-h-screen'>
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TotalTopBar
+          title='예금 가입'
+          showBackButton={true}
+          showXButton={true}
+        />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -196,7 +186,7 @@ const DepositMoney = () => {
         </div>
       </div>
 
-      <div className='mb-20 mt-8 flex w-full items-center justify-between p-4'>
+      <div className='mt-8 flex w-full items-center justify-between p-4'>
         <Button
           label='이전'
           size='medium'
