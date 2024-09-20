@@ -31,6 +31,8 @@ import Savingspassword from '@/pages/savings/Savings_Password';
 import SavingsSuccess from '@/pages/savings/Savings_Success';
 import DepositSuccess2 from '@/pages/deposit/Deposit_Success2';
 import AccountCheck from '@/pages/account/AccountCheck';
+import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
+
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,7 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       { path: 'account/check', element: <AccountCheck /> },
+      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
     ],
   },
 ]);
