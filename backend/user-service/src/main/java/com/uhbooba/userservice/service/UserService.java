@@ -3,9 +3,9 @@ package com.uhbooba.userservice.service;
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
-import com.uhbooba.userservice.exception.NotFoundException;
 import com.uhbooba.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void signup(SignupRequest request) {
         duplicateUsername(request.username());
@@ -21,7 +22,7 @@ public class UserService {
         User user = User.builder()
             .name(request.name())
             .username(request.username())
-            .password(request.password())
+            .password(bCryptPasswordEncoder.encode(request.password()))
             .phoneNumber(request.phoneNumber())
             .build();
 
