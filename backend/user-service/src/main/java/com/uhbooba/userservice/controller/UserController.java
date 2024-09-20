@@ -31,9 +31,9 @@ public class UserController {
             env.getProperty("local.server.port"));
     }
 
-    @PostMapping("/users")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommonResponse<?> join(@Valid @RequestBody SignupRequest request,
+    public CommonResponse<?> sighup(@Valid @RequestBody SignupRequest request,
         BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new SignupFormatException();
