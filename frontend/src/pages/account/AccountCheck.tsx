@@ -14,23 +14,23 @@ const AccountCheck = () => {
   const ButtonConfig: ButtonConfigType[] = [
     {
       label: '계좌 입금',
-      route: '',
+      route: '/account/addcash',
       size: 'small',
-      color: 'orange',
+      color: 'red',
       className: 'flex-grow',
     },
     {
       label: '이체',
-      route: '',
+      route: '/account/transfer',
       size: 'small',
-      color: 'orange',
+      color: 'green',
       className: 'flex-grow',
     },
     {
       label: '자동 납부',
       route: '',
       size: 'small',
-      color: 'orange',
+      color: 'blue',
       className: 'flex-grow',
     },
   ];

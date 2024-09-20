@@ -7,7 +7,7 @@ const BUTTON_SIZES = {
   small: 'py-2 w-full text-sm',
 };
 
-<<<<<<< frontend/src/components/common/buttons/Button.tsx
+// <<<<<<< frontend/src/components/common/buttons/Button.tsx
 const BUTTON_COLORS = {
   orange: 'bg-primary  focus:border-blue-400 focus:text-blue-400',
   red: 'bg-red-main focus:border-blue-400 focus:text-blue-400',
