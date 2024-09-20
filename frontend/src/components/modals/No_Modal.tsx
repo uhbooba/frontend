@@ -20,7 +20,7 @@ const NoModal: React.FC<ModalProps> = ({
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-      <div className='w-full max-w-sm rounded-xl bg-white p-8 pt-2 shadow-lg'>
+      <div className='m-4 w-full max-w-sm rounded-xl bg-white p-8 pt-2 shadow-lg'>
         <div className='mb-4 ml-4 flex items-center justify-center pr-8'>
           {imageSrc && <img src={imageSrc} alt='Icon' className='h-24 w-24' />}
           <h2 className='whitespace-nowrap text-3xl font-bold'>{title}</h2>

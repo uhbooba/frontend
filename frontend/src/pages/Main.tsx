@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
-// import Layout from '@/components/layouts/Layout';
 
 const ButtonConfig: ButtonConfigType[] = [
   {

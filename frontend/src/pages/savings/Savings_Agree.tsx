@@ -49,10 +49,11 @@ const SavingsAgree = () => {
 
   return (
     <div>
-      {/* 상단바 */}
-      <XTopBar title='적금가입 - 동의페이지' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='적금 가입' />
+      </div>
 
-      <div className='mb-6 mt-2'>
+      <div className='mb-6 mt-20'>
         <LevelBar currentLevel={1} totalLevel={5} />
       </div>
 
@@ -107,18 +108,20 @@ const SavingsAgree = () => {
         </div>
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
+      <div className='mb-20 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
           color='orange'
           onClick={() => GoBack()}
+          className='mr-2'
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
           onClick={() => OpenModal()}
+          className='ml-2'
         />
       </div>
 

@@ -12,10 +12,12 @@ const Savings = () => {
 
   return (
     <div>
-      <XTopBar title='적금 가입' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='적금 가입' />
+      </div>
 
       <div>
-        <div className='mt-4 text-center'>
+        <div className='mt-20 text-center'>
           <p className='text-3xl font-bold'>적금이란?</p>
         </div>
         <div className=''>
@@ -50,7 +52,7 @@ const Savings = () => {
       </div>
 
       {/* 말풍선 부분 */}
-      <div className='relative z-10 ml-16 mt-8 w-[255px]'>
+      <div className='relative ml-16 mt-8 w-[255px]'>
         <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-3'>
           <p className='text-center text-lg text-black'>
             매달 열심히 적금을 하면
@@ -84,7 +86,7 @@ const Savings = () => {
       </div>
 
       {/* 확인 버튼 */}
-      <div className='fixed bottom-16 mb-2 w-full items-center justify-center p-4'>
+      <div className='mb-20 w-full items-center justify-center p-4'>
         <Button
           label='확인'
           size='large'
