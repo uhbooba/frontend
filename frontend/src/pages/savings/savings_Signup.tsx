@@ -6,9 +6,13 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
+import CheckButton from '@/components/common/buttons/CheckButton';
+import { useAtom } from 'jotai';
+import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 import { validateInputs } from '@/utils/validateInputs';
 
-const DepositSignup = () => {
+const SavingsSignup = () => {
+  const [check, setCheck] = useAtom(checkAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [idNumber, setIdNumber] = useState('');
@@ -20,16 +24,18 @@ const DepositSignup = () => {
   });
 
   useEffect(() => {
-    setIsModalOpen(false);
-    setName('');
-    setIdNumber('');
-    setPhoneNumber('');
-    setErrors({
-      name: '',
-      idNumber: '',
-      phoneNumber: '',
-    });
-  }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setErrors]);
+    return () => {
+      setCheck('');
+      setName('');
+      setIdNumber('');
+      setPhoneNumber('');
+      setErrors({
+        name: '',
+        idNumber: '',
+        phoneNumber: '',
+      });
+    };
+  }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
 
   const navigate = useNavigate();
 
@@ -48,7 +54,7 @@ const DepositSignup = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/deposit/money');
+    navigate('/savings/money');
   };
 
   const ModalClose = () => {
@@ -56,9 +62,9 @@ const DepositSignup = () => {
   };
 
   return (
-    <div>
+    <div className='w-full overflow-x-hidden'>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='적금 가입' />
       </div>
 
       <div className='mt-20'>
@@ -73,7 +79,7 @@ const DepositSignup = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           isError={!!errors.name}
-          className='mb-2'
+          className='mb-4'
         />
         {errors.name && <p className='mb-4 text-red-500'>{errors.name}</p>}
 
@@ -84,7 +90,7 @@ const DepositSignup = () => {
           value={idNumber}
           onChange={(e) => setIdNumber(e.target.value)}
           isError={!!errors.idNumber}
-          className='mb-2'
+          className='mb-4'
         />
         {errors.idNumber && (
           <p className='mb-4 text-red-500'>{errors.idNumber}</p>
@@ -97,26 +103,29 @@ const DepositSignup = () => {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           isError={!!errors.phoneNumber}
-          className='mb-2'
+          className='mb-4'
         />
         {errors.phoneNumber && (
           <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
         )}
       </div>
 
+      <div>
+        <p className='ml-4 text-xl font-bold text-gray-600'>자동이체 여부</p>
+        <CheckButton name='check' selected={check} setSelected={setCheck} />
+      </div>
+
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
         <Button
           label='이전'
-          size='large'
+          size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => GoBack()}
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => OpenModal()}
         />
       </div>
@@ -149,4 +158,4 @@ const DepositSignup = () => {
   );
 };
 
-export default DepositSignup;
+export default SavingsSignup;

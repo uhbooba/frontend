@@ -2,41 +2,42 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
 
-const DepositSuccess = () => {
+const SavingsSuccess = () => {
   return (
     <div className='flex min-h-screen flex-col bg-white'>
-      {/* 상단바 */}
-      <OnlyXTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <OnlyXTopBar title='계좌 생성' />
+      </div>
 
       {/* 배경 이미지 설정 */}
       <div
-        className='relative flex flex-grow flex-col justify-between px-4 pt-8'
+        className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
         style={{
-          backgroundImage: `url("/assets/images/money_rain.png")`,
-          backgroundSize: '400px auto',
+          backgroundImage: `url("/assets/images/coin_rain.png")`,
+          backgroundSize: '440px auto',
           backgroundPosition: 'center -50px',
           // 이미지 한장만 나오게하고싶으면 나중ㅇ테 이거 주석 해제하면 됨
           // backgroundRepeat: "no-repeat",
         }}
       >
         <div className='mt-4 text-center'>
-          <p className='text-5xl font-bold'>예금 상품</p>
+          <p className='text-5xl font-bold'>적금 상품</p>
           <p className='mt-2 text-5xl font-bold'>가입 성공</p>
         </div>
 
         {/* 말풍선 부분 */}
-        <div className='relative mx-auto mt-16 w-[360px] font-bold'>
+        <div className='relative mt-24 w-[280px]'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
-            <p className='text-start text-xl text-black'>축하합니다~</p>
+            <p className='text-start text-xl text-black'>
+              적금 상품 가입 완료!
+            </p>
             <p className='mt-2 text-start text-xl text-black'>
-              5단계 미션을 성공했어요!
+              이제 매달 열심히 넣으면
             </p>
             <p className='mt-4 text-start text-xl text-black'>
-              다음 미션에서는
+              나중에는 큰 목돈이 되서
             </p>
-            <p className='text-start text-xl text-black'>
-              공과금 납부를 해볼거에요~
-            </p>
+            <p className='text-start text-xl text-black'>돌아올거야!</p>
 
             {/* 말풍선 꼬리 부분 */}
             <div className='absolute bottom-[-22px] left-[70%] -translate-x-1/2 transform'>
@@ -51,25 +52,23 @@ const DepositSuccess = () => {
           </div>
         </div>
 
-        <div className='mt-auto'>
-          {/* 돼지 이미지 */}
-          <div className='mb-4 flex justify-end'>
-            <img
-              src='/assets/images/finish_pig.png'
-              alt='Pig'
-              className='h-60 w-60'
-            />
-          </div>
+        {/* 돼지 이미지 */}
+        <div className='mb-4 flex justify-end'>
+          <img
+            src='/assets/images/finish_j_pig.png'
+            alt='Pig'
+            className='h-60 w-60'
+          />
+        </div>
 
-          {/* 버튼 */}
-          <div className='mb-24'>
-            <Button
-              label='나의 계좌로 이동하기'
-              size='large'
-              color='orange'
-              className='w-full py-4'
-            />
-          </div>
+        {/* 버튼 */}
+        <div className='mb-24'>
+          <Button
+            label='나의 계좌로 이동하기'
+            size='large'
+            color='orange'
+            className='w-full py-4'
+          />
         </div>
       </div>
 
@@ -81,4 +80,4 @@ const DepositSuccess = () => {
   );
 };
 
-export default DepositSuccess;
+export default SavingsSuccess;

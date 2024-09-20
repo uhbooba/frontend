@@ -5,19 +5,19 @@ import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import BigModal from '@/components/modals/Big_Modal';
 import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
 import {
-  maturityDateAtom,
+  selectAccountAtom,
   selectMoneyAtom,
   selectPeriodAtom,
 } from '@/atoms/deposit/depositDataAtoms';
+import { useAtom } from 'jotai';
 
-const DepositProduct = () => {
+const CancelDepositProduct = () => {
   const navigate = useNavigate();
-  const [maturityDate] = useAtom(maturityDateAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectAccount] = useAtom(selectAccountAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -28,7 +28,7 @@ const DepositProduct = () => {
   };
 
   const GoNext = () => {
-    navigate('/deposit/password');
+    navigate('/cancel/deposit/password');
   };
 
   const openModal = () => {
@@ -42,20 +42,23 @@ const DepositProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='예금 중도해지' />
       </div>
 
       <div className='mb-6 mt-20'>
-        <LevelBar currentLevel={4} totalLevel={5} />
+        <LevelBar currentLevel={1} totalLevel={2} />
       </div>
       <div className='p-4'>
-        <div className='pb-4 text-3xl font-bold'>가입 상품 안내</div>
-
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>정기예금 2번 상품</span>
           </div>
+        </div>
+
+        <div className='border-b border-gray-300 py-4'>
+          <span className='text-2xl text-gray-500'>계좌번호</span>
+          <div className='mt-2 text-xl font-bold'>{selectAccount}</div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
@@ -65,8 +68,8 @@ const DepositProduct = () => {
               <div className='mt-2 text-xl font-bold'>10%</div>
             </div>
             <div>
-              <span className='text-2xl text-gray-500'>최소 금액</span>
-              <div className='mt-2 text-xl font-bold'>20 만 원</div>
+              <span className='text-2xl text-gray-500'>가입 금액</span>
+              <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>약정 기간</span>
@@ -76,29 +79,23 @@ const DepositProduct = () => {
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <span className='text-2xl text-gray-500'>만기일</span>
-          <div className='mt-2 text-xl font-bold'>{maturityDate}</div>
-        </div>
-
-        <div className='border-b border-gray-300 py-4'>
           <div className='flex'>
-            <div className='mr-20 text-left'>
-              <span className='text-2xl text-gray-500'>가입금액</span>
-              <div className='mt-2 text-xl font-bold'>{selectMoney} 원</div>
+            <div>
+              <span className='text-2xl text-gray-500'>중도해지 이자율</span>
+              <div className='mt-2 text-xl font-bold'>1%</div>
             </div>
-            <div className='text-left'>
-              <span className='text-2xl text-gray-500'>예상 이자</span>
+            <div className='ml-12 text-left'>
+              <span className='text-2xl text-gray-500'>이자 금액</span>
               <div className='mt-2 text-xl font-bold'>13만 8,750원</div>
             </div>
           </div>
         </div>
-
         <div className='border-b border-gray-300 py-4'>
-          <span className='text-2xl text-gray-500'>예상 금액</span>
-          <div className='mt-2 text-xl font-bold'>242 만 원</div>
+          <span className='text-2xl text-gray-500'>받을 금액</span>
+          <div className='mt-2 text-xl font-bold'>213 만 8,750원</div>
         </div>
 
-        <div className='mb-20 mt-8 flex w-full items-center justify-between'>
+        <div className='mb-20 mt-8 flex items-center justify-between'>
           <Button
             label='이전'
             size='medium'
@@ -107,9 +104,9 @@ const DepositProduct = () => {
             className='mr-2'
           />
           <Button
-            label='가입하기'
+            label='해지하기'
             size='medium'
-            color='green'
+            color='red'
             onClick={openModal}
             className='ml-2'
           />
@@ -123,8 +120,8 @@ const DepositProduct = () => {
           isOpen={isModalOpen}
           ModalClose={closeModal}
           GoNext={GoNext}
-          title='가입 확인'
-          description='정말로 상품에 가입하시겠습니까?'
+          title='중도 해지'
+          description='정말로 해지하시겠습니까?'
           imageSrc='/assets/icons/warning.png'
         />
       </div>
@@ -132,4 +129,4 @@ const DepositProduct = () => {
   );
 };
 
-export default DepositProduct;
+export default CancelDepositProduct;

@@ -3,18 +3,18 @@ import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import PasswordInput from '@/components/common/PasswordInput';
 
-const DepositPassword = () => {
+const Savingspassword = () => {
   const navigate = useNavigate();
 
   const passwordComplete = (password: string[]) => {
     console.log('비밀번호 확인용 :', password.join(''));
-    navigate('/deposit/success2');
+    navigate('/savings/success');
   };
 
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='적금 가입' />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -26,4 +26,4 @@ const DepositPassword = () => {
   );
 };
 
-export default DepositPassword;
+export default Savingspassword;
