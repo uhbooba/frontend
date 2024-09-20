@@ -2,17 +2,20 @@ export interface Errors {
   name: string;
   idNumber: string;
   phoneNumber: string;
+  check: string;
 }
 
 export const validateInputs = (
   name: string,
   idNumber: string,
   phoneNumber: string,
+  check?: string,
 ): { isValid: boolean; newErrors: Errors } => {
   const newErrors: Errors = {
     name: '',
     idNumber: '',
     phoneNumber: '',
+    check: '',
   };
 
   let isValid = true;
@@ -37,6 +40,12 @@ export const validateInputs = (
   // 이름 17자까지만 입력 가능하게 조건
   else if (name.length > 17) {
     newErrors.name = '이름은 17자까지만 입력이 가능합니다.';
+    isValid = false;
+  }
+
+  // 이름 최소 2글자 이상 입력 가능하게 조건
+  else if (name.length < 3) {
+    newErrors.name = '이름이 너무 짧습니다.';
     isValid = false;
   }
 
@@ -73,6 +82,12 @@ export const validateInputs = (
   // 전화번호 형식 조건 (010으로 시작하고, 11자리 숫자)
   else if (!/^010\d{8}$/.test(phoneNumber.trim())) {
     newErrors.phoneNumber = '01012345678 형식으로 입력해주세요.';
+    isValid = false;
+  }
+
+  // 자동이체 여부 선택 안했을 때 조건
+  if (check !== undefined && check === '') {
+    newErrors.check = '자동이체 여부를 선택해주세요.';
     isValid = false;
   }
 
