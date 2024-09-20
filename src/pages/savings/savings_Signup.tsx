@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import { useAtom } from 'jotai';
 import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
+import { validateInputs } from '@/utils/validateInputs';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);
@@ -20,7 +21,6 @@ const SavingsSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
-    accountNumber: '',
   });
 
   useEffect(() => {
@@ -33,42 +33,17 @@ const SavingsSignup = () => {
         name: '',
         idNumber: '',
         phoneNumber: '',
-        accountNumber: '',
       });
     };
   }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
 
   const navigate = useNavigate();
 
-  const validateInputs = () => {
-    const newErrors = {
-      name: '',
-      idNumber: '',
-      phoneNumber: '',
-      accountNumber: '',
-    };
-
-    let isValid = true;
-
-    if (!name || !/^[가-힣]+$/.test(name)) {
-      newErrors.name = '한글만 입력이 가능합니다.';
-      isValid = false;
-    }
-    if (!idNumber || !/^\d+$/.test(idNumber)) {
-      newErrors.idNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-      newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const OpenModal = () => {
-    if (validateInputs()) {
+    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    setErrors(newErrors);
+
+    if (isValid) {
       setIsModalOpen(true);
     }
   };
