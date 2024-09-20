@@ -1,20 +1,24 @@
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import PasswordInput from '@/components/common/PasswordInput';
+import TotalTopBar from '@/components/layouts/TotalTopBar';
 
 const DepositPassword = () => {
   const navigate = useNavigate();
 
   const passwordComplete = (password: string[]) => {
     console.log('비밀번호 확인용 :', password.join(''));
-    navigate('/deposit/success2');
+    navigate('/deposit/success');
   };
 
   return (
-    <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+    <div className='min-h-screen'>
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TotalTopBar
+          title='예금 가입'
+          showBackButton={true}
+          showXButton={true}
+        />
       </div>
 
       <div className='mb-12 mt-20'>
