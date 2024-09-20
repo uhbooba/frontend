@@ -42,11 +42,7 @@ const CancelDepositProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar
-          title='예금 중도해지'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='예금 중도해지' />
       </div>
 
       <div className='mb-6 mt-20'>

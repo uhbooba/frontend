@@ -6,7 +6,7 @@ const SavingsSuccess = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='계좌 생성' showXButton={true} />
+        <TopBar title='계좌 생성' showBackButton={false} />
       </div>
 
       {/* 배경 이미지 설정 */}

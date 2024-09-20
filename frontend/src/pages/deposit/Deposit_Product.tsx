@@ -42,7 +42,7 @@ const DepositProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
+        <TopBar title='예금 가입' />
       </div>
 
       <div className='mb-6 mt-20'>

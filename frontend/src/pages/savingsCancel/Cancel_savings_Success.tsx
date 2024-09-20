@@ -6,11 +6,7 @@ const CancelSavingsSuccess = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar
-          title='적금 중도해지'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='적금 중도해지' showBackButton={false} />
       </div>
 
       <div className='text-center'>
