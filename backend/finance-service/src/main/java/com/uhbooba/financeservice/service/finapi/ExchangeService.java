@@ -1,14 +1,17 @@
 package com.uhbooba.financeservice.service.finapi;
 
+import static com.uhbooba.financeservice.service.finapi.CommonService.executeApiRequest;
+import static com.uhbooba.financeservice.util.finapi.FinApiList.Exchange.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.exception.FinOpenApiException;
 import com.uhbooba.financeservice.util.finapi.FinOpenApiHandler;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -16,51 +19,35 @@ import org.springframework.stereotype.Service;
 public class ExchangeService {
 
     private final FinOpenApiHandler finOpenApiHandler;
-    private final String BASE_URL = "/edu";
-    private final String EXCHANGE_URL = BASE_URL + "/exchange";
-    private final String EXCHANGE_RATE_URL = BASE_URL + "/exchangeRate";
 
-    private final String EXCHANGE_RATE_SEARCH_API_NAME = "exchangeRateSearch";
-    private final String EXCHANGE_RATE_API_NAME = "exchangeRate";
-    private final String ESTIMATE_EXCHANGE_API_NAME = "estimate";
-    private final String EXCHANGE_API_NAME = "updateDemandDepositAccountWithdrawal";
-    private final String INQUIRE_BANK_CURRENCY_API_NAME = "inquireBankCurrency";
-
-    private JsonNode executeApiRequest(HandlerParamWithHeader param) {
-        try {
-            return finOpenApiHandler.apiRequest(param);
-        } catch(Exception e) {
-            log.error("API 요청 실패: {}, 이유: {}", param.apiName(), e.getMessage(), e);
-
-            throw new FinOpenApiException(
-                "API 요청 실패: " + param.apiName() + ", 이유: " + e.getMessage());
-        }
-    }
-
-    public JsonNode getExchangeRate(String currency) {
+    public Mono<JsonNode> getExchangeRate(String currency) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("currency", currency.toUpperCase()); // 대문자
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
-                                                             .url(EXCHANGE_RATE_URL + "/search")
+                                                             .url(GET_EXCHANGE_RATE_SEARCH_URL)
                                                              .apiName(EXCHANGE_RATE_SEARCH_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
         return executeApiRequest(param);
     }
 
-    public JsonNode getAllExchangeRate() {
-        // 1. api 요청
+    public Mono<JsonNode> getAllExchangeRate() {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+
+        // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
                                                              .url(EXCHANGE_RATE_URL)
                                                              .apiName(EXCHANGE_RATE_API_NAME)
+                                                             .requestBody(requestBody)
                                                              .build();
         return executeApiRequest(param);
     }
 
-    public JsonNode getExchangeEstimate(
+    public Mono<JsonNode> getExchangeEstimate(
         // 기존 통화
         String fromCurrency,
         // 환전할 통화
@@ -76,14 +63,14 @@ public class ExchangeService {
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
-                                                             .url(EXCHANGE_URL + "/estimate")
+                                                             .url(GET_EXCHANGE_ESTIMATE_URL)
                                                              .apiName(ESTIMATE_EXCHANGE_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
         return executeApiRequest(param);
     }
 
-    public JsonNode exchange(
+    public Mono<JsonNode> exchange(
         String accountNo,
         String exchangeCurrency,
         Double exchangeAmount
@@ -103,13 +90,16 @@ public class ExchangeService {
         return executeApiRequest(param);
     }
 
-    public JsonNode getBackCurrency() {
-        // 1. api 요청
+    public Mono<JsonNode> getBackCurrency() {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+
+        // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
-                                                             .url(BASE_URL
-                                                                      + "/bank/inquireBankCurrency")
+                                                             .url(GET_BANK_CURRENCY_URL)
                                                              .apiName(
                                                                  INQUIRE_BANK_CURRENCY_API_NAME)
+                                                             .requestBody(requestBody)
                                                              .build();
         return executeApiRequest(param);
     }
