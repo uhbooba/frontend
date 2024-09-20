@@ -10,7 +10,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
 } from '@/atoms/savings/savingsDataAtoms';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const CancelSavingsProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
+        <TopBar
           title='적금 중도해지'
           showBackButton={true}
           showXButton={true}
@@ -114,7 +114,7 @@ const CancelSavingsProduct = () => {
           <div className='mt-2 text-xl font-bold'>660만 2,750원</div>
         </div>
 
-        <div className='mb-2 mt-8 flex items-center justify-between'>
+        <div className='mt-4 flex items-center justify-between'>
           <Button
             label='이전'
             size='medium'

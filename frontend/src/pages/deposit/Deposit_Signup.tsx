@@ -6,7 +6,7 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';
 import { validateInputs } from '@/utils/validateInputs';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,13 +56,9 @@ const DepositSignup = () => {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TotalTopBar
-          title='예금 가입'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mt-20'>

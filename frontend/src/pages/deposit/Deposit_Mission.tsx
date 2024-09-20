@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositMission = () => {
   const navigate = useNavigate();
@@ -11,13 +11,9 @@ const DepositMission = () => {
   };
 
   return (
-    <div className='bg-yellow-100'>
+    <div className='min-h-screen bg-yellow-100'>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TotalTopBar
-          title='예금 가입'
-          showBackButton={true}
-          showXButton={true}
-        />
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       {/* 돼지 말풍선 부분 */}

@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelSavingsExplain = () => {
   const navigate = useNavigate();
@@ -10,9 +10,9 @@ const CancelSavingsExplain = () => {
     navigate('/cancel/savings/product');
   };
   return (
-    <div className='flex min-h-screen flex-col'>
+    <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
+        <TopBar
           title='적금 중도해지'
           showBackButton={true}
           showXButton={true}
@@ -62,7 +62,7 @@ const CancelSavingsExplain = () => {
           />
 
           {/* 버튼 */}
-          <div className='mb-2 w-full items-center justify-center p-4'>
+          <div className='w-full items-center justify-center p-4'>
             <Button
               label='중도해지 하러가기'
               size='large'

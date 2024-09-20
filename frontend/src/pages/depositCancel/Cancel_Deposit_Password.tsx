@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelDepositPassword = () => {
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ const CancelDepositPassword = () => {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
+        <TopBar
           title='예금 중도해지'
           showBackButton={true}
           showXButton={true}

@@ -6,7 +6,6 @@ import PeriodInput from '@/components/common/PeriodInput';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/No_Modal';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import Keypad from '@/components/common/KeyPad';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
@@ -15,6 +14,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
 } from '@/atoms/savings/savingsDataAtoms';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsMoney = () => {
   const navigate = useNavigate();
@@ -134,9 +134,8 @@ const SavingsMoney = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
       </div>
-
       <div className='mb-12 mt-20'>
         <LevelBar currentLevel={3} totalLevel={5} />
       </div>

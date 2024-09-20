@@ -10,7 +10,7 @@ import {
   selectPeriodAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import { useAtom } from 'jotai';
-import TotalTopBar from '@/components/layouts/TotalTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelDepositProduct = () => {
   const navigate = useNavigate();
@@ -40,9 +40,9 @@ const CancelDepositProduct = () => {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TotalTopBar
+        <TopBar
           title='예금 중도해지'
           showBackButton={true}
           showXButton={true}
@@ -99,7 +99,7 @@ const CancelDepositProduct = () => {
           <div className='mt-2 text-xl font-bold'>213 만 8,750원</div>
         </div>
 
-        <div className='mb-2 mt-8 flex items-center justify-between'>
+        <div className='mt-8 flex items-center justify-between'>
           <Button
             label='이전'
             size='medium'

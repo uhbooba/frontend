@@ -2,12 +2,12 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsAccount = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const SavingsAccount = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-12 mt-20'>
