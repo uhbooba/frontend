@@ -1,8 +1,10 @@
 package com.uhbooba.userservice.service;
 
 import com.uhbooba.userservice.dto.request.SignupRequest;
+import com.uhbooba.userservice.dto.response.UserResponse;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
+import com.uhbooba.userservice.exception.NotFoundException;
 import com.uhbooba.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,4 +45,10 @@ public class UserService {
             });
     }
 
+    public UserResponse getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new NotFoundException(username + "가 존재하지 않습니다."));
+
+        return UserResponse.of(user);
+    }
 }

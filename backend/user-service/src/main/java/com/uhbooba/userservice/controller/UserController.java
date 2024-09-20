@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-service")
+@RequestMapping("/user-service/users")
 public class UserController {
 
     private final Environment env;
@@ -39,6 +40,20 @@ public class UserController {
         }
         userService.signup(request);
         return CommonResponse.created("회원가입 성공");
+    }
+
+    @GetMapping("/check-username/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResponse<?> checkUsername(@PathVariable("username") String username) {
+        userService.duplicateUsername(username);
+        return CommonResponse.ok("아이디 사용 가능");
+    }
+
+    @GetMapping("/check-phoneNumber/{phoneNumber}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResponse<?> checkPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+        userService.duplicatePhoneNumber(phoneNumber);
+        return CommonResponse.ok("전화번호 사용 가능");
     }
 
 }
