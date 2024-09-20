@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '@/components/layouts/TopBar';
 import QuizLevelBar from '@/components/quiz/QuizLevelBar';
