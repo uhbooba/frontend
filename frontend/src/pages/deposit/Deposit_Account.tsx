@@ -2,12 +2,12 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositAccount = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const DepositAccount = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -91,9 +91,21 @@ const DepositAccount = () => {
         </div>
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
-        <Button label='이전' size='medium' color='orange' onClick={GoBack} />
-        <Button label='다음' size='medium' color='orange' onClick={GoNext} />
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
+        <Button
+          label='이전'
+          size='medium'
+          color='orange'
+          onClick={GoBack}
+          className='mr-2'
+        />
+        <Button
+          label='다음'
+          size='medium'
+          color='orange'
+          onClick={GoNext}
+          className='ml-2'
+        />
       </div>
 
       <div className='fixed bottom-0 left-0 w-full'>

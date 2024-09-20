@@ -1,21 +1,25 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelSavingsSuccess = () => {
   return (
     <div>
-      <div className='w-full'>
-        <OnlyXTopBar title='적금 중도해지' />
+      <div className='fixed left-0 top-0 w-full'>
+        <TopBar
+          title='적금 중도해지'
+          showBackButton={true}
+          showXButton={true}
+        />
       </div>
 
       <div className='text-center'>
-        <p className='mt-16 text-5xl font-bold'>적금 상품</p>
+        <p className='mt-32 text-5xl font-bold'>적금 상품</p>
         <p className='mt-4 text-5xl font-bold'>중도해지 완료</p>
       </div>
 
       {/* 말풍선 부분 */}
-      <div className='relative z-10 ml-20 mt-24 w-[270px]'>
+      <div className='relative z-10 ml-20 mt-20 w-[270px]'>
         <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-4 font-bold'>
           <p className='text-start text-lg text-black'>
             성공적으로 상품 중도해지를
@@ -45,7 +49,7 @@ const CancelSavingsSuccess = () => {
       </div>
 
       {/* 버튼 */}
-      <div className='mb-20 flex items-center p-4'>
+      <div className='flex items-center p-4'>
         <Button
           label='나의 계좌로 이동하기'
           size='large'

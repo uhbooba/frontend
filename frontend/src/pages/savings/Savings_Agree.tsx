@@ -5,8 +5,8 @@ import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/No_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsAgree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,7 +50,7 @@ const SavingsAgree = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-6 mt-20'>
@@ -108,7 +108,7 @@ const SavingsAgree = () => {
         </div>
       </div>
 
-      <div className='mb-20 flex w-full items-center justify-center p-4'>
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'

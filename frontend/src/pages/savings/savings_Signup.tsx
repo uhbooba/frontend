@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router';
 import BigModal from '@/components/modals/Big_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import { useAtom } from 'jotai';
 import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 import { validateInputs } from '@/utils/validateInputs';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);
@@ -62,9 +62,9 @@ const SavingsSignup = () => {
   };
 
   return (
-    <div className='w-full overflow-x-hidden'>
+    <div className='h-full'>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mt-20'>
@@ -115,18 +115,20 @@ const SavingsSignup = () => {
         <CheckButton name='check' selected={check} setSelected={setCheck} />
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
           color='orange'
           onClick={() => GoBack()}
+          className='mr-2'
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
           onClick={() => OpenModal()}
+          className='ml-2'
         />
       </div>
 

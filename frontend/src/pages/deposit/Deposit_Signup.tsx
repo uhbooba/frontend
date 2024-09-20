@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router';
 import BigModal from '@/components/modals/Big_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 import { validateInputs } from '@/utils/validateInputs';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,8 +57,8 @@ const DepositSignup = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mt-20'>
@@ -104,19 +104,19 @@ const DepositSignup = () => {
         )}
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
-          size='large'
+          size='medium'
           color='orange'
-          className='flex-grow'
+          className='mr-2'
           onClick={() => GoBack()}
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
-          className='flex-grow'
+          className='ml-2'
           onClick={() => OpenModal()}
         />
       </div>

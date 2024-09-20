@@ -2,7 +2,6 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import BigModal from '@/components/modals/Big_Modal';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
@@ -11,6 +10,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
 } from '@/atoms/savings/savingsDataAtoms';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const SavingsProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-6 mt-20'>

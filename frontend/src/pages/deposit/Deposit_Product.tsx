@@ -2,7 +2,6 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import BigModal from '@/components/modals/Big_Modal';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
@@ -11,6 +10,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
 } from '@/atoms/deposit/depositDataAtoms';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const DepositProduct = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
       </div>
 
       <div className='mb-6 mt-20'>
@@ -98,7 +98,7 @@ const DepositProduct = () => {
           <div className='mt-2 text-xl font-bold'>242 만 원</div>
         </div>
 
-        <div className='mb-20 mt-8 flex w-full items-center justify-between'>
+        <div className='mb-2 mt-8 flex w-full items-center justify-between'>
           <Button
             label='이전'
             size='medium'

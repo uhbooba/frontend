@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import XTopBar from '@/components/layouts/XTopbar';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelSavingsExplain = () => {
   const navigate = useNavigate();
@@ -10,9 +10,13 @@ const CancelSavingsExplain = () => {
     navigate('/cancel/savings/product');
   };
   return (
-    <div className='flex min-h-screen flex-col'>
+    <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 중도해지' />
+        <TopBar
+          title='적금 중도해지'
+          showBackButton={true}
+          showXButton={true}
+        />
       </div>
 
       <div className='mt-16 flex-grow overflow-y-auto px-4'>
@@ -31,7 +35,7 @@ const CancelSavingsExplain = () => {
         </div>
 
         {/* 말풍선 부분 */}
-        <div className='relative ml-24 mt-4 w-[240px]'>
+        <div className='relative ml-24 mt-4 w-[230px]'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-4 font-bold'>
             <p className='text-start text-lg text-black'>
               중도해지를 하면 이자가
@@ -58,7 +62,7 @@ const CancelSavingsExplain = () => {
           />
 
           {/* 버튼 */}
-          <div className='mb-20 w-full items-center justify-center p-4'>
+          <div className='w-full items-center justify-center p-4'>
             <Button
               label='중도해지 하러가기'
               size='large'
