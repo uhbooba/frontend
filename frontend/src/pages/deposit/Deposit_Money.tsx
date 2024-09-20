@@ -15,6 +15,7 @@ import {
   maturityDateAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
+import { calculateMaturityDate } from '@/utils/dateUtil';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
@@ -39,6 +40,14 @@ const DepositMoney = () => {
     setPeriodBtnColor('');
     setIsModalOpen(false);
   };
+
+  // 금액과 기간 선택 시 만기일 업데이트
+  useEffect(() => {
+    if (selectPeriod) {
+      const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
+      setMaturityDate(calculatedMaturityDate); // maturityDateAtom에 저장
+    }
+  }, [selectPeriod, setMaturityDate]);
 
   // 뒤로가기
   const GoBack = () => {
@@ -102,19 +111,19 @@ const DepositMoney = () => {
   // 기간 버튼 내용값
   const periods = ['6개월', '12개월', '24개월', '36개월'];
 
-  // 나의 만기일 계산 함수
-  const calculateMaturityDate = (months: string) => {
-    const currentDate = new Date(); // 현재 날짜 가져오기
-    const periodInMonths = parseInt(months.replace('개월', ''), 10); // 선택한 버튼 값 숫자로 변경
-    currentDate.setMonth(currentDate.getMonth() + periodInMonths); // 현재날짜 + 선택 개월수
+  // // 나의 만기일 계산 함수
+  // const calculateMaturityDate = (months: string) => {
+  //   const currentDate = new Date(); // 현재 날짜 가져오기
+  //   const periodInMonths = parseInt(months.replace('개월', ''), 10); // 선택한 버튼 값 숫자로 변경
+  //   currentDate.setMonth(currentDate.getMonth() + periodInMonths); // 현재날짜 + 선택 개월수
 
-    // 한국식 날짜로 변환하기 (2222년 22월 22일처럼 바꾸는컷)
-    return currentDate.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  //   // 한국식 날짜로 변환하기 (2222년 22월 22일처럼 바꾸는컷)
+  //   return currentDate.toLocaleDateString('ko-KR', {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric',
+  //   });
+  // };
 
   // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {
