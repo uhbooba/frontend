@@ -13,7 +13,7 @@ const DepositMission = () => {
   return (
     <div className='min-h-screen bg-yellow-100'>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
+        <TopBar title='예금 가입' />
       </div>
 
       {/* 돼지 말풍선 부분 */}

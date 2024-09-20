@@ -14,7 +14,7 @@ const Savingspassword = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입' showBackButton={true} showXButton={true} />
+        <TopBar title='적금 가입' />
       </div>
 
       <div className='mb-12 mt-20'>
