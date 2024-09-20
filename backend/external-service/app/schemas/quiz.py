@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from typing import List, Union
+
+from pydantic import BaseModel
 
 
 class QuizItem(BaseModel):
@@ -7,10 +8,13 @@ class QuizItem(BaseModel):
     number: int
     question: str
     answer: str
+    comment: str
+
 
 class QuizPartResponse(BaseModel):
     part: int
     quizzes: List[QuizItem]
+
 
 class QuizResponse(BaseModel):
     status: str
