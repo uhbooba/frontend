@@ -6,7 +6,7 @@ const DepositSuccess = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='예금 가입' showXButton={true} />
+        <TopBar title='예금 가입' showBackButton={false} />
       </div>
 
       {/* 배경 이미지 설정 */}

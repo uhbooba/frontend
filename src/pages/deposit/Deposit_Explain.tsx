@@ -12,7 +12,7 @@ const DepositExplain = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='예금 가입' showBackButton={true} showXButton={true} />
+        <TopBar title='예금 가입' />
       </div>
 
       {/* 말풍선 스타일 적용 */}

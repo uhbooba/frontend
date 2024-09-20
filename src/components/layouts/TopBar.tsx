@@ -12,8 +12,8 @@ type TopBarProps = {
 
 const TopBar: React.FC<TopBarProps> = ({
   title,
-  showBackButton = false,
-  showXButton = false,
+  showBackButton = true,
+  showXButton = true,
   onXButtonClick,
 }) => {
   const navigate = useNavigate();
