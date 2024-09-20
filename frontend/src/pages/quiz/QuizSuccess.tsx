@@ -8,6 +8,10 @@ import Button from '@/components/common/buttons/Button';
 const QuizSuccess = () => {
   const navigate = useNavigate();
 
+  const moveQuizMainPage = () => {
+    navigate('/quiz');
+  };
+
   useEffect(() => {
     runConfetti();
   });
@@ -27,7 +31,11 @@ const QuizSuccess = () => {
             className='mt-8 h-56 w-56'
           />
           <div className='mt-8 w-3/4'>
-            <Button label='다른 문제 풀기' size='large' />
+            <Button
+              label='다른 문제 풀기'
+              size='large'
+              onClick={moveQuizMainPage}
+            />
           </div>
         </div>
       </div>
