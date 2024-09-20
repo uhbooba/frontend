@@ -49,10 +49,10 @@ public class UserController {
         return CommonResponse.ok("아이디 사용 가능");
     }
 
-    @GetMapping("/check-phoneNumber/{phoneNumber}")
+    @GetMapping("/check-phone/{phone}")
     @ResponseStatus(HttpStatus.OK)
-    public CommonResponse<?> checkPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
-        userService.duplicatePhoneNumber(phoneNumber);
+    public CommonResponse<?> checkPhone(@PathVariable("phone") String phone) {
+        userService.duplicatePhone(phone);
         return CommonResponse.ok("전화번호 사용 가능");
     }
 

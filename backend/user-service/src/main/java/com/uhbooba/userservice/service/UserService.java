@@ -19,20 +19,20 @@ public class UserService {
 
     public void signup(SignupRequest request) {
         duplicateUsername(request.username());
-        duplicatePhoneNumber(request.phoneNumber());
+        duplicatePhone(request.phone());
 
         User user = User.builder()
             .name(request.name())
             .username(request.username())
             .password(bCryptPasswordEncoder.encode(request.password()))
-            .phoneNumber(request.phoneNumber())
+            .phone(request.phone())
             .build();
 
         userRepository.save(user);
     }
 
-    public void duplicatePhoneNumber(String phoneNumber) {
-        userRepository.findByPhoneNumber(phoneNumber)
+    public void duplicatePhone(String phone) {
+        userRepository.findByPhone(phone)
             .ifPresent(user -> {
                 throw new DuplicateUserException("이미 가입한 회원입니다.");
             });

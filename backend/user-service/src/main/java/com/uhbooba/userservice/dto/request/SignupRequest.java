@@ -22,7 +22,7 @@ public record SignupRequest(
     @NotBlank(message = "전화번호를 입력해주세요.")
     @Size(max = 15, message = "전화번호는 최대 15자까지 가능합니다.")
     @Pattern(regexp = "^\\d{10,15}$", message = "전화번호는 숫자로 10자리에서 15자리까지 입력 가능합니다.")
-    String phoneNumber
+    String phone
 
 ) {
 

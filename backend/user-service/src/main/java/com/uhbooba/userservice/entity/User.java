@@ -23,7 +23,7 @@ public class User {
     private String password;
 
     @Column(unique = true, nullable = false, length = 15)
-    private String phoneNumber;
+    private String phone;
 
     @Column(nullable = false)
     private Boolean isTwoFactorAuthEnabled;
@@ -32,11 +32,11 @@ public class User {
     private Boolean isFirstLogin;
 
     @Builder
-    public User(String name, String username, String password, String phoneNumber) {
+    public User(String name, String username, String password, String phone) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.isTwoFactorAuthEnabled = false;
         this.isFirstLogin = true;
     }
