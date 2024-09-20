@@ -41,9 +41,11 @@ const CancelSavingsProduct = () => {
 
   return (
     <div>
-      <XTopBar title='적금 중도해지' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='적금 중도해지' />
+      </div>
 
-      <div className='mb-4 mt-4'>
+      <div className='mb-4 mt-20'>
         <LevelBar currentLevel={1} totalLevel={2} />
       </div>
 
@@ -108,13 +110,20 @@ const CancelSavingsProduct = () => {
           <div className='mt-2 text-xl font-bold'>660만 2,750원</div>
         </div>
 
-        <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
-          <Button label='이전' size='medium' color='orange' onClick={GoBack} />
+        <div className='mb-20 mt-8 flex items-center justify-between'>
+          <Button
+            label='이전'
+            size='medium'
+            color='orange'
+            onClick={GoBack}
+            className='mr-2'
+          />
           <Button
             label='해지하기'
             size='medium'
             color='red'
             onClick={openModal}
+            className='ml-2'
           />
         </div>
 
