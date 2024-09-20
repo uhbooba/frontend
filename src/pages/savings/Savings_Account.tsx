@@ -5,11 +5,11 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import XTopBar from '@/components/layouts/XTopbar';
 import NoModal from '@/components/modals/No_Modal';
 import clsx from 'clsx';
-import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
 
-const DepositAccount = () => {
+const SavingsAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const DepositAccount = () => {
     if (selectAccount === null) {
       setIsModalOpen(true);
     } else {
-      navigate('/deposit/product');
+      navigate('/savings/product');
     }
   };
 
@@ -42,7 +42,7 @@ const DepositAccount = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='적금 가입' />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -91,9 +91,21 @@ const DepositAccount = () => {
         </div>
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
-        <Button label='이전' size='medium' color='orange' onClick={GoBack} />
-        <Button label='다음' size='medium' color='orange' onClick={GoNext} />
+      <div className='mb-20 flex w-full items-center justify-center p-4'>
+        <Button
+          label='이전'
+          size='medium'
+          color='orange'
+          onClick={GoBack}
+          className='mr-2'
+        />
+        <Button
+          label='다음'
+          size='medium'
+          color='orange'
+          onClick={GoNext}
+          className='ml-2'
+        />
       </div>
 
       <div className='fixed bottom-0 left-0 w-full'>
@@ -111,4 +123,4 @@ const DepositAccount = () => {
   );
 };
 
-export default DepositAccount;
+export default SavingsAccount;

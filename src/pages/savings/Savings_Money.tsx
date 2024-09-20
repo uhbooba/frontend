@@ -8,16 +8,15 @@ import NoModal from '@/components/modals/No_Modal';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import Keypad from '@/components/common/KeyPad';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
+  maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
-  maturityDateAtom,
-} from '@/atoms/deposit/depositDataAtoms';
-import { useEffect, useState } from 'react';
-import { calculateMaturityDate } from '@/utils/dateUtil';
+} from '@/atoms/savings/savingsDataAtoms';
 
-const DepositMoney = () => {
+const SavingsMoney = () => {
   const navigate = useNavigate();
 
   const [selectMoney, setSelectMoney] = useAtom(selectMoneyAtom);
@@ -41,14 +40,6 @@ const DepositMoney = () => {
     setIsModalOpen(false);
   };
 
-  // 금액과 기간 선택 시 만기일 업데이트
-  useEffect(() => {
-    if (selectPeriod) {
-      const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
-      setMaturityDate(calculatedMaturityDate); // maturityDateAtom에 저장
-    }
-  }, [selectPeriod, setMaturityDate]);
-
   // 뒤로가기
   const GoBack = () => {
     navigate(-1);
@@ -59,8 +50,9 @@ const DepositMoney = () => {
     // 금액과 기간 선택 여부 확인
     if (!selectMoney || !selectPeriod) {
       setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
+      console.log(selectPeriod);
     } else {
-      navigate('/deposit/account');
+      navigate('/savings/account');
     }
   };
 
@@ -69,7 +61,7 @@ const DepositMoney = () => {
     setIsModalOpen(false);
   };
 
-  // 얼마로 시작할까요? 버튼 클릭 함수
+  // 얼마씩 적금할까요? 버튼 클릭 함수
   const amountClick = (amount: string) => {
     setAmountBtnColor(amount);
 
@@ -111,21 +103,20 @@ const DepositMoney = () => {
   // 기간 버튼 내용값
   const periods = ['6개월', '12개월', '24개월', '36개월'];
 
-  // // 나의 만기일 계산 함수
-  // const calculateMaturityDate = (months: string) => {
-  //   const currentDate = new Date(); // 현재 날짜 가져오기
-  //   const periodInMonths = parseInt(months.replace('개월', ''), 10); // 선택한 버튼 값 숫자로 변경
-  //   currentDate.setMonth(currentDate.getMonth() + periodInMonths); // 현재날짜 + 선택 개월수
+  // 나의 만기일 계산 함수
+  const calculateMaturityDate = (months: string) => {
+    const currentDate = new Date(); // 현재 날짜 가져오기
+    const periodInMonths = parseInt(months.replace('개월', ''), 10); // 선택한 버튼 값 숫자로 변경
+    currentDate.setMonth(currentDate.getMonth() + periodInMonths); // 현재날짜 + 선택 개월수
 
-  //   // 한국식 날짜로 변환하기 (2222년 22월 22일처럼 바꾸는컷)
-  //   return currentDate.toLocaleDateString('ko-KR', {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //   });
-  // };
+    // 한국식 날짜로 변환하기 (2222년 22월 22일처럼 바꾸는컷)
+    return currentDate.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
-  // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {
     if (selectPeriod) {
       const calculatedMaturityDate = calculateMaturityDate(selectPeriod);
@@ -143,7 +134,7 @@ const DepositMoney = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='적금 가입' />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -152,7 +143,7 @@ const DepositMoney = () => {
 
       <div>
         <div className='pb-4 pl-4 text-3xl font-bold'>
-          <span>얼마로 시작할까요?</span>
+          <span>얼마씩 적금할까요?</span>
         </div>
 
         <MoneyInput
@@ -196,7 +187,7 @@ const DepositMoney = () => {
         </div>
       </div>
 
-      <div className='mb-20 mt-8 flex w-full items-center justify-between p-4'>
+      <div className='mb-20 mt-8 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
@@ -239,4 +230,4 @@ const DepositMoney = () => {
   );
 };
 
-export default DepositMoney;
+export default SavingsMoney;

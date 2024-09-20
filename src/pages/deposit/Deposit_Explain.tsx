@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import XTopBar from '@/components/layouts/XTopbar';
 
 const DepositExplain = () => {
   const navigate = useNavigate();
@@ -11,12 +11,13 @@ const DepositExplain = () => {
   };
   return (
     <div>
-      {/* 상단바 */}
-      <TopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
       {/* 말풍선 스타일 적용 */}
       <div>
-        <div className='mt-4 text-center'>
+        <div className='mt-20 text-center'>
           <p className='text-3xl font-bold'>예금이란?</p>
         </div>
         <div className='text-center'>
@@ -47,14 +48,14 @@ const DepositExplain = () => {
         {/* 돼지 이미지 */}
         <div className='flex items-center justify-center'>
           <img
-            src='assets/images/deposit_pig.png'
+            src='/assets/images/deposit_pig.png'
             alt='Pig'
-            className='ml-32 mt-4 h-56 w-56'
+            className='ml-32 mt-8 h-56 w-56'
           />
         </div>
 
         {/* 확인 버튼 */}
-        <div className='mt-2 items-center justify-center p-4'>
+        <div className='mb-20 w-full items-center justify-center p-4'>
           <Button
             label='확인'
             size='large'

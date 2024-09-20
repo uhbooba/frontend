@@ -8,7 +8,7 @@ import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 
-const DepositAgree = () => {
+const SavingsAgree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [agree1, setAgree1] = useState<string>('');
@@ -39,7 +39,7 @@ const DepositAgree = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/deposit/signup');
+    navigate('/savings/signup');
   };
 
   const ModalClose = () => {
@@ -50,7 +50,7 @@ const DepositAgree = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='예금 가입' />
+        <XTopBar title='적금 가입' />
       </div>
 
       <div className='mb-6 mt-20'>
@@ -60,10 +60,10 @@ const DepositAgree = () => {
       <div className='m-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 수집 및 이용 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 ml-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -77,10 +77,10 @@ const DepositAgree = () => {
       <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 제3자 제공 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 ml-1 mt-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1 mt-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -94,10 +94,10 @@ const DepositAgree = () => {
       <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>싸피은행 약관 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 ml-1 mt-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1 mt-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -114,13 +114,14 @@ const DepositAgree = () => {
           size='medium'
           color='orange'
           onClick={() => GoBack()}
-          className='mr-4'
+          className='mr-2'
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
           onClick={() => OpenModal()}
+          className='ml-2'
         />
       </div>
 
@@ -164,4 +165,4 @@ const DepositAgree = () => {
   );
 };
 
-export default DepositAgree;
+export default SavingsAgree;
