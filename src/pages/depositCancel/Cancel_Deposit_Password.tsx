@@ -12,7 +12,7 @@ const CancelDepositPassword = () => {
 
   return (
     <div>
-      <XTopBar title='예금 가입 - 비밀번호' />
+      <XTopBar title='예금 중도해지' />
 
       <div className='mb-12 mt-4'>
         <LevelBar currentLevel={2} totalLevel={2} />

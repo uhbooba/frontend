@@ -49,20 +49,21 @@ const DepositAgree = () => {
 
   return (
     <div>
-      {/* 상단바 */}
-      <XTopBar title='예금가입 - 동의페이지' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
-      <div className='mb-6 mt-2'>
+      <div className='mb-6 mt-20'>
         <LevelBar currentLevel={1} totalLevel={5} />
       </div>
 
       <div className='m-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 수집 및 이용 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1 ml-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 수집 및 이용 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -76,10 +77,10 @@ const DepositAgree = () => {
       <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>개인정보 제3자 제공 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 mt-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
-          <p className='mb-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1 ml-1 mt-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
+          <p className='mb-1 ml-1'>개인정보 제3자 제공 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -93,10 +94,10 @@ const DepositAgree = () => {
       <div className='m-4 mt-4'>
         <p className='mb-2 text-2xl font-bold'>싸피은행 약관 동의서</p>
         <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 mt-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
-          <p className='mb-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1 ml-1 mt-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
+          <p className='mb-1 ml-1'>싸피은행 약관에 동의하세요?</p>
         </div>
         <div className='flex justify-end'>
           <CheckButton
@@ -107,12 +108,13 @@ const DepositAgree = () => {
         </div>
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
+      <div className='mb-20 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
           color='orange'
           onClick={() => GoBack()}
+          className='mr-4'
         />
         <Button
           label='다음'

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
 import { useAtom } from 'jotai';
 import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
+import { validateInputs } from '@/utils/validateInputs';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);
@@ -20,7 +21,6 @@ const SavingsSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
-    accountNumber: '',
   });
 
   useEffect(() => {
@@ -33,42 +33,17 @@ const SavingsSignup = () => {
         name: '',
         idNumber: '',
         phoneNumber: '',
-        accountNumber: '',
       });
     };
   }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
 
   const navigate = useNavigate();
 
-  const validateInputs = () => {
-    const newErrors = {
-      name: '',
-      idNumber: '',
-      phoneNumber: '',
-      accountNumber: '',
-    };
-
-    let isValid = true;
-
-    if (!name || !/^[가-힣]+$/.test(name)) {
-      newErrors.name = '한글만 입력이 가능합니다.';
-      isValid = false;
-    }
-    if (!idNumber || !/^\d+$/.test(idNumber)) {
-      newErrors.idNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-      newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const OpenModal = () => {
-    if (validateInputs()) {
+    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    setErrors(newErrors);
+
+    if (isValid) {
       setIsModalOpen(true);
     }
   };
@@ -88,9 +63,11 @@ const SavingsSignup = () => {
 
   return (
     <div className='w-full overflow-x-hidden'>
-      <XTopBar title='적금 가입 - 개인정보' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='적금 가입' />
+      </div>
 
-      <div className='mt-2'>
+      <div className='mt-20'>
         <LevelBar currentLevel={2} totalLevel={5} />
       </div>
 
@@ -141,16 +118,14 @@ const SavingsSignup = () => {
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
         <Button
           label='이전'
-          size='large'
+          size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => GoBack()}
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
-          className='flex-grow'
           onClick={() => OpenModal()}
         />
       </div>

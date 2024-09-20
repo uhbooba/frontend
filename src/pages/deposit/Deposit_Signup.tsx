@@ -6,6 +6,7 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
+import { validateInputs } from '@/utils/validateInputs';
 
 const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,7 +17,6 @@ const DepositSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
-    accountNumber: '',
   });
 
   useEffect(() => {
@@ -28,41 +28,16 @@ const DepositSignup = () => {
       name: '',
       idNumber: '',
       phoneNumber: '',
-      accountNumber: '',
     });
   }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setErrors]);
 
   const navigate = useNavigate();
 
-  const validateInputs = () => {
-    const newErrors = {
-      name: '',
-      idNumber: '',
-      phoneNumber: '',
-      accountNumber: '',
-    };
-
-    let isValid = true;
-
-    if (!name || !/^[가-힣]+$/.test(name)) {
-      newErrors.name = '한글만 입력이 가능합니다.';
-      isValid = false;
-    }
-    if (!idNumber || !/^\d+$/.test(idNumber)) {
-      newErrors.idNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-    if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
-      newErrors.phoneNumber = '숫자만 입력 가능합니다.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const OpenModal = () => {
-    if (validateInputs()) {
+    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    setErrors(newErrors);
+
+    if (isValid) {
       setIsModalOpen(true);
     }
   };
@@ -81,10 +56,12 @@ const DepositSignup = () => {
   };
 
   return (
-    <div className='w-full overflow-x-hidden'>
-      <XTopBar title='예금 가입 - 개인정보' />
+    <div>
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
-      <div className='mt-2'>
+      <div className='mt-20'>
         <LevelBar currentLevel={2} totalLevel={5} />
       </div>
 
@@ -125,19 +102,6 @@ const DepositSignup = () => {
         {errors.phoneNumber && (
           <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
         )}
-
-        {/* <Input
-          label='계좌번호'
-          variant='full'
-          placeholder='계좌번호를 입력하세요'
-          value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
-          isError={!!errors.accountNumber}
-          className='mb-2'
-        />
-        {errors.accountNumber && (
-          <p className='mb-4 text-red-500'>{errors.accountNumber}</p>
-        )} */}
       </div>
 
       <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>

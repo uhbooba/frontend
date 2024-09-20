@@ -11,12 +11,13 @@ const DepositExplain = () => {
   };
   return (
     <div>
-      {/* 상단바 */}
-      <XTopBar title='예금 가입' />
+      <div className='fixed left-0 top-0 w-full'>
+        <XTopBar title='예금 가입' />
+      </div>
 
       {/* 말풍선 스타일 적용 */}
       <div>
-        <div className='mt-4 text-center'>
+        <div className='mt-20 text-center'>
           <p className='text-3xl font-bold'>예금이란?</p>
         </div>
         <div className='text-center'>
@@ -54,7 +55,7 @@ const DepositExplain = () => {
         </div>
 
         {/* 확인 버튼 */}
-        <div className='fixed bottom-16 w-full items-center justify-center p-4 mb-2'>
+        <div className='mb-20 w-full items-center justify-center p-4'>
           <Button
             label='확인'
             size='large'
