@@ -1,5 +1,9 @@
 fastapi
+requests
 uvicorn
 sqlalchemy
 pymysql
 pydantic[email]
+python-dotenv
+gTTS
+redis

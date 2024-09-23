@@ -25,7 +25,7 @@ springdoc:
   api-docs:
     path: /finance-service/v3/api-docs
   swagger-ui:
-    path: /finance-service/swagger-ui.html
+    path: /finance-service/docs
 
 
 eureka:

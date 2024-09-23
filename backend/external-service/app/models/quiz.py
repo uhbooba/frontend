@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, Text, Boolean, DateTime
 from sqlalchemy.sql import func
-from app.config.database import Base
+
+from ..config.database import Base
+
 
 class Quiz(Base):
     __tablename__ = "quiz"
@@ -10,6 +12,7 @@ class Quiz(Base):
     number = Column(Integer)
     question = Column(Text)
     answer = Column(Boolean)
+    comment = Column(Text)
     created_at = Column(DateTime, server_default=func.now())
 
     def __repr__(self):

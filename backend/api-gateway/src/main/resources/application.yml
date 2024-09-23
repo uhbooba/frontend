@@ -10,10 +10,10 @@ eureka:
 spring:
   application:
     name: api-gateway
-#  security:
-#    user:
-#      name: user
-#      password: 1234
+  #  security:
+  #    user:
+  #      name: user
+  #      password: 1234
   cloud:
     gateway:
       globalcors:
@@ -77,20 +77,27 @@ spring:
           predicates:
             - Path=/finance-service/**,/finances/**
 
+        - id: external-service
+          uri: lb://external-service
+          predicates:
+            - Path=/external-service/**,/externals/**
+
 springdoc:
   api-docs:
     enabled: true
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html
+    path: /docs
     config-url: /v3/api-docs/swagger-config
     urls:
       - url: /v3/api-docs
         name: API Gateway Service
       - url: /user-service/v3/api-docs
-        name: User Service
+        name: 사용자 서비스
       - url: /finance-service/v3/api-docs
-        name: Finance Service
+        name: 금융 서비스
+      - url: /external-service/v3/api-docs
+        name: 외부 서비스
 
 management:
   endpoints:

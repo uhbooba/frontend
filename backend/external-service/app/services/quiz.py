@@ -1,22 +1,25 @@
-from sqlalchemy.orm import Session
-from app.models.quiz import Quiz
-from app.schemas.quiz import QuizItem, QuizPartResponse, QuizResponse
 from itertools import groupby
 from operator import attrgetter
+
+from sqlalchemy.orm import Session
+
+from ..models.quiz import Quiz
+from ..schemas.quiz import QuizItem, QuizPartResponse, QuizResponse
+
 
 class QuizService:
 
     # 모든 퀴즈를 가져오는 함수
     @staticmethod
     def get_all_quizzes(db: Session, skip: int = 0, limit: int = 100):
-
         quizzes = db.query(Quiz).offset(skip).limit(limit).all()
         quiz_items = [
             QuizItem(
                 part=quiz.part,
                 number=quiz.number,
                 question=quiz.question,
-                answer='O' if quiz.answer else 'X'
+                answer='O' if quiz.answer else 'X',
+                comment=quiz.comment
             )
             for quiz in quizzes
         ]
@@ -31,7 +34,6 @@ class QuizService:
 
         return QuizResponse(status="success", data=quizzes_by_part)
 
-
     # 특정 파트의 퀴즈를 가져오는 함수
     @staticmethod
     def get_quizzes_by_part(db: Session, part: int):
@@ -42,7 +44,8 @@ class QuizService:
                 part=quiz.part,
                 number=quiz.number,
                 question=quiz.question,
-                answer='O' if quiz.answer else 'X'
+                answer='O' if quiz.answer else 'X',
+                comment=quiz.comment
             )
             for quiz in quizzes
         ]

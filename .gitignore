@@ -212,3 +212,7 @@ prometheus/chunks_head/
 prometheus/wal/
 prometheus/lock
 prometheus/queries.active
+prometheus/
+
+kafka-data/
+zookeeper-data/

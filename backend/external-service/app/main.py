@@ -1,30 +1,30 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# import sys
+# import os
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #####################################################################################
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-#####################################################################################c
-
-
-
-from config.database import SessionLocal, engine, Base
+from .config.database import SessionLocal, engine, Base
+from .eureka_register import register_with_eureka
 from fastapi import FastAPI
-from config.database import engine, Base
-from controllers import quiz
-
+from .config.database import engine, Base
+from .controllers import quiz, tts
+#####################################################################################c
 Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
-
+app = FastAPI(
+    openapi_url="/external-service/v3/api-docs",  # OpenAPI 문서 경로 설정
+    docs_url="/external-service/docs",            # Swagger UI 경로 설정
+)
+#####################################################################################c
 app.include_router(quiz.router)
+app.include_router(tts.router)
+
 
 @app.get("/health-check")
 def read_root():
     return {"Hello": "World"}
+#####################################################################################c
+@app.on_event("startup")
+def startup_event():
+    register_with_eureka()
 
 # Dependency
 def get_db():
