@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 
 public record CommonResponse<T>(
 
-        int statusCode,
-        String message,
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        T result
+    int statusCode,
+    String message,
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    T result
 ) {
     public static <T> CommonResponse<T> ok(String message) {
         return new CommonResponse<>(HttpStatus.OK.value(), message, null);
@@ -28,6 +28,14 @@ public record CommonResponse<T>(
 
     public static <T> CommonResponse<T> created(String message) {
         return new CommonResponse<>(HttpStatus.CREATED.value(), message, null);
+    }
+
+    public static <T> CommonResponse<T> unauthorized(String message) {
+        return new CommonResponse<>(HttpStatus.UNAUTHORIZED.value(), message, null);
+    }
+
+    public static <T> CommonResponse<T> forbidden(String message) {
+        return new CommonResponse<>(HttpStatus.FORBIDDEN.value(), message, null);
     }
 
 }
