@@ -30,6 +30,9 @@ import SavingsProduct from '@/pages/savings/Savings_Product';
 import Savingspassword from '@/pages/savings/Savings_Password';
 import SavingsSuccess from '@/pages/savings/Savings_Success';
 import DepositSuccess2 from '@/pages/deposit/Deposit_Success2';
+import QuizMain from '@/pages/quiz/QuizMain';
+import QuizQuestion from '@/pages/quiz/QuizQuestion';
+import QuizSuccess from '@/pages/quiz/QuizSuccess';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +70,9 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
+      { path: 'quiz', element: <QuizMain /> },
+      { path: 'quiz/:type', element: <QuizQuestion /> },
+      { path: 'quiz/:type/success', element: <QuizSuccess /> },
     ],
   },
 ]);
