@@ -1,11 +1,9 @@
 package com.uhbooba.financeservice.service.finapi;
 
-import static com.uhbooba.financeservice.service.finapi.CommonService.executeApiRequest;
 import static com.uhbooba.financeservice.util.finapi.FinApiList.DemandDeposit.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.util.finapi.FinOpenApiHandler;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DemandDepositService {
 
-    private final FinOpenApiHandler finOpenApiHandler;
+    private final CommonService commonService;
 
     public Mono<JsonNode> createDemandDeposit(
         String bankCode,
@@ -35,7 +33,7 @@ public class DemandDepositService {
                                                              .apiName(CREATE_DEPOSIT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> createDemandDepositAccount(String accountTypeUniqueNo) {
@@ -49,7 +47,7 @@ public class DemandDepositService {
                                                              .apiName(CREATE_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDemandDepositAccount(
@@ -67,7 +65,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDemandDepositAccounts(String userKey) {
@@ -81,7 +79,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDemandDepositAccountHolderName(
@@ -99,7 +97,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDemandDepositAccountBalance(
@@ -117,7 +115,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> depositDemandDepositAccount(
@@ -139,7 +137,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> transferDemandDepositAccount(
@@ -165,7 +163,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getTransactionHistories(
@@ -192,7 +190,7 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getTransactionHistory(
@@ -213,6 +211,6 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 }
