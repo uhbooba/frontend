@@ -44,26 +44,25 @@ const DepositExplain = () => {
         </div>
       </div>
 
-      <div className=''>
-        {/* 돼지 이미지 */}
-        <div>
-          <img
-            src='/assets/images/deposit_pig.png'
-            alt='Pig'
-            className='h-54 w-54 ml-32 mt-8'
-          />
-        </div>
-
-        {/* 확인 버튼 */}
-        <div className='w-full items-center justify-center p-4'>
-          <Button
-            label='확인'
-            size='large'
-            color='orange'
-            onClick={() => GoSignup()}
-          />
-        </div>
+      {/* 돼지 이미지 */}
+      <div>
+        <img
+          src='/assets/images/deposit_pig.png'
+          alt='Pig'
+          className='ml-20 mt-8 h-[270px] w-[270px]'
+        />
       </div>
+
+      {/* 확인 버튼 */}
+      <div className='w-full items-center justify-center p-4'>
+        <Button
+          label='확인'
+          size='large'
+          color='orange'
+          onClick={() => GoSignup()}
+        />
+      </div>
+
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>
