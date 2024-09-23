@@ -40,10 +40,10 @@ spring:
             allowCredentials: true
 
       routes:
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/user-service/**,/users/**
+        #        - id: user-service
+        #          uri: lb://user-service
+        #          predicates:
+        #            - Path=/user-service/**,/users/**
 
         - id: user-service
           uri: lb://user-service
@@ -75,7 +75,7 @@ spring:
         - id: finance-service
           uri: lb://finance-service
           predicates:
-            - Path=/finance-service/**,/finances/**
+            - Path=/finance-service/**,/finances/**,/fin-api/**
 
         - id: external-service
           uri: lb://external-service
