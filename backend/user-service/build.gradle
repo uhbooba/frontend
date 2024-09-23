@@ -32,6 +32,9 @@ dependencies {
     // db
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.4.1'
 
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
