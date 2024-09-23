@@ -9,13 +9,13 @@ import {
   validatePhoneNumber,
   validateUserId,
 } from '@/utils/validation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const Signup = () => {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   //const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [password] = useState('');
 
   const [isPhoneConfirmed, setTsPhoneConfirmed] = useState(false);
   const [isPhoneClicked, setIsPhoneClicked] = useState(false);

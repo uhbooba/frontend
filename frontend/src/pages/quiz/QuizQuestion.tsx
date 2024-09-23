@@ -10,7 +10,6 @@ const QuizQuestion = () => {
   const totalQuestions = 5;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState('');
-  const [quizCompleted, setQuizCompleted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const WRONG_TEXT = '앗 오답입니다! \n다시 한번 풀어보세요!';
 
@@ -26,7 +25,6 @@ const QuizQuestion = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setShowModal(false);
     } else {
-      setQuizCompleted(true);
       navigate('success');
     }
   };
