@@ -4,12 +4,14 @@ interface BalloonProps {
   content: string[]; // 여러 문장
   tailPosition?: 'left' | 'center' | 'right'; // 꼬리 위치
   textPosition?: 'left' | 'center' | 'right';
+  bubbleSize?: string;
 }
 
 const TextBubble: React.FC<BalloonProps> = ({
   content,
   tailPosition = 'center',
   textPosition = 'right',
+  bubbleSize = 'w-[280px]',
 }) => {
   const tailPositionClass =
     tailPosition === 'left'
@@ -26,7 +28,7 @@ const TextBubble: React.FC<BalloonProps> = ({
         : 'text-center';
 
   return (
-    <div className='relative mt-24 w-[280px]'>
+    <div className={`relative mt-24 ${bubbleSize}`}>
       <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
         {content.map((line, index) => (
           <p
