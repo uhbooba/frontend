@@ -44,6 +44,12 @@ services:
       - uhbooba-net
     volumes:
       - external-db-data:/var/lib/mariadb
+      - ./healthcheck.sh:/usr/local/bin/healthcheck.sh
+    healthcheck:
+      test: ["CMD", "bash", "/usr/local/bin/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   uhbooba-net:
