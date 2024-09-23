@@ -32,6 +32,9 @@ import SavingsSuccess from '@/pages/savings/Savings_Success';
 import DepositSuccess2 from '@/pages/deposit/Deposit_Success2';
 import EducationVideo from '@/pages/education/video/Education_Video';
 import EducationCertificate from '@/pages/education/certificate/Education_Certificate';
+import QuizMain from '@/pages/quiz/QuizMain';
+import QuizQuestion from '@/pages/quiz/QuizQuestion';
+import QuizSuccess from '@/pages/quiz/QuizSuccess';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,9 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       { path: 'education/video', element: <EducationVideo /> },
       { path: 'education/certificate', element: <EducationCertificate /> },
+      { path: 'quiz', element: <QuizMain /> },
+      { path: 'quiz/:type', element: <QuizQuestion /> },
+      { path: 'quiz/:type/success', element: <QuizSuccess /> },
     ],
   },
 ]);
