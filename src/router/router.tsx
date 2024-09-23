@@ -35,6 +35,8 @@ import EducationCertificate from '@/pages/education/certificate/Education_Certif
 import QuizMain from '@/pages/quiz/QuizMain';
 import QuizQuestion from '@/pages/quiz/QuizQuestion';
 import QuizSuccess from '@/pages/quiz/QuizSuccess';
+import EducationWriting from '@/pages/education/certificate/Education_Writing';
+import EducationDownload from '@/pages/education/certificate/Education_Download';
 
 const router = createBrowserRouter([
   {
@@ -74,6 +76,8 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       { path: 'education/video', element: <EducationVideo /> },
       { path: 'education/certificate', element: <EducationCertificate /> },
+      { path: 'education/writing', element: <EducationWriting /> },
+      { path: 'education/download', element: <EducationDownload /> },
       { path: 'quiz', element: <QuizMain /> },
       { path: 'quiz/:type', element: <QuizQuestion /> },
       { path: 'quiz/:type/success', element: <QuizSuccess /> },
