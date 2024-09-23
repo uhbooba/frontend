@@ -24,7 +24,7 @@ export type ButtonConfigType = {
 };
 
 type ButtonProps = {
-  label: string;
+  label: string | React.ReactNode;
   size?: keyof typeof BUTTON_SIZES;
   color?: keyof typeof BUTTON_COLORS;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
