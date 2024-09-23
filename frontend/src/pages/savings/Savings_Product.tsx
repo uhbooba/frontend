@@ -22,6 +22,11 @@ const SavingsProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log("프로덕트페이지 체크 기억확인용", check);
+  }, [check]);
+
+  
+  useEffect(() => {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
@@ -49,6 +54,7 @@ const SavingsProduct = () => {
     return value.toLocaleString() + ' 원';
   };
 
+  
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
