@@ -44,7 +44,7 @@ export const validateInputs = (
   }
 
   // 이름 최소 2글자 이상 입력 가능하게 조건
-  else if (name.length < 3) {
+  else if (name.length < 3 && name.length > 0) {
     newErrors.name = '이름이 너무 짧습니다.';
     isValid = false;
   }
