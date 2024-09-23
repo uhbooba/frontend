@@ -18,8 +18,8 @@ const SavingsProduct = () => {
   const [maturityDate] = useAtom(maturityDateAtom);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [check] = useAtom(checkAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsModalOpen(false);
