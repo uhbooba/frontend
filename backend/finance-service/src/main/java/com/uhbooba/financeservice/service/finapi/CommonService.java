@@ -2,7 +2,6 @@ package com.uhbooba.financeservice.service.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.exception.FinOpenApiException;
 import com.uhbooba.financeservice.util.finapi.FinOpenApiHandler;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,17 +15,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class CommonService {
 
-    public static FinOpenApiHandler finOpenApiHandler;
+    private final FinOpenApiHandler finOpenApiHandler;
 
-    public static Mono<JsonNode> executeApiRequest(HandlerParamWithHeader param) {
-        return finOpenApiHandler.apiRequest(param)
-                                .onErrorResume(e -> {
-                                    log.error("API 요청 실패: {}, 이유: {}", param.apiName(),
-                                              e.getMessage(), e);
-                                    return Mono.error(new FinOpenApiException(
-                                        "API 요청 실패: " + param.apiName() + ", 이유: "
-                                            + e.getMessage()));
-                                });
+    public Mono<JsonNode> executeApiRequest(HandlerParamWithHeader param) {
+        return finOpenApiHandler.apiRequest(param);
     }
 
     public Mono<JsonNode> getBankCodes() {
@@ -35,8 +27,8 @@ public class CommonService {
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
-                                                             .url("/edu/bank/inquireBankCurrency")
-                                                             .apiName("inquireBankCurrency")
+                                                             .url("/edu/bank/inquireBankCodes")
+                                                             .apiName("inquireBankCodes")
                                                              .requestBody(requestBody)
                                                              .build();
         return executeApiRequest(param);
