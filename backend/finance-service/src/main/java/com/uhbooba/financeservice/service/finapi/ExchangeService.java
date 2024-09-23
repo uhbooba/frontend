@@ -1,11 +1,9 @@
 package com.uhbooba.financeservice.service.finapi;
 
-import static com.uhbooba.financeservice.service.finapi.CommonService.executeApiRequest;
 import static com.uhbooba.financeservice.util.finapi.FinApiList.Exchange.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.util.finapi.FinOpenApiHandler;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ExchangeService {
 
-    private final FinOpenApiHandler finOpenApiHandler;
+    private final CommonService commonService;
 
     public Mono<JsonNode> getExchangeRate(String currency) {
         // 1. 요청 본문 생성
@@ -31,7 +29,7 @@ public class ExchangeService {
                                                              .apiName(EXCHANGE_RATE_SEARCH_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getAllExchangeRate() {
@@ -44,7 +42,7 @@ public class ExchangeService {
                                                              .apiName(EXCHANGE_RATE_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getExchangeEstimate(
@@ -67,7 +65,7 @@ public class ExchangeService {
                                                              .apiName(ESTIMATE_EXCHANGE_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> exchange(
@@ -87,7 +85,7 @@ public class ExchangeService {
                                                              .apiName(EXCHANGE_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getBackCurrency() {
@@ -101,6 +99,6 @@ public class ExchangeService {
                                                                  INQUIRE_BANK_CURRENCY_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return executeApiRequest(param);
+        return commonService.executeApiRequest(param);
     }
 }
