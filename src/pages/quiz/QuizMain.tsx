@@ -1,6 +1,5 @@
 import TopBar from '@/components/layouts/TopBar';
 import { QuizItem } from '@/components/quiz/QuizItem';
-import pig from '@/assets/images/pig.png';
 import { useNavigate } from 'react-router';
 
 const QuizMain = () => {
@@ -27,7 +26,7 @@ const QuizMain = () => {
           <QuizItem
             key={item.path}
             title={item.title}
-            icon={<img src={pig} className='h-16 w-16' />}
+            icon={<img src='/assets/images/pig.png' className='h-16 w-16' />}
             onClick={() => moveQuiz(item.path)}
           />
         ))}

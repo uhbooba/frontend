@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const Login = () => {
   const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const [password] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
