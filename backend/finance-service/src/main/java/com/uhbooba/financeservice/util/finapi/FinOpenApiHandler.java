@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -62,15 +63,41 @@ public class FinOpenApiHandler {
                         .uri(baseUrl + url)
                         .bodyValue(requestBody)
                         .retrieve()
-                        .bodyToMono(String.class)
+                        .onStatus(HttpStatusCode::isError,
+                                  clientResponse -> clientResponse.bodyToMono(String.class)
+                                                                  .flatMap(errorBody -> {
+                                                                      log.error(
+                                                                          "API 요청 실패: {}, 상태 코드: {}, 응답: {}",
+                                                                          url,
+                                                                          clientResponse.statusCode(),
+                                                                          errorBody);
+                                                                      return Mono.error(
+                                                                          new FinOpenApiException(
+                                                                              "API 요청 실패: " + url
+                                                                                  + ", 이유: "
+                                                                                  + errorBody));
+                                                                  }))
+                        .bodyToMono(JsonNode.class) // JsonNode로 바로 변환
+                        .flatMap(response -> { // REC 가 있는 반환일 경우 그것만 반환
+                            // Header 확인
+                            if(response.has("Header")) {
+                                JsonNode header = response.get("Header");
+                                String responseCode = header.get("responseCode")
+                                                            .asText();
+                                if(!"H0000".equals(responseCode)) {
+                                    // 실패한 경우 예외 처리
+                                    String responseMessage = header.get("responseMessage")
+                                                                   .asText();
+                                    return Mono.error(new FinOpenApiException(
+                                        "API 요청 실패: " + ", 이유: " + responseMessage));
+                                }
+                            }
+                            // REC 반환
+                            return Mono.just(response.has("REC") ? response.get("REC") : response);
+                        })
                         .timeout(Duration.ofSeconds(5)) // 5초 타임아웃 설정
-                        .map(this::parseJsonResponse)
                         .subscribeOn(Schedulers.boundedElastic()) // I/O 작업을 위한 스레드 풀
-                        .onErrorResume(throwable -> {
-                            log.error("API 요청 실패: {}", throwable.getMessage(), throwable);
-                            return Mono.error(
-                                new FinOpenApiException("API 요청 실패 : " + param.url()));
-                        });
+            ;
 
     }
 
@@ -116,7 +143,8 @@ public class FinOpenApiHandler {
         JsonNode headerNode = null;
         try {
             // fin 공통헤더 만들기
-            headerJson = objectMapper.writeValueAsString(finCommonHeader.createHeader(apiName));
+            FinCommonHeader header = finCommonHeader.createHeader(apiName);
+            headerJson = objectMapper.writeValueAsString(header);
             headerNode = objectMapper.readTree(headerJson);
         } catch(JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -133,15 +161,44 @@ public class FinOpenApiHandler {
                         .uri(baseUrl + url)
                         .bodyValue(requestBody)
                         .retrieve()
-                        .bodyToMono(String.class)
+                        .onStatus(HttpStatusCode::isError,
+                                  clientResponse -> clientResponse.bodyToMono(String.class)
+                                                                  .flatMap(errorBody -> {
+                                                                      log.error(
+                                                                          "API 요청 실패: {}, 상태 코드: {}, 응답: {}",
+                                                                          apiName,
+                                                                          clientResponse.statusCode(),
+                                                                          errorBody);
+                                                                      return Mono.error(
+                                                                          new FinOpenApiException(
+                                                                              "API 요청 실패: "
+                                                                                  + apiName
+                                                                                  + ", 이유: "
+                                                                                  + errorBody));
+                                                                  }))
+                        .bodyToMono(JsonNode.class) // JsonNode로 바로 변환
+                        .flatMap(response -> { // REC 가 있는 반환일 경우 그것만 반환
+                            // Header 확인
+                            if(response.has("Header")) {
+                                JsonNode header = response.get("Header");
+                                String responseCode = header.get("responseCode")
+                                                            .asText();
+                                if(!"H0000".equals(responseCode)) {
+                                    // 실패한 경우 예외 처리
+                                    String responseMessage = header.get("responseMessage")
+                                                                   .asText();
+                                    return Mono.error(new FinOpenApiException(
+                                        "API 요청 실패: " + apiName + ", 이유: " + responseMessage));
+                                }
+                            }
+                            // REC 반환
+                            return Mono.just(response.has("REC") ? response.get("REC") : response);
+                        })
                         .timeout(Duration.ofSeconds(5)) // 5초 타임아웃 설정
-                        .map(this::parseJsonResponse)
                         .subscribeOn(Schedulers.boundedElastic()) // I/O 작업을 위한 스레드 풀
-                        .onErrorResume(throwable -> {
-                            log.error("API 요청 실패: {}", throwable.getMessage(), throwable);
-                            return Mono.error(
-                                new FinOpenApiException("API 요청 실패: " + param.apiName()));
-                        });
+                        .doOnSuccess(response -> log.info("API 요청 성공: {}, 응답: {}", apiName,
+                                                          response)) // 성공 시 응답 로깅
+            ;
     }
 
     /**
