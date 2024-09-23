@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install -g npm@10.7.0
 RUN npm install
 COPY . .
-RUN npm run build --noEmitOnError false
+RUN npm run build
 
 # Step 2: Serve the React application using Nginx
 FROM nginx:alpine
