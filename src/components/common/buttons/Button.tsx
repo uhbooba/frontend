@@ -8,10 +8,10 @@ const BUTTON_SIZES = {
 };
 
 const BUTTON_COLORS = {
-  orange: 'bg-primary  focus:border-blue-400 focus:text-blue-400',
-  red: 'bg-red-main focus:border-blue-400 focus:text-blue-400',
-  green: 'bg-green-main  focus:border-blue-400 focus:text-blue-400',
-  white: 'bg-white-500 focus:border-blue-300 focus:text-blue-400',
+  orange: 'bg-primary',
+  red: 'bg-red-main',
+  green: 'bg-green-main',
+  white: 'bg-white-500',
   blue: 'bg-blue-500',
 };
 
