@@ -6,6 +6,7 @@ import BigModal from '@/components/modals/Big_Modal';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
+  checkAtom,
   maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
@@ -18,6 +19,7 @@ const SavingsProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [check] = useAtom(checkAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -39,10 +41,18 @@ const SavingsProduct = () => {
     setIsModalOpen(false);
   };
 
+  const parseCurrency = (value: string): number => {
+    return Number(value.replace(/[^0-9]/g, ''));
+  };
+
+  const formatCurrency = (value: number): string => {
+    return value.toLocaleString() + ' 원';
+  };
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입'  />
+        <TopBar title='적금 가입' />
       </div>
 
       <div className='mb-6 mt-20'>
@@ -60,48 +70,65 @@ const SavingsProduct = () => {
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <div className='grid grid-cols-3 text-start'>
+          <div className='grid grid-cols-2 text-start'>
             <div>
-              <span className='text-2xl text-gray-500'>이자율</span>
-              <div className='mt-2 text-xl font-bold'>5%</div>
+              <span className='text-2xl text-gray-500'>약정 기간</span>
+              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
             </div>
+            <div>
+              <span className='text-2xl text-gray-500'>만기일</span>
+              <div className='mt-2 text-xl font-bold'>{maturityDate}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className='border-b border-gray-300 py-4'>
+          <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>월 납입액</span>
               <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
             </div>
             <div>
-              <span className='text-2xl text-gray-500'>약정 기간</span>
-              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
+              <span className='text-2xl text-gray-500'>만기시 원금</span>
+              <div className='mt-2 text-xl font-bold'>
+                {formatCurrency(
+                  Number(selectPeriod.replace('개월', '')) *
+                    parseCurrency(selectMoney),
+                )}
+              </div>
             </div>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <div>
-            <span className='text-2xl text-gray-500'>만기일</span>
-            <div className='mt-2 text-xl font-bold'>{maturityDate}</div>
-          </div>
-        </div>
-
-        <div className='border-b border-gray-300 py-4'>
-          <div className='flex'>
+          <div className='grid grid-cols-2 text-start'>
             <div>
-              <span className='text-2xl text-gray-500'>원금</span>
-              <div className='mt-2 text-xl font-bold'>2,160만 원</div>
+              <span className='text-2xl text-gray-500'>이자율</span>
+              <div className='mt-2 text-xl font-bold'>5%</div>
             </div>
-            <div className='ml-12 text-left'>
+            <div>
               <span className='text-2xl text-gray-500'>예상 이자</span>
-              <div className='mt-2 text-xl font-bold'>13만 8,750원</div>
+              <div className='mt-2 text-xl font-bold'>138,750 원</div>
             </div>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <span className='text-2xl text-gray-500'>예상 금액</span>
-          <div className='mt-2 text-xl font-bold'>2,173만 8,750원</div>
+          <div className='grid grid-cols-2 text-start'>
+            <div>
+              <span className='text-2xl text-gray-500'>예상 금액</span>
+              <div className='mt-2 text-xl font-bold'>2,173만 8,750원</div>
+            </div>
+            <div>
+              <span className='text-2xl text-gray-500'>자동이체 여부</span>
+              <div className='mt-2 text-xl font-bold'>
+                {check === 'yes' ? '사용함' : '사용 안함'}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className='mb-20 flex w-full items-center justify-center p-4'>
+        <div className='mb-2 flex w-full items-center justify-center p-4'>
           <Button
             label='이전'
             size='medium'

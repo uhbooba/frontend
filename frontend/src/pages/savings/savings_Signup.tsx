@@ -6,10 +6,10 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
-import { useAtom } from 'jotai';
-import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 import { validateInputs } from '@/utils/validateInputs';
 import TopBar from '@/components/layouts/TopBar';
+import { useAtom } from 'jotai';
+import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);
@@ -21,6 +21,7 @@ const SavingsSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
+    check: '',
   });
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const SavingsSignup = () => {
         name: '',
         idNumber: '',
         phoneNumber: '',
+        check: '',
       });
     };
   }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
@@ -40,7 +42,12 @@ const SavingsSignup = () => {
   const navigate = useNavigate();
 
   const OpenModal = () => {
-    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    const { isValid, newErrors } = validateInputs(
+      name,
+      idNumber,
+      phoneNumber,
+      check,
+    );
     setErrors(newErrors);
 
     if (isValid) {
@@ -113,6 +120,9 @@ const SavingsSignup = () => {
       <div>
         <p className='ml-4 text-xl font-bold text-gray-600'>자동이체 여부</p>
         <CheckButton name='check' selected={check} setSelected={setCheck} />
+        {errors.check && (
+          <p className='mb-4 ml-4 mt-2 text-red-500'>{errors.check}</p>
+        )}
       </div>
 
       <div className='mb-2 flex w-full items-center justify-center p-4'>
