@@ -5,17 +5,19 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.atomic.AtomicInteger;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 public class FinCommonHeader {
 
     private static final AtomicInteger sequence = new AtomicInteger(0);
     private final String institutionCode = "00100"; // 기관 코드 고정
     private final String fintechAppNo = "001"; // 핀테크 앱 일련번호 고정
 
-    @Value("${finopenapi.key")
+    @Value("${finopenapi.key}")
     private String apiKey; // 금융 api key
 
     private String apiName; // API URL의 마지막 path 명
@@ -57,6 +59,22 @@ public class FinCommonHeader {
         ZonedDateTime koreaTime = now.atZone(ZoneId.systemDefault())
                                      .withZoneSameInstant(SEOUL_ZONE);
 
-        return new FinCommonHeader(apiName, koreaTime, this.apiKey);
+        this.apiName = apiName;
+        this.transmissionDate = koreaTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.transmissionTime = koreaTime.format(DateTimeFormatter.ofPattern("HHmmss"));
+        this.apiServiceCode = apiName;
+        this.institutionTransactionUniqueNo = generateUniqueNo(transmissionDate + transmissionTime);
+
+        return this; // 현재 인스턴스를 반환
+    }
+
+    @Override
+    public String toString() {
+        return "FinCommonHeader{" + "institutionCode='" + institutionCode + '\''
+            + ", fintechAppNo='" + fintechAppNo + '\'' + ", apiKey='" + apiKey + '\''
+            + ", apiName='" + apiName + '\'' + ", transmissionDate='" + transmissionDate + '\''
+            + ", transmissionTime='" + transmissionTime + '\'' + ", apiServiceCode='"
+            + apiServiceCode + '\'' + ", institutionTransactionUniqueNo='"
+            + institutionTransactionUniqueNo + '\'' + '}';
     }
 }
