@@ -46,11 +46,11 @@ const DepositExplain = () => {
 
       <div className=''>
         {/* 돼지 이미지 */}
-        <div className='flex items-center justify-center'>
+        <div>
           <img
             src='/assets/images/deposit_pig.png'
             alt='Pig'
-            className='ml-32 mt-8 h-56 w-56'
+            className='h-54 w-54 ml-32 mt-8'
           />
         </div>
 
