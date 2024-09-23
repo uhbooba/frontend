@@ -5,32 +5,56 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import XTopBar from '@/components/layouts/XTopbar';
 import { useState } from 'react';
+import MoneyInput from '@/components/common/MoneyInput';
 
 const AccountTransferAmount = () => {
   
     const navigate = useNavigate();
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedBank, setSelectedBank] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
+    const [amount, setAmount] = useState(0);
+    // const [modalOpen, setModalOpen] = useState(false);
+    // const [accountNumber, setAccountNumber] = useState('');
+
+    const amountLabels = [
+        '+1만원',
+        '+5만원',
+        '+10만원',
+        '+100만원',
+        '전액',
+        '직접 입력',
+    ]
+
+    const amountValues = [
+        10000,
+        50000,
+        100000,
+        1000000,
+        0,
+        0,
+    ]
 
     const GoBack = () => {
         navigate(-1);
     };
 
-    const handleBankSelect = (bank: string) => {
-        setSelectedBank(bank);
-        setModalOpen(false);
+    const handleAmmountSelect = (index: number) => {
+        const selectedAmount = amountValues[index]
+        if (selectedAmount > 0) {
+            setAmount((prevAmount) => prevAmount + selectedAmount)
+        } else {
+            console.log('전액 처리나 직접 입력 로직을 찾아보자')
+        }
+        // setModalOpen(false);
     }
 
-    const handleSubmit = () => {
-        if (!accountNumber || !selectedBank) {
-            alert("계좌번호와 은행을 선택해 주세요.");
-            return;
-        }
-        navigate('/account/check', {
-            state: { accountNumber, selectedBank}
-        })
-    }
+    // const handleSubmit = () => {
+    //     if (!accountNumber || !selectedBank) {
+    //         alert("계좌번호와 은행을 선택해 주세요.");
+    //         return;
+    //     }
+    //     navigate('/account/check', {
+    //         state: { accountNumber, selectedBank}
+    //     })
+    // }
 
     return (
     <div className='flex flex-col h-screen'>
@@ -44,36 +68,19 @@ const AccountTransferAmount = () => {
 
         <div className='ml-4 mr-4 mt-6'>
             <Input
-                label='계좌번호'
+                label='얼마를 보낼까요?'
                 variant='full'
-                placeholder='계좌번호를 입력해 주세요.'
-                value={accountNumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-            />
+                placeholder={`${amount}원`}
+                numberValue={amount}
+                onChange={(e) => setAmount(Number(e.target.value))}
+            ></Input>
 
-            <div className='relative mt-4'>
-                <Button 
-                    label={selectedBank || '은행 선택'}
-                    size='medium'
-                    color='orange'
-                    onClick={() => setModalOpen(true)}
+            <div className='flex relative mt-4'>
+                <MoneyInput 
+                    amounts={amountLabels}
+                    onAmountClick={(index) => handleAmmountSelect(index)}
+                    amountBtnColor='None'
                 />
-
-                {modalOpen && (
-                    <div className='absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg'>
-                        <ul className='max-h4-48 overflow-auto'>
-                            {['국민은행', '신한은행', '하나은행', '우리은행', '농협은행'].map((bank) => (
-                                <li
-                                    key={bank}
-                                    className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
-                                    onClick={() => handleBankSelect(bank)}
-                                >
-                                    {bank}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
             </div>
             
             <div className='w-full mt-[30vh]'>
@@ -90,7 +97,7 @@ const AccountTransferAmount = () => {
                     size='medium'
                     color='orange'
                     className='flex-grow'
-                    onClick={handleSubmit}
+                    onClick={GoBack}
                     />
                 </div>
 

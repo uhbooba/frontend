@@ -21,7 +21,7 @@ const AccountCheck = () => {
     },
     {
       label: '이체',
-      route: '/account/transfer',
+      route: '/account/transfer/account-info',
       size: 'small',
       color: 'green',
       className: 'flex-grow',
