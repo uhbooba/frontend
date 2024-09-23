@@ -27,7 +27,7 @@ const AccountTransferAccountInfo = () => {
             alert("계좌번호와 은행을 선택해 주세요.");
             return;
         }
-        navigate('/account/check', {
+        navigate('/account/transfer/amount', {
             state: { accountNumber, selectedBank}
         })
     }
