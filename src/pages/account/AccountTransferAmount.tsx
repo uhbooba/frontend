@@ -17,8 +17,6 @@ const AccountTransferAmount = () => {
     const [selectedBank] = useAtom(selectedBankAtom)
     const [accountNumber] = useAtom(accountNumberAtom)
     const [accountHolderName] = useAtom(accountHolderNameAtomn)
-    // const [modalOpen, setModalOpen] = useState(false);
-    // const [accountNumber, setAccountNumber] = useState('');
 
     const amountLabels = [
         '+1만원',
@@ -66,15 +64,15 @@ const AccountTransferAmount = () => {
         setAmount((prev) => Math.floor(prev/10));
     };
 
-    // const handleSubmit = () => {
-    //     if (!accountNumber || !selectedBank) {
-    //         alert("계좌번호와 은행을 선택해 주세요.");
-    //         return;
-    //     }
-    //     navigate('/account/check', {
-    //         state: { accountNumber, selectedBank}
-    //     })
-    // }
+    const handleSubmit = () => {
+        if (!amount) {
+            alert("입금할 금액을 선택해주세요.");
+            return;
+        }
+        navigate('/account/transfer/deposit-name', {
+            state: { accountNumber, selectedBank}
+        })
+    }
 
     return (
     <div className='flex flex-col h-screen'>
@@ -100,7 +98,7 @@ const AccountTransferAmount = () => {
                 placeholder='금액을 입력해 주세요.'
                 value={`${amount}원`}
                 onChange={(e) => setAmount(Number(e.target.value))}
-            ></Input>
+            />
 
             <div className='flex relative mt-4'>
                 <MoneyInput 
@@ -124,7 +122,7 @@ const AccountTransferAmount = () => {
                     size='medium'
                     color='orange'
                     className='flex-grow'
-                    onClick={GoBack}
+                    onClick={handleSubmit}
                     />
                 </div>
 
