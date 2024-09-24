@@ -5,10 +5,11 @@ from ..config.logger import setup_logger
 
 logger = setup_logger("app")
 
+
 class RedisService:
     _instance = None
 
-    def __new__(cls, host='localhost', port=6379, db=3):
+    def __new__(cls, host="localhost", port=6379, db=3):
         if not cls._instance:
             cls._instance = super().__new__(cls)
             cls._instance.redis_client = redis.StrictRedis(host=host, port=port, db=db)
@@ -32,8 +33,6 @@ class RedisService:
         else:
             logger.info(f"Redis에 키 저장: {key}, 만료 시간: 없음")
 
-
-
     def get(self, key: str):
         """Redis에서 키에 해당하는 값을 가져옵니다."""
         value = self.redis_client.get(key)
@@ -48,6 +47,7 @@ class RedisService:
         keys = self.redis_client.keys("*")
         logger.info(f"Redis의 모든 키 조회: {len(keys)}개")
         return keys
+
 
 # 싱글톤 인스턴스 생성
 redis_service = RedisService()
