@@ -1,7 +1,7 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.service.finapi.CommonService;
+import com.uhbooba.financeservice.service.finapi.FinApiCommonService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +16,11 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/fin-api/common")
 public class CommonController {
 
-    private final CommonService commonService;
+    private final FinApiCommonService finApiCommonService;
 
     @GetMapping("/bank-codes")
     @Operation(summary = "bank code 가져오기")
     public Mono<JsonNode> getBankCodes() {
-        return commonService.getBankCodes();
+        return finApiCommonService.getBankCodes();
     }
 }
