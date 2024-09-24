@@ -4,77 +4,22 @@ import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
-import { useState } from 'react';
-import MoneyInput from '@/components/common/MoneyInput';
-import Keypad from '@/components/common/KeyPad';
+// import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { accountHolderNameAtomn, accountNumberAtom, amountAtom, selectedBankAtom } from '@/atoms/account/accountTransferAtoms';
 
-const AccountTransferAmount = () => {
+const AccountTransferDepositName = () => {
     const navigate = useNavigate();
     const [amount, setAmount] = useAtom(amountAtom);
-    const [keyOpen, setKeyOpen] = useState(false)
+    // const [keyOpen, setKeyOpen] = useState(false)
     const [selectedBank] = useAtom(selectedBankAtom)
     const [accountNumber] = useAtom(accountNumberAtom)
     const [accountHolderName] = useAtom(accountHolderNameAtomn)
-    // const [modalOpen, setModalOpen] = useState(false);
-    // const [accountNumber, setAccountNumber] = useState('');
-
-    const amountLabels = [
-        '+1만원',
-        '+5만원',
-        '+10만원',
-        '+100만원',
-        '전액',
-        '직접 입력',
-    ]
-
-    const amountValues = [
-        10000,
-        50000,
-        100000,
-        1000000,
-        Infinity,
-        0,
-    ]
-
+    
     const GoBack = () => {
         navigate(-1);
     };
 
-    const handleAmountSelect = (index: number) => {
-        const selectedAmount = amountValues[index]
-        if (selectedAmount > 0) {
-            setAmount((prevAmount) => prevAmount + selectedAmount);
-            setKeyOpen(false);
-        } else if (selectedAmount == 0) {
-            setAmount(0);
-            setKeyOpen(true);
-        } else {
-            console.log('전액 처리나 직접 입력 로직을 찾아보자')
-        }
-        // setModalOpen(false);
-    }
-
-    // 키패드 숫자 클릭할 때 함수
-    const keyClick = (num: string) => {
-        setAmount((prev) => Number(String(prev) + num));
-    };
-
-    // 키패트 지우기 버튼 클릭할 때 함수
-    const handleDelete = () => {
-        setAmount((prev) => Math.floor(prev/10));
-    };
-
-    // const handleSubmit = () => {
-    //     if (!accountNumber || !selectedBank) {
-    //         alert("계좌번호와 은행을 선택해 주세요.");
-    //         return;
-    //     }
-    //     navigate('/account/check', {
-    //         state: { accountNumber, selectedBank}
-    //     })
-    // }
 
     return (
     <div className='flex flex-col h-screen'>
@@ -102,13 +47,6 @@ const AccountTransferAmount = () => {
                 onChange={(e) => setAmount(Number(e.target.value))}
             ></Input>
 
-            <div className='flex relative mt-4'>
-                <MoneyInput 
-                    amounts={amountLabels}
-                    onAmountClick={(index) => handleAmountSelect(index)}
-                    amountBtnColor='None'
-                />
-            </div>
             
             <div className='w-full mt-[30vh]'>
                 <div className='flex w-full justify-between space-x-4 px-4 pb-4'>
@@ -128,15 +66,6 @@ const AccountTransferAmount = () => {
                     />
                 </div>
 
-                {/* 키패드 */}
-                {keyOpen && (
-                    <Keypad
-                    onNumberClick={keyClick}
-                    onDeleteClick={handleDelete}
-                    onConfirmClick={() => setKeyOpen(false)}
-                    />
-                )}
-
                 <div className='fixed bottom-0 left-0 w-full'>
                     <BottomTab />
                 </div>
@@ -146,4 +75,4 @@ const AccountTransferAmount = () => {
   );
 };
 
-export default AccountTransferAmount;
+export default AccountTransferDepositName;
