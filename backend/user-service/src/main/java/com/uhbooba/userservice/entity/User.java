@@ -41,4 +41,9 @@ public class User {
         this.isFirstLogin = true;
     }
 
+    public User(String username, String name) {
+        this.username = username;
+        this.name = name;
+    }
+
 }

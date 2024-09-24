@@ -1,11 +1,17 @@
 package com.uhbooba.userservice.filter;
 
+import static com.uhbooba.userservice.constant.JWT_SET.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uhbooba.userservice.dto.CommonResponse;
 import com.uhbooba.userservice.dto.CustomUserDetails;
 import com.uhbooba.userservice.dto.request.LoginRequest;
 import com.uhbooba.userservice.dto.response.LoginUserResponse;
+import com.uhbooba.userservice.service.RefreshService;
+import com.uhbooba.userservice.util.CookieUtil;
+import com.uhbooba.userservice.util.JWTUtil;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,6 +31,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final JWTUtil jwtUtil;
+    private final RefreshService refreshService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -44,6 +52,21 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        String username = userDetails.getUsername();
+        String name = userDetails.getName();
+
+        String access = jwtUtil.createJwt("access", username, name, ACCESS_TOKEN_EXPIRATION);
+        String refresh = jwtUtil.createJwt("refresh", username, name, REFRESH_TOKEN_EXPIRATION);
+
+        refreshService.saveRefreshToken(refresh, username);
+
+        response.setHeader("access", access);
+        response.setStatus(HttpStatus.OK.value());
+
+        Cookie cookie = CookieUtil.createCookie("refresh", refresh);
+        CookieUtil.addSameSiteCookieAttribute(response, cookie);
+
         LoginUserResponse loginUserResponse = LoginUserResponse.of(userDetails);
         CommonResponse<LoginUserResponse> responseBody = CommonResponse.ok("Authentication successful", loginUserResponse);
 
