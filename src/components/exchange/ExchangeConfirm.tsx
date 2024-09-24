@@ -20,8 +20,10 @@ const ExchangeConfirm: React.FC<ExchangeConfirmProps> = ({
   return (
     <BottomSheet isOpen={isOpen} onClose={onCancel}>
       <div className='w-full space-y-4'>
-        <h2 className='text-center text-xl font-bold'>환전하시겠습니까?</h2>
-        <div className='space-y-2'>
+        <h2 className='my-4 text-center text-4xl font-bold'>
+          환전하시겠습니까?
+        </h2>
+        <div className='space-y-2 py-8 text-3xl'>
           <div className='flex justify-between'>
             <span className='text-gray-600'>미국 USD</span>
             <span className='font-semibold'>

@@ -21,11 +21,11 @@ const MissionSuccessModal: React.FC<MissionSuccessModalProps> = ({
             alt='미션 성공 스탬프'
           />
         </div>
-        <div className='w-full border-t border-dashed py-8'>
+        <div className='w-2/3 border-t border-dashed py-8'>
           <Button
             label='확인'
             color='green'
-            className='w-2/3 py-3'
+            className='py-3'
             onClick={onConfirm}
           />
         </div>
