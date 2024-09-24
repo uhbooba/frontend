@@ -7,14 +7,12 @@ const BUTTON_SIZES = {
   small: 'py-2 w-full text-sm',
 };
 
-// <<<<<<< frontend/src/components/common/buttons/Button.tsx
 const BUTTON_COLORS = {
-  orange: 'bg-primary  focus:border-blue-400 focus:text-blue-400',
-  red: 'bg-red-main focus:border-blue-400 focus:text-blue-400',
-  green: 'bg-green-main  focus:border-blue-400 focus:text-blue-400',
-  white: 'bg-white-500 focus:border-blue-300 focus:text-blue-400',
+  orange: 'bg-primary',
+  red: 'bg-red-main',
+  green: 'bg-green-main',
+  white: 'bg-white-500',
   blue: 'bg-blue-500',
-
 };
 
 export type ButtonConfigType = {
@@ -26,7 +24,7 @@ export type ButtonConfigType = {
 };
 
 type ButtonProps = {
-  label: string;
+  label: string | React.ReactNode;
   size?: keyof typeof BUTTON_SIZES;
   color?: keyof typeof BUTTON_COLORS;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;

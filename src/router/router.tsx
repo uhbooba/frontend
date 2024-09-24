@@ -30,6 +30,13 @@ import SavingsProduct from '@/pages/savings/Savings_Product';
 import Savingspassword from '@/pages/savings/Savings_Password';
 import SavingsSuccess from '@/pages/savings/Savings_Success';
 import DepositSuccess2 from '@/pages/deposit/Deposit_Success2';
+import EducationVideo from '@/pages/education/video/Education_Video';
+import EducationCertificate from '@/pages/education/certificate/Education_Certificate';
+import QuizMain from '@/pages/quiz/QuizMain';
+import QuizQuestion from '@/pages/quiz/QuizQuestion';
+import QuizSuccess from '@/pages/quiz/QuizSuccess';
+import EducationWriting from '@/pages/education/certificate/Education_Writing';
+import EducationDownload from '@/pages/education/certificate/Education_Download';
 import AccountCheck from '@/pages/account/AccountCheck';
 import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
 import AccountTransferAmount from '@/pages/account/AccountTransferAmount';
@@ -71,9 +78,13 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
-      { path: 'account/check', element: <AccountCheck /> },
-      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
-      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
+      { path: 'education/video', element: <EducationVideo /> },
+      { path: 'education/certificate', element: <EducationCertificate /> },
+      { path: 'education/writing', element: <EducationWriting /> },
+      { path: 'education/download', element: <EducationDownload /> },
+      { path: 'quiz', element: <QuizMain /> },
+      { path: 'quiz/:type', element: <QuizQuestion /> },
+      { path: 'quiz/:type/success', element: <QuizSuccess /> },
     ],
   },
 ]);

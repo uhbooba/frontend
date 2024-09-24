@@ -1,6 +1,6 @@
 import Button from '@/components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import XTopBar from '@/components/layouts/XTopbar';
+import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
 
 const Savings = () => {
@@ -13,7 +13,7 @@ const Savings = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' />
       </div>
 
       <div>
@@ -86,7 +86,7 @@ const Savings = () => {
       </div>
 
       {/* 확인 버튼 */}
-      <div className='mb-20 w-full items-center justify-center p-4'>
+      <div className='w-full items-center justify-center p-4'>
         <Button
           label='확인'
           size='large'

@@ -6,8 +6,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className='min-h-screen flex justify-center'>
-      <div className='bg-white relative w-full max-w-[430px] h-full max-h-[950px] pb-[calc(56px+2rem)] overflow-y-auto'>
+    <div className='flex min-h-screen justify-center'>
+      <div className='relative h-full max-h-[950px] w-full max-w-[430px] overflow-y-auto bg-white pb-[calc(56px+2rem)]'>
         {children}
       </div>
     </div>

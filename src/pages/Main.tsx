@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
+import TopBar from '@/components/layouts/TopBar';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
@@ -41,8 +42,10 @@ const Main = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col justify-end pb-20'>
-      <div className='flex justify-between space-x-4 p-4'>
+    <div>
+      <TopBar title='메인페이지' showBackButton={false} showXButton={false} />
+
+      <div className='space-y-4 p-4'>
         {ButtonConfig.map((button, index) => (
           <Button
             key={index}

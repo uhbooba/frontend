@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import XTopBar from '@/components/layouts/XTopbar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositMission = () => {
   const navigate = useNavigate();
@@ -11,13 +11,13 @@ const DepositMission = () => {
   };
 
   return (
-    <div className='bg-yellow-100'>
+    <div className='min-h-screen bg-yellow-100'>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <XTopBar title='예금 가입' />
+        <TopBar title='예금 가입' />
       </div>
 
       {/* 돼지 말풍선 부분 */}
-      <div className='relative flex min-h-screen flex-col items-center'>
+      <div className='relative mt-8 flex flex-col items-center'>
         {/* 말풍선 스타일 적용 */}
         <div className='relative mt-20 h-[440px] w-[360px] rounded-lg bg-white'>
           <div className='mt-8 text-center'>
