@@ -1,12 +1,17 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.service.finapi.DemandDepositService;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositDepositAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionsRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositTransferAccountRequest;
+import com.uhbooba.financeservice.service.finapi.FinApiDemandDepositService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,108 +23,99 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/fin-api/demand-deposit")
 public class DemandDepositController {
 
-    private final DemandDepositService demandDepositService;
+    private final FinApiDemandDepositService finApiDemandDepositService;
 
     @PostMapping("/create")
-    @Operation(summary = "입출금 예금 계좌 생성")
+    @Operation(summary = "입출금 상품 생성")
     public Mono<JsonNode> createDemandDeposit(
-        @RequestParam("bankCode") String bankCode,
-        @RequestParam("accountName") String accountName,
-        @RequestParam("accountDescription") String accountDescription
+        @RequestBody DemandDepositCreateRequest createRequest
     ) {
-        return demandDepositService.createDemandDeposit(bankCode, accountName, accountDescription);
+        return finApiDemandDepositService.createDemandDeposit(createRequest);
+    }
+
+    @PostMapping("/get")
+    @Operation(summary = "입출금 상품 전체 조회")
+    public Mono<JsonNode> getDemandDeposits(
+    ) {
+        return finApiDemandDepositService.getDemandDepositProducts();
     }
 
     @PostMapping("/create-account")
     @Operation(summary = "입출금 계좌 유형으로 계좌 생성")
-    public Mono<JsonNode> createDemandDepositAccount(@RequestParam("accountTypeUniqueNo") String accountTypeUniqueNo) {
-        return demandDepositService.createDemandDepositAccount(accountTypeUniqueNo);
+    public Mono<JsonNode> createDemandDepositAccount(
+        @RequestParam("userKey") String userKey,
+        @RequestParam("accountTypeUniqueNo") String accountTypeUniqueNo
+    ) {
+        return finApiDemandDepositService.createDemandDepositAccount(userKey, accountTypeUniqueNo);
     }
 
-    @GetMapping("/account-detail")
+    @PostMapping("/account-detail")
     @Operation(summary = "입출금계좌 조회")
     public Mono<JsonNode> getAccountDetail(
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return demandDepositService.getDemandDepositAccount(userKey, accountNo);
+        return finApiDemandDepositService.getDemandDepositAccount(userKey, accountNo);
     }
 
-    @GetMapping("/accounts")
+    @PostMapping("/accounts")
     @Operation(summary = "사용자의 모든 입출금계좌 조회")
     public Mono<JsonNode> getAllAccounts(@RequestParam("userKey") String userKey) {
-        return demandDepositService.getDemandDepositAccounts(userKey);
+        return finApiDemandDepositService.getDemandDepositAccounts(userKey);
     }
 
-    @GetMapping("/account-holder")
+    @PostMapping("/account-holder")
     @Operation(summary = "입출금계좌 소유자 이름 조회")
     public Mono<JsonNode> getAccountHolderName(
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return demandDepositService.getDemandDepositAccountHolderName(userKey, accountNo);
+        return finApiDemandDepositService.getDemandDepositAccountHolderName(userKey, accountNo);
     }
 
-    @GetMapping("/balance")
+    @PostMapping("/balance")
     @Operation(summary = "입출금계좌 잔액 조회")
     public Mono<JsonNode> getAccountBalance(
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return demandDepositService.getDemandDepositAccountBalance(userKey, accountNo);
+        return finApiDemandDepositService.getDemandDepositAccountBalance(userKey, accountNo);
     }
 
     @PostMapping("/deposit")
     @Operation(summary = "입출금계좌에 예금")
     public Mono<JsonNode> depositAccount(
         @RequestParam("userKey") String userKey,
-        @RequestParam("accountNo") String accountNo,
-        @RequestParam("transactionBalance") Long transactionBalance,
-        @RequestParam("transactionSummary") String transactionSummary
+        @RequestBody DemandDepositDepositAccountRequest accountRequest
     ) {
-        return demandDepositService.depositDemandDepositAccount(userKey, accountNo,
-                                                                transactionBalance,
-                                                                transactionSummary);
+        return finApiDemandDepositService.depositDemandDepositAccount(userKey, accountRequest);
     }
 
     @PostMapping("/transfer")
     @Operation(summary = "입출금계좌에서 출금 및 이체")
     public Mono<JsonNode> transferAccount(
         @RequestParam("userKey") String userKey,
-        @RequestParam("depositAccountNo") String depositAccountNo,
-        @RequestParam("depositTransactionSummary") String depositTransactionSummary,
-        @RequestParam("transactionBalance") Long transactionBalance,
-        @RequestParam("withdrawalAccountNo") String withdrawalAccountNo,
-        @RequestParam("withdrawalTransactionSummary") String withdrawalTransactionSummary
+        @RequestBody DemandDepositTransferAccountRequest transferAccountRequest
     ) {
-        return demandDepositService.transferDemandDepositAccount(userKey, depositAccountNo,
-                                                                 depositTransactionSummary,
-                                                                 transactionBalance,
-                                                                 withdrawalAccountNo,
-                                                                 withdrawalTransactionSummary);
+        return finApiDemandDepositService.transferDemandDepositAccount(userKey,
+                                                                       transferAccountRequest);
     }
 
-    @GetMapping("/transaction-histories")
+    @PostMapping("/transaction-histories")
     @Operation(summary = "입출금계좌 거래내역 조회")
     public Mono<JsonNode> getTransactionHistories(
         @RequestParam("userKey") String userKey,
-        @RequestParam("accountNo") String accountNo,
-        @RequestParam("startDate") String startDate,
-        @RequestParam("endDate") String endDate,
-        @RequestParam("transactionType") String transactionType,
-        @RequestParam("orderByType") String orderByType
+        @RequestBody DemandDepositGetTransactionsRequest getTransactionsRequest
     ) {
-        return demandDepositService.getTransactionHistories(userKey, accountNo, startDate, endDate,
-                                                            transactionType, orderByType);
+        return finApiDemandDepositService.getTransactionHistories(userKey, getTransactionsRequest);
     }
 
-    @GetMapping("/transaction-history")
+    @PostMapping("/transaction-history")
     @Operation(summary = "입출금계좌 단일 거래내역 조회")
     public Mono<JsonNode> getTransactionHistory(
         @RequestParam("userKey") String userKey,
-        @RequestParam("accountNo") String accountNo,
-        @RequestParam("transactionUniqueNo") Long transactionUniqueNo
+        @RequestBody DemandDepositGetTransactionRequest getTransactionRequest
     ) {
-        return demandDepositService.getTransactionHistory(userKey, accountNo, transactionUniqueNo);
+        return finApiDemandDepositService.getTransactionHistory(userKey, getTransactionRequest);
     }
 }
