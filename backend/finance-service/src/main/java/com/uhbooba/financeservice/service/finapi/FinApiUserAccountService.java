@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class UserAccountService {
+public class FinApiUserAccountService {
 
     private final FinOpenApiHandler finOpenApiHandler;
     private final String baseUrl = "/member";
