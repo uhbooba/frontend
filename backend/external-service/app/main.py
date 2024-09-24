@@ -13,6 +13,7 @@ from .eureka_register import register_with_eureka
 #####################################################################################c
 Base.metadata.create_all(bind=engine)
 app = FastAPI(
+    root_path="/external-service",
     openapi_url="/external-service/v3/api-docs",  # OpenAPI 문서 경로 설정
     docs_url="/external-service/docs",  # Swagger UI 경로 설정
 )
@@ -49,7 +50,6 @@ import uvicorn
 
 
 def signal_handler(sig, frame):
-    print("You pressed Ctrl+C!")
     sys.exit(0)
 
 
