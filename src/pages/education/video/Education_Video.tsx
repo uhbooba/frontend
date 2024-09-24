@@ -2,7 +2,7 @@ import KeywordButtons from '@/components/common/KeywordButtons';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import { useState } from 'react';
-import videoDatas from './videoDatas';
+import videoDatas from '../../../mocks/videoDatas';
 import { useNavigate } from 'react-router';
 
 const EducationVideo = () => {
