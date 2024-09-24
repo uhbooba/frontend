@@ -5,6 +5,7 @@ import static com.uhbooba.userservice.constant.CORS_SET.*;
 
 import com.uhbooba.userservice.exception.CustomAccessDeniedHandler;
 import com.uhbooba.userservice.exception.CustomAuthenticationEntryPoint;
+import com.uhbooba.userservice.filter.CustomLogoutFilter;
 import com.uhbooba.userservice.filter.JWTFilter;
 import com.uhbooba.userservice.filter.LoginFilter;
 import com.uhbooba.userservice.service.RefreshService;
@@ -20,6 +21,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -85,6 +87,10 @@ public class SecurityConfig {
 
             .addFilterBefore(
                 new JWTFilter(jwtUtil), LoginFilter.class
+            )
+
+            .addFilterBefore(
+                new CustomLogoutFilter(jwtUtil, refreshService), LogoutFilter.class
             )
 
             .sessionManagement((session) -> session

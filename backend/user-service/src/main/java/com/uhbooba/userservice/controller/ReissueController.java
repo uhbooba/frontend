@@ -66,7 +66,7 @@ public class ReissueController {
         try {
             jwtUtil.isExpired(refreshToken);
         } catch (ExpiredJwtException e) {
-            throw new TokenExpiredException("refresh token가 만료되었습니다.");
+            throw new TokenExpiredException("refresh token이 만료되었습니다.");
         }
 
         if (!"refresh".equals(jwtUtil.getCategory(refreshToken))) {
