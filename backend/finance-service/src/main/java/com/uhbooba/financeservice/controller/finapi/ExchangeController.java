@@ -1,8 +1,9 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.ExchangeRequest;
-import com.uhbooba.financeservice.service.finapi.ExchangeService;
+import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeGetEstimateRequest;
+import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeRequest;
+import com.uhbooba.financeservice.service.finapi.FinApiExchangeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,40 +21,40 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/fin-api/exchange")
 public class ExchangeController {
 
-    private final ExchangeService exchangeService;
+    private final FinApiExchangeService finApiExchangeService;
 
     @GetMapping("/common/bank-currency")
     @Operation(summary = "통화코드 조회")
     public Mono<JsonNode> getBankCurrency() {
-        return exchangeService.getBackCurrency();
+        return finApiExchangeService.getBackCurrency();
     }
 
     @GetMapping("/exchange/rate")
     @Operation(summary = "환율 조회")
     public Mono<JsonNode> getExchangeRate(@RequestParam("currency") String currency) {
-        return exchangeService.getExchangeRate(currency);
+        return finApiExchangeService.getExchangeRate(currency);
     }
 
     @GetMapping("/exchange/all-rates")
     @Operation(summary = "모든 환율 조회")
     public Mono<JsonNode> getAllExchangeRates() {
-        return exchangeService.getAllExchangeRate();
+        return finApiExchangeService.getAllExchangeRate();
     }
 
     @PostMapping("/exchange/estimate")
     @Operation(summary = "환전 예상 금액 조회")
     public Mono<JsonNode> getExchangeEstimate(
-        @RequestParam("fromCurrency") String fromCurrency,
-        @RequestParam("toCurrency") String toCurrency,
-        @RequestParam("amount") Double amount
+        @RequestBody ExchangeGetEstimateRequest exchangeGetEstimateRequest
     ) {
-        return exchangeService.getExchangeEstimate(fromCurrency, toCurrency, amount);
+        return finApiExchangeService.getExchangeEstimate(exchangeGetEstimateRequest);
     }
 
     @PostMapping("/exchange/currency")
     @Operation(summary = "환전")
-    public Mono<JsonNode> exchangeCurrency(@RequestBody ExchangeRequest dto) {
-        return exchangeService.exchange(dto.accountNo(), dto.exchangeCurrency(),
-                                        dto.exchangeAmount());
+    public Mono<JsonNode> exchangeCurrency(
+        @RequestParam String userKey,
+        @RequestBody ExchangeRequest dto
+    ) {
+        return finApiExchangeService.exchange(userKey, dto);
     }
 }
