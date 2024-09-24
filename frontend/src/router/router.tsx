@@ -41,6 +41,7 @@ import ExchangeAgree from '@/pages/exchange/ExchangeAgree';
 import ExchangeMoney from '@/pages/exchange/ExchangeMoney';
 import ExchangePassword from '@/pages/exchange/ExchangePassword';
 import ExchangeComplete from '@/pages/exchange/ExchangeComplete';
+import ExchangeSuccess from '@/pages/exchange/ExchangeSuccess';
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,7 @@ const router = createBrowserRouter([
       { path: 'exchange/money', element: <ExchangeMoney /> },
       { path: 'exchange/password', element: <ExchangePassword /> },
       { path: 'exchange/complete', element: <ExchangeComplete /> },
+      { path: 'exchange/success', element: <ExchangeSuccess /> },
     ],
   },
 ]);
