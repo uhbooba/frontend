@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CommonService {
+public class FinApiCommonService {
 
     private final FinOpenApiHandler finOpenApiHandler;
 
