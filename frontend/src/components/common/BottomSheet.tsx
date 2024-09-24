@@ -22,9 +22,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         className='w-full max-w-md transform space-y-4 rounded-t-3xl bg-white p-6 transition-transform duration-300 ease-out'
         onClick={(e) => e.stopPropagation()}
       >
-        <div className='mb-2 flex justify-center'>
-          <div className='h-1 w-10 rounded-full bg-gray-300'></div>
-        </div>
         <div className='space-y-4'>{children}</div>
       </div>
     </div>
