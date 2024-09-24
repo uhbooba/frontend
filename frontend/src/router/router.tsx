@@ -41,7 +41,9 @@ import AccountCheck from '@/pages/account/AccountCheck';
 import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
 import AccountTransferAmount from '@/pages/account/AccountTransferAmount';
 import AccountTransferDepositName from '@/pages/account/AccountTransferDepositName';
-
+import AccountTransferInfoCheck from '@/pages/account/AccountTransferInfoCheck';
+import AccountTransferPassword from '@/pages/account/AccountTransferPassword';
+import AccountTransferSuccess from '@/pages/account/AccountTransferSuccess';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,9 @@ const router = createBrowserRouter([
       { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
       { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
       { path: 'account/transfer/deposit-name', element: <AccountTransferDepositName /> },
+      { path: 'account/transfer/info-check', element: <AccountTransferInfoCheck /> },
+      { path: 'account/transfer/password', element: <AccountTransferPassword /> },
+      { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
     ],
   },
 ]);
