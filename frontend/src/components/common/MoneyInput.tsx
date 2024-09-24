@@ -8,11 +8,13 @@ type MoneyInputProps = {
   amountBtnColor: string;
 };
 
-const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountBtnColor }) => {
+const MoneyInput: React.FC<MoneyInputProps> = ({
+  amounts,
+  onAmountClick,
+  amountBtnColor,
+}) => {
   return (
     <div>
-      
-
       <div className='flex justify-between space-x-4 px-4'>
         {amounts.slice(0, 3).map((amount, index) => (
           <Button
@@ -23,9 +25,9 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
             onClick={() => onAmountClick(amount)}
             className={clsx(
               'border-2',
-              amountBtnColor === amount 
-                ? 'border-blue-400 text-blue-400' 
-                : 'border-gray-200'
+              amountBtnColor === amount
+                ? 'border-blue-400 text-blue-400'
+                : 'border-gray-200',
             )}
           />
         ))}
@@ -41,15 +43,13 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
             onClick={() => onAmountClick(amount)}
             className={clsx(
               'border-2',
-              amountBtnColor === amount 
-                ? 'border-blue-400 text-blue-400' 
-                : 'border-gray-200'
+              amountBtnColor === amount
+                ? 'border-blue-400 text-blue-400'
+                : 'border-gray-200',
             )}
           />
         ))}
       </div>
-
-      
     </div>
   );
 };
