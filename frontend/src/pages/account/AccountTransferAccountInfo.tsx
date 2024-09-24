@@ -3,15 +3,17 @@ import { Input } from '@/components/common/Input';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
+import TopBar from '@/components/layouts/TopBar';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { accountNumberAtom, selectedBankAtom } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAccountInfo = () => {
   
     const navigate = useNavigate();
     const [modalOpen, setModalOpen] = useState(false);
-    const [selectedBank, setSelectedBank] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
+    const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
+    const [accountNumber, setAccountNumber] = useAtom(accountNumberAtom);
 
     const GoBack = () => {
         navigate(-1);
@@ -35,7 +37,7 @@ const AccountTransferAccountInfo = () => {
     return (
     <div className='flex flex-col h-screen'>
         <div className='w-full'>
-            <XTopBar title='계좌 이체' />
+            <TopBar title='계좌 이체' />
         </div>
 
         <div className='mt-4'>

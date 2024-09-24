@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 type MoneyInputProps = {
   amounts: string[];
-  onAmountClick: (amount: string) => void;
+  onAmountClick: (index: number, amount: string) => void;
   amountBtnColor: string;
 };
 
@@ -20,7 +20,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
             label={amount}
             color='white'
             size='small'
-            onClick={() => onAmountClick(amount)}
+            onClick={() => onAmountClick(index, amount)}
             className={clsx(
               'border-2',
               amountBtnColor === amount 
@@ -34,11 +34,11 @@ const MoneyInput: React.FC<MoneyInputProps> = ({ amounts, onAmountClick, amountB
       <div className='flex justify-between space-x-4 px-4 py-4'>
         {amounts.slice(3, 6).map((amount, index) => (
           <Button
-            key={index}
+            key={index+3}
             label={amount}
             color='white'
             size='small'
-            onClick={() => onAmountClick(amount)}
+            onClick={() => onAmountClick(index+3, amount)}
             className={clsx(
               'border-2',
               amountBtnColor === amount 

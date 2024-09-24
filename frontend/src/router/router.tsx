@@ -40,6 +40,7 @@ import EducationDownload from '@/pages/education/certificate/Education_Download'
 import AccountCheck from '@/pages/account/AccountCheck';
 import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
 import AccountTransferAmount from '@/pages/account/AccountTransferAmount';
+import AccountTransferDepositName from '@/pages/account/AccountTransferDepositName';
 
 
 const router = createBrowserRouter([
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       { path: 'quiz', element: <QuizMain /> },
       { path: 'quiz/:type', element: <QuizQuestion /> },
       { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      { path: 'account/check', element: <AccountCheck /> },
+      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
+      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
+      { path: 'account/transfer/deposit-name', element: <AccountTransferDepositName /> },
     ],
   },
 ]);
