@@ -6,10 +6,12 @@ import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
 import ExchangeConfirm from '@/components/exchange/ExchangeConfirm';
+import { useAtom } from 'jotai';
+import { exchangeDataAtom } from '@/atoms/exchangeAtoms';
 
 const ExchangeMoney = () => {
   const navigate = useNavigate();
-  const [usdAmount, setUsdAmount] = useState('');
+  const [usdAmount, setUsdAmount] = useAtom(exchangeDataAtom);
   const [krwAmount, setKrwAmount] = useState('');
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<
@@ -39,7 +41,7 @@ const ExchangeMoney = () => {
       const krw = parseFloat(krwAmount) || 0;
       setUsdAmount((krw / exchangeRate).toFixed(2));
     }
-  }, [usdAmount, krwAmount, selectedCurrency]);
+  }, [usdAmount, setUsdAmount, krwAmount, selectedCurrency]);
 
   const keyClick = (num: string) => {
     if (selectedCurrency === 'USD') {
