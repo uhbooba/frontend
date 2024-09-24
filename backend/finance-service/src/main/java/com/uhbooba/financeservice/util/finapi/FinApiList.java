@@ -8,6 +8,9 @@ public class FinApiList {
         public static final String CREATE_DEPOSIT_API_NAME = "createDemandDeposit";
         public static final String CREATE_DEPOSIT_URL = BASE_URL + CREATE_DEPOSIT_API_NAME;
 
+        public static final String GET_DEPOSIT_API_NAME = "inquireDemandDepositList";
+        public static final String GET_DEPOSIT_URL = BASE_URL + GET_DEPOSIT_API_NAME;
+
         public static final String CREATE_ACCOUNT_API_NAME = "createDemandDepositAccount";
         public static final String CREATE_ACCOUNT_URL = BASE_URL + CREATE_ACCOUNT_API_NAME;
 
@@ -78,5 +81,48 @@ public class FinApiList {
         public static final String ESTIMATE_EXCHANGE_API_NAME = "estimate";
         public static final String EXCHANGE_API_NAME = "updateDemandDepositAccountWithdrawal";
         public static final String INQUIRE_BANK_CURRENCY_API_NAME = "inquireBankCurrency";
+    }
+
+    public static class Savings {
+
+        private static final String BASE_URL = "/edu/savings";
+
+        public static final String CREATE_SAVINGS_PRODUCT_API_NAME = "createProduct";
+        public static final String CREATE_SAVINGS_PRODUCT_URL =
+            BASE_URL + CREATE_SAVINGS_PRODUCT_API_NAME;
+
+        public static final String GET_SAVINGS_PRODUCTS_API_NAME = "inquireSavingsProducts";
+        public static final String GET_SAVINGS_PRODUCTS_URL =
+            BASE_URL + GET_SAVINGS_PRODUCTS_API_NAME;
+
+        public static final String CREATE_SAVINGS_ACCOUNT_API_NAME = "createAccount";
+        public static final String CREATE_SAVINGS_ACCOUNT_URL =
+            BASE_URL + CREATE_SAVINGS_ACCOUNT_API_NAME;
+
+        public static final String GET_SAVINGS_ACCOUNT_LIST_API_NAME = "inquireAccountList";
+        public static final String GET_SAVINGS_ACCOUNT_LIST_URL =
+            BASE_URL + GET_SAVINGS_ACCOUNT_LIST_API_NAME;
+
+        public static final String GET_SAVINGS_ACCOUNT_DETAIL_API_NAME = "inquireAccount";
+        public static final String GET_SAVINGS_ACCOUNT_DETAIL_URL =
+            BASE_URL + GET_SAVINGS_ACCOUNT_DETAIL_API_NAME;
+
+        public static final String GET_SAVINGS_PAYMENT_API_NAME = "inquirePayment";
+        public static final String GET_SAVINGS_PAYMENT_URL =
+            BASE_URL + GET_SAVINGS_PAYMENT_API_NAME;
+
+        public static final String GET_SAVINGS_EXPIRY_INTEREST_API_NAME = "inquireExpiryInterest";
+        public static final String GET_SAVINGS_EXPIRY_INTEREST_URL =
+            BASE_URL + GET_SAVINGS_EXPIRY_INTEREST_API_NAME;
+
+        public static final String GET_SAVINGS_EARLY_TERMINATION_INTEREST_API_NAME = "inquireEarlyTerminationInterest";
+        public static final String GET_SAVINGS_EARLY_TERMINATION_INTEREST_URL =
+            BASE_URL + GET_SAVINGS_EARLY_TERMINATION_INTEREST_API_NAME;
+
+        public static final String DELETE_SAVINGS_ACCOUNT_API_NAME = "deleteAccount";
+        public static final String DELETE_SAVINGS_ACCOUNT_URL =
+            BASE_URL + DELETE_SAVINGS_ACCOUNT_API_NAME;
+
+
     }
 }
