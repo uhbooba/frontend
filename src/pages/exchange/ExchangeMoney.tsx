@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useAsyncError, useNavigate } from 'react-router';
 import Button from '@/components/common/buttons/Button';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
+import ExchangeConfirm from '@/components/exchange/ExchangeConfirm';
 
 const ExchangeMoney = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const ExchangeMoney = () => {
   const [selectedCurrency, setSelectedCurrency] = useState<
     'USD' | 'KRW' | null
   >(null);
+  const [isBottomOpen, setIsBottomOpen] = useState(false);
 
   const exchangeRate = 1330;
 
@@ -21,7 +23,13 @@ const ExchangeMoney = () => {
     navigate(-1);
   };
 
-  const OpenModal = () => {};
+  const OpenModal = () => {
+    setIsBottomOpen(true);
+  };
+
+  const CloseModal = () => {
+    setIsBottomOpen(false);
+  };
 
   useEffect(() => {
     if (selectedCurrency === 'USD') {
@@ -48,6 +56,13 @@ const ExchangeMoney = () => {
       setKrwAmount((prev) => prev.slice(0, -1));
     }
   };
+
+  const handleConfirmExchange = () => {
+    // 환전 확인
+    setIsBottomOpen(false);
+    navigate('/exchange/password');
+  };
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
@@ -73,14 +88,14 @@ const ExchangeMoney = () => {
           className='mb-5'
         />
         <div className='my-3 flex justify-center'>
-          <div className='w-fit rounded-full border-2 border-primary p-1 text-primary'>
+          <div className='w-fit rounded-full border-2 border-primary p-2 text-primary'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
               viewBox='0 0 24 24'
               strokeWidth={3}
               stroke='currentColor'
-              className='size-6'
+              className='size-8'
             >
               <path
                 strokeLinecap='round'
@@ -121,6 +136,16 @@ const ExchangeMoney = () => {
           onNumberClick={keyClick}
           onDeleteClick={handleDelete}
           onConfirmClick={() => setKeyOpen(false)}
+        />
+      )}
+
+      {isBottomOpen && (
+        <ExchangeConfirm
+          usdAmount={usdAmount}
+          krwAmount={krwAmount}
+          onConfirm={handleConfirmExchange}
+          onCancel={CloseModal}
+          isOpen={isBottomOpen}
         />
       )}
 
