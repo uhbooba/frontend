@@ -1,17 +1,42 @@
 import React from 'react';
 import BackButton from '@/components/common/buttons/BackButton';
+import XButton from '@/components/common/buttons/XButton';
+import { useNavigate } from 'react-router-dom';
 
 type TopBarProps = {
   title: string;
+  showBackButton?: boolean;
+  showXButton?: boolean;
+  onXButtonClick?: () => void;
 };
 
-const TopBar: React.FC<TopBarProps> = ({ title }) => {
+const TopBar: React.FC<TopBarProps> = ({
+  title,
+  showBackButton = true,
+  showXButton = true,
+  onXButtonClick,
+}) => {
+  const navigate = useNavigate();
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   return (
-    <div className='flex items-center justify-between border-b-4 bg-white py-4'>
-      <BackButton className='ml-4' />
-      <span className='absolute left-1/2 -translate-x-1/2 transform text-xl font-bold'>
-        {title}
-      </span>
+    <div className='relative flex items-center justify-center border-b-4 bg-white py-4'>
+      {showBackButton && (
+        <div className='absolute left-0'>
+          <BackButton className='ml-4' />
+        </div>
+      )}
+
+      <span className='text-xl font-bold'>{title}</span>
+
+      {showXButton && (
+        <div className='absolute right-0'>
+          <XButton className='mr-4' onClick={onXButtonClick || handleGoHome} />
+        </div>
+      )}
     </div>
   );
 };

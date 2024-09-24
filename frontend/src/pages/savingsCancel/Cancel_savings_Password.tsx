@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import PasswordInput from '@/components/common/PasswordInput';
+import TopBar from '@/components/layouts/TopBar';
 
 const CancelSavingsPassword = () => {
   const navigate = useNavigate();
@@ -12,9 +12,14 @@ const CancelSavingsPassword = () => {
 
   return (
     <div>
-      <XTopBar title='적금 중도해지' />
+      <div className='fixed left-0 top-0 w-full'>
+        <TopBar
+          title='적금 중도해지'
 
-      <div className='mb-12 mt-4'>
+        />
+      </div>
+
+      <div className='mt-20'>
         <LevelBar currentLevel={2} totalLevel={2} />
       </div>
 

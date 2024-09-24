@@ -1,12 +1,12 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const SavingsSuccess = () => {
   return (
-    <div className='flex min-h-screen flex-col bg-white'>
+    <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <OnlyXTopBar title='계좌 생성' />
+        <TopBar title='계좌 생성' showBackButton={false} />
       </div>
 
       {/* 배경 이미지 설정 */}
@@ -62,7 +62,7 @@ const SavingsSuccess = () => {
         </div>
 
         {/* 버튼 */}
-        <div className='mb-24'>
+        <div>
           <Button
             label='나의 계좌로 이동하기'
             size='large'

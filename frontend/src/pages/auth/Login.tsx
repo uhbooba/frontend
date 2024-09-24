@@ -2,11 +2,12 @@ import Button from '@/components/common/buttons/Button';
 import ErrorText from '@/components/common/ErrorText';
 import { Input } from '@/components/common/Input';
 import TopBar from '@/components/layouts/TopBar';
+
 import { useState } from 'react';
 
 const Login = () => {
   const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const [password] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {

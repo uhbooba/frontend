@@ -1,0 +1,53 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: finance-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3308/uhbooba}
+    username: ${SPRING_DATASOURCE_USERNAME:uhbooba}
+    password: ${SPRING_DATASOURCE_PASSWORD:42seoul}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+openapi:
+  service:
+    title: finance-service doc
+    version: 1.0.0
+springdoc:
+  api-docs:
+    path: /finance-service/v3/api-docs
+  swagger-ui:
+    path: /finance-service/docs
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    org.springframework.web: "info"
+    org.hibernate: "info"
+  file:
+    name: app/logs/application.log
