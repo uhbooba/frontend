@@ -1,50 +1,49 @@
-import BankButtons from '@/components/common/BankButtons';
-import Button from '@/components/common/buttons/Button';
-import SubjectButtons from '@/components/common/SubjectButtons';
+import { useState, useEffect } from 'react';
+import KeywordButtons from '@/components/common/KeywordButtons';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
-import { useState } from 'react';
 
-const EducationVideo2 = () => {
-  const [vedioClick, setVideoClick] = useState(true);
-  const [subjectClick, setSubjectClick] = useState(false);
-  const [selectBank, setSelectBank] = useState('모두 보기');
-  const [selectSubject, setSelectSubject] = useState('기초금융 상식');
+// 비디오에 있는 속성들 타입 정해주기
+interface Video {
+  id: number;
+  keyword: string;
+  title: string;
+  url: string;
+  description: string;
+  upload_at: string;
+}
 
-  const OnVideo = () => {
-    setVideoClick(true);
-    setSubjectClick(false);
+const EducationVideo = () => {
+  const [selectKeyword, setSelectKeyword] = useState('모두 보기');
+  const [videoData, setVideoData] = useState<Video[]>([]);
+
+  const keywordClick = (keyword: string) => {
+    setSelectKeyword(keyword);
   };
 
-  const OnSubject = () => {
-    setVideoClick(false);
-    setSubjectClick(true);
-  };
+  const keywords = ['모두 보기', '금융위원회', '시.금.치'];
 
-  const bankClick = (bank: string) => {
-    setSelectBank(bank);
-  };
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('http://localhost:5173/video');
+        const data = await response.json();
+        console.log(`이건 리스폰 그자체: ${response}`);
+        console.log(`이것은 성공한 데이터 : ${data}`);
+        if (data.status === 'success') {
+          setVideoData(data.data);
+        }
+      } catch (error) {
+        console.log(`이것은 에러 : ${error}`);
+      }
+    };
 
-  const subClick = (subject: string) => {
-    setSelectSubject(subject);
-  };
+    fetchVideos();
+  }, []);
 
-  const banks = [
-    '모두 보기',
-    '우리은행',
-    '신한은행',
-    '농협은행',
-    '국민은행',
-    '하나은행',
-  ];
-  const subjects = [
-    '기초금융 상식',
-    '생활금융',
-    '모바일뱅킹',
-    '금융사기',
-    '연금지식',
-    '상속지식',
-  ];
+  const filteredVideos = videoData.filter(
+    (video) => selectKeyword === '모두 보기' || video.keyword === selectKeyword,
+  );
 
   return (
     <div>
@@ -52,46 +51,38 @@ const EducationVideo2 = () => {
         <TopBar title='교육영상' />
       </div>
 
-      {/* 은행별 & 주제별 버튼 */}
-      {/* 이 버튼에 클릭 여부에 따라 아래 목록 버튼이 바뀜 */}
-      <div className='mt-16 flex justify-between border-b-2 p-4'>
-        <Button
-          label='은행별 영상'
-          className={`mr-2 ${vedioClick ? 'opacity-100' : 'opacity-50'}`}
-          onClick={OnVideo}
-        />
-        <Button
-          label='주제별 영상'
-          className={`mr-2 ${subjectClick ? 'opacity-100' : 'opacity-50'}`}
-          onClick={OnSubject}
+      <div className='mt-20 border-b-2'>
+        <KeywordButtons
+          keywords={keywords}
+          onKeywordClick={keywordClick}
+          keywordBtnColor={selectKeyword}
         />
       </div>
 
-      {/* 은행 목록 버튼 */}
-      {vedioClick && (
-        <div className='border-b-2'>
-          <BankButtons
-            banks={banks}
-            onBankClick={bankClick}
-            bankBtnColor={selectBank}
-          />
-        </div>
-      )}
+      <div className='mt-4 px-4'>
+        {filteredVideos.length === 0 ? (
+          <p>유튜브 영상이 없습니다.</p>
+        ) : (
+          filteredVideos.map((video) => (
+            <div
+              key={video.id}
+              className='mb-8 rounded-lg border bg-white p-4 shadow-md'
+            >
+              <h3 className='mb-2 text-xl font-bold'>{video.title}</h3>
+              <iframe
+                width='100%'
+                height='315'
+                src={video.url}
+                title={video.title}
+                className='mb-4 rounded-lg border-2 border-gray-300'
+                allow='accelerometer; gyroscope; picture-in-picture'
+                allowFullScreen
+              />
+            </div>
+          ))
+        )}
+      </div>
 
-      {/* 주제 목록 버튼 */}
-      {subjectClick && (
-        <div className='border-b-2'>
-          <SubjectButtons
-            subjects={subjects}
-            onSubjectClick={subClick}
-            subjectBtnColor={selectSubject}
-          />
-        </div>
-      )}
-
-      {/* 이제 여기다가 유미누나 api 참고해서 영상 불러오는거 만들기 */}
-
-      {/* 바텀탭 */}
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>
@@ -99,4 +90,4 @@ const EducationVideo2 = () => {
   );
 };
 
-export default EducationVideo2;
+export default EducationVideo;

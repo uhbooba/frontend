@@ -26,7 +26,6 @@ const SavingsSignup = () => {
 
   useEffect(() => {
     return () => {
-      setCheck('');
       setName('');
       setIdNumber('');
       setPhoneNumber('');
