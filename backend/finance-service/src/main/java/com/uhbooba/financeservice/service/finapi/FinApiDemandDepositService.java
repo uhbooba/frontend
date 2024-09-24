@@ -4,6 +4,11 @@ import static com.uhbooba.financeservice.util.finapi.FinApiList.DemandDeposit.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositDepositAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionsRequest;
+import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositTransferAccountRequest;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -12,20 +17,24 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class DemandDepositService {
+public class FinApiDemandDepositService {
 
-    private final CommonService commonService;
+    private final FinApiCommonService finApiCommonService;
 
+    /**
+     * 수시 입출금 상품 생성
+     *
+     * @param createRequest
+     * @return
+     */
     public Mono<JsonNode> createDemandDeposit(
-        String bankCode,
-        String accountName,
-        String accountDescription
+        DemandDepositCreateRequest createRequest
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("bankCode", bankCode);
-        requestBody.put("accountName", accountName);
-        requestBody.put("accountDescription", accountDescription);
+        requestBody.put("bankCode", createRequest.bankCode());
+        requestBody.put("accountName", createRequest.accountName());
+        requestBody.put("accountDescription", createRequest.accountDescription());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -33,10 +42,38 @@ public class DemandDepositService {
                                                              .apiName(CREATE_DEPOSIT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
-    public Mono<JsonNode> createDemandDepositAccount(String accountTypeUniqueNo) {
+    /**
+     * 수시 입출금 상품 조회
+     *
+     * @return
+     */
+    public Mono<JsonNode> getDemandDepositProducts() {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(GET_DEPOSIT_URL)
+                                                             .apiName(GET_DEPOSIT_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .build();
+        return finApiCommonService.executeApiRequest(param);
+    }
+
+    /**
+     * 수시 입출금 계좌 생성
+     *
+     * @param userKey
+     * @param accountTypeUniqueNo
+     * @return
+     */
+    public Mono<JsonNode> createDemandDepositAccount(
+        String userKey,
+        String accountTypeUniqueNo
+    ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("accountTypeUniqueNo", accountTypeUniqueNo);
@@ -46,10 +83,18 @@ public class DemandDepositService {
                                                              .url(CREATE_ACCOUNT_URL)
                                                              .apiName(CREATE_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
+                                                             .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 수시입출금 계좌 조회
+     *
+     * @param userKey
+     * @param accountNo
+     * @return
+     */
     public Mono<JsonNode> getDemandDepositAccount(
         String userKey,
         String accountNo
@@ -65,9 +110,15 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 수시 입출금 계좌 전체 조회(사용자의)
+     *
+     * @param userKey
+     * @return
+     */
     public Mono<JsonNode> getDemandDepositAccounts(String userKey) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
@@ -79,9 +130,16 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 예금주 확인
+     *
+     * @param userKey
+     * @param accountNo
+     * @return
+     */
     public Mono<JsonNode> getDemandDepositAccountHolderName(
         String userKey,
         String accountNo
@@ -97,9 +155,16 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 잔액 확인
+     *
+     * @param userKey
+     * @param accountNo
+     * @return
+     */
     public Mono<JsonNode> getDemandDepositAccountBalance(
         String userKey,
         String accountNo
@@ -115,20 +180,25 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 계좌 입금
+     *
+     * @param userKey
+     * @param depositRequest
+     * @return
+     */
     public Mono<JsonNode> depositDemandDepositAccount(
         String userKey,
-        String accountNo,
-        Long transactionBalance,
-        String transactionSummary
+        DemandDepositDepositAccountRequest depositRequest
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("accountNo", accountNo);
-        requestBody.put("transactionBalance", transactionBalance);
-        requestBody.put("transactionSummary", transactionSummary);
+        requestBody.put("accountNo", depositRequest.accountNo());
+        requestBody.put("transactionBalance", depositRequest.transactionBalance());
+        requestBody.put("transactionSummary", depositRequest.transactionSummary());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -137,24 +207,29 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 계좌 이체
+     *
+     * @param userKey
+     * @param transferAccountRequest
+     * @return
+     */
     public Mono<JsonNode> transferDemandDepositAccount(
         String userKey,
-        String depositAccountNo,
-        String depositTransactionSummary,
-        Long transactionBalance,
-        String withdrawalAccountNo,
-        String withdrawalTransactionSummary
+        DemandDepositTransferAccountRequest transferAccountRequest
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("depositAccountNo", depositAccountNo);
-        requestBody.put("depositTransactionSummary", depositTransactionSummary);
-        requestBody.put("transactionBalance", transactionBalance);
-        requestBody.put("withdrawalAccountNo", withdrawalAccountNo);
-        requestBody.put("withdrawalTransactionSummary", withdrawalTransactionSummary);
+        requestBody.put("depositAccountNo", transferAccountRequest.depositAccountNo());
+        requestBody.put("depositTransactionSummary",
+                        transferAccountRequest.depositTransactionSummary());
+        requestBody.put("transactionBalance", transferAccountRequest.transactionBalance());
+        requestBody.put("withdrawalAccountNo", transferAccountRequest.withdrawalAccountNo());
+        requestBody.put("withdrawalTransactionSummary",
+                        transferAccountRequest.withdrawalTransactionSummary());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -163,24 +238,27 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 거래 내역 조회
+     *
+     * @param userKey
+     * @param getTransactionRequest
+     * @return
+     */
     public Mono<JsonNode> getTransactionHistories(
         String userKey,
-        String accountNo,
-        String startDate,
-        String endDate,
-        String transactionType,
-        String orderByType
+        DemandDepositGetTransactionsRequest getTransactionRequest
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("accountNo", accountNo);
-        requestBody.put("startDate", startDate);
-        requestBody.put("endDate", endDate);
-        requestBody.put("transactionType", transactionType);
-        requestBody.put("orderByType", orderByType);
+        requestBody.put("accountNo", getTransactionRequest.accountNo());
+        requestBody.put("startDate", getTransactionRequest.startDate());
+        requestBody.put("endDate", getTransactionRequest.endDate());
+        requestBody.put("transactionType", getTransactionRequest.transactionType());
+        requestBody.put("orderByType", getTransactionRequest.orderByType());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -190,18 +268,24 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
+    /**
+     * 거래 내역 단건 조회
+     *
+     * @param userKey
+     * @param getTransactionRequest
+     * @return
+     */
     public Mono<JsonNode> getTransactionHistory(
         String userKey,
-        String accountNo,
-        Long transactionUniqueNo
+        DemandDepositGetTransactionRequest getTransactionRequest
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("accountNo", accountNo);
-        requestBody.put("transactionUniqueNo", transactionUniqueNo);
+        requestBody.put("accountNo", getTransactionRequest.accountNo());
+        requestBody.put("transactionUniqueNo", getTransactionRequest.transactionUniqueNo());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -211,6 +295,6 @@ public class DemandDepositService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 }
