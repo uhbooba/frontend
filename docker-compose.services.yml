@@ -68,7 +68,8 @@ services:
     volumes:
       - ./logs/external-service:/app/logs
     depends_on:
-      - eureka-server
+      eureka-server:
+        condition: service_started
 
   api-gateway:
     container_name: api-gateway
