@@ -1,9 +1,9 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.DepositAccountCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.DepositCreateRequest;
-import com.uhbooba.financeservice.service.finapi.DepositService;
+import com.uhbooba.financeservice.dto.finapi.deposit.DepositAccountCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.deposit.DepositCreateRequest;
+import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,24 +22,27 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/fin-api/deposit")
 public class DepositController {
 
-    private final DepositService depositService;
+    private final FinApiDepositService finApiDepositService;
 
     @PostMapping("/create-account")
     @Operation(summary = "예금 계좌 생성")
-    public Mono<JsonNode> createDepositAccount(@RequestBody DepositAccountCreateRequest dto) {
-        return depositService.createDepositAccount(dto);
+    public Mono<JsonNode> createDepositAccount(
+        @RequestParam("userKey") String userKey,
+        @RequestBody DepositAccountCreateRequest dto
+    ) {
+        return finApiDepositService.createDepositAccount(userKey, dto);
     }
 
     @PostMapping("/create-deposit")
     @Operation(summary = "예금 상품 만들기")
     public Mono<JsonNode> createDeposit(@RequestBody DepositCreateRequest dto) {
-        return depositService.createDeposit(dto);
+        return finApiDepositService.createDeposit(dto);
     }
 
     @GetMapping("/deposit-products")
     @Operation(summary = "예금 상품 전체 조회")
     public Mono<JsonNode> getDepositProducts() {
-        return depositService.getDepositProducts();
+        return finApiDepositService.getDepositProducts();
     }
 
     @GetMapping("/expiry-interest")
@@ -48,7 +51,7 @@ public class DepositController {
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositExpiryInterest(userKey, accountNo);
+        return finApiDepositService.getDepositExpiryInterest(userKey, accountNo);
     }
 
     @GetMapping("/early-termination-interest")
@@ -57,7 +60,7 @@ public class DepositController {
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositEarlyTerminationInterest(userKey, accountNo);
+        return finApiDepositService.getDepositEarlyTerminationInterest(userKey, accountNo);
     }
 
     @DeleteMapping("/delete-account")
@@ -66,7 +69,7 @@ public class DepositController {
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.deleteDepositAccount(userKey, accountNo);
+        return finApiDepositService.deleteDepositAccount(userKey, accountNo);
     }
 
     @GetMapping("/account-detail")
@@ -75,12 +78,12 @@ public class DepositController {
         @RequestParam("userKey") String userKey,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositAccount(userKey, accountNo);
+        return finApiDepositService.getDepositAccount(userKey, accountNo);
     }
 
     @GetMapping("/accounts")
     @Operation(summary = "사용자의 예금 계좌 목록 조회")
     public Mono<JsonNode> getDepositAccounts(@RequestParam("userKey") String userKey) {
-        return depositService.getDepositAccounts(userKey);
+        return finApiDepositService.getDepositAccounts(userKey);
     }
 }
