@@ -1,4 +1,80 @@
+import TopBar from "@/components/layouts/TopBar";
+import LevelBar from "@/components/common/LevelBar";
+import { BottomTab } from "@/components/layouts/BottomTab";
+import { useAtom } from "jotai";
+import { accountNumberAtom, amountAtom, selectedBankAtom } from "@/atoms/account/accountTransferAtoms";
+
+
 const AccountTransferInfoCheck = () => {
+  const [ selectedBank ] = useAtom(selectedBankAtom)
+  const [ accountNumber ] = useAtom(accountNumberAtom)
+  const [ amount ] = useAtom(amountAtom)
+
+  return (
+    <div className='flex flex-col h-screen'>
+    <div className='w-full'>
+        <TopBar title='계좌 이체' />
+    </div>
+
+    <div className='mt-4'>
+        <LevelBar currentLevel={2} totalLevel={4} />
+    </div>
+
+    <div>이체 내역</div>
+
+    <div>받는 계좌</div>
+    <div>{selectedBank} {accountNumber}</div>
+
+    <div>보낸 금액</div>
+    <div>{amount}원</div>
+
+    <div>받는 분 기록</div>
+    <div>김지윤</div>
+
+    <div>거래일시</div>
+    <div>현재 시간</div>
+
+
+    {/* <div className='mt-4 ml-4'>
+        <div>
+            {selectedBank} {accountNumber}
+        </div>
+        {accountHolderName}님께
+    </div>
+
+    <div className='ml-4 mr-4 mt-6'>
+        <div className='mb-8'>
+            {amount}원
+        </div>
+
+        <Input 
+            label='내 통장 기록'
+            placeholder={myAccountRecord}
+            onChange={(e) => setMyAcoountRecord(e.target.value)}
+        />
+        <Input 
+            label='받는 분 통장 기록'
+            placeholder={yourAccountRecord}
+            onChange={(e) => setYourAcoountRecord(e.target.value)}
+        />
+
+        
+        <div className='w-full mt-[30vh]'>
+            <div className='flex w-full justify-between space-x-4 px-4 pb-4'>
+                <Button
+                label='이체하기'
+                size='large'
+                color='orange'
+                className='flex-grow'
+                onClick={() => navigate('/account/transfer/password')}
+                />
+            </div> */}
+
+            <div className='fixed bottom-0 left-0 w-full'>
+                <BottomTab />
+            </div>
+        </div>
+    );
   };
   
   export default AccountTransferInfoCheck;
