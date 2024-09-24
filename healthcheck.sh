@@ -1,2 +1,0 @@
-#!/bin/bash
-mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" -e "USE $MARIADB_DATABASE; SELECT 1;"
