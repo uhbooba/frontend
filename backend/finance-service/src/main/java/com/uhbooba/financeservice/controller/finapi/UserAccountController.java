@@ -1,7 +1,7 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.service.finapi.UserAccountService;
+import com.uhbooba.financeservice.service.finapi.FinApiUserAccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/fin-api/user")
 public class UserAccountController {
 
-    private final UserAccountService userAccountService;
+    private final FinApiUserAccountService finApiUserAccountService;
 
     @GetMapping("/{userId}")
     @Operation(summary = "사용자 계정 조회")
     public Mono<JsonNode> getUserAccount(@PathVariable("userId") Long userId) {
-        return userAccountService.getOrCreateUserAccount(userId);
+        return finApiUserAccountService.getOrCreateUserAccount(userId);
     }
 }
