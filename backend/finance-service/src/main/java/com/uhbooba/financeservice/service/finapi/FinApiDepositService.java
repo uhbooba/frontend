@@ -4,9 +4,9 @@ import static com.uhbooba.financeservice.util.finapi.FinApiList.Deposit.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.uhbooba.financeservice.dto.finapi.DepositAccountCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.DepositCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
+import com.uhbooba.financeservice.dto.finapi.deposit.DepositAccountCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.deposit.DepositCreateRequest;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class DepositService {
+public class FinApiDepositService {
 
-    private final CommonService commonService;
+    private final FinApiCommonService finApiCommonService;
     private final ObjectMapper objectMapper;
 
     public Mono<JsonNode> createDeposit(
@@ -34,7 +34,7 @@ public class DepositService {
                                                              .apiName(CREATE_DEPOSIT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDepositProducts() {
@@ -47,10 +47,11 @@ public class DepositService {
                                                              .apiName(GET_DEPOSIT_PRODUCTS_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> createDepositAccount(
+        String userKey,
         DepositAccountCreateRequest dto
     ) {
         // 1. 요청 본문 생성
@@ -62,8 +63,9 @@ public class DepositService {
                                                              .apiName(
                                                                  CREATE_DEPOSIT_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
+                                                             .userKey(userKey)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDepositAccount(
@@ -82,7 +84,7 @@ public class DepositService {
                                                                  GET_DEPOSIT_ACCOUNT_DETAIL_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDepositAccounts(String userKey) {
@@ -97,7 +99,7 @@ public class DepositService {
                                                                  GET_DEPOSIT_ACCOUNT_LIST_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDepositExpiryInterest(
@@ -115,7 +117,7 @@ public class DepositService {
                                                              .apiName(GET_EXPIRY_INTEREST_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> getDepositEarlyTerminationInterest(
@@ -134,7 +136,7 @@ public class DepositService {
                                                                  GET_EARLY_TERMINATION_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 
     public Mono<JsonNode> deleteDepositAccount(
@@ -152,6 +154,6 @@ public class DepositService {
                                                              .apiName(DELETE_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .build();
-        return commonService.executeApiRequest(param);
+        return finApiCommonService.executeApiRequest(param);
     }
 }
