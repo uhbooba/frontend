@@ -50,7 +50,7 @@ const DepositExplain = () => {
           <img
             src='/assets/images/deposit_pig.png'
             alt='Pig'
-            className='h-54 w-54 ml-32 mt-8'
+            className='ml-20 mt-8 h-[270px] w-[270px]'
           />
         </div>
 

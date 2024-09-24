@@ -18,6 +18,13 @@ const ButtonConfig: ButtonConfigType[] = [
     color: 'orange',
     className: 'w-full',
   },
+  {
+    label: '퀴즈',
+    route: '/quiz',
+    size: 'large',
+    color: 'orange',
+    className: 'w-full',
+  },
 ];
 
 const Education = () => {
