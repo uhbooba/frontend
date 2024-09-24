@@ -18,9 +18,13 @@ const QuizMain = () => {
     { title: '상속지식', path: 'inheritance-knowledge' },
   ];
 
+  const GoEdu = () => {
+    navigate('/study');
+  };
+
   return (
     <div>
-      <TopBar title='금융 퀴즈' />
+      <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
       <div>
         {quizItems.map((item) => (
           <QuizItem
