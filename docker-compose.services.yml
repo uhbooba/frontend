@@ -70,8 +70,6 @@ services:
     depends_on:
       eureka-server:
         condition: service_started
-      external-db:
-        condition: service_healthy
 
   api-gateway:
     container_name: api-gateway
