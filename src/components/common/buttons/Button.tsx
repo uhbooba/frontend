@@ -19,8 +19,9 @@ export type ButtonConfigType = {
   label: string;
   route: string;
   size: keyof typeof BUTTON_SIZES;
-  color: keyof typeof BUTTON_COLORS;
+  color?: keyof typeof BUTTON_COLORS;
   className: string;
+  img?: string;
 };
 
 type ButtonProps = {
@@ -30,6 +31,7 @@ type ButtonProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   className?: string;
+  img?: string;
   type?: 'submit' | 'reset' | 'button';
 };
 
@@ -41,6 +43,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   className,
   type,
+  img,
 }) => {
   return (
     <button
@@ -54,6 +57,13 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
     >
+      {img && (
+        <img
+          src={img}
+          alt={`${label} 이미지`}
+          className='mx-auto mb-2 h-12 w-12'
+        />
+      )}
       {label}
     </button>
   );
