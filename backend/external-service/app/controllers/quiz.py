@@ -1,15 +1,14 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from ..schemas.error import ErrorResponse
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
 from ..config.database import get_db
+from ..schemas.error import ErrorResponse
 from ..schemas.quiz import QuizResponse
 from ..services.quiz import QuizService
 
-router = APIRouter(
-    prefix="/quiz",
-    tags=["quiz"]
-)
+router = APIRouter(prefix="/quiz", tags=["quiz"])
+
 
 @router.get("", response_model=QuizResponse)
 def read_quizzes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -22,8 +21,7 @@ def read_quizzes_by_part(part: int, db: Session = Depends(get_db)):
     response = QuizService.get_quizzes_by_part(db, part)
     if not response.data:
         error_response = ErrorResponse(
-            status="not found",
-            data=f"No quizzes found for part {part}"
+            status="not found", data=f"No quizzes found for part {part}"
         )
         return JSONResponse(status_code=404, content=error_response.dict())
     return response
