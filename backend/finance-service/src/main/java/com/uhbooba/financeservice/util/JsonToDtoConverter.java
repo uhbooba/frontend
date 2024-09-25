@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 public class JsonToDtoConverter {
@@ -15,16 +14,16 @@ public class JsonToDtoConverter {
     /**
      * 제너릭 메서드 : monoJsonNode -> list로 변환
      *
-     * @param monoJsonNode
+     * @param jsonNode
      * @param typeReference
      * @param <T>
      * @return
      */
-    public <T> Mono<List<T>> convertToList(
-        Mono<JsonNode> monoJsonNode,
+    public <T> List<T> convertToList(
+        JsonNode jsonNode,
         TypeReference<List<T>> typeReference
     ) {
-        return monoJsonNode.map(jsonNode -> objectMapper.convertValue(jsonNode, typeReference));
+        return objectMapper.convertValue(jsonNode, typeReference);
     }
 
     /**
@@ -35,10 +34,10 @@ public class JsonToDtoConverter {
      * @param <T>
      * @return
      */
-    public <T> Mono<T> convertToObject(
-        Mono<JsonNode> monoJsonNode,
+    public <T> T convertToObject(
+        JsonNode jsonNode,
         Class<T> clazz
     ) {
-        return monoJsonNode.map(jsonNode -> objectMapper.convertValue(jsonNode, clazz));
+        return objectMapper.convertValue(jsonNode, clazz);
     }
 }
