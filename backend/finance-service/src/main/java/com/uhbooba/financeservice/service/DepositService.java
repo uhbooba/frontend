@@ -2,20 +2,19 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.deposit.DepositAccountCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.deposit.DepositCreateRequest;
-import com.uhbooba.financeservice.dto.response.deposit.DepositAccountDeleteResponse;
-import com.uhbooba.financeservice.dto.response.deposit.DepositAccountResponse;
-import com.uhbooba.financeservice.dto.response.deposit.DepositEarlyTerminationInterestResponse;
-import com.uhbooba.financeservice.dto.response.deposit.DepositExpiryInterestResponse;
-import com.uhbooba.financeservice.dto.response.deposit.DepositResponse;
+import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountDeleteResponse;
+import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountResponse;
+import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositEarlyTerminationInterestResponse;
+import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositExpiryInterestResponse;
+import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositResponse;
 import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -25,69 +24,76 @@ public class DepositService {
     private final FinApiDepositService finApiDepositService;
     private final JsonToDtoConverter jsonToDtoConverter;
 
-    public Mono<DepositResponse> createDeposit(
+    public DepositResponse createDeposit(
         DepositCreateRequest dto
     ) {
-        Mono<JsonNode> createdDeposit = finApiDepositService.createDeposit(dto);
+        JsonNode createdDeposit = finApiDepositService.createDeposit(dto)
+                                                      .block();
         return jsonToDtoConverter.convertToObject(createdDeposit, DepositResponse.class);
     }
 
-    public Mono<List<DepositResponse>> getAllDeposits() {
-        Mono<JsonNode> deposits = finApiDepositService.getDepositProducts();
+    public List<DepositResponse> getAllDeposits() {
+        JsonNode deposits = finApiDepositService.getDepositProducts()
+                                                .block();
         return jsonToDtoConverter.convertToList(deposits,
                                                 new TypeReference<List<DepositResponse>>() {});
     }
 
-    public Mono<DepositAccountResponse> createDepositAccount(
+    public DepositAccountResponse createDepositAccount(
         String userKey,
         DepositAccountCreateRequest dto
     ) {
-        Mono<JsonNode> createdDeposit = finApiDepositService.createDepositAccount(userKey, dto);
+        JsonNode createdDeposit = finApiDepositService.createDepositAccount(userKey, dto)
+                                                      .block();
         return jsonToDtoConverter.convertToObject(createdDeposit, DepositAccountResponse.class);
     }
 
-    public Mono<DepositAccountResponse> getDepositAccount(
+    public DepositAccountResponse getDepositAccount(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> depositAccount = finApiDepositService.getDepositAccount(userKey, accountNo);
+        JsonNode depositAccount = finApiDepositService.getDepositAccount(userKey, accountNo)
+                                                      .block();
         return jsonToDtoConverter.convertToObject(depositAccount, DepositAccountResponse.class);
     }
 
-    public Mono<List<DepositAccountResponse>> getAllDepositAccounts(
+    public List<DepositAccountResponse> getAllDepositAccounts(
         String userKey
     ) {
-        Mono<JsonNode> depositAccounts = finApiDepositService.getDepositAccounts(userKey);
+        JsonNode depositAccounts = finApiDepositService.getDepositAccounts(userKey)
+                                                       .block();
         return jsonToDtoConverter.convertToList(depositAccounts,
                                                 new TypeReference<List<DepositAccountResponse>>() {});
     }
 
-    public Mono<DepositExpiryInterestResponse> getDepositExpiryInterest(
+    public DepositExpiryInterestResponse getDepositExpiryInterest(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> depositExpiryInterest = finApiDepositService.getDepositExpiryInterest(
-            userKey, accountNo);
+        JsonNode depositExpiryInterest = finApiDepositService.getDepositExpiryInterest(userKey,
+                                                                                       accountNo)
+                                                             .block();
         return jsonToDtoConverter.convertToObject(depositExpiryInterest,
                                                   DepositExpiryInterestResponse.class);
     }
 
-    public Mono<DepositEarlyTerminationInterestResponse> getDepositEarlyTerminationInterest(
+    public DepositEarlyTerminationInterestResponse getDepositEarlyTerminationInterest(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> nodeMono = finApiDepositService.getDepositEarlyTerminationInterest(userKey,
-                                                                                          accountNo);
+        JsonNode nodeMono = finApiDepositService.getDepositEarlyTerminationInterest(userKey,
+                                                                                    accountNo)
+                                                .block();
         return jsonToDtoConverter.convertToObject(nodeMono,
                                                   DepositEarlyTerminationInterestResponse.class);
     }
 
-    public Mono<DepositAccountDeleteResponse> deleteDepositAccount(
+    public DepositAccountDeleteResponse deleteDepositAccount(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> deletedDeposit = finApiDepositService.deleteDepositAccount(userKey,
-                                                                                  accountNo);
+        JsonNode deletedDeposit = finApiDepositService.deleteDepositAccount(userKey, accountNo)
+                                                      .block();
         return jsonToDtoConverter.convertToObject(deletedDeposit,
                                                   DepositAccountDeleteResponse.class);
     }
