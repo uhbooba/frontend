@@ -33,7 +33,7 @@ const AccountTransferDepositName = () => {
         </div>
 
         <div className='mt-4'>
-            <LevelBar currentLevel={2} totalLevel={4} />
+            <LevelBar currentLevel={3} totalLevel={5} />
         </div>
 
         <div className='mt-4 ml-4'>
@@ -51,11 +51,13 @@ const AccountTransferDepositName = () => {
             <Input 
                 label='내 통장 기록'
                 placeholder={myAccountRecord}
+                value = {myAccountRecord}
                 onChange={(e) => setMyAcoountRecord(e.target.value)}
             />
             <Input 
                 label='받는 분 통장 기록'
                 placeholder={yourAccountRecord}
+                value= {yourAccountRecord}
                 onChange={(e) => setYourAcoountRecord(e.target.value)}
             />
 
@@ -67,7 +69,7 @@ const AccountTransferDepositName = () => {
                     size='large'
                     color='orange'
                     className='flex-grow'
-                    onClick={() => navigate('/account/transfer/password')}
+                    onClick={() => navigate('/account/transfer/info-check')}
                     />
                 </div>
 
