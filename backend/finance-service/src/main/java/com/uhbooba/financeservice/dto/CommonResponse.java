@@ -1,13 +1,13 @@
 package com.uhbooba.financeservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 
 public record CommonResponse<T>(
-
-    int statusCode,
-    String message,
-    @JsonInclude(JsonInclude.Include.NON_NULL) T result
+    @Schema int statusCode,
+    @Schema String message,
+    @Schema @JsonInclude(JsonInclude.Include.NON_NULL) T result
 ) {
 
     public static <T> CommonResponse<T> ok(String message) {
