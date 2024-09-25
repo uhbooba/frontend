@@ -6,7 +6,6 @@ import static com.uhbooba.userservice.constant.CORS_SET.*;
 import com.uhbooba.userservice.exception.CustomAccessDeniedHandler;
 import com.uhbooba.userservice.exception.CustomAuthenticationEntryPoint;
 import com.uhbooba.userservice.filter.CustomLogoutFilter;
-import com.uhbooba.userservice.filter.JWTFilter;
 import com.uhbooba.userservice.filter.LoginFilter;
 import com.uhbooba.userservice.service.RefreshService;
 import com.uhbooba.userservice.util.JWTUtil;
@@ -83,10 +82,6 @@ public class SecurityConfig {
                 new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,
                     refreshService),
                 UsernamePasswordAuthenticationFilter.class
-            )
-
-            .addFilterBefore(
-                new JWTFilter(jwtUtil), LoginFilter.class
             )
 
             .addFilterBefore(
