@@ -1,4 +1,3 @@
-# app/services/redis.py
 import redis
 
 from ..config.config import REDIS_HOST, REDIS_PORT
@@ -7,7 +6,7 @@ from ..config.logger import setup_logger
 logger = setup_logger("app")
 
 
-class RedisConfig:
+class RedisHandler:
     _instances = {}  # 인스턴스 목록
 
     @classmethod
@@ -61,11 +60,11 @@ class RedisConfig:
 
 
 #######################################################################
-RedisConfig.initialize([0, 1, 2, 3, 4, 5])
+RedisHandler.initialize([0, 1, 2, 3, 4, 5])
 
-r_api_keys = RedisConfig.get_instance(0)
-r_api_data = RedisConfig.get_instance(1)
-r_tts_audio = RedisConfig.get_instance(2)
-r_tts_hash = RedisConfig.get_instance(3)
-r_chat_credits = RedisConfig.get_instance(4)
-r_chat_log = RedisConfig.get_instance(5)
+r_api_keys = RedisHandler.get_instance(0)
+r_api_data = RedisHandler.get_instance(1)
+r_tts_audio = RedisHandler.get_instance(2)
+r_tts_hash = RedisHandler.get_instance(3)
+r_chat_credits = RedisHandler.get_instance(4)
+r_chat_log = RedisHandler.get_instance(5)

@@ -7,22 +7,28 @@ from fastapi import FastAPI
 
 from .config.database import SessionLocal
 from .config.database import engine, Base
-from .controllers import quiz, tts, video, chat, redis
+from .controllers import (
+    chat_controller,
+    quiz_controller,
+    tts_controller,
+    video_controller,
+    redis_controller,
+)
 from .eureka_register import register_with_eureka
 
-#####################################################################################c
+#####################################################################################
 Base.metadata.create_all(bind=engine)
 app = FastAPI(
     root_path="/external-service",
     openapi_url="/v3/api-docs",  # OpenAPI 문서 경로 설정
     docs_url="/docs",  # Swagger UI 경로 설정
 )
-#####################################################################################c
-app.include_router(quiz.router)
-app.include_router(tts.router)
-app.include_router(video.router)
-app.include_router(chat.router)
-app.include_router(redis.router)
+#####################################################################################
+app.include_router(chat_controller.router)
+app.include_router(quiz_controller.router)
+app.include_router(redis_controller.router)
+app.include_router(tts_controller.router)
+app.include_router(video_controller.router)
 
 
 @app.get("/health-check")
