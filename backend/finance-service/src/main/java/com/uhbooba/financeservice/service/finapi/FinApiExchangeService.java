@@ -4,8 +4,9 @@ import static com.uhbooba.financeservice.util.finapi.FinApiList.Exchange.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeGetEstimateRequest;
-import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeGetEstimateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ForeignCurrencyDemandDepositCreateRequest;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -76,8 +77,7 @@ public class FinApiExchangeService {
         requestBody.put("accountNo", exchangeRequest.accountNo());
         requestBody.put("exchangeCurrency", exchangeRequest.exchangeCurrency()
                                                            .toUpperCase()); // 대문자
-        requestBody.put("exchangeAmount", exchangeRequest.exchangeAmount()
-                                                         .toString());
+        requestBody.put("exchangeAmount", exchangeRequest.exchangeAmount());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()

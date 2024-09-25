@@ -26,7 +26,7 @@ public class FinApiUserAccountService {
      * @return
      * @throws
      */
-    public Mono<JsonNode> getOrCreateUserAccount(Long userId) {
+    public Mono<JsonNode> getOrCreateUserAccount(Integer userId) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
         // 1.1 email 만들기
@@ -58,7 +58,7 @@ public class FinApiUserAccountService {
                                 });
     }
 
-    public JsonNode getOrCreateUserAccountWithRT(Long userId) throws JsonProcessingException {
+    public JsonNode getOrCreateUserAccountWithRT(Integer userId) throws JsonProcessingException {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
         // 1.1 email 만들기
@@ -94,7 +94,7 @@ public class FinApiUserAccountService {
      * @param userId user id
      * @return email
      */
-    private String generateUniqueEmail(Long userId) {
+    private String generateUniqueEmail(Integer userId) {
         return "user" + userId + "@uhbooba.com";
     }
 }

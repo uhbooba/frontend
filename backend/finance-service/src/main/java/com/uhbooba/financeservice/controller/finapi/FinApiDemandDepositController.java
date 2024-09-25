@@ -1,13 +1,14 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositDepositAccountRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionsRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositTransferAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositDepositAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionsRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositTransferAccountRequest;
 import com.uhbooba.financeservice.service.finapi.FinApiDemandDepositService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "[사용 X]수시 입출금 API", description = "수시 입출금 API 입니다.")
 @RequestMapping("/fin-api/demand-deposit")
-public class DemandDepositController {
+public class FinApiDemandDepositController {
 
     private final FinApiDemandDepositService finApiDemandDepositService;
 

@@ -1,10 +1,11 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.deposit.DepositAccountCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.deposit.DepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositCreateRequest;
 import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +20,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "[사용 X]예금 API", description = "예금 API 입니다.")
 @RequestMapping("/fin-api/deposit")
-public class DepositController {
+public class FinApiDepositController {
 
     private final FinApiDepositService finApiDepositService;
 

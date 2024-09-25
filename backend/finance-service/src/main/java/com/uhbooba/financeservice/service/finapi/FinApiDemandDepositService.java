@@ -4,11 +4,11 @@ import static com.uhbooba.financeservice.util.finapi.FinApiList.DemandDeposit.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositDepositAccountRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionsRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositTransferAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositDepositAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionsRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositTransferAccountRequest;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

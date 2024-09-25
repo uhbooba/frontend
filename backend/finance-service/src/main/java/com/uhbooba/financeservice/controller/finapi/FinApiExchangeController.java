@@ -1,10 +1,12 @@
 package com.uhbooba.financeservice.controller.finapi;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeGetEstimateRequest;
-import com.uhbooba.financeservice.dto.finapi.exchange.ExchangeRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeGetEstimateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeRequest;
+import com.uhbooba.financeservice.dto.finapi.request.exchange.ForeignCurrencyDemandDepositCreateRequest;
 import com.uhbooba.financeservice.service.finapi.FinApiExchangeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "[사용 X]환전 및 외환 API", description = "환전 및 외환 API 입니다.")
 @RequestMapping("/fin-api/exchange")
-public class ExchangeController {
+public class FinApiExchangeController {
 
     private final FinApiExchangeService finApiExchangeService;
 
@@ -52,7 +55,7 @@ public class ExchangeController {
     @PostMapping("/exchange/currency")
     @Operation(summary = "환전")
     public Mono<JsonNode> exchangeCurrency(
-        @RequestParam String userKey,
+        @RequestParam("userKey") String userKey,
         @RequestBody ExchangeRequest dto
     ) {
         return finApiExchangeService.exchange(userKey, dto);
