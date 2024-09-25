@@ -45,14 +45,20 @@ const TopBar: React.FC<TopBarProps> = ({
       {/* 나중에 챗봇이랑 내정보 함수 해당 페이지로 가게 바꿔야함 */}
       {showMainButton && (
         <div className='flex py-5'>
-          <div className='absolute left-4 top-6'>
-            <p className='text-2xl font-bold'>어부바</p>
+          <div className='absolute left-3 top-1 flex'>
+            {/* <p className='text-2xl font-bold'>어부바</p> */}
+            <img
+              src='/assets/images/small_logo.png'
+              alt='로고'
+              className='h-16 w-16'
+            ></img>
+            <p className='pl-1 pt-4 text-2xl font-bold'>어부바</p>
           </div>
-          <div className='absolute right-20 top-4 flex-col'>
-            <TbMessageChatbot onClick={handleGoHome} size={30} />
+          <div className='absolute right-20 top-3 flex-col'>
+            <TbMessageChatbot onClick={handleGoHome} size={32} />
             <p>챗봇</p>
           </div>
-          <div className='absolute right-2 top-4 flex-col'>
+          <div className='absolute right-2 top-3.5 flex-col'>
             <FaUser onClick={handleGoHome} size={30} className='ml-2' />
             <span>내정보</span>
           </div>

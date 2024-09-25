@@ -2,11 +2,17 @@ import { useEffect, useRef } from 'react';
 import Button from '@/components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
+import { useNavigate } from 'react-router';
 
 const EducationDownload = () => {
+  const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const name = '이희주'; // 나중에 사용자 정보에서 이름 가져와서 여기에 넣기
   const currentDate = new Date().toLocaleDateString();
+
+  const GoEdu = () => {
+    navigate('/study');
+  };
 
   // 캔바스 사용해서 이미지 위에 글씨 올리는 구조
   useEffect(() => {
@@ -55,7 +61,11 @@ const EducationDownload = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='이수증 다운로드' />
+        <TopBar
+          title='이수증 다운로드'
+          onXButtonClick={GoEdu}
+          showBackButton={false}
+        />
       </div>
 
       <div className='mt-20 flex justify-center'>

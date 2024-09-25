@@ -59,11 +59,10 @@ const router = createBrowserRouter([
     children: [
       { path: '', element: <Main /> },
       { path: 'study', element: <Education /> },
-      { path: 'deposit', element: <DepositMission /> },
-      { path: 'savings', element: <Savings /> },
-      { path: 'explain', element: <DepositExplain /> },
       { path: 'signup', element: <Signup /> },
       { path: 'login', element: <Login /> },
+      // 예금
+      { path: 'deposit', element: <DepositMission /> },
       { path: 'deposit/explain', element: <DepositExplain /> },
       { path: 'deposit/signup', element: <DepositSignup /> },
       { path: 'deposit/agree', element: <DepositAgree /> },
@@ -73,6 +72,8 @@ const router = createBrowserRouter([
       { path: 'deposit/password', element: <DepositPassword /> },
       { path: 'deposit/success', element: <DepositSuccess /> },
       { path: 'deposit/success2', element: <DepositSuccess2 /> },
+      // 적금
+      { path: 'savings', element: <Savings /> },
       { path: 'savings/agree', element: <SavingsAgree /> },
       { path: 'savings/signup', element: <SavingsSignup /> },
       { path: 'savings/money', element: <SavingsMoney /> },
@@ -80,15 +81,19 @@ const router = createBrowserRouter([
       { path: 'savings/product', element: <SavingsProduct /> },
       { path: 'savings/password', element: <Savingspassword /> },
       { path: 'savings/success', element: <SavingsSuccess /> },
+      // 예금 중도해지
       { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
       { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
       { path: 'cancel/deposit/password', element: <CancelDepositPassword /> },
       { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
+      // 적금 중도해지
       { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
+      // 금융 교육 영상
       { path: 'education/video', element: <EducationVideo /> },
+      // 이수증
       { path: 'education/certificate', element: <EducationCertificate /> },
       { path: 'education/writing', element: <EducationWriting /> },
       { path: 'education/download', element: <EducationDownload /> },
