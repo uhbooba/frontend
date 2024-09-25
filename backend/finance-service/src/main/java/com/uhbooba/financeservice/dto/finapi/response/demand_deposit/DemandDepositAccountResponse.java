@@ -1,5 +1,10 @@
-package com.uhbooba.financeservice.dto.response.demand_deposit;
+package com.uhbooba.financeservice.dto.finapi.response.demand_deposit;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
+
+@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record DemandDepositAccountResponse(
     String bankCode,
     String bankName,
@@ -14,7 +19,5 @@ public record DemandDepositAccountResponse(
     String oneTimeTransferLimit,
     String accountBalance,
     String lastTransactionDate,
-    String currency
-) {
-
-}
+    CurrencyDto currency
+) {}

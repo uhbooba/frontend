@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.response.deposit;
+package com.uhbooba.financeservice.dto.finapi.response.deposit;
 
 import lombok.Builder;
 

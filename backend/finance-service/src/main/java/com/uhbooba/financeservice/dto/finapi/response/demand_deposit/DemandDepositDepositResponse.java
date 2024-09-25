@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.response.demand_deposit;
+package com.uhbooba.financeservice.dto.finapi.response.demand_deposit;
 
 import lombok.Builder;
 
@@ -6,6 +6,4 @@ import lombok.Builder;
 public record DemandDepositDepositResponse(
     String transactionUniqueNo,
     String transactionDate
-) {
-
-}
+) {}

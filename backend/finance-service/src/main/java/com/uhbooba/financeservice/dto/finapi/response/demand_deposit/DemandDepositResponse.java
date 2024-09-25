@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.response.demand_deposit;
+package com.uhbooba.financeservice.dto.finapi.response.demand_deposit;
 
 public record DemandDepositResponse(
     String accountTypeUniqueNo,

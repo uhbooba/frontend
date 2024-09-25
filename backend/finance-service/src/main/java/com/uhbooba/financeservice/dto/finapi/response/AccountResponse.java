@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.response;
+package com.uhbooba.financeservice.dto.finapi.response;
 
 import com.uhbooba.financeservice.entity.AccountType;
 import lombok.Builder;
