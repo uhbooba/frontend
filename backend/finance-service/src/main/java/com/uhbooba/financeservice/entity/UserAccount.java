@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,19 +25,10 @@ public class UserAccount {
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    private Integer userServiceId; // user service 에서의 Id
-
-    @Column(nullable = false, unique = true)
-    private String userId; // open API 에서 사용한 email 형식의 userId <- 필요 없을 수도 있음
+    private Integer userId; // user service 에서의 Id
 
     @Column(nullable = false, unique = true)
     private String userKey;
-
-    @Column
-    private OffsetDateTime created;
-
-    @Column
-    private OffsetDateTime modified;
 
     // 계좌 정보와 연관 관계 설정
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,17 +36,11 @@ public class UserAccount {
 
     @Builder
     public UserAccount(
-        Integer userServiceId,
-        String userId,
-        String userKey,
-        OffsetDateTime created,
-        OffsetDateTime modified
+        Integer userId,
+        String userKey
     ) {
-        this.userServiceId = userServiceId;
         this.userId = userId;
         this.userKey = userKey;
-        this.created = created;
-        this.modified = modified;
     }
 
     /**
