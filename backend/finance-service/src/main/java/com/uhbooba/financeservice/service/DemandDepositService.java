@@ -2,132 +2,161 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositCreateRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositDepositAccountRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositGetTransactionsRequest;
-import com.uhbooba.financeservice.dto.finapi.demand_deposit.DemandDepositTransferAccountRequest;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositAccountBalanceResponse;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositAccountHolderResponse;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositAccountResponse;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositDepositResponse;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositResponse;
-import com.uhbooba.financeservice.dto.response.demand_deposit.DemandDepositTransferResponse;
-import com.uhbooba.financeservice.dto.response.transaction.TransactionListResponse;
-import com.uhbooba.financeservice.dto.response.transaction.TransactionResponse;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositDepositAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionsRequest;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositTransferAccountRequest;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountBalanceResponse;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountHolderResponse;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountResponse;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositDepositResponse;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositResponse;
+import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositTransferResponse;
+import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionListResponse;
+import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionResponse;
+import com.uhbooba.financeservice.entity.UserAccount;
 import com.uhbooba.financeservice.service.finapi.FinApiDemandDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class DemandDepositService {
 
+    @Value("${variables.bank-code}")
+    private String bankCode;
+
+    @Value("${variables.demand-deposit-product-id}")
+    private String demandDepositProductId;
+
+    private final UserAccountService userAccountService;
+
     private final FinApiDemandDepositService finApiDemandDepositService;
     private final JsonToDtoConverter jsonToDtoConverter;
 
-    public Mono<DemandDepositResponse> createDemandDeposit(
+    public DemandDepositResponse createDemandDeposit(
         DemandDepositCreateRequest demandDepositCreateRequest
     ) {
-        Mono<JsonNode> createdDemandDeposit = finApiDemandDepositService.createDemandDeposit(
-            demandDepositCreateRequest);
+        JsonNode createdDemandDeposit = finApiDemandDepositService.createDemandDeposit(
+                                                                      demandDepositCreateRequest)
+                                                                  .block();
         return jsonToDtoConverter.convertToObject(createdDemandDeposit,
                                                   DemandDepositResponse.class);
     }
 
-    public Mono<List<DemandDepositResponse>> getAllDemandDeposits() {
-        Mono<JsonNode> demandDeposits = finApiDemandDepositService.getDemandDepositProducts();
+    public List<DemandDepositResponse> getAllDemandDeposits() {
+        JsonNode demandDeposits = finApiDemandDepositService.getDemandDepositProducts()
+                                                            .block();
         return jsonToDtoConverter.convertToList(demandDeposits,
                                                 new TypeReference<List<DemandDepositResponse>>() {});
     }
 
-    public Mono<DemandDepositAccountResponse> createDemandDepositAccount(
-        String userKey,
-        String accountTypeUniqueNo
+    public DemandDepositAccountResponse createDemandDepositAccount(
+        Integer userId
     ) {
-        Mono<JsonNode> createdDemandDeposit = finApiDemandDepositService.createDemandDepositAccount(
-            userKey, accountTypeUniqueNo);
-        return jsonToDtoConverter.convertToObject(createdDemandDeposit,
-                                                  DemandDepositAccountResponse.class);
+        // 1. 사용자 계정 찾기
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        String userKey = userAccount.getUserKey();
+        String accountTypeUniqueNo = demandDepositProductId;
+        // 2. 입출금 계좌 만들기 (동기적 처리)
+
+        // 비동기 API 호출 후 block()으로 동기 처리
+        JsonNode createdDemandDeposit = finApiDemandDepositService.createDemandDepositAccount(
+                                                                      userKey, accountTypeUniqueNo)
+                                                                  .block();
+
+        // JSON을 객체로 변환 후 반환
+        DemandDepositAccountResponse demandDepositAccount = jsonToDtoConverter.convertToObject(
+            createdDemandDeposit, DemandDepositAccountResponse.class);
+
+        return demandDepositAccount;  // 최종 결과 반환
     }
 
-    public Mono<DemandDepositAccountResponse> getDemandDepositAccount(
+    public DemandDepositAccountResponse getDemandDepositAccount(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> demandDeposit = finApiDemandDepositService.getDemandDepositAccount(userKey,
-                                                                                          accountNo);
+        JsonNode demandDeposit = finApiDemandDepositService.getDemandDepositAccount(userKey,
+                                                                                    accountNo)
+                                                           .block();
         return jsonToDtoConverter.convertToObject(demandDeposit,
                                                   DemandDepositAccountResponse.class);
     }
 
-    public Mono<List<DemandDepositResponse>> getAllDemandDepositAccounts(
+    public List<DemandDepositResponse> getAllDemandDepositAccounts(
         String userKey
     ) {
-        Mono<JsonNode> demandDeposits = finApiDemandDepositService.getDemandDepositAccounts(
-            userKey);
+        JsonNode demandDeposits = finApiDemandDepositService.getDemandDepositAccounts(userKey)
+                                                            .block();
         return jsonToDtoConverter.convertToList(demandDeposits,
                                                 new TypeReference<List<DemandDepositResponse>>() {});
     }
 
-    public Mono<DemandDepositAccountHolderResponse> getDemandDepositAccountHolderName(
+    public DemandDepositAccountHolderResponse getDemandDepositAccountHolderName(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> holder = finApiDemandDepositService.getDemandDepositAccountHolderName(
-            userKey, accountNo);
+        JsonNode holder = finApiDemandDepositService.getDemandDepositAccountHolderName(userKey,
+                                                                                       accountNo)
+                                                    .block();
         return jsonToDtoConverter.convertToObject(holder, DemandDepositAccountHolderResponse.class);
     }
 
-    public Mono<DemandDepositAccountBalanceResponse> getDemandDepositAccountBalance(
+    public DemandDepositAccountBalanceResponse getDemandDepositAccountBalance(
         String userKey,
         String accountNo
     ) {
-        Mono<JsonNode> balance = finApiDemandDepositService.getDemandDepositAccountBalance(userKey,
-                                                                                           accountNo);
+        JsonNode balance = finApiDemandDepositService.getDemandDepositAccountBalance(userKey,
+                                                                                     accountNo)
+                                                     .block();
         return jsonToDtoConverter.convertToObject(balance,
                                                   DemandDepositAccountBalanceResponse.class);
     }
 
-    public Mono<DemandDepositDepositResponse> depositDemandDepositAccount(
+    public DemandDepositDepositResponse depositDemandDepositAccount(
         String userKey,
         DemandDepositDepositAccountRequest depositRequest
     ) {
-        Mono<JsonNode> deposit = finApiDemandDepositService.depositDemandDepositAccount(userKey,
-                                                                                        depositRequest);
+        JsonNode deposit = finApiDemandDepositService.depositDemandDepositAccount(userKey,
+                                                                                  depositRequest)
+                                                     .block();
         return jsonToDtoConverter.convertToObject(deposit, DemandDepositDepositResponse.class);
     }
 
-    public Mono<List<DemandDepositTransferResponse>> transferDemandDepositAccount(
+    public List<DemandDepositTransferResponse> transferDemandDepositAccount(
         String userKey,
         DemandDepositTransferAccountRequest transferAccountRequest
     ) {
-        Mono<JsonNode> transfer = finApiDemandDepositService.transferDemandDepositAccount(userKey,
-                                                                                          transferAccountRequest);
+        JsonNode transfer = finApiDemandDepositService.transferDemandDepositAccount(userKey,
+                                                                                    transferAccountRequest)
+                                                      .block();
         return jsonToDtoConverter.convertToList(transfer,
                                                 new TypeReference<List<DemandDepositTransferResponse>>() {});
     }
 
-    public Mono<TransactionListResponse> getTransactionHistories(
+    public TransactionListResponse getTransactionHistories(
         String userKey,
         DemandDepositGetTransactionsRequest getTransactionRequest
     ) {
-        Mono<JsonNode> transactions = finApiDemandDepositService.getTransactionHistories(userKey,
-                                                                                         getTransactionRequest);
+        JsonNode transactions = finApiDemandDepositService.getTransactionHistories(userKey,
+                                                                                   getTransactionRequest)
+                                                          .block();
         return jsonToDtoConverter.convertToObject(transactions, TransactionListResponse.class);
     }
 
-    public Mono<TransactionResponse> getTransactionHistory(
+    public TransactionResponse getTransactionHistory(
         String userKey,
         DemandDepositGetTransactionRequest getTransactionRequest
     ) {
-        Mono<JsonNode> transaction = finApiDemandDepositService.getTransactionHistory(userKey,
-                                                                                      getTransactionRequest);
+        JsonNode transaction = finApiDemandDepositService.getTransactionHistory(userKey,
+                                                                                getTransactionRequest)
+                                                         .block();
         return jsonToDtoConverter.convertToObject(transaction, TransactionResponse.class);
     }
 
