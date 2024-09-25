@@ -18,8 +18,6 @@ const AccountTransferSuccess = () => {
           backgroundImage: `url("/assets/images/money_rain.png")`,
           backgroundSize: '420px auto',
           backgroundPosition: 'center -50px',
-          // 이미지 한장만 나오게하고싶으면 나중ㅇ테 이거 주석 해제하면 됨
-          // backgroundRepeat: "no-repeat",
         }}
       >
         <div className='mt-4 text-center'>

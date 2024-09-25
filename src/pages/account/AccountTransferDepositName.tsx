@@ -29,7 +29,10 @@ const AccountTransferDepositName = () => {
     return (
     <div className='flex flex-col h-screen'>
         <div className='w-full'>
-            <TopBar title='계좌 이체' />
+        <TopBar 
+            title='계좌 이체' 
+            showXButton={false}
+        />
         </div>
 
         <div className='mt-4'>
