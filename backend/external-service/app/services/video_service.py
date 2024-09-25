@@ -1,8 +1,8 @@
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from ..models.video import Video
-from ..schemas.video import VideoItem
+from ..models.video_model import Video
+from ..schemas.video_schema import VideoItem
 
 
 class VideoService:
@@ -22,7 +22,7 @@ class VideoService:
         ]
 
     @staticmethod
-    def get_videos_by_keyword(db: Session, keyword: str):
+    def get_videos_by_keyword(keyword: str, db: Session):
         videos = db.query(Video).filter(Video.keyword == keyword).all()
         return [
             VideoItem(
