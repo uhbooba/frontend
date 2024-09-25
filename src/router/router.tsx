@@ -37,6 +37,13 @@ import QuizQuestion from '@/pages/quiz/QuizQuestion';
 import QuizSuccess from '@/pages/quiz/QuizSuccess';
 import EducationWriting from '@/pages/education/certificate/Education_Writing';
 import EducationDownload from '@/pages/education/certificate/Education_Download';
+import ExchangeAgree from '@/pages/exchange/ExchangeAgree';
+import ExchangeMoney from '@/pages/exchange/ExchangeMoney';
+import ExchangePassword from '@/pages/exchange/ExchangePassword';
+import ExchangeComplete from '@/pages/exchange/ExchangeComplete';
+import ExchangeSuccess from '@/pages/exchange/ExchangeSuccess';
+import ExchangeMission from '@/pages/exchange/ExchangeMission';
+import ExchangeExplain from '@/pages/exchange/ExchangeExplain';
 
 const router = createBrowserRouter([
   {
@@ -78,9 +85,18 @@ const router = createBrowserRouter([
       { path: 'education/certificate', element: <EducationCertificate /> },
       { path: 'education/writing', element: <EducationWriting /> },
       { path: 'education/download', element: <EducationDownload /> },
+      // 퀴즈
       { path: 'quiz', element: <QuizMain /> },
       { path: 'quiz/:type', element: <QuizQuestion /> },
       { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      // 환전
+      { path: 'exchange/mission', element: <ExchangeMission /> },
+      { path: 'exchange/explain', element: <ExchangeExplain /> },
+      { path: 'exchange/agree', element: <ExchangeAgree /> },
+      { path: 'exchange/money', element: <ExchangeMoney /> },
+      { path: 'exchange/password', element: <ExchangePassword /> },
+      { path: 'exchange/complete', element: <ExchangeComplete /> },
+      { path: 'exchange/success', element: <ExchangeSuccess /> },
     ],
   },
 ]);
