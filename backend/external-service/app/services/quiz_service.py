@@ -3,16 +3,16 @@ from operator import attrgetter
 
 from sqlalchemy.orm import Session
 
-from ..models.quiz import Quiz
-from ..schemas.quiz import QuizItem, QuizPartResponse, QuizResponse
+from ..models.quiz_model import Quiz
+from ..schemas.quiz_schema import QuizItem, QuizPartResponse, QuizResponse
 
 
 class QuizService:
 
     # 모든 퀴즈를 가져오는 함수
     @staticmethod
-    def get_all_quizzes(db: Session, skip: int = 0, limit: int = 100):
-        quizzes = db.query(Quiz).offset(skip).limit(limit).all()
+    def get_all_quizzes(db: Session):
+        quizzes = db.query(Quiz).all()
         quiz_items = [
             QuizItem(
                 part=quiz.part,
@@ -34,11 +34,11 @@ class QuizService:
             for part, items in grouped_quizzes
         ]
 
-        return QuizResponse(status="success", data=quizzes_by_part)
+        return quizzes_by_part
 
     # 특정 파트의 퀴즈를 가져오는 함수
     @staticmethod
-    def get_quizzes_by_part(db: Session, part: int):
+    def get_quizzes_by_part(part: int, db: Session):
         quizzes = db.query(Quiz).filter(Quiz.part == part).all()
 
         quiz_items = [
