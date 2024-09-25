@@ -36,7 +36,12 @@ const Education = () => {
 
   return (
     <div>
-      <TopBar title='교육페이지' showBackButton={false} showXButton={false} />
+      <TopBar
+        title=''
+        showBackButton={false}
+        showXButton={false}
+        showMainButton={true}
+      />
 
       <div className='space-y-4 p-4'>
         {ButtonConfig.map((button, index) => (
