@@ -58,7 +58,7 @@ const DepositMoney = () => {
   const GoNext = () => {
     // 금액과 기간 선택 여부 확인
     if (!selectMoney || !selectPeriod) {
-      setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
+      setIsModalOpen(true); // 금액, 기간 전부 고르지 않으면 모달 뜨게하기
     } else {
       navigate('/deposit/account');
     }
@@ -70,7 +70,7 @@ const DepositMoney = () => {
   };
 
   // 얼마로 시작할까요? 버튼 클릭 함수
-  const amountClick = (amount: string) => {
+  const amountClick = (index:number, amount: string) => {
     setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
