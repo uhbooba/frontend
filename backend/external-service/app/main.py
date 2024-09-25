@@ -7,7 +7,7 @@ from fastapi import FastAPI
 
 from .config.database import SessionLocal
 from .config.database import engine, Base
-from .controllers import quiz, tts, video, chat
+from .controllers import quiz, tts, video, chat, redis
 from .eureka_register import register_with_eureka
 
 #####################################################################################c
@@ -22,6 +22,7 @@ app.include_router(quiz.router)
 app.include_router(tts.router)
 app.include_router(video.router)
 app.include_router(chat.router)
+app.include_router(redis.router)
 
 
 @app.get("/health-check")
