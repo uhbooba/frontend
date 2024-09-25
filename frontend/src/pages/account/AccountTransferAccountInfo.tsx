@@ -41,7 +41,7 @@ const AccountTransferAccountInfo = () => {
         </div>
 
         <div className='mt-4'>
-            <LevelBar currentLevel={1} totalLevel={4} />
+            <LevelBar currentLevel={1} totalLevel={5} />
         </div>
 
         <div className='ml-4 mr-4 mt-6'>
