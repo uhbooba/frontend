@@ -29,15 +29,16 @@ const AccountTransferAccountInfo = () => {
             alert("계좌번호와 은행을 선택해 주세요.");
             return;
         }
-        navigate('/account/transfer/amount', {
-            state: { accountNumber, selectedBank}
-        })
+        navigate('/account/transfer/amount')
     }
 
     return (
     <div className='flex flex-col h-screen'>
         <div className='w-full'>
-            <TopBar title='계좌 이체' />
+            <TopBar 
+                title='계좌 이체' 
+                showXButton={false}
+            />
         </div>
 
         <div className='mt-4'>
