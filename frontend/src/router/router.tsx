@@ -25,7 +25,7 @@ import CancelSavingsSuccess from '@/pages/savingsCancel/Cancel_savings_Success';
 import SavingsAgree from '@/pages/savings/Savings_Agree';
 import SavingsMoney from '@/pages/savings/Savings_Money';
 import SavingsAccount from '@/pages/savings/Savings_Account';
-import SavingsSignup from '@/pages/savings/Savings_Signup';
+import SavingsSignup from '@/pages/savings/savings_Signup';
 import SavingsProduct from '@/pages/savings/Savings_Product';
 import Savingspassword from '@/pages/savings/Savings_Password';
 import SavingsSuccess from '@/pages/savings/Savings_Success';
@@ -44,6 +44,13 @@ import ExchangeComplete from '@/pages/exchange/ExchangeComplete';
 import ExchangeSuccess from '@/pages/exchange/ExchangeSuccess';
 import ExchangeMission from '@/pages/exchange/ExchangeMission';
 import ExchangeExplain from '@/pages/exchange/ExchangeExplain';
+import AccountCheck from '@/pages/account/AccountCheck';
+import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
+import AccountTransferAmount from '@/pages/account/AccountTransferAmount';
+import AccountTransferDepositName from '@/pages/account/AccountTransferDepositName';
+import AccountTransferInfoCheck from '@/pages/account/AccountTransferInfoCheck';
+import AccountTransferPassword from '@/pages/account/AccountTransferPassword';
+import AccountTransferSuccess from '@/pages/account/AccountTransferSuccess';
 
 const router = createBrowserRouter([
   {
@@ -97,6 +104,15 @@ const router = createBrowserRouter([
       { path: 'exchange/password', element: <ExchangePassword /> },
       { path: 'exchange/complete', element: <ExchangeComplete /> },
       { path: 'exchange/success', element: <ExchangeSuccess /> },
+      // 계좌 조회
+      { path: 'account/check', element: <AccountCheck /> },
+      // 계좌 이체
+      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
+      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
+      { path: 'account/transfer/deposit-name', element: <AccountTransferDepositName /> },
+      { path: 'account/transfer/info-check', element: <AccountTransferInfoCheck /> },
+      { path: 'account/transfer/password', element: <AccountTransferPassword /> },
+      { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
     ],
   },
 ]);
