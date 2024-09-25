@@ -102,4 +102,83 @@ public class FinApiExchangeService {
                                                              .build();
         return finApiCommonService.executeApiRequest(param);
     }
+
+    public Mono<JsonNode> createForeignCurrencyDemandDeposit(
+        ForeignCurrencyDemandDepositCreateRequest request
+    ) {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("bankCode", request.bankCode()
+                                           .toUpperCase());
+        requestBody.put("accountName", request.accountName());
+        requestBody.put("accountDescription", request.accountDescription());
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(
+                                                                 CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_URL)
+                                                             .apiName(
+                                                                 CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .build();
+
+        return finApiCommonService.executeApiRequest(param);
+    }
+
+    public Mono<JsonNode> getForeignCurrencyDemandDepositList(
+
+    ) {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_LIST_URL)
+                                                             .apiName(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_LIST_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .build();
+        return finApiCommonService.executeApiRequest(param);
+    }
+
+    public Mono<JsonNode> createForeignCurrencyDemandDepositAccount(
+        String userKey,
+        String accountTypeUniqueNo,
+        String currency
+    ) {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("accountTypeUniqueNo", accountTypeUniqueNo);
+        requestBody.put("currency", currency);
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(
+                                                                 CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_URL)
+                                                             .apiName(
+                                                                 CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .userKey(userKey)
+                                                             .build();
+        return finApiCommonService.executeApiRequest(param);
+    }
+
+    public Mono<JsonNode> getForeignCurrencyDemandDepositAccountList(
+        String userKey
+    ) {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_URL)
+                                                             .apiName(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .userKey(userKey)
+                                                             .build();
+        return finApiCommonService.executeApiRequest(param);
+    }
 }

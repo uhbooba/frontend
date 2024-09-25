@@ -60,4 +60,39 @@ public class FinApiExchangeController {
     ) {
         return finApiExchangeService.exchange(userKey, dto);
     }
+
+    @PostMapping("/exchange/products")
+    @Operation(summary = "외화 상품 만들기")
+    public Mono<JsonNode> exchangeProducts(
+        @RequestBody ForeignCurrencyDemandDepositCreateRequest request
+    ) {
+        return finApiExchangeService.createForeignCurrencyDemandDeposit(request);
+    }
+
+    @GetMapping("/excahnge/products")
+    @Operation(summary = "외화 상품 조회")
+    public Mono<JsonNode> getExchangeProducts(
+    ) {
+        return finApiExchangeService.getForeignCurrencyDemandDepositList();
+    }
+
+    @PostMapping("/exchange/accounts")
+    @Operation(summary = "외화 계좌 만들기")
+    public Mono<JsonNode> exchangeAccount(
+        @RequestParam("userKey") String userKey,
+        @RequestParam("accountTypeUniqueNo") String accountTypeUniqueNo,
+        @RequestParam("currency") String currency
+    ) {
+        return finApiExchangeService.createForeignCurrencyDemandDepositAccount(userKey,
+                                                                               accountTypeUniqueNo,
+                                                                               currency);
+    }
+
+    @GetMapping("/exchange/accounts")
+    @Operation(summary = "외화 계좌 조회")
+    public Mono<JsonNode> getExchangeAccounts(
+        @RequestParam("userKey") String userKey
+    ) {
+        return finApiExchangeService.getForeignCurrencyDemandDepositAccountList(userKey);
+    }
 }
