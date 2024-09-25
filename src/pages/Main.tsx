@@ -87,12 +87,12 @@ const Main = () => {
           <Button
             label='돈 보내기'
             size='small'
-            className='flex h-10 w-40 items-center justify-center bg-white'
+            className='ml-2 mr-2 flex h-10 w-40 items-center justify-center bg-white'
           />
           <Button
             label='계좌 조회(내역)'
             size='small'
-            className='flex h-10 w-40 items-center justify-center bg-white'
+            className='ml-2 mr-2 flex h-10 w-40 items-center justify-center bg-white'
           />
         </div>
       </div>
