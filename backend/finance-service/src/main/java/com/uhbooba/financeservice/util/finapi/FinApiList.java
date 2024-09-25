@@ -70,6 +70,7 @@ public class FinApiList {
     public static class Exchange {
 
         private static final String BASE_URL = "/edu";
+        private static final String FOREIGN_BASE_URL = "/edu/demandDeposit/foreignCurrency/";
         public static final String EXCHANGE_URL = BASE_URL + "/exchange";
         public static final String EXCHANGE_RATE_URL = BASE_URL + "/exchangeRate";
         public static final String GET_BANK_CURRENCY_URL = BASE_URL + "/bank/inquireBankCurrency";
@@ -81,6 +82,22 @@ public class FinApiList {
         public static final String ESTIMATE_EXCHANGE_API_NAME = "estimate";
         public static final String EXCHANGE_API_NAME = "updateDemandDepositAccountWithdrawal";
         public static final String INQUIRE_BANK_CURRENCY_API_NAME = "inquireBankCurrency";
+
+        public static final String CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_API_NAME = "createForeignCurrencyDemandDeposit";
+        public static final String CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_URL =
+            FOREIGN_BASE_URL + CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_API_NAME;
+
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_LIST_API_NAME = "inquireForeignCurrencyDemandDepositList";
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_LIST_URL =
+            FOREIGN_BASE_URL + GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_LIST_API_NAME;
+
+        public static final String CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME = "createForeignCurrencyDemandDepositAccount";
+        public static final String CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_URL =
+            FOREIGN_BASE_URL + CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME;
+
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME = "inquireForeignCurrencyDemandDepositAccountList";
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_URL =
+            FOREIGN_BASE_URL + GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME;
     }
 
     public static class Savings {
