@@ -14,8 +14,8 @@ from .eureka_register import register_with_eureka
 Base.metadata.create_all(bind=engine)
 app = FastAPI(
     root_path="/external-service",
-    openapi_url="/external-service/v3/api-docs",  # OpenAPI 문서 경로 설정
-    docs_url="/external-service/docs",  # Swagger UI 경로 설정
+    openapi_url="/v3/api-docs",  # OpenAPI 문서 경로 설정
+    docs_url="/docs",  # Swagger UI 경로 설정
 )
 #####################################################################################c
 app.include_router(quiz.router)
