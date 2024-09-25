@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.finapi.savings;
+package com.uhbooba.financeservice.dto.finapi.request.savings;
 
 import lombok.Builder;
 

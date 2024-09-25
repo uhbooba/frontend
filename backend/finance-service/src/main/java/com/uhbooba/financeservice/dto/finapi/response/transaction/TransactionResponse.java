@@ -1,4 +1,4 @@
-package com.uhbooba.financeservice.dto.response.transaction;
+package com.uhbooba.financeservice.dto.finapi.response.transaction;
 
 public record TransactionResponse(
     String transactionUniqueNo,
