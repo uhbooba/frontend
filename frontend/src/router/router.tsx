@@ -44,6 +44,7 @@ import ExchangeComplete from '@/pages/exchange/ExchangeComplete';
 import ExchangeSuccess from '@/pages/exchange/ExchangeSuccess';
 import ExchangeMission from '@/pages/exchange/ExchangeMission';
 import ExchangeExplain from '@/pages/exchange/ExchangeExplain';
+import AccountList from '@/pages/account/AccountList';
 import AccountCheck from '@/pages/account/AccountCheck';
 import AccountTransferAccountInfo from '@/pages/account/AccountTransferAccountInfo'
 import AccountTransferAmount from '@/pages/account/AccountTransferAmount';
@@ -110,6 +111,7 @@ const router = createBrowserRouter([
       { path: 'exchange/complete', element: <ExchangeComplete /> },
       { path: 'exchange/success', element: <ExchangeSuccess /> },
       // 계좌 조회
+      { path: 'account/list', element: <AccountList /> },
       { path: 'account/check', element: <AccountCheck /> },
       // 계좌 이체
       { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
