@@ -13,6 +13,13 @@ const ButtonConfig: ButtonConfigType[] = [
     img: '/assets/images/search.png',
   },
   {
+    label: '예금 가입 (추후 삭제 예정)',
+    route: '/deposit',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/search.png',
+  },
+  {
     label: '적금 가입 (계좌개설)',
     route: '/savings',
     size: 'small',
