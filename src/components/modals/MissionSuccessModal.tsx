@@ -17,7 +17,7 @@ const MissionSuccessModal: React.FC<MissionSuccessModalProps> = ({
           <p>다음 미션에 도전해보세요!</p>
           <img
             src='/assets/images/mission_stamp.png'
-            className='mx-auto my-8 w-60'
+            className='mx-auto my-8 h-56'
             alt='미션 성공 스탬프'
           />
         </div>
