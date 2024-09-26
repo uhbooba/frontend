@@ -43,7 +43,7 @@ const CancelSavingsSuccess = lazy(
 const SavingsAgree = lazy(() => import('@/pages/savings/Savings_Agree'));
 const SavingsMoney = lazy(() => import('@/pages/savings/Savings_Money'));
 const SavingsAccount = lazy(() => import('@/pages/savings/Savings_Account'));
-const SavingsSignup = lazy(() => import('@/pages/savings/Savings_Signup'));
+const SavingsSignup = lazy(() => import('@/pages/savings/savings_Signup'));
 const SavingsProduct = lazy(() => import('@/pages/savings/Savings_Product'));
 const SavingsPassword = lazy(() => import('@/pages/savings/Savings_Password'));
 const SavingsSuccess = lazy(() => import('@/pages/savings/Savings_Success'));
