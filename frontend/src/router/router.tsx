@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
-<<<<<<< frontend/src/router/router.tsx
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -98,13 +97,24 @@ const UtilityPaySuccess = lazy(
 );
 
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
-const AccountTransferAccountInfo = lazy(() => import('@/pages/account/AccountTransferAccountInfo'));
-const AccountTransferAmount = lazy(() => import('@/pages/account/AccountTransferAmount'));
-const AccountTransferDepositName = lazy(() => import('@/pages/account/AccountTransferDepositName'));
-const AccountTransferInfoCheck = lazy(() => import('@/pages/account/AccountTransferInfoCheck'));
-const AccountTransferPassword = lazy(() => import('@/pages/account/AccountTransferPassword'));
-const AccountTransferSuccess = lazy(() => import('@/pages/account/AccountTransferSuccess'));
-
+const AccountTransferAccountInfo = lazy(
+  () => import('@/pages/account/AccountTransferAccountInfo'),
+);
+const AccountTransferAmount = lazy(
+  () => import('@/pages/account/AccountTransferAmount'),
+);
+const AccountTransferDepositName = lazy(
+  () => import('@/pages/account/AccountTransferDepositName'),
+);
+const AccountTransferInfoCheck = lazy(
+  () => import('@/pages/account/AccountTransferInfoCheck'),
+);
+const AccountTransferPassword = lazy(
+  () => import('@/pages/account/AccountTransferPassword'),
+);
+const AccountTransferSuccess = lazy(
+  () => import('@/pages/account/AccountTransferSuccess'),
+);
 
 const router = createBrowserRouter([
   {
@@ -149,7 +159,7 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
-      // 금융 교육 영상      
+      // 금융 교육 영상
       { path: 'education/video', element: <EducationVideo /> },
       // 이수증
       { path: 'education/certificate', element: <EducationCertificate /> },
@@ -178,11 +188,23 @@ const router = createBrowserRouter([
       // 계좌 조회
       { path: 'account/check', element: <AccountCheck /> },
       // 계좌 이체
-      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
+      {
+        path: 'account/transfer/account-info',
+        element: <AccountTransferAccountInfo />,
+      },
       { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
-      { path: 'account/transfer/deposit-name', element: <AccountTransferDepositName /> },
-      { path: 'account/transfer/info-check', element: <AccountTransferInfoCheck /> },
-      { path: 'account/transfer/password', element: <AccountTransferPassword /> },
+      {
+        path: 'account/transfer/deposit-name',
+        element: <AccountTransferDepositName />,
+      },
+      {
+        path: 'account/transfer/info-check',
+        element: <AccountTransferInfoCheck />,
+      },
+      {
+        path: 'account/transfer/password',
+        element: <AccountTransferPassword />,
+      },
       { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
     ],
   },
