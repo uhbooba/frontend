@@ -79,7 +79,7 @@ const Button: React.FC<ButtonProps> = ({
         />
       )}
 
-      <span className='mt-8 text-3xl'> {edu_label}</span>
+      {edu_label && <span className='mt-8 text-3xl'> {edu_label}</span>}
 
       {label}
     </button>
