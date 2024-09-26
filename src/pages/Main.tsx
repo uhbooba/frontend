@@ -4,61 +4,48 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 
 const ButtonConfig: ButtonConfigType[] = [
+  // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
   {
     label: '예금 가입 (전체계좌 조회)',
     route: '/deposit',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
   {
     label: '적금 가입 (계좌개설)',
     route: '/savings',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/account.png',
   },
   {
     label: '예금 중도 해지 (예적금)',
     route: '/cancel/deposit/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
   },
   {
     label: '환전',
     route: 'exchange/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/exchange.png',
   },
   {
-    label: '공과금',
+    label: '적금 중도해지(공과금)',
     route: '/cancel/savings/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white rounded-3xl shadow',
     img: '/assets/images/tax.png',
-  },
-  {
-    label: '적금 중도해지 (금융사기)',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
-    img: '/assets/images/fraud.png',
   },
   {
     label: '계좌입금(시드머니충전)',
     route: '/cancel/savings/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
-  },
-  {
-    label: '미션 스탬프',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white border-2',
-    img: '/assets/images/mission_stamp.png',
   },
 ];
 
@@ -69,8 +56,16 @@ const Main = () => {
     navigate(route);
   };
 
+  const GoAccountCheck = () => {
+    navigate('account/check');
+  };
+
+  const GoAccountTransfer = () => {
+    navigate('account/transfer/account-info');
+  };
+
   return (
-    <div>
+    <div className='h-[840px] bg-orange-100/40'>
       <TopBar
         title=''
         showBackButton={false}
@@ -79,7 +74,7 @@ const Main = () => {
       />
 
       {/* 메인계좌 디브 */}
-      <div className='m-4 mt-8 h-56 rounded-lg border-2 bg-white'>
+      <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
         <div className='flex pt-2'>
           <div className='flex items-center pl-2'>
             <img
@@ -103,11 +98,13 @@ const Main = () => {
             label='돈 보내기'
             size='small'
             className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
+            onClick={() => GoAccountTransfer()}
           />
           <Button
-            label='계좌 조회(계좌내역)'
+            label='계좌내역 조회'
             size='small'
             className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
+            onClick={() => GoAccountCheck()}
           />
         </div>
       </div>
