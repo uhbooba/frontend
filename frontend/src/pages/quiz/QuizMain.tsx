@@ -19,7 +19,7 @@ const QuizMain = () => {
   ];
 
   const GoEdu = () => {
-    navigate('/study');
+    navigate('/education');
   };
 
   return (
