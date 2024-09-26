@@ -129,7 +129,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: '', element: <Main /> },
-      { path: 'study', element: <Education /> },
+      { path: 'education', element: <Education /> },
       { path: 'signup', element: <Signup /> },
       { path: 'login', element: <Login /> },
       // 예금

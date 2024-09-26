@@ -11,7 +11,7 @@ const EducationVideo = () => {
   const navigate = useNavigate();
 
   const GoEdu = () => {
-    navigate('/study');
+    navigate('/education');
   };
 
   const keywordClick = (keyword: string) => {

@@ -11,7 +11,7 @@ const EducationDownload = () => {
   const currentDate = new Date().toLocaleDateString();
 
   const GoEdu = () => {
-    navigate('/study');
+    navigate('/education');
   };
 
   // 캔바스 사용해서 이미지 위에 글씨 올리는 구조
