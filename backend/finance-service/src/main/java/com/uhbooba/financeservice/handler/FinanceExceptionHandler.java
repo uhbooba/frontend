@@ -1,12 +1,13 @@
 package com.uhbooba.financeservice.handler;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
+import com.uhbooba.financeservice.exception.DemandDepositAccountAlreadyExistException;
 import com.uhbooba.financeservice.exception.FinOpenApiException;
+import com.uhbooba.financeservice.exception.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +17,20 @@ import org.springframework.web.context.request.WebRequest;
 @RestControllerAdvice
 @Slf4j
 public class FinanceExceptionHandler {
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public CommonResponse<?> handleNotFoundException(NotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        return CommonResponse.badRequest(ex.getMessage());
+    }
+
+    @ExceptionHandler(DemandDepositAccountAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public CommonResponse<?> handleDemandDepositExceedLimitException(DemandDepositAccountAlreadyExistException ex) {
+        log.error(ex.getMessage(), ex);
+        return CommonResponse.badRequest(ex.getMessage());
+    }
 
     @ExceptionHandler(FinOpenApiException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -30,6 +45,7 @@ public class FinanceExceptionHandler {
         log.error(e.getMessage(), e);
         return CommonResponse.badRequest(e.getMessage());
     }
+
     /**
      * dto의 valid 옵션인 것에 에러 발생시
      *
@@ -38,11 +54,12 @@ public class FinanceExceptionHandler {
      * @return : string
      */
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public CommonResponse<String> handleIllegalArgumentException(
         IllegalArgumentException ex,
         WebRequest request
     ) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return CommonResponse.badRequest(ex.getMessage(), null);
     }
 
     /**
@@ -52,16 +69,15 @@ public class FinanceExceptionHandler {
      * @return 에러코드 + 에러설명
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public CommonResponse<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         // 모든 에러를 가져와서 메시지 구성
         List<String> errorMessages = ex.getBindingResult()
                                        .getFieldErrors()
                                        .stream()
-                                       .map(fieldError -> String.format(
-                                           "Field '%s': %s",
-                                           fieldError.getField(),
-                                           fieldError.getDefaultMessage()
-                                       ))
+                                       .map(fieldError -> String.format("Field '%s': %s",
+                                                                        fieldError.getField(),
+                                                                        fieldError.getDefaultMessage()))
                                        .toList();
 
         // 에러 메시지들을 JSON 형식의 배열로 반환
@@ -69,7 +85,6 @@ public class FinanceExceptionHandler {
                                                .map(message -> "\"" + message + "\"")
                                                .collect(Collectors.joining(", ", "[", "]"));
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                             .body(errorMessageJson);
+        return CommonResponse.badRequest(errorMessageJson, null);
     }
 }
