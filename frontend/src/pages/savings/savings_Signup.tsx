@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router';
 import BigModal from '@/components/modals/Big_Modal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import XTopBar from '@/components/layouts/XTopbar';
 import { useEffect, useState } from 'react';
 import CheckButton from '@/components/common/buttons/CheckButton';
+import { validateInputs } from '@/utils/validateInputs';
+import TopBar from '@/components/layouts/TopBar';
 import { useAtom } from 'jotai';
 import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
-import { validateInputs } from '@/utils/validateInputs';
 
 const SavingsSignup = () => {
   const [check, setCheck] = useAtom(checkAtom);
@@ -21,11 +21,11 @@ const SavingsSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
+    check: '',
   });
 
   useEffect(() => {
     return () => {
-      setCheck('');
       setName('');
       setIdNumber('');
       setPhoneNumber('');
@@ -33,6 +33,7 @@ const SavingsSignup = () => {
         name: '',
         idNumber: '',
         phoneNumber: '',
+        check: '',
       });
     };
   }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
@@ -40,7 +41,12 @@ const SavingsSignup = () => {
   const navigate = useNavigate();
 
   const OpenModal = () => {
-    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
+    const { isValid, newErrors } = validateInputs(
+      name,
+      idNumber,
+      phoneNumber,
+      check,
+    );
     setErrors(newErrors);
 
     if (isValid) {
@@ -62,9 +68,9 @@ const SavingsSignup = () => {
   };
 
   return (
-    <div className='w-full overflow-x-hidden'>
+    <div className='h-full'>
       <div className='fixed left-0 top-0 w-full'>
-        <XTopBar title='적금 가입' />
+        <TopBar title='적금 가입' />
       </div>
 
       <div className='mt-20'>
@@ -113,20 +119,25 @@ const SavingsSignup = () => {
       <div>
         <p className='ml-4 text-xl font-bold text-gray-600'>자동이체 여부</p>
         <CheckButton name='check' selected={check} setSelected={setCheck} />
+        {errors.check && (
+          <p className='mb-4 ml-4 mt-2 text-red-500'>{errors.check}</p>
+        )}
       </div>
 
-      <div className='absolute bottom-24 left-0 flex w-full justify-between space-x-4 px-4'>
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
           color='orange'
           onClick={() => GoBack()}
+          className='mr-2'
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
           onClick={() => OpenModal()}
+          className='ml-2'
         />
       </div>
 

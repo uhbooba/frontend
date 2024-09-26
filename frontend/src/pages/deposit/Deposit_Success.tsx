@@ -1,19 +1,20 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
-import OnlyXTopBar from '@/components/layouts/OnlyXTopBar';
+import TopBar from '@/components/layouts/TopBar';
 
 const DepositSuccess = () => {
   return (
-    <div className='flex min-h-screen flex-col bg-white'>
-      {/* 상단바 */}
-      <OnlyXTopBar title='예금 가입' />
+    <div>
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' showBackButton={false} />
+      </div>
 
       {/* 배경 이미지 설정 */}
       <div
-        className='relative flex flex-grow flex-col justify-between px-4 pt-8'
+        className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
         style={{
           backgroundImage: `url("/assets/images/money_rain.png")`,
-          backgroundSize: '400px auto',
+          backgroundSize: '420px auto',
           backgroundPosition: 'center -50px',
           // 이미지 한장만 나오게하고싶으면 나중ㅇ테 이거 주석 해제하면 됨
           // backgroundRepeat: "no-repeat",
@@ -25,9 +26,9 @@ const DepositSuccess = () => {
         </div>
 
         {/* 말풍선 부분 */}
-        <div className='relative mx-auto mt-16 w-[360px] font-bold'>
+        <div className='relative mt-24 w-[290px] font-bold'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
-            <p className='text-start text-xl text-black'>축하합니다~</p>
+            <p className='text-start text-xl text-black'>축하합니다~~</p>
             <p className='mt-2 text-start text-xl text-black'>
               5단계 미션을 성공했어요!
             </p>
@@ -35,7 +36,7 @@ const DepositSuccess = () => {
               다음 미션에서는
             </p>
             <p className='text-start text-xl text-black'>
-              공과금 납부를 해볼거에요~
+              공과금 납부를 해봐요!
             </p>
 
             {/* 말풍선 꼬리 부분 */}
@@ -62,7 +63,7 @@ const DepositSuccess = () => {
           </div>
 
           {/* 버튼 */}
-          <div className='mb-24'>
+          <div className='mb-3'>
             <Button
               label='나의 계좌로 이동하기'
               size='large'
