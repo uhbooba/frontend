@@ -1,6 +1,6 @@
 import redis
 
-from ..config.config import REDIS_HOST, REDIS_PORT
+from ..config.config import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD
 from ..config.logger import setup_logger
 
 logger = setup_logger("app")
@@ -26,7 +26,7 @@ class RedisHandler:
     def create_instance(cls, db_number):
         instance = cls.__new__(cls)
         instance.redis_client = redis.StrictRedis(
-            host=REDIS_HOST, port=REDIS_PORT, db=db_number
+            host=REDIS_HOST, port=REDIS_PORT, db=db_number, password=REDIS_PASSWORD
         )
         return instance.redis_client
 
