@@ -25,7 +25,7 @@ export const validateInputs = (
     newErrors.name = '이름을 입력해주세요.';
     isValid = false;
   }
-  // 숫자, 영어, 기호가 포함된 경우
+  // 숫자, 영어, 기호가 포함된 경우 (자음모음보다 우선)
   else if (/[^가-힣ㄱ-ㅎㅏ-ㅣ]/.test(name)) {
     newErrors.name = '한글만 입력 가능합니다.';
     isValid = false;
