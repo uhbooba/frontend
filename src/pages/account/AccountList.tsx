@@ -3,12 +3,14 @@ import { BottomTab } from "@/components/layouts/BottomTab";
 
 
 const AccountList = () => {
-    <div>
-        <TopBar title="계좌 목록" />
-        <div className='fixed bottom-0 left-0 w-full'>
-            <BottomTab />
+    return(
+        <div>
+            <TopBar title="계좌 목록" />
+            <div className='fixed bottom-0 left-0 w-full'>
+                <BottomTab />
+            </div>
         </div>
-    </div>
+    );
 };
 
 export default AccountList;
