@@ -16,6 +16,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   variant?: keyof typeof INPUT_VARIANTS;
   type?: string;
+  // 입력창을 동일하게 사용하고 싶은데 number 값을 못 받게 설정되어 있어서 이 값을 하나 추가했습니다.
+  numberValue?: number;
   disabled?: boolean;
   readOnly?: boolean;
   isError?: boolean;

@@ -62,7 +62,7 @@ const SavingsMoney = () => {
   };
 
   // 얼마씩 적금할까요? 버튼 클릭 함수
-  const amountClick = (amount: string) => {
+  const amountClick = (index: number, amount: string) => {
     setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
@@ -134,7 +134,7 @@ const SavingsMoney = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입'  />
+        <TopBar title='적금 가입' />
       </div>
       <div className='mb-12 mt-20'>
         <LevelBar currentLevel={3} totalLevel={5} />
