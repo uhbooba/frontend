@@ -32,9 +32,6 @@ public class Account {
     @Setter
     private UserAccount userAccount; // 사용자 계정
 
-    @Column
-    private String username; // 예금주 이름
-
     @Column(nullable = false)
     private String accountNo; // 계좌 번호
 
@@ -43,20 +40,23 @@ public class Account {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private AccountType accountType; // 계좌 타입
+    private AccountType accountTypeCode; // 계좌 타입
+
+    @Column
+    private String accountTypeName;
 
     @Builder
     public Account(
         UserAccount userAccount,
-        String username,
         String accountNo,
         String accountName,
-        AccountType accountType
+        AccountType accountTypeCode,
+        String accountTypeName
     ) {
         this.userAccount = userAccount;
-        this.username = username;
         this.accountNo = accountNo;
         this.accountName = accountName;
-        this.accountType = accountType;
+        this.accountTypeCode = accountTypeCode;
+        this.accountTypeName = accountTypeName;
     }
 }
