@@ -115,6 +115,9 @@ const AccountTransferPassword = lazy(
 const AccountTransferSuccess = lazy(
   () => import('@/pages/account/AccountTransferSuccess'),
 );
+const AccountList = lazy(
+  () => import('@/pages/account/AccountList')
+)
 
 const router = createBrowserRouter([
   {
