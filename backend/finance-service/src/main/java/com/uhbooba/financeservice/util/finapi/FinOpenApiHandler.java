@@ -164,17 +164,49 @@ public class FinOpenApiHandler {
                         .onStatus(HttpStatusCode::isError,
                                   clientResponse -> clientResponse.bodyToMono(String.class)
                                                                   .flatMap(errorBody -> {
-                                                                      log.error(
-                                                                          "API 요청 실패: {}, 상태 코드: {}, 응답: {}",
-                                                                          apiName,
-                                                                          clientResponse.statusCode(),
-                                                                          errorBody);
-                                                                      return Mono.error(
-                                                                          new FinOpenApiException(
-                                                                              "API 요청 실패: "
-                                                                                  + apiName
-                                                                                  + ", 이유: "
-                                                                                  + errorBody));
+                                                                      try {
+                                                                          // JSON 에러 응답을 파싱 (Jackson ObjectMapper를 사용)
+                                                                          ObjectMapper objectMapper = new ObjectMapper();
+                                                                          JsonNode errorJson = objectMapper.readTree(
+                                                                              errorBody);
+                                                                          String responseCode = errorJson.path(
+                                                                                                             "responseCode")
+                                                                                                         .asText();
+                                                                          String responseMessage = errorJson.path(
+                                                                                                                "responseMessage")
+                                                                                                            .asText();
+
+                                                                          String formattedErrorMessage = String.format(
+                                                                              "API 요청 실패: %s, 상태 코드: %s, 응답 코드: %s, 응답 메시지: %s",
+                                                                              apiName,
+                                                                              clientResponse.statusCode(),
+                                                                              responseCode,
+                                                                              responseMessage);
+
+                                                                          log.error(
+                                                                              formattedErrorMessage);
+
+                                                                          // 에러 메시지로 FinOpenApiException 발생
+                                                                          return Mono.error(
+                                                                              new FinOpenApiException(
+                                                                                  formattedErrorMessage));
+
+                                                                      } catch(
+                                                                          JsonProcessingException e) {
+                                                                          // 에러 바디가 JSON이 아닐 경우 그대로 에러 바디를 로깅
+                                                                          log.error(
+                                                                              "API 요청 실패: {}, 상태 코드: {}, 응답: {}",
+                                                                              apiName,
+                                                                              clientResponse.statusCode(),
+                                                                              errorBody);
+
+                                                                          return Mono.error(
+                                                                              new FinOpenApiException(
+                                                                                  "API 요청 실패: "
+                                                                                      + apiName
+                                                                                      + ", 이유: "
+                                                                                      + errorBody));
+                                                                      }
                                                                   }))
                         .bodyToMono(JsonNode.class) // JsonNode로 바로 변환
                         .flatMap(response -> { // REC 가 있는 반환일 경우 그것만 반환

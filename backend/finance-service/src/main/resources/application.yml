@@ -55,3 +55,7 @@ logging:
 finopenapi:
   key: ${FINOPENAPI_KEY}
   base-url: ${FINOPENAPI_BASE_URL}
+
+variables:
+  bank-code: ${BANK_CODE}
+  demand-deposit-product-id: ${DEMAND_DEPOSIT_PRODUCT_ID}
