@@ -49,6 +49,9 @@ const SavingsProduct = lazy(() => import('@/pages/savings/SavingsProduct'));
 const SavingsPassword = lazy(() => import('@/pages/savings/SavingsPassword'));
 const SavingsSuccess = lazy(() => import('@/pages/savings/SavingsSuccess'));
 const EducationVideo = lazy(
+  () => import('@/pages/education/video/EducationVideoHard'),
+);
+const EducationVideo2 = lazy(
   () => import('@/pages/education/video/EducationVideo'),
 );
 const EducationCertificate = lazy(
@@ -160,7 +163,8 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       // 금융 교육 영상
-      { path: 'education/video', element: <EducationVideo /> },
+      { path: 'education/video/hard', element: <EducationVideo /> },
+      { path: 'education/video', element: <EducationVideo2 /> },
       // 이수증
       { path: 'education/certificate', element: <EducationCertificate /> },
       { path: 'education/writing', element: <EducationWriting /> },
