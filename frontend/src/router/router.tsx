@@ -115,6 +115,9 @@ const AccountTransferPassword = lazy(
 const AccountTransferSuccess = lazy(
   () => import('@/pages/account/AccountTransferSuccess'),
 );
+const AccountList = lazy(
+  () => import('@/pages/account/AccountList')
+)
 
 const router = createBrowserRouter([
   {
@@ -186,6 +189,7 @@ const router = createBrowserRouter([
       { path: 'utility/password', element: <UtilityPayPassword /> },
       { path: 'utility/success', element: <UtilityPaySuccess /> },
       // 계좌 조회
+      { path: 'account/list', element: <AccountList /> },
       { path: 'account/check', element: <AccountCheck /> },
       // 계좌 이체
       {
