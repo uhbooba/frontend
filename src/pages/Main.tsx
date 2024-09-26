@@ -9,57 +9,43 @@ const ButtonConfig: ButtonConfigType[] = [
     label: '예금 가입 (전체계좌 조회)',
     route: '/deposit',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
   {
     label: '적금 가입 (계좌개설)',
     route: '/savings',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/account.png',
   },
   {
     label: '예금 중도 해지 (예적금)',
     route: '/cancel/deposit/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
   },
   {
     label: '환전',
     route: 'exchange/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/exchange.png',
   },
   {
     label: '적금 중도해지(공과금)',
     route: '/cancel/savings/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white rounded-3xl shadow',
     img: '/assets/images/tax.png',
-  },
-  {
-    label: '(금융사기)',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
-    img: '/assets/images/fraud.png',
   },
   {
     label: '계좌입금(시드머니충전)',
     route: '/cancel/savings/explain',
     size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
-  },
-  {
-    label: '(미션 스탬프)',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white border-2 rounded-3xl',
-    img: '/assets/images/mission_stamp.png',
   },
 ];
 
@@ -79,7 +65,7 @@ const Main = () => {
   };
 
   return (
-    <div className='bg-orange-100/40'>
+    <div className='h-[840px] bg-orange-100/40'>
       <TopBar
         title=''
         showBackButton={false}
@@ -88,7 +74,7 @@ const Main = () => {
       />
 
       {/* 메인계좌 디브 */}
-      <div className='m-4 mt-8 h-56 rounded-2xl border-2 bg-white'>
+      <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
         <div className='flex pt-2'>
           <div className='flex items-center pl-2'>
             <img
