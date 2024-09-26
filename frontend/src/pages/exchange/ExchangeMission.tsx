@@ -52,6 +52,7 @@ const ExchangeMission = () => {
             src='/assets/images/pig.png'
             alt='Pig'
             className='mt-4 h-56 w-56'
+            loading='lazy'
           />
         </div>
       </div>
