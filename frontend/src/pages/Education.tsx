@@ -6,43 +6,43 @@ import TopBar from '@/components/layouts/TopBar';
 const ButtonConfig: ButtonConfigType[] = [
   {
     label: '',
-    edu_label: '교육 영상',
+    eduLabel: '교육 영상',
     route: '/education/video',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
-    edu_img: '/assets/images/video.png',
+    eduImg: '/assets/images/video.png',
   },
   {
     label: '',
-    edu_label: '퀴즈',
+    eduLabel: '퀴즈',
     route: '/quiz',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
-    edu_img: '/assets/images/quiz.png',
+    eduImg: '/assets/images/quiz.png',
   },
   {
     label: '',
-    edu_label: '금융사기',
+    eduLabel: '금융사기',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
-    edu_img: '/assets/images/fraud.png',
+    eduImg: '/assets/images/fraud.png',
   },
   {
     label: '',
-    edu_label: '미션 스탬프',
+    eduLabel: '미션 스탬프',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex h-32 bg-white shadow rounded-3xl',
-    edu_img: '/assets/images/mission_stamp.png',
+    eduImg: '/assets/images/mission_stamp.png',
   },
   {
     label: '',
-    edu_label: '교육 이수증',
+    eduLabel: '교육 이수증',
     route: '/education/certificate',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
-    edu_img: '/assets/images/cer_icon.png',
+    eduImg: '/assets/images/cer_icon.png',
   },
 ];
 
@@ -71,8 +71,8 @@ const Education = () => {
             color={button.color}
             onClick={() => handleButtonClick(button.route)}
             className={button.className}
-            edu_img={button.edu_img}
-            edu_label={button.edu_label}
+            eduImg={button.eduImg}
+            eduLabel={button.eduLabel}
           />
         ))}
       </div>

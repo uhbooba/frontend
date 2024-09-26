@@ -22,8 +22,8 @@ export type ButtonConfigType = {
   color?: keyof typeof BUTTON_COLORS;
   className: string;
   img?: string;
-  edu_img?: string;
-  edu_label?: string;
+  eduImg?: string;
+  eduLabel?: string;
 };
 
 type ButtonProps = {
@@ -34,8 +34,8 @@ type ButtonProps = {
   disabled?: boolean;
   className?: string;
   img?: string;
-  edu_img?: string;
-  edu_label?: string;
+  eduImg?: string;
+  eduLabel?: string;
   type?: 'submit' | 'reset' | 'button';
 };
 
@@ -48,8 +48,8 @@ const Button: React.FC<ButtonProps> = ({
   className,
   type,
   img,
-  edu_img,
-  edu_label,
+  eduImg,
+  eduLabel,
 }) => {
   return (
     <button
@@ -71,15 +71,15 @@ const Button: React.FC<ButtonProps> = ({
         />
       )}
 
-      {edu_img && (
+      {eduImg && (
         <img
-          src={edu_img}
+          src={eduImg}
           alt={`${label} 이미지`}
           className='ml-4 mr-12 h-28 w-28'
         />
       )}
 
-      {edu_label && <span className='mt-8 text-3xl'> {edu_label}</span>}
+      {eduLabel && <span className='mt-8 text-3xl'> {eduLabel}</span>}
 
       {label}
     </button>
