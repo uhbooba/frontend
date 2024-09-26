@@ -19,8 +19,11 @@ export type ButtonConfigType = {
   label: string;
   route: string;
   size: keyof typeof BUTTON_SIZES;
-  color: keyof typeof BUTTON_COLORS;
+  color?: keyof typeof BUTTON_COLORS;
   className: string;
+  img?: string;
+  eduImg?: string;
+  eduLabel?: string;
 };
 
 type ButtonProps = {
@@ -30,6 +33,9 @@ type ButtonProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   className?: string;
+  img?: string;
+  eduImg?: string;
+  eduLabel?: string;
   type?: 'submit' | 'reset' | 'button';
 };
 
@@ -41,6 +47,9 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   className,
   type,
+  img,
+  eduImg,
+  eduLabel,
 }) => {
   return (
     <button
@@ -54,6 +63,24 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
     >
+      {img && (
+        <img
+          src={img}
+          alt={`${label} 이미지`}
+          className='mx-auto mb-2 h-12 w-12'
+        />
+      )}
+
+      {eduImg && (
+        <img
+          src={eduImg}
+          alt={`${label} 이미지`}
+          className='ml-4 mr-12 h-28 w-28'
+        />
+      )}
+
+      {eduLabel && <span className='mt-8 text-3xl'> {eduLabel}</span>}
+
       {label}
     </button>
   );

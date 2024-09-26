@@ -10,10 +10,15 @@ const EducationCertificate = () => {
   const GoNext = () => {
     navigate('/education/writing');
   };
+
+  const GoEdu = () => {
+    navigate('/study');
+  };
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='교육 이수증' />
+        <TopBar title='교육 이수증' onXButtonClick={GoEdu} />
       </div>
 
       <div className='ml-4'>

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
+<<<<<<< frontend/src/router/router.tsx
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -96,6 +97,15 @@ const UtilityPaySuccess = lazy(
   () => import('@/pages/utilityPayment/UtilityPaySuccess'),
 );
 
+const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
+const AccountTransferAccountInfo = lazy(() => import('@/pages/account/AccountTransferAccountInfo'));
+const AccountTransferAmount = lazy(() => import('@/pages/account/AccountTransferAmount'));
+const AccountTransferDepositName = lazy(() => import('@/pages/account/AccountTransferDepositName'));
+const AccountTransferInfoCheck = lazy(() => import('@/pages/account/AccountTransferInfoCheck'));
+const AccountTransferPassword = lazy(() => import('@/pages/account/AccountTransferPassword'));
+const AccountTransferSuccess = lazy(() => import('@/pages/account/AccountTransferSuccess'));
+
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -107,12 +117,10 @@ const router = createBrowserRouter([
     children: [
       { path: '', element: <Main /> },
       { path: 'study', element: <Education /> },
-      { path: 'deposit', element: <DepositMission /> },
-      { path: 'savings', element: <Savings /> },
-      { path: 'explain', element: <DepositExplain /> },
       { path: 'signup', element: <Signup /> },
       { path: 'login', element: <Login /> },
       // 예금
+      { path: 'deposit', element: <DepositMission /> },
       { path: 'deposit/explain', element: <DepositExplain /> },
       { path: 'deposit/signup', element: <DepositSignup /> },
       { path: 'deposit/agree', element: <DepositAgree /> },
@@ -123,6 +131,7 @@ const router = createBrowserRouter([
       { path: 'deposit/success', element: <DepositSuccess /> },
       { path: 'deposit/success2', element: <DepositSuccess2 /> },
       // 적금
+      { path: 'savings', element: <Savings /> },
       { path: 'savings/agree', element: <SavingsAgree /> },
       { path: 'savings/signup', element: <SavingsSignup /> },
       { path: 'savings/money', element: <SavingsMoney /> },
@@ -140,7 +149,7 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
-      // 교육 영상
+      // 금융 교육 영상      
       { path: 'education/video', element: <EducationVideo /> },
       // 이수증
       { path: 'education/certificate', element: <EducationCertificate /> },
@@ -166,6 +175,15 @@ const router = createBrowserRouter([
       { path: 'utility/money', element: <UtilityPayMoney /> },
       { path: 'utility/password', element: <UtilityPayPassword /> },
       { path: 'utility/success', element: <UtilityPaySuccess /> },
+      // 계좌 조회
+      { path: 'account/check', element: <AccountCheck /> },
+      // 계좌 이체
+      { path: 'account/transfer/account-info', element: <AccountTransferAccountInfo /> },
+      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
+      { path: 'account/transfer/deposit-name', element: <AccountTransferDepositName /> },
+      { path: 'account/transfer/info-check', element: <AccountTransferInfoCheck /> },
+      { path: 'account/transfer/password', element: <AccountTransferPassword /> },
+      { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
     ],
   },
 ]);
