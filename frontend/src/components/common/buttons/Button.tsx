@@ -22,6 +22,8 @@ export type ButtonConfigType = {
   color?: keyof typeof BUTTON_COLORS;
   className: string;
   img?: string;
+  eduImg?: string;
+  eduLabel?: string;
 };
 
 type ButtonProps = {
@@ -32,6 +34,8 @@ type ButtonProps = {
   disabled?: boolean;
   className?: string;
   img?: string;
+  eduImg?: string;
+  eduLabel?: string;
   type?: 'submit' | 'reset' | 'button';
 };
 
@@ -44,6 +48,8 @@ const Button: React.FC<ButtonProps> = ({
   className,
   type,
   img,
+  eduImg,
+  eduLabel,
 }) => {
   return (
     <button
@@ -64,6 +70,17 @@ const Button: React.FC<ButtonProps> = ({
           className='mx-auto mb-2 h-12 w-12'
         />
       )}
+
+      {eduImg && (
+        <img
+          src={eduImg}
+          alt={`${label} 이미지`}
+          className='ml-4 mr-12 h-28 w-28'
+        />
+      )}
+
+      {eduLabel && <span className='mt-8 text-3xl'> {eduLabel}</span>}
+
       {label}
     </button>
   );
