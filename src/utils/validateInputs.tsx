@@ -20,31 +20,28 @@ export const validateInputs = (
 
   let isValid = true;
 
-  // 이름 비어두면 안되는 조건
+  // 이름 비어있으면 안되는 조건
   if (name === '') {
     newErrors.name = '이름을 입력해주세요.';
     isValid = false;
   }
-  // 이름 한글만 입력가능하게 조건
-  else if (!/^[가-힣]+$/.test(name)) {
+  // 숫자, 영어, 기호가 포함된 경우
+  else if (/[^가-힣ㄱ-ㅎㅏ-ㅣ]/.test(name)) {
     newErrors.name = '한글만 입력 가능합니다.';
     isValid = false;
   }
-
-  // 이름 오타 났을 때 조건
+  // 자음 또는 모음만 입력된 경우
   else if (/[ㄱ-ㅎㅏ-ㅣ]/.test(name)) {
     newErrors.name = '이름을 정확하게 입력해주세요.';
     isValid = false;
   }
-
   // 이름 17자까지만 입력 가능하게 조건
   else if (name.length > 17) {
     newErrors.name = '이름은 17자까지만 입력이 가능합니다.';
     isValid = false;
   }
-
-  // 이름 최소 2글자 이상 입력 가능하게 조건
-  else if (name.length < 3 && name.length > 0) {
+  // 이름이 0 초과 3 미만일 때 (너무 짧은 경우)
+  else if (name.length < 3) {
     newErrors.name = '이름이 너무 짧습니다.';
     isValid = false;
   }
