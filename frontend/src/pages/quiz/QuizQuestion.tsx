@@ -34,7 +34,7 @@ const QuizQuestion = () => {
   };
 
   const GoEdu = () => {
-    navigate('/study');
+    navigate('/education');
   };
 
   return (
