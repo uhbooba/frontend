@@ -38,7 +38,7 @@ public class DemandDepositController {
     private final DemandDepositService demandDepositService;
 
     @PostMapping("/products")
-    @Operation(summary = "입출금 상품 생성")
+    @Operation(summary = "입출금 상품 생성 - 사용 X")
     public CommonResponse<DemandDepositResponse> createDemandDeposit(
         @Valid @RequestBody DemandDepositCreateRequest createRequest
     ) {
@@ -47,7 +47,7 @@ public class DemandDepositController {
     }
 
     @GetMapping("/products")
-    @Operation(summary = "입출금 상품 전체 조회")
+    @Operation(summary = "입출금 상품 전체 조회 - 사용 X")
     public CommonResponse<List<DemandDepositResponse>> getDemandDeposits(
     ) {
         return CommonResponse.ok("완료", demandDepositService.getAllDemandDeposits());
@@ -56,8 +56,6 @@ public class DemandDepositController {
     @PostMapping("/accounts")
     @Operation(summary = "입출금 계좌 생성")
     public CommonResponse<DemandDepositAccountResponse> createDemandDepositAccount(
-        //        @RequestParam("userKey") String userKey,
-        //        @RequestParam("accountTypeUniqueNo") String accountTypeUniqueNo,
         @RequestParam("userId") Integer userId
     ) {
         return CommonResponse.ok("완료", demandDepositService.createDemandDepositAccount(userId));
@@ -66,88 +64,75 @@ public class DemandDepositController {
     @GetMapping("/accounts/detail")
     @Operation(summary = "입출금계좌 조회")
     public CommonResponse<DemandDepositAccountResponse> getAccountDetail(
-        @RequestParam("userKey") String userKey,
-        @RequestParam("accountNo") String accountNo
+        @RequestParam("userId") Integer userId
     ) {
-        if(accountNo.length() > 16) {
-            throw new IllegalArgumentException("계좌 번호는 16글자입니다.");
-        }
-        return CommonResponse.ok("완료",
-                                 demandDepositService.getDemandDepositAccount(userKey, accountNo));
-    }
-
-    @GetMapping("/accounts")
-    @Operation(summary = "사용자의 모든 입출금계좌 조회")
-    public CommonResponse<List<DemandDepositResponse>> getAllAccounts(
-        @RequestParam("userKey") String userKey
-    ) {
-        return CommonResponse.ok("완료", demandDepositService.getAllDemandDepositAccounts(userKey));
+        return CommonResponse.ok("완료", demandDepositService.getDemandDepositAccount(userId));
     }
 
     @GetMapping("/accounts/holder")
     @Operation(summary = "입출금계좌 소유자 이름 조회")
     public CommonResponse<DemandDepositAccountHolderResponse> getAccountHolderName(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
         if(accountNo.length() > 16) {
             throw new IllegalArgumentException("계좌 번호는 16글자입니다.");
         }
         return CommonResponse.ok("완료",
-                                 demandDepositService.getDemandDepositAccountHolderName(userKey,
+                                 demandDepositService.getDemandDepositAccountHolderName(userId,
                                                                                         accountNo));
     }
 
     @GetMapping("/accounts/balances")
     @Operation(summary = "입출금계좌 잔액 조회")
     public CommonResponse<DemandDepositAccountBalanceResponse> getAccountBalance(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
         if(accountNo.length() > 16) {
             throw new IllegalArgumentException("계좌 번호는 16글자입니다.");
         }
-        return CommonResponse.ok("완료", demandDepositService.getDemandDepositAccountBalance(userKey,
+        return CommonResponse.ok("완료", demandDepositService.getDemandDepositAccountBalance(userId,
                                                                                            accountNo));
     }
 
     @PostMapping("/accounts/deposit")
     @Operation(summary = "입출금계좌에 예금")
     public CommonResponse<DemandDepositDepositResponse> depositAccount(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody DemandDepositDepositAccountRequest accountRequest
     ) {
-        return CommonResponse.ok("완료", demandDepositService.depositDemandDepositAccount(userKey,
+        return CommonResponse.ok("완료", demandDepositService.depositDemandDepositAccount(userId,
                                                                                         accountRequest));
     }
 
     @PostMapping("/accounts/transfer")
     @Operation(summary = "입출금계좌에서 이체")
     public CommonResponse<List<DemandDepositTransferResponse>> transferAccount(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody DemandDepositTransferAccountRequest transferAccountRequest
     ) {
-        return CommonResponse.ok("완료", demandDepositService.transferDemandDepositAccount(userKey,
+        return CommonResponse.ok("완료", demandDepositService.transferDemandDepositAccount(userId,
                                                                                          transferAccountRequest));
     }
 
     @PostMapping("/transactions/histories")
     @Operation(summary = "입출금계좌 거래내역 조회")
     public CommonResponse<TransactionListResponse> getTransactionHistories(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody DemandDepositGetTransactionsRequest getTransactionsRequest
     ) {
-        return CommonResponse.ok("완료", demandDepositService.getTransactionHistories(userKey,
+        return CommonResponse.ok("완료", demandDepositService.getTransactionHistories(userId,
                                                                                     getTransactionsRequest));
     }
 
     @PostMapping("/transactions/histories/detail")
     @Operation(summary = "입출금계좌 단일 거래내역 조회")
     public CommonResponse<TransactionResponse> getTransactionHistory(
-        @RequestParam("userKey") String userKey,
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody DemandDepositGetTransactionRequest getTransactionRequest
     ) {
-        return CommonResponse.ok("완료", demandDepositService.getTransactionHistory(userKey,
+        return CommonResponse.ok("완료", demandDepositService.getTransactionHistory(userId,
                                                                                   getTransactionRequest));
     }
 }
