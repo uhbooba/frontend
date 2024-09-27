@@ -97,6 +97,7 @@ const UtilityPaySuccess = lazy(
 );
 
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
+const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
 const AccountTransferAccountInfo = lazy(
   () => import('@/pages/account/AccountTransferAccountInfo'),
 );
@@ -162,6 +163,55 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
+      // 금융 교육 영상
+      { path: 'education/video', element: <EducationVideo /> },
+      // 이수증
+      { path: 'education/certificate', element: <EducationCertificate /> },
+      { path: 'education/writing', element: <EducationWriting /> },
+      { path: 'education/download', element: <EducationDownload /> },
+      // 퀴즈
+      { path: 'quiz', element: <QuizMain /> },
+      { path: 'quiz/:type', element: <QuizQuestion /> },
+      { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      // 환전
+      { path: 'exchange/mission', element: <ExchangeMission /> },
+      { path: 'exchange/explain', element: <ExchangeExplain /> },
+      { path: 'exchange/agree', element: <ExchangeAgree /> },
+      { path: 'exchange/money', element: <ExchangeMoney /> },
+      { path: 'exchange/password', element: <ExchangePassword /> },
+      { path: 'exchange/complete', element: <ExchangeComplete /> },
+      { path: 'exchange/success', element: <ExchangeSuccess /> },
+      // 공과금 납부
+      { path: 'utility/mission', element: <UtilityPayMission /> },
+      { path: 'utility/explain', element: <UtilityPayExplain /> },
+      { path: 'utility/input', element: <UtilityPayInfoInput /> },
+      { path: 'utility/scan', element: <UtilityPayScan /> },
+      { path: 'utility/money', element: <UtilityPayMoney /> },
+      { path: 'utility/password', element: <UtilityPayPassword /> },
+      { path: 'utility/success', element: <UtilityPaySuccess /> },
+      // 계좌 조회
+      { path: 'account/list', element: <AccountList /> },
+      { path: 'account/check', element: <AccountCheck /> },
+      { path: 'account/add-cash', element: <AccountAddCash /> },
+      // 계좌 이체
+      {
+        path: 'account/transfer/account-info',
+        element: <AccountTransferAccountInfo />,
+      },
+      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
+      {
+        path: 'account/transfer/deposit-name',
+        element: <AccountTransferDepositName />,
+      },
+      {
+        path: 'account/transfer/info-check',
+        element: <AccountTransferInfoCheck />,
+      },
+      {
+        path: 'account/transfer/password',
+        element: <AccountTransferPassword />,
+      },
+      { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
     ],
   },
 ]);
