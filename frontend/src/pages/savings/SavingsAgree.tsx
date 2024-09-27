@@ -1,8 +1,8 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import CheckButton from '@/components/common/buttons/CheckButton';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,15 @@ const SavingsAgree = () => {
     setAgree1('');
     setAgree2('');
     setAgree3('');
-  }, [setIsModalOpen, setWarningModal, setAgree1, setAgree2, setAgree3]);
+    setAgree4('');
+  }, [
+    setIsModalOpen,
+    setWarningModal,
+    setAgree1,
+    setAgree2,
+    setAgree3,
+    setAgree4,
+  ]);
 
   const navigate = useNavigate();
 
@@ -131,7 +139,7 @@ const SavingsAgree = () => {
         </div>
         <div className='flex justify-end'>
           <CheckButton
-            name='agree3'
+            name='agree4'
             selected={agree4}
             setSelected={setAgree4}
           />

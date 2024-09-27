@@ -6,29 +6,23 @@ import TopBar from '@/components/layouts/TopBar';
 const ButtonConfig: ButtonConfigType[] = [
   // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
   {
-    label: '예금 가입 (전체계좌 조회)',
-    route: '/deposit',
+    label: '전체계좌 조회',
+    route: '/account/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
+
   {
-    label: '예금 가입 (추후 삭제 예정)',
-    route: '/deposit',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/images/search.png',
-  },
-  {
-    label: '적금 가입 (계좌개설)',
-    route: '/savings',
+    label: '계좌개설',
+    route: '/account/products',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/account.png',
   },
   {
-    label: '예금 중도 해지 (예적금)',
-    route: '/cancel/deposit/explain',
+    label: '예적금',
+    route: '/account/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
@@ -48,11 +42,39 @@ const ButtonConfig: ButtonConfigType[] = [
     img: '/assets/images/tax.png',
   },
   {
-    label: '적금 중도해지(계좌입금)',
-    route: '/cancel/savings/explain',
+    label: '계좌입금',
+    route: '/account/add-cash',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
+  },
+  {
+    label: '예금 가입 (추후 삭제 예정)',
+    route: '/deposit',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
+  },
+  {
+    label: '예금 중도 해지 (추후 삭제 예정)',
+    route: '/cancel/deposit/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
+  },
+  {
+    label: '적금 가입 (추후 삭제 예정)',
+    route: '/savings',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
+  },
+  {
+    label: '적금 중도해지(추후 삭제 예정)',
+    route: '/cancel/savings/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
   },
 ];
 
@@ -72,7 +94,7 @@ const Main = () => {
   };
 
   return (
-    <div className='h-[840px] bg-orange-100/40'>
+    <div className='min-h-screen bg-orange-100/40'>
       <TopBar
         title=''
         showBackButton={false}

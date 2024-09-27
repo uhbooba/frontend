@@ -4,7 +4,7 @@ import MoneyInput from '@/components/common/MoneyInput';
 import { Input } from '@/components/common/Input';
 import PeriodInput from '@/components/common/PeriodInput';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import LevelBar from '@/components/common/LevelBar';
 import Keypad from '@/components/common/KeyPad';
 import { useAtom } from 'jotai';

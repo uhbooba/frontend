@@ -2,7 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import { useEffect, useState } from 'react';
 import {
   selectAccountAtom,
