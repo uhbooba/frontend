@@ -16,9 +16,13 @@ const QuizSuccess = () => {
     runConfetti();
   });
 
+  const GoEdu = () => {
+    navigate('/education');
+  };
+
   return (
     <div className='flex flex-col'>
-      <TopBar title='금융 퀴즈' />
+      <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
       <div className='h-full'>
         <div className='flex flex-col items-center justify-center'>
           <TextBubble

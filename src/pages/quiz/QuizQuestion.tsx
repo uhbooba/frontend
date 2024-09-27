@@ -33,9 +33,13 @@ const QuizQuestion = () => {
     setShowModal(false);
   };
 
+  const GoEdu = () => {
+    navigate('/education');
+  };
+
   return (
     <div>
-      <TopBar title='금융 퀴즈' />
+      <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
       <QuizLevelBar
         currentQuestion={currentQuestionIndex}
         totalQuestions={totalQuestions}
