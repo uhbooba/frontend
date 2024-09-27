@@ -98,6 +98,10 @@ public class FinApiList {
         public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME = "inquireForeignCurrencyDemandDepositAccountList";
         public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_URL =
             FOREIGN_BASE_URL + GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME;
+
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME = "inquireForeignCurrencyDemandDepositAccount";
+        public static final String GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_URL =
+            FOREIGN_BASE_URL + GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME;
     }
 
     public static class Savings {
