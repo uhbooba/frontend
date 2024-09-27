@@ -80,7 +80,7 @@ const Main = () => {
   };
 
   return (
-    <div className='h-[840px] bg-orange-100/40'>
+    <div className='h-[950px] bg-orange-100/40'>
       <TopBar
         title=''
         showBackButton={false}
