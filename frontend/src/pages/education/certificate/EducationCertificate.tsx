@@ -12,7 +12,7 @@ const EducationCertificate = () => {
   };
 
   const GoEdu = () => {
-    navigate('/study');
+    navigate('/education');
   };
 
   return (

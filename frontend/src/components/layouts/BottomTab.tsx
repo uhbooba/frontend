@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { path: '/', name: '메인' },
-  { path: '/study', name: '교육' },
+  { path: '/education', name: '교육' },
 ] as const;
 
 export const BottomTab = () => {
