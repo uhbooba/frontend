@@ -74,6 +74,13 @@ spring:
           predicates:
             - Path=/external-service/**,/externals/**
 
+        - id: external-service
+          uri: lb://external-service
+          predicates:
+            - Path=/external-service/**
+          filters:
+            - RewritePath=/external-service/(?<segment>.*), /$\{segment}
+
 springdoc:
   api-docs:
     enabled: true
