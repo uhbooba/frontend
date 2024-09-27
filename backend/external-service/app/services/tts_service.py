@@ -42,14 +42,14 @@ class TtsService:
 
         # 해쉬 충돌 확인
         cached_prefix = r_tts_hash.get(hashed_text)
-        if cached_prefix and cached_prefix != text[:11].encode("utf-8"):
+        if cached_prefix and cached_prefix.decode("utf-8") != text[:11]:
             # 해시 충돌 발생
             r_tts_hash.redis_client.delete(hashed_text)
             r_tts_audio.redis_client.delete(hashed_text)
             logger.info(f"충돌된 캐시 삭제: {hashed_text}")
 
         # 캐시된 오디오 확인
-        cached_audio = r_tts_audio.get(cached_prefix)
+        cached_audio = r_tts_audio.get(hashed_text)
 
         if cached_audio:
             logger.info("캐시된 TTS 음성을 반환합니다.")
