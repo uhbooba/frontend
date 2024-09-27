@@ -8,7 +8,6 @@ import com.uhbooba.financeservice.dto.finapi.response.exchange.BankCurrencyRespo
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ExchangeEstimateResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ExchangeRateResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ExchangeResponse;
-import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyAccountCreateResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyAccountResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyProductResponse;
 import com.uhbooba.financeservice.service.ExchangeService;
@@ -42,67 +41,63 @@ public class ExchangeController {
 
     @GetMapping("/rates/detail")
     @Operation(summary = "환율 조회")
-    public ExchangeRateResponse getExchangeRate(
+    public CommonResponse<ExchangeRateResponse> getExchangeRate(
         @RequestParam("currency") String currency
     ) {
-        return exchangeService.getExchangeRate(currency);
+        return CommonResponse.ok("환율 조회 성공", exchangeService.getExchangeRate(currency));
     }
 
     @PostMapping("/estimates")
     @Operation(summary = "환전 예상 금액 조회")
-    public ExchangeEstimateResponse getExchangeEstimate(
+    public CommonResponse<ExchangeEstimateResponse> getExchangeEstimate(
         @Valid @RequestBody ExchangeGetEstimateRequest exchangeGetEstimateRequest
     ) {
-        return exchangeService.getExchangeEstimate(exchangeGetEstimateRequest);
+        return CommonResponse.ok("환전 예상 금액 조회 성공",
+                                 exchangeService.getExchangeEstimate(exchangeGetEstimateRequest));
     }
 
     @PostMapping("/exchange")
     @Operation(summary = "환전")
-    public ExchangeResponse exchangeCurrency(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<ExchangeResponse> exchangeCurrency(
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody ExchangeRequest dto
     ) {
-        return exchangeService.doExchange(userKey, dto);
+        return CommonResponse.ok("환전 성공", exchangeService.doExchange(userId, dto));
     }
 
     @PostMapping("/products")
     @Operation(summary = "외화 상품 만들기")
-    public ForeignCurrencyProductResponse exchangeProducts(
+    public CommonResponse<ForeignCurrencyProductResponse> exchangeProducts(
         @RequestBody ForeignCurrencyDemandDepositCreateRequest request
     ) {
-        return exchangeService.createForeignCurrencyDemandDeposit(request);
+        return CommonResponse.ok("외화 상품 만들기 성공",
+                                 exchangeService.createForeignCurrencyDemandDeposit(request));
     }
 
     @GetMapping("/products")
     @Operation(summary = "외화 상품 조회")
-    public List<ForeignCurrencyProductResponse> getExchangeProducts(
+    public CommonResponse<List<ForeignCurrencyProductResponse>> getExchangeProducts(
     ) {
-        return exchangeService.getForeignCurrencyDemandDepositList();
+        return CommonResponse.ok("외화 상품 조회 성공",
+                                 exchangeService.getForeignCurrencyDemandDepositList());
     }
 
     @PostMapping("/accounts")
     @Operation(summary = "외화 계좌 만들기")
-    public ForeignCurrencyAccountCreateResponse exchangeAccount(
-        @RequestParam("userKey") String userKey,
-        @RequestParam("accountTypeUniqueNo") String accountTypeUniqueNo,
-        @RequestParam("currency") String currency
+    public CommonResponse<ForeignCurrencyAccountResponse> exchangeAccount(
+        @RequestParam("userId") Integer userId
     ) {
-        if(accountTypeUniqueNo.length() > 20) {
-            throw new IllegalArgumentException("금융 상품 고유 번호는 최대 20자리입니다.");
-        }
-        if(currency.length() > 20) {
-            throw new IllegalArgumentException("통화코드는 최대 20자리입니다.");
-        }
-        return exchangeService.createForeignCurrencyDemandDepositAccount(userKey,
-                                                                         accountTypeUniqueNo,
-                                                                         currency);
+        return CommonResponse.ok("외화 계좌 만들기 성공",
+                                 exchangeService.createForeignCurrencyDemandDepositAccount(userId));
     }
 
     @GetMapping("/accounts")
     @Operation(summary = "외화 계좌 조회")
-    public List<ForeignCurrencyAccountResponse> getExchangeAccounts(
-        @RequestParam("userKey") String userKey
+    public CommonResponse<List<ForeignCurrencyAccountResponse>> getExchangeAccounts(
+        @RequestParam("userId") Integer userId
     ) {
-        return exchangeService.getForeignCurrencyDemandDepositAccountList(userKey);
+        return CommonResponse.ok("외화 계좌 조회 성공",
+                                 exchangeService.getForeignCurrencyDemandDepositAccountList(
+                                     userId));
     }
 }
