@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
@@ -10,13 +10,13 @@ const AddCash = () => {
   const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
   const handleButtonClick = (index: number) => {
-    setSelectedButton(index)
+    setSelectedButton(index);
   };
 
   const handleNextStep = () => {
     if (selectedButton !== null) {
-        const route = '/account/check';
-        navigate(route);
+      const route = '/account/check';
+      navigate(route);
     }
   };
 
@@ -51,35 +51,34 @@ const AddCash = () => {
     },
   ];
 
-
   return (
     <div className=''>
-        {/* 상단바 */}
-        <TopBar title='계좌 입금' />
-        {/* space-x-4 p-4 */}
-        <div className='mt-[1vh] mx-16'>
-            {ButtonConfig.map((button, index) => (
-                <Button
-                    key={index}
-                    label={button.label}
-                    size={button.size}
-                    color={selectedButton === index ? 'blue' : button.color}
-                    onClick={() => handleButtonClick(index)}
-                    className={button.className}
-                />
-            ))}
-        </div>
-        <div className="mt-[6vh] p-4 flex justify-center">
-            <Button 
-                label="입금 하기"
-                onClick={handleNextStep}
-                className="w-full max-w-[calc(100%-60px)]" 
-                disabled={selectedButton === null}
-            />
-        </div>
-        <div className='fixed bottom-0 left-0 w-full'>
-            <BottomTab />
-        </div>
+      {/* 상단바 */}
+      <TopBar title='계좌 입금' />
+      {/* space-x-4 p-4 */}
+      <div className='mx-16 mt-[1vh]'>
+        {ButtonConfig.map((button, index) => (
+          <Button
+            key={index}
+            label={button.label}
+            size={button.size}
+            color={selectedButton === index ? 'blue' : button.color}
+            onClick={() => handleButtonClick(index)}
+            className={button.className}
+          />
+        ))}
+      </div>
+      <div className='mt-[6vh] flex justify-center p-4'>
+        <Button
+          label='입금 하기'
+          onClick={handleNextStep}
+          className='w-full max-w-[calc(100%-60px)]'
+          disabled={selectedButton === null}
+        />
+      </div>
+      <div className='fixed bottom-0 left-0 w-full'>
+        <BottomTab />
+      </div>
     </div>
   );
 };
