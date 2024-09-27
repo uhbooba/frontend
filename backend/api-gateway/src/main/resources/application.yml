@@ -50,50 +50,24 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/login
-            - Method=POST
+            - Path=/user-service/**
           filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user-service/logout
-            - Method=POST
-          filters:
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user-service/users
-            - Method=POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user-service/users/**
-            - Method=GET
-          filters:
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user-service/reissue
-            - Method=POST
-          filters:
+#            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: finance-service
           uri: lb://finance-service
           predicates:
-            - Path=/finance-service/**,/finances/**,/fin-api/**
+            - Path=/finances/**,/fin-api/**
+#          filters:
+#            - AuthorizationHeaderFilter
+
+        - id: finance-service
+          uri: lb://finance-service
+          predicates:
+            - Path=/finance-service/**
+          filters:
+            - RewritePath=/finance-service/(?<segment>.*), /$\{segment}
 
         - id: external-service
           uri: lb://external-service

@@ -19,7 +19,6 @@ from .eureka_register import register_with_eureka
 #####################################################################################
 Base.metadata.create_all(bind=engine)
 app = FastAPI(
-    root_path="/external-service",
     openapi_url="/v3/api-docs",  # OpenAPI 문서 경로 설정
     docs_url="/docs",  # Swagger UI 경로 설정
 )
