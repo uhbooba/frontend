@@ -102,7 +102,7 @@ public class FinApiList {
 
     public static class Savings {
 
-        private static final String BASE_URL = "/edu/savings";
+        private static final String BASE_URL = "/edu/savings/";
 
         public static final String CREATE_SAVINGS_PRODUCT_API_NAME = "createProduct";
         public static final String CREATE_SAVINGS_PRODUCT_URL =
