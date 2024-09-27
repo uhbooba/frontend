@@ -98,8 +98,12 @@ const UtilityPaySuccess = lazy(
 
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
 const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
-const AccountProductsList = lazy(() => import('@/pages/account/AccountProductsList'));
-const AccountDepositProducts = lazy(() => import('@/pages/account/AccountDepositProducts'));
+const AccountProductsList = lazy(
+  () => import('@/pages/account/AccountProductsList'),
+);
+const AccountDepositProducts = lazy(
+  () => import('@/pages/account/AccountDepositProducts'),
+);
 const AccountTransferAccountInfo = lazy(
   () => import('@/pages/account/AccountTransferAccountInfo'),
 );
