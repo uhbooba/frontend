@@ -28,7 +28,8 @@ class RedisHandler:
         instance.redis_client = redis.StrictRedis(
             host=REDIS_HOST, port=REDIS_PORT, db=db_number, password=REDIS_PASSWORD
         )
-        return instance.redis_client
+        instance.db = db_number
+        return instance
 
     def __init__(cls, *args, **kwargs):
         pass
@@ -48,14 +49,14 @@ class RedisHandler:
     def get(self, key: str):
         value = self.redis_client.get(key)
         if value:
-            logger.info(f"Redis에서 키 조회 성공: {key}")
+            logger.info(f"Redis(DB:{self.db})에서 키 조회 성공: {key}")
         else:
-            logger.info(f"Redis에서 키 조회 실패: {key}")
+            logger.info(f"Redis(DB:{self.db})에서 키 조회 실패: {key}")
         return value
 
     def get_all_keys(self):
         keys = self.redis_client.keys("*")
-        logger.info(f"Redis의 모든 키 조회: {len(keys)}개")
+        logger.info(f"Redis(DB:{self.db})의 모든 키 조회: {len(keys)}개")
         return keys
 
 
