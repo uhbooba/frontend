@@ -5,18 +5,44 @@ import TopBar from '@/components/layouts/TopBar';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
-    label: '교육 영상',
+    label: '',
+    eduLabel: '교육 영상',
     route: '/education/video',
-    size: 'large',
-    color: 'orange',
-    className: 'w-full',
+    size: 'small',
+    className: 'flex h-32 bg-white rounded-3xl shadow',
+    eduImg: '/assets/images/video.png',
   },
   {
-    label: '교육 이수증',
+    label: '',
+    eduLabel: '퀴즈',
+    route: '/quiz',
+    size: 'small',
+    className: 'flex h-32 bg-white rounded-3xl shadow',
+    eduImg: '/assets/images/quiz.png',
+  },
+  {
+    label: '',
+    eduLabel: '금융사기',
+    route: '/cancel/savings/explain',
+    size: 'small',
+    className: 'flex h-32 bg-white rounded-3xl shadow',
+    eduImg: '/assets/images/fraud.png',
+  },
+  {
+    label: '',
+    eduLabel: '미션 스탬프',
+    route: '/cancel/savings/explain',
+    size: 'small',
+    className: 'flex h-32 bg-white shadow rounded-3xl',
+    eduImg: '/assets/images/mission_stamp.png',
+  },
+  {
+    label: '',
+    eduLabel: '교육 이수증',
     route: '/education/certificate',
-    size: 'large',
-    color: 'orange',
-    className: 'w-full',
+    size: 'small',
+    className: 'flex h-32 bg-white rounded-3xl shadow',
+    eduImg: '/assets/images/cer_icon.png',
   },
 ];
 
@@ -28,10 +54,15 @@ const Education = () => {
   };
 
   return (
-    <div>
-      <TopBar title='교육페이지' showBackButton={false} showXButton={false} />
+    <div className='h-[840px] bg-orange-100/40'>
+      <TopBar
+        title=''
+        showBackButton={false}
+        showXButton={false}
+        showMainButton={true}
+      />
 
-      <div className='space-y-4 p-4'>
+      <div className='grid gap-4 p-4'>
         {ButtonConfig.map((button, index) => (
           <Button
             key={index}
@@ -40,6 +71,8 @@ const Education = () => {
             color={button.color}
             onClick={() => handleButtonClick(button.route)}
             className={button.className}
+            eduImg={button.eduImg}
+            eduLabel={button.eduLabel}
           />
         ))}
       </div>

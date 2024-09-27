@@ -4,33 +4,48 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 
 const ButtonConfig: ButtonConfigType[] = [
+  // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
   {
-    label: '예금 가입',
+    label: '예금 가입 (전체계좌 조회)',
     route: '/deposit',
     size: 'small',
-    color: 'orange',
-    className: 'flex-grow',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/search.png',
   },
   {
-    label: '적금 가입',
+    label: '적금 가입 (계좌개설)',
     route: '/savings',
     size: 'small',
-    color: 'orange',
-    className: 'flex-grow',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/account.png',
   },
   {
-    label: '예금 중도 해지',
+    label: '예금 중도 해지 (예적금)',
     route: '/cancel/deposit/explain',
     size: 'small',
-    color: 'orange',
-    className: 'flex-grow',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/deposave.png',
   },
   {
-    label: '적금 중도 해지',
+    label: '환전',
+    route: 'exchange/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/exchange.png',
+  },
+  {
+    label: '적금 중도해지(공과금)',
     route: '/cancel/savings/explain',
     size: 'small',
-    color: 'orange',
-    className: 'flex-grow',
+    className: 'flex-grow h-32 bg-white rounded-3xl shadow',
+    img: '/assets/images/tax.png',
+  },
+  {
+    label: '계좌입금(시드머니충전)',
+    route: '/cancel/savings/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/money_pig.png',
   },
 ];
 
@@ -41,11 +56,61 @@ const Main = () => {
     navigate(route);
   };
 
-  return (
-    <div>
-      <TopBar title='메인페이지' showBackButton={false} showXButton={false} />
+  const GoAccountCheck = () => {
+    navigate('account/check');
+  };
 
-      <div className='space-y-4 p-4'>
+  const GoAccountTransfer = () => {
+    navigate('account/transfer/account-info');
+  };
+
+  return (
+    <div className='h-[840px] bg-orange-100/40'>
+      <TopBar
+        title=''
+        showBackButton={false}
+        showXButton={false}
+        showMainButton={true}
+      />
+
+      {/* 메인계좌 디브 */}
+      <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
+        <div className='flex pt-2'>
+          <div className='flex items-center pl-2'>
+            <img
+              src='/assets/images/small_logo.png'
+              alt='로고'
+              className='h-16 w-16 pt-1'
+            ></img>
+          </div>
+          <div className='pb-0 pl-3 pr-4 pt-4 text-xl font-bold'>
+            <p className='pb-1'>자유입출금 계좌</p>
+            <p>111-222-333333</p>
+          </div>
+        </div>
+
+        <div className='pb-2 pl-4 pr-4 pt-4 text-3xl font-bold'>
+          10,000,000원
+        </div>
+
+        <div className='flex justify-around pt-4'>
+          <Button
+            label='돈 보내기'
+            size='small'
+            className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
+            onClick={() => GoAccountTransfer()}
+          />
+          <Button
+            label='계좌내역 조회'
+            size='small'
+            className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
+            onClick={() => GoAccountCheck()}
+          />
+        </div>
+      </div>
+
+      {/* 하단 그리드 버튼들 */}
+      <div className='grid grid-cols-2 gap-4 p-4'>
         {ButtonConfig.map((button, index) => (
           <Button
             key={index}
@@ -54,9 +119,12 @@ const Main = () => {
             color={button.color}
             onClick={() => handleButtonClick(button.route)}
             className={button.className}
+            img={button.img}
           />
         ))}
       </div>
+
+      {/* 바텀탭 */}
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>
