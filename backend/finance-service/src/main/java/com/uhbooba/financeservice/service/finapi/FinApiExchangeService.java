@@ -149,6 +149,7 @@ public class FinApiExchangeService {
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
+        
         requestBody.put("accountTypeUniqueNo", accountTypeUniqueNo);
         requestBody.put("currency", currency);
 
@@ -161,6 +162,7 @@ public class FinApiExchangeService {
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
+        System.out.println(param);
         return finApiCommonService.executeApiRequest(param);
     }
 
@@ -176,6 +178,26 @@ public class FinApiExchangeService {
                                                                  GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_URL)
                                                              .apiName(
                                                                  GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_LIST_API_NAME)
+                                                             .requestBody(requestBody)
+                                                             .userKey(userKey)
+                                                             .build();
+        return finApiCommonService.executeApiRequest(param);
+    }
+
+    public Mono<JsonNode> getForeignCurrencyDemandDepositAccount(
+        String userKey,
+        String accountNo
+    ) {
+        // 1. 요청 본문 생성
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("accountNo", accountNo);
+
+        // 2. api 요청
+        HandlerParamWithHeader param = HandlerParamWithHeader.builder()
+                                                             .url(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_URL)
+                                                             .apiName(
+                                                                 GET_FOREIGN_CURRENCY_DEMAND_DEPOSIT_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
                                                              .userKey(userKey)
                                                              .build();
