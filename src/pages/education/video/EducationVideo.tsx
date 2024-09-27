@@ -14,44 +14,21 @@ interface Video {
   upload_at: string;
 }
 
-const EducationVideo2 = () => {
+const EducationVideo = () => {
   const [selectKeyword, setSelectKeyword] = useState('모두 보기');
   const [videoData, setVideoData] = useState<Video[]>([]);
-  const [keywordData, setKeywordData] = useState<string[]>([]);
 
   const keywordClick = (keyword: string) => {
     setSelectKeyword(keyword);
   };
 
-  const keywords = ['모두 보기', ...keywordData];
-
-  useEffect(() => {
-    const fetchKeywords = async () => {
-      try {
-        const response = await fetch(
-          'http://j11a402.p.ssafy.io:8080/external-service/video/keywords',
-        );
-        const data = await response.json();
-        if (data.status === 'success') {
-          setKeywordData(data.data);
-        }
-      } catch (error) {
-        console.log(`키워드 에러 : ${error}`);
-      }
-    };
-
-    fetchKeywords();
-  }, []);
-
-  // 확인용 콘솔로그
-  useEffect(() => {
-    console.log(`키워드 데이터 : ${keywordData}`);
-  }, [keywordData]);
+  const keywords = ['모두 보기', '금융위원회', '시.금.치'];
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await getEducationVideos();
+        console.log(response);
         setVideoData(response.data.data);
       } catch (error) {
         console.log(error);
@@ -61,9 +38,12 @@ const EducationVideo2 = () => {
     fetchVideos();
   }, []);
 
-  const filteredVideos = videoData.filter(
-    (video) => selectKeyword === '모두 보기' || video.keyword === selectKeyword,
-  );
+  const filteredVideos = Array.isArray(videoData)
+    ? videoData.filter(
+        (video) =>
+          selectKeyword === '모두 보기' || video.keyword === selectKeyword,
+      )
+    : [];
 
   return (
     <div>
@@ -110,4 +90,4 @@ const EducationVideo2 = () => {
   );
 };
 
-export default EducationVideo2;
+export default EducationVideo;
