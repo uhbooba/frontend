@@ -1,5 +1,6 @@
 package com.uhbooba.financeservice.controller.finance;
 
+import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountDeleteResponse;
@@ -33,68 +34,74 @@ public class DepositController {
 
     @PostMapping("/products")
     @Operation(summary = "예금 상품 만들기")
-    public DepositResponse createDeposit(
+    public CommonResponse<DepositResponse> createDeposit(
         @Valid @RequestBody DepositCreateRequest dto
     ) {
-        return depositService.createDeposit(dto);
+        return CommonResponse.ok("예금 상품 생성 완료", depositService.createDeposit(dto));
     }
 
     @GetMapping("/products")
     @Operation(summary = "예금 상품 전체 조회")
-    public List<DepositResponse> getDepositProducts() {
-        return depositService.getAllDeposits();
+    public CommonResponse<List<DepositResponse>> getDepositProducts() {
+        return CommonResponse.ok("예금 상품 조회 완료", depositService.getAllDeposits());
     }
 
     @PostMapping("/accounts")
     @Operation(summary = "예금 계좌 생성")
-    public DepositAccountResponse createDepositAccount(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<DepositAccountResponse> createDepositAccount(
+        @RequestParam("userId") Integer userId,
         @Valid @RequestBody DepositAccountCreateRequest dto
     ) {
-        return depositService.createDepositAccount(userKey, dto);
+        return CommonResponse.ok("예금 계좌 생성 완료", depositService.createDepositAccount(userId, dto));
     }
 
     @GetMapping("/accounts/expiry-interests")
     @Operation(summary = "예금 만기 이자 조회")
-    public DepositExpiryInterestResponse getDepositExpiryInterest(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<DepositExpiryInterestResponse> getDepositExpiryInterest(
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositExpiryInterest(userKey, accountNo);
+        return CommonResponse.ok("예금 만기 이자 조회 완료",
+                                 depositService.getDepositExpiryInterest(userId, accountNo));
     }
 
     @GetMapping("/accounts/early-termination-interest")
     @Operation(summary = "예금 중도 해지 시 이자 조회")
-    public DepositEarlyTerminationInterestResponse getDepositEarlyTerminationInterest(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<DepositEarlyTerminationInterestResponse> getDepositEarlyTerminationInterest(
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositEarlyTerminationInterest(userKey, accountNo);
+        return CommonResponse.ok("예금 중도 해지 이자 조회 완료",
+                                 depositService.getDepositEarlyTerminationInterest(userId,
+                                                                                   accountNo));
     }
 
     @DeleteMapping("/accounts")
     @Operation(summary = "입출금 계좌 삭제")
-    public DepositAccountDeleteResponse deleteDepositAccount(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<DepositAccountDeleteResponse> deleteDepositAccount(
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.deleteDepositAccount(userKey, accountNo);
+        return CommonResponse.ok("입출금 계좌 삭제 완료",
+                                 depositService.deleteDepositAccount(userId, accountNo));
     }
 
     @GetMapping("/accounts/detail")
     @Operation(summary = "예금 계좌 상세 조회")
-    public DepositAccountResponse getDepositAccount(
-        @RequestParam("userKey") String userKey,
+    public CommonResponse<DepositAccountResponse> getDepositAccount(
+        @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
     ) {
-        return depositService.getDepositAccount(userKey, accountNo);
+        return CommonResponse.ok("예금 계좌 상세 조회 완료",
+                                 depositService.getDepositAccount(userId, accountNo));
     }
 
     @GetMapping("/accounts")
     @Operation(summary = "사용자의 예금 계좌 목록 조회")
-    public List<DepositAccountResponse> getDepositAccounts(
-        @RequestParam("userKey") String userKey
+    public CommonResponse<List<DepositAccountResponse>> getDepositAccounts(
+        @RequestParam("userId") Integer userId
     ) {
-        return depositService.getAllDepositAccounts(userKey);
+        return CommonResponse.ok("사용자 예금 계좌 목록 조회 완료",
+                                 depositService.getAllDepositAccounts(userId));
     }
 }

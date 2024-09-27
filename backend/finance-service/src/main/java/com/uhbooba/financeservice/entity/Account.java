@@ -40,9 +40,11 @@ public class Account {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter
     private AccountType accountTypeCode; // 계좌 타입
 
     @Column
+    @Setter
     private String accountTypeName;
 
     @Builder
