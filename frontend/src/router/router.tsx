@@ -43,7 +43,7 @@ const CancelSavingsSuccess = lazy(
 const SavingsAgree = lazy(() => import('@/pages/savings/Savings_Agree'));
 const SavingsMoney = lazy(() => import('@/pages/savings/Savings_Money'));
 const SavingsAccount = lazy(() => import('@/pages/savings/Savings_Account'));
-const SavingsSignup = lazy(() => import('@/pages/savings/Savings_Signup'));
+const SavingsSignup = lazy(() => import('@/pages/savings/savings_Signup'));
 const SavingsProduct = lazy(() => import('@/pages/savings/Savings_Product'));
 const SavingsPassword = lazy(() => import('@/pages/savings/Savings_Password'));
 const SavingsSuccess = lazy(() => import('@/pages/savings/Savings_Success'));
@@ -97,6 +97,7 @@ const UtilityPaySuccess = lazy(
 );
 
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
+const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
 const AccountTransferAccountInfo = lazy(
   () => import('@/pages/account/AccountTransferAccountInfo'),
 );
@@ -191,6 +192,7 @@ const router = createBrowserRouter([
       // 계좌 조회
       { path: 'account/list', element: <AccountList /> },
       { path: 'account/check', element: <AccountCheck /> },
+      { path: 'account/add-cash', element: <AccountAddCash /> },
       // 계좌 이체
       {
         path: 'account/transfer/account-info',
