@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import KeywordButtons from '@/components/common/KeywordButtons';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
-import { getEducationVideos } from '@/services/education';
+import {
+  getEducationVideos,
+  getKeyword,
+  getVideoByKeyword,
+} from '@/services/education';
 
 // 비디오에 있는 속성들 타입 정해주기
 interface Video {
@@ -17,25 +21,44 @@ interface Video {
 const EducationVideo = () => {
   const [selectKeyword, setSelectKeyword] = useState('모두 보기');
   const [videoData, setVideoData] = useState<Video[]>([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
 
-  const keywordClick = (keyword: string) => {
+  const keywordClick = async (keyword: string) => {
     setSelectKeyword(keyword);
-  };
 
-  const keywords = ['모두 보기', '금융위원회', '시.금.치'];
-
-  useEffect(() => {
-    const fetchVideos = async () => {
+    if (keyword !== '모두 보기') {
       try {
-        const response = await getEducationVideos();
-        console.log(response);
+        const response = await getVideoByKeyword(keyword);
         setVideoData(response.data.data);
       } catch (error) {
-        console.log(error);
+        console.log('keywordClick 에러', error);
       }
-    };
+    } else {
+      fetchAllVideo();
+    }
+  };
 
-    fetchVideos();
+  const fetchAllVideo = async () => {
+    try {
+      const response = await getEducationVideos();
+      setVideoData(response.data.data);
+    } catch (error) {
+      console.log('fetchAllVideo 에러', error);
+    }
+  };
+
+  const fetchKeywords = async () => {
+    try {
+      const response = await getKeyword();
+      setKeywords(response.data.data);
+    } catch (error) {
+      console.log('fetchKeywords 에러', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllVideo();
+    fetchKeywords();
   }, []);
 
   const filteredVideos = Array.isArray(videoData)
@@ -47,13 +70,13 @@ const EducationVideo = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
+      <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar title='교육영상' />
       </div>
 
       <div className='mt-20 border-b-2'>
         <KeywordButtons
-          keywords={keywords}
+          keywords={['모두 보기', ...keywords]}
           onKeywordClick={keywordClick}
           keywordBtnColor={selectKeyword}
         />
