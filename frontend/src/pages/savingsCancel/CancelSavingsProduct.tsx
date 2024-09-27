@@ -42,10 +42,7 @@ const CancelSavingsProduct = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar
-          title='적금 중도해지'
-
-        />
+        <TopBar title='적금 중도해지' />
       </div>
 
       <div className='mb-4 mt-20'>
@@ -63,6 +60,7 @@ const CancelSavingsProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
           <div className='mt-2 text-xl font-bold'>{selectAccount}</div>
+          {/* 계좌번호 예금 가입하면 새로 생기는 예금계좌 번호 가져오기 */}
         </div>
 
         <div className='border-b border-gray-300 py-4'>
