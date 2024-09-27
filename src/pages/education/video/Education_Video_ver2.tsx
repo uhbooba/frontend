@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import KeywordButtons from '@/components/common/KeywordButtons';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
+import { getEducationVideos } from '@/services/education';
 
 // 비디오에 있는 속성들 타입 정해주기
 interface Video {
@@ -26,15 +27,10 @@ const EducationVideo = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://localhost:5173/video');
-        const data = await response.json();
-        console.log(`이건 리스폰 그자체: ${response}`);
-        console.log(`이것은 성공한 데이터 : ${data}`);
-        if (data.status === 'success') {
-          setVideoData(data.data);
-        }
+        const response = await getEducationVideos();
+        setVideoData(response.data.data);
       } catch (error) {
-        console.log(`이것은 에러 : ${error}`);
+        console.log(error);
       }
     };
 
