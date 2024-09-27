@@ -5,7 +5,7 @@ import static com.uhbooba.financeservice.util.finapi.FinApiList.Savings.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uhbooba.financeservice.dto.finapi.HandlerParamWithHeader;
-import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
+import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsCreateRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +52,8 @@ public class FinApiSavingsService {
     }
 
     public Mono<JsonNode> createSavingsAccount(
-        DepositAccountCreateRequest dto
+        String userKey,
+        SavingsAccountCreateRequest dto
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = objectMapper.convertValue(dto, Map.class);
@@ -63,6 +64,7 @@ public class FinApiSavingsService {
                                                              .apiName(
                                                                  CREATE_SAVINGS_ACCOUNT_API_NAME)
                                                              .requestBody(requestBody)
+                                                             .userKey(userKey)
                                                              .build();
         return finApiCommonService.executeApiRequest(param);
     }
