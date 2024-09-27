@@ -9,12 +9,20 @@ import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountResp
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositEarlyTerminationInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositExpiryInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositResponse;
+import com.uhbooba.financeservice.entity.DepositProduct;
+import com.uhbooba.financeservice.entity.UserAccount;
+import com.uhbooba.financeservice.mapper.DepositProductMapper;
+import com.uhbooba.financeservice.repository.DepositProductRepository;
 import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,34 +30,59 @@ import org.springframework.stereotype.Service;
 public class DepositService {
 
     private final FinApiDepositService finApiDepositService;
+    private final UserAccountService userAccountService;
+
     private final JsonToDtoConverter jsonToDtoConverter;
 
+    private final DepositProductRepository depositProductRepository;
+
+    private final DepositProductMapper depositProductMapper;
+
+    @Transactional
     public DepositResponse createDeposit(
         DepositCreateRequest dto
     ) {
         JsonNode createdDeposit = finApiDepositService.createDeposit(dto)
                                                       .block();
-        return jsonToDtoConverter.convertToObject(createdDeposit, DepositResponse.class);
+
+        DepositResponse depositResponse = jsonToDtoConverter.convertToObject(createdDeposit,
+                                                                             DepositResponse.class);
+
+        Set<String> interestRates = new HashSet<>(Arrays.asList("1.0", "3.0", "5.0"));
+
+        if(interestRates.contains(depositResponse.interestRate())) {
+            DepositProduct deposit = depositProductMapper.toEntity(depositResponse);
+            depositProductRepository.save(deposit);
+        }
+
+        return depositResponse;
     }
 
-    public List<DepositResponse> getAllDeposits() {
+    public List<DepositResponse> getAllDepositsByApi() {
         JsonNode deposits = finApiDepositService.getDepositProducts()
                                                 .block();
         return jsonToDtoConverter.convertToList(deposits,
                                                 new TypeReference<List<DepositResponse>>() {});
     }
 
+    public List<DepositResponse> getAllDeposits() {
+        List<DepositProduct> depositProducts = depositProductRepository.findAll();
+        return depositProductMapper.toDto(depositProducts);
+    }
+
     public DepositAccountResponse createDepositAccount(
-        String userKey,
+        Integer userId,
         DepositAccountCreateRequest dto
     ) {
+        // 1. 사용자 계정 찾기
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
         JsonNode createdDeposit = finApiDepositService.createDepositAccount(userKey, dto)
                                                       .block();
         return jsonToDtoConverter.convertToObject(createdDeposit, DepositAccountResponse.class);
     }
 
     public DepositAccountResponse getDepositAccount(
-        String userKey,
+        Integer userId,
         String accountNo
     ) {
         JsonNode depositAccount = finApiDepositService.getDepositAccount(userKey, accountNo)
@@ -58,7 +91,7 @@ public class DepositService {
     }
 
     public List<DepositAccountResponse> getAllDepositAccounts(
-        String userKey
+        Integer userId
     ) {
         JsonNode depositAccounts = finApiDepositService.getDepositAccounts(userKey)
                                                        .block();
@@ -67,7 +100,7 @@ public class DepositService {
     }
 
     public DepositExpiryInterestResponse getDepositExpiryInterest(
-        String userKey,
+        Integer userId,
         String accountNo
     ) {
         JsonNode depositExpiryInterest = finApiDepositService.getDepositExpiryInterest(userKey,
@@ -78,7 +111,7 @@ public class DepositService {
     }
 
     public DepositEarlyTerminationInterestResponse getDepositEarlyTerminationInterest(
-        String userKey,
+        Integer userId,
         String accountNo
     ) {
         JsonNode nodeMono = finApiDepositService.getDepositEarlyTerminationInterest(userKey,
@@ -89,7 +122,7 @@ public class DepositService {
     }
 
     public DepositAccountDeleteResponse deleteDepositAccount(
-        String userKey,
+        Integer userId,
         String accountNo
     ) {
         JsonNode deletedDeposit = finApiDepositService.deleteDepositAccount(userKey, accountNo)
