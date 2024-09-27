@@ -23,9 +23,9 @@ openapi:
     version: 1.0.0
 springdoc:
   api-docs:
-    path: /finance-service/v3/api-docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /finance-service/docs
+    path: /docs
 
 
 eureka:
