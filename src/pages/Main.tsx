@@ -14,15 +14,15 @@ const ButtonConfig: ButtonConfigType[] = [
   },
 
   {
-    label: '적금 가입 (계좌개설)',
-    route: '/savings',
+    label: '계좌개설',
+    route: '/account/products',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/account.png',
   },
   {
-    label: '예금 중도 해지 (예적금)',
-    route: '/cancel/deposit/explain',
+    label: '예적금',
+    route: '/account/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
@@ -42,8 +42,8 @@ const ButtonConfig: ButtonConfigType[] = [
     img: '/assets/images/tax.png',
   },
   {
-    label: '적금 중도해지(계좌입금)',
-    route: '/cancel/savings/explain',
+    label: '계좌입금',
+    route: '/account/add-cash',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
@@ -53,14 +53,28 @@ const ButtonConfig: ButtonConfigType[] = [
     route: '/deposit',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/images/search.png',
+    img: '/assets/icons/warning.png',
+  },
+  {
+    label: '예금 중도 해지 (추후 삭제 예정)',
+    route: '/cancel/deposit/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
+  },
+  {
+    label: '적금 가입 (추후 삭제 예정)',
+    route: '/savings',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/icons/warning.png',
   },
   {
     label: '적금 중도해지(추후 삭제 예정)',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/images/money_pig.png',
+    img: '/assets/icons/warning.png',
   },
 ];
 
@@ -80,7 +94,7 @@ const Main = () => {
   };
 
   return (
-    <div className='h-[950px] bg-orange-100/40'>
+    <div className='min-h-screen bg-orange-100/40'>
       <TopBar
         title=''
         showBackButton={false}
