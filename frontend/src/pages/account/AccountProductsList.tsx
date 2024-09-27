@@ -3,7 +3,7 @@ import { BottomTab } from "@/components/layouts/BottomTab";
 import AccountProduct from "@/components/common/AccountProduct";
 
 
-const AccountProducts = () => {
+const AccountProductsList = () => {
     const ProductsList = [
         {
             name: '자유입출금 통장',
@@ -44,4 +44,4 @@ const AccountProducts = () => {
     );
 };
 
-export default AccountProducts;
+export default AccountProductsList;
