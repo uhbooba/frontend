@@ -139,7 +139,7 @@ const SavingsAgree = () => {
         </div>
         <div className='flex justify-end'>
           <CheckButton
-            name='agree3'
+            name='agree4'
             selected={agree4}
             setSelected={setAgree4}
           />
