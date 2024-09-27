@@ -30,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +71,7 @@ public class DemandDepositService {
                                                 new TypeReference<List<DemandDepositResponse>>() {});
     }
 
+    @Transactional
     public DemandDepositAccountResponse createDemandDepositAccount(
         Integer userId
     ) {
@@ -96,7 +98,6 @@ public class DemandDepositService {
             createdDemandDeposit, DemandDepositAccountCreateResponse.class);
         // 3. 계좌 상세 정보 조회해서 데이터 가져오기
         DemandDepositAccountResponse accountResponse = getDemandDepositAccountInFinApi(userKey,
-
                                                                                        demandDepositAccount.accountNo());
         // 4. DB에 계좌 저장하기
         Account account = accountMapper.toEntity(accountResponse);
@@ -106,6 +107,7 @@ public class DemandDepositService {
         return accountResponse;  // 최종 결과 반환
     }
 
+    @Transactional(readOnly = true)
     public DemandDepositAccountResponse getDemandDepositAccount(
         Integer userId
     ) {
@@ -160,7 +162,7 @@ public class DemandDepositService {
                                                                                        accountNo)
                                                     .block();
         // userName 이 이메일 앞부분으로 자동으로 만들어짐
-        // TODO : userClient 만들어서 id로 찾아서 거기서 이름 빼오자!
+        // TODO : userClient 만들어서 id로 찾아서 거기서 이름 빼오자! or userAccount 에 username 채워놓고 그거 주자
         return jsonToDtoConverter.convertToObject(holder, DemandDepositAccountHolderResponse.class);
     }
 
