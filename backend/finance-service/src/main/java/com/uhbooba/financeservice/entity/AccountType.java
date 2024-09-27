@@ -7,7 +7,7 @@ public enum AccountType {
     DEMAND_DEPOSIT("1"),  // 수시입출금
     FIXED_DEPOSIT("2"),   // 정기예금
     INSTALLMENT_SAVING("3"),  // 정기적금
-    LOAN("4");  // 대출
+    FOREIGN_DEMAND_DEPOSIT("4");  // 외화 수시입출금
 
     private final String code;
 

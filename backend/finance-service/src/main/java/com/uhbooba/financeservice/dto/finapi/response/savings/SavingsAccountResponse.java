@@ -1,11 +1,11 @@
-package com.uhbooba.financeservice.dto.finapi.response.deposit;
+package com.uhbooba.financeservice.dto.finapi.response.savings;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record DepositAccountResponse(
+public record SavingsAccountResponse(
     String bankCode,
     String bankName,
     String accountNo,
