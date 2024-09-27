@@ -1,8 +1,8 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import CheckButton from '@/components/common/buttons/CheckButton';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';

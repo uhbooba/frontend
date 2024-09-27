@@ -6,19 +6,13 @@ import TopBar from '@/components/layouts/TopBar';
 const ButtonConfig: ButtonConfigType[] = [
   // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
   {
-    label: '예금 가입 (전체계좌 조회)',
-    route: '/deposit',
+    label: '전체계좌 조회',
+    route: '/account/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
-  {
-    label: '예금 가입 (추후 삭제 예정)',
-    route: '/deposit',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/images/search.png',
-  },
+
   {
     label: '적금 가입 (계좌개설)',
     route: '/savings',
@@ -49,6 +43,20 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '적금 중도해지(계좌입금)',
+    route: '/cancel/savings/explain',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/money_pig.png',
+  },
+  {
+    label: '예금 가입 (추후 삭제 예정)',
+    route: '/deposit',
+    size: 'small',
+    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
+    img: '/assets/images/search.png',
+  },
+  {
+    label: '적금 중도해지(추후 삭제 예정)',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',

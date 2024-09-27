@@ -2,7 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';

@@ -1,7 +1,7 @@
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
 import { useNavigate } from 'react-router';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';
