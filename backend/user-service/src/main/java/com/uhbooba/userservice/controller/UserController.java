@@ -4,10 +4,11 @@ import com.uhbooba.userservice.dto.CommonResponse;
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.exception.SignupFormatException;
 import com.uhbooba.userservice.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/users")
+@Tag(name = "회원 관리", description = "회원 API 입니다.")
 public class UserController {
 
-    private final Environment env;
     private final UserService userService;
-
-    @GetMapping("/health-check")
-    public String status() {
-        return String.format("It's Working in User Service On PORT %s",
-            env.getProperty("local.server.port"));
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "회원 가입")
     public CommonResponse<?> sighup(@Valid @RequestBody SignupRequest request,
         BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
@@ -46,6 +42,7 @@ public class UserController {
 
     @GetMapping("/check-username/{username}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "아이디 중복 확인")
     public CommonResponse<?> checkUsername(@PathVariable("username") String username) {
         userService.duplicateUsername(username);
         return CommonResponse.ok("아이디 사용 가능");
@@ -53,6 +50,7 @@ public class UserController {
 
     @GetMapping("/check-phone/{phone}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "전화번호 중복 확인")
     public CommonResponse<?> checkPhone(@PathVariable("phone") String phone) {
         userService.duplicatePhone(phone);
         return CommonResponse.ok("전화번호 사용 가능");

@@ -9,6 +9,8 @@ import com.uhbooba.userservice.service.RefreshService;
 import com.uhbooba.userservice.util.CookieUtil;
 import com.uhbooba.userservice.util.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +28,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/reissue")
 @RequiredArgsConstructor
+@Tag(name = "토큰 관리", description = "jwt 토큰 API 입니다.")
 public class ReissueController {
 
     private final JWTUtil jwtUtil;
@@ -33,6 +36,7 @@ public class ReissueController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "refresh 토큰 재발급")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 
         String refreshToken = extractRefreshTokenFromCookies(request.getCookies())
