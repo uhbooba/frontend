@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.mapper;
 
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountResponse;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountResponse;
+import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsAccountResponse;
 import com.uhbooba.financeservice.entity.Account;
 import com.uhbooba.financeservice.entity.AccountType;
 import org.mapstruct.Mapper;
@@ -19,4 +20,6 @@ public interface AccountMapper {
     }
 
     Account toEntity(DepositAccountResponse dto);
+
+    Account toEntity(SavingsAccountResponse dto);
 }
