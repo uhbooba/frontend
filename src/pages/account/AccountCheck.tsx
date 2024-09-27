@@ -14,7 +14,7 @@ const AccountCheck = () => {
   const ButtonConfig: ButtonConfigType[] = [
     {
       label: '계좌 입금',
-      route: '/account/addcash',
+      route: '/account/add-cash',
       size: 'small',
       color: 'red',
       className: 'flex-grow',
