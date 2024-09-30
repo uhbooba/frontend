@@ -5,7 +5,7 @@ import io
 from gtts import gTTS
 
 from ..config.logger import setup_logger
-from ..config.redis import r_tts_audio, r_tts_hash
+from ..config.redis import r_tts_audio, r_tts_hash, r_tts_ai
 
 logger = setup_logger("app")
 
@@ -57,3 +57,15 @@ class TtsService:
         else:
             logger.info("새로운 TTS 음성을 생성합니다.")
             return await TtsService.generate_tts(text, hashed_text)
+
+    @staticmethod
+    async def get_tts_ai(tts_key: str) -> bytes:
+
+        # 캐시된 오디오 확인
+        cached_audio = r_tts_ai.get(tts_key)
+        if cached_audio:
+            logger.info(f"TTS 음성을 반환합니다 : tts_key is {tts_key}")
+            return cached_audio
+        else:
+            logger.info(f"TTS 음성이 없습니다 : tts_key is {tts_key}")
+            raise Exception(f"TTS 음성을 찾을 수 없습니다: tts_key is {tts_key}")
