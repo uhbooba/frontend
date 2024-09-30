@@ -12,10 +12,7 @@ const CancelSavingsExplain = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar
-          title='적금 중도해지'
-
-        />
+        <TopBar title='적금 중도해지' />
       </div>
 
       <div className='mt-16 flex-grow overflow-y-auto px-4'>

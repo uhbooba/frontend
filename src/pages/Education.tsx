@@ -22,7 +22,7 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '',
-    eduLabel: '금융사기',
+    eduLabel: '(금융사기)',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
@@ -30,7 +30,7 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '',
-    eduLabel: '미션 스탬프',
+    eduLabel: '(미션 스탬프)',
     route: '/cancel/savings/explain',
     size: 'small',
     className: 'flex h-32 bg-white shadow rounded-3xl',

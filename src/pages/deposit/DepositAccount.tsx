@@ -2,14 +2,14 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
+import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
+import { useEffect, useState } from 'react';
 import TopBar from '@/components/layouts/TopBar';
 
-const SavingsAccount = () => {
+const DepositAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const SavingsAccount = () => {
     if (selectAccount === null) {
       setIsModalOpen(true);
     } else {
-      navigate('/savings/product');
+      navigate('/deposit/product');
     }
   };
 
@@ -41,8 +41,8 @@ const SavingsAccount = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입' />
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' />
       </div>
 
       <div className='mb-12 mt-20'>
@@ -91,7 +91,7 @@ const SavingsAccount = () => {
         </div>
       </div>
 
-      <div className='mb-20 flex w-full items-center justify-center p-4'>
+      <div className='mb-2 flex w-full items-center justify-center p-4'>
         <Button
           label='이전'
           size='medium'
@@ -123,4 +123,4 @@ const SavingsAccount = () => {
   );
 };
 
-export default SavingsAccount;
+export default DepositAccount;

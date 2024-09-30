@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Button from '@/components/common/buttons/Button';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import CheckButton from '@/components/common/buttons/CheckButton';
-import NoModal from '@/components/modals/No_Modal';
+import NoModal from '@/components/modals/NoModal';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
 

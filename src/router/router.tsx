@@ -4,64 +4,67 @@ import App from '@/App';
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
-const Savings = lazy(() => import('@/pages/savings/Savings_Explain'));
-const DepositMission = lazy(() => import('@/pages/deposit/Deposit_Mission'));
-const DepositExplain = lazy(() => import('@/pages/deposit/Deposit_Explain'));
-const DepositSignup = lazy(() => import('@/pages/deposit/Deposit_Signup'));
-const DepositAgree = lazy(() => import('@/pages/deposit/Deposit_Agree'));
-const DepositMoney = lazy(() => import('@/pages/deposit/Deposit_Money'));
-const DepositProduct = lazy(() => import('@/pages/deposit/Deposit_Product'));
-const DepositAccount = lazy(() => import('@/pages/deposit/Deposit_Account'));
-const DepositPassword = lazy(() => import('@/pages/deposit/Deposit_Password'));
-const DepositSuccess = lazy(() => import('@/pages/deposit/Deposit_Success'));
+const DepositMission = lazy(() => import('@/pages/deposit/DepositMission'));
+const DepositExplain = lazy(() => import('@/pages/deposit/DepositExplain'));
+const DepositSignup = lazy(() => import('@/pages/deposit/DepositSignup'));
+const DepositAgree = lazy(() => import('@/pages/deposit/DepositAgree'));
+const DepositMoney = lazy(() => import('@/pages/deposit/DepositMoney'));
+const DepositProduct = lazy(() => import('@/pages/deposit/DepositProduct'));
+const DepositAccount = lazy(() => import('@/pages/deposit/DepositAccount'));
+const DepositPassword = lazy(() => import('@/pages/deposit/DepositPassword'));
+const DepositSuccess = lazy(() => import('@/pages/deposit/DepositSuccess'));
+const DepositSuccess2 = lazy(() => import('@/pages/deposit/DepositSuccess2'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Signup = lazy(() => import('@/pages/auth/Signup'));
 const CancelDepositExplain = lazy(
-  () => import('@/pages/depositCancel/Cancel_Deposit_Explain'),
+  () => import('@/pages/depositCancel/CancelDepositExplain'),
 );
 const CancelDepositProduct = lazy(
-  () => import('@/pages/depositCancel/Cancel_Deposit_Product'),
+  () => import('@/pages/depositCancel/CancelDepositProduct'),
 );
 const CancelDepositPassword = lazy(
-  () => import('@/pages/depositCancel/Cancel_Deposit_Password'),
+  () => import('@/pages/depositCancel/CancelDepositPassword'),
 );
 const CancelDepositSuccess = lazy(
-  () => import('@/pages/depositCancel/Cancel_Deposit_Success'),
+  () => import('@/pages/depositCancel/CancelDepositSuccess'),
 );
 const CancelSavingsExplain = lazy(
-  () => import('@/pages/savingsCancel/Cancel_savings_Explain'),
+  () => import('@/pages/savingsCancel/CancelSavingsExplain'),
 );
 const CancelSavingsProduct = lazy(
-  () => import('@/pages/savingsCancel/Cancel_savings_Product'),
+  () => import('@/pages/savingsCancel/CancelSavingsProduct'),
 );
 const CancelSavingsPassword = lazy(
-  () => import('@/pages/savingsCancel/Cancel_savings_Password'),
+  () => import('@/pages/savingsCancel/CancelSavingsPassword'),
 );
 const CancelSavingsSuccess = lazy(
-  () => import('@/pages/savingsCancel/Cancel_savings_Success'),
+  () => import('@/pages/savingsCancel/CancelSavingsSuccess'),
 );
-const SavingsAgree = lazy(() => import('@/pages/savings/Savings_Agree'));
-const SavingsMoney = lazy(() => import('@/pages/savings/Savings_Money'));
-const SavingsAccount = lazy(() => import('@/pages/savings/Savings_Account'));
-const SavingsSignup = lazy(() => import('@/pages/savings/Savings_Signup'));
-const SavingsProduct = lazy(() => import('@/pages/savings/Savings_Product'));
-const SavingsPassword = lazy(() => import('@/pages/savings/Savings_Password'));
-const SavingsSuccess = lazy(() => import('@/pages/savings/Savings_Success'));
-const DepositSuccess2 = lazy(() => import('@/pages/deposit/Deposit_Success2'));
+const SavingsExplain = lazy(() => import('@/pages/savings/SavingsExplain'));
+const SavingsAgree = lazy(() => import('@/pages/savings/SavingsAgree'));
+const SavingsMoney = lazy(() => import('@/pages/savings/SavingsMoney'));
+const SavingsAccount = lazy(() => import('@/pages/savings/SavingsAccount'));
+const SavingsSignup = lazy(() => import('@/pages/savings/SavingsSignup'));
+const SavingsProduct = lazy(() => import('@/pages/savings/SavingsProduct'));
+const SavingsPassword = lazy(() => import('@/pages/savings/SavingsPassword'));
+const SavingsSuccess = lazy(() => import('@/pages/savings/SavingsSuccess'));
 const EducationVideo = lazy(
-  () => import('@/pages/education/video/Education_Video'),
+  () => import('@/pages/education/video/EducationVideoHard'),
+);
+const EducationVideo2 = lazy(
+  () => import('@/pages/education/video/EducationVideo'),
 );
 const EducationCertificate = lazy(
-  () => import('@/pages/education/certificate/Education_Certificate'),
+  () => import('@/pages/education/certificate/EducationCertificate'),
 );
 const QuizMain = lazy(() => import('@/pages/quiz/QuizMain'));
 const QuizQuestion = lazy(() => import('@/pages/quiz/QuizQuestion'));
 const QuizSuccess = lazy(() => import('@/pages/quiz/QuizSuccess'));
 const EducationWriting = lazy(
-  () => import('@/pages/education/certificate/Education_Writing'),
+  () => import('@/pages/education/certificate/EducationCertificateWriting'),
 );
 const EducationDownload = lazy(
-  () => import('@/pages/education/certificate/Education_Download'),
+  () => import('@/pages/education/certificate/EducationCertificateDownload'),
 );
 const ExchangeAgree = lazy(() => import('@/pages/exchange/ExchangeAgree'));
 const ExchangeMoney = lazy(() => import('@/pages/exchange/ExchangeMoney'));
@@ -98,6 +101,12 @@ const UtilityPaySuccess = lazy(
 
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
 const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
+const AccountProductsList = lazy(
+  () => import('@/pages/account/AccountProductsList'),
+);
+const AccountDepositProducts = lazy(
+  () => import('@/pages/account/AccountDepositProducts'),
+);
 const AccountTransferAccountInfo = lazy(
   () => import('@/pages/account/AccountTransferAccountInfo'),
 );
@@ -143,7 +152,7 @@ const router = createBrowserRouter([
       { path: 'deposit/success', element: <DepositSuccess /> },
       { path: 'deposit/success2', element: <DepositSuccess2 /> },
       // 적금
-      { path: 'savings', element: <Savings /> },
+      { path: 'savings', element: <SavingsExplain /> },
       { path: 'savings/agree', element: <SavingsAgree /> },
       { path: 'savings/signup', element: <SavingsSignup /> },
       { path: 'savings/money', element: <SavingsMoney /> },
@@ -162,7 +171,8 @@ const router = createBrowserRouter([
       { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
       { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
       // 금융 교육 영상
-      { path: 'education/video', element: <EducationVideo /> },
+      { path: 'education/video/hard', element: <EducationVideo /> },
+      { path: 'education/video', element: <EducationVideo2 /> },
       // 이수증
       { path: 'education/certificate', element: <EducationCertificate /> },
       { path: 'education/writing', element: <EducationWriting /> },
@@ -191,6 +201,9 @@ const router = createBrowserRouter([
       { path: 'account/list', element: <AccountList /> },
       { path: 'account/check', element: <AccountCheck /> },
       { path: 'account/add-cash', element: <AccountAddCash /> },
+      // 계좌 생성
+      { path: 'account/products', element: <AccountProductsList /> },
+      { path: 'account/products/deposit', element: <AccountDepositProducts /> },
       // 계좌 이체
       {
         path: 'account/transfer/account-info',
