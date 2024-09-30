@@ -15,3 +15,4 @@ class Video(Base):
     description = Column(Text, nullable=True)
     upload_at = Column(Date)
     bring_at = Column(DateTime, server_default=func.now())
+    views = Column(Integer)
