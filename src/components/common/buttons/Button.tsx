@@ -5,6 +5,7 @@ const BUTTON_SIZES = {
   large: 'py-2 w-full text-lg',
   medium: 'py-2 w-full text-md',
   small: 'py-2 w-full text-sm',
+  customMedium: 'py-2 w-24 text-md',
 };
 
 const BUTTON_COLORS = {
@@ -13,6 +14,7 @@ const BUTTON_COLORS = {
   green: 'bg-green-main',
   white: 'bg-white-500',
   blue: 'bg-blue-500',
+  lightOrange: 'bg-[#FFD362]'
 };
 
 export type ButtonConfigType = {
