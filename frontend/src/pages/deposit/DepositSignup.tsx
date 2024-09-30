@@ -1,18 +1,14 @@
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
 import { useNavigate } from 'react-router';
-import BigModal from '@/components/modals/Big_Modal';
+import BigModal from '@/components/modals/BigModal';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import { useEffect, useState } from 'react';
-import CheckButton from '@/components/common/buttons/CheckButton';
 import { validateInputs } from '@/utils/validateInputs';
 import TopBar from '@/components/layouts/TopBar';
-import { useAtom } from 'jotai';
-import { checkAtom } from '@/atoms/savings/savingsDataAtoms';
 
-const SavingsSignup = () => {
-  const [check, setCheck] = useAtom(checkAtom);
+const DepositSignup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [idNumber, setIdNumber] = useState('');
@@ -21,36 +17,24 @@ const SavingsSignup = () => {
     name: '',
     idNumber: '',
     phoneNumber: '',
-    check: '',
   });
 
   useEffect(() => {
-    console.log("사인업페이지에서 체크 잘 기억하나 확인용ㅌ", check);
-  }, [check]);
-
-  useEffect(() => {
-    return () => {
-      setName('');
-      setIdNumber('');
-      setPhoneNumber('');
-      setErrors({
-        name: '',
-        idNumber: '',
-        phoneNumber: '',
-        check: '',
-      });
-    };
-  }, [setName, setIdNumber, setPhoneNumber, setErrors, setCheck]);
+    setIsModalOpen(false);
+    setName('');
+    setIdNumber('');
+    setPhoneNumber('');
+    setErrors({
+      name: '',
+      idNumber: '',
+      phoneNumber: '',
+    });
+  }, [setIsModalOpen, setName, setIdNumber, setPhoneNumber, setErrors]);
 
   const navigate = useNavigate();
 
   const OpenModal = () => {
-    const { isValid, newErrors } = validateInputs(
-      name,
-      idNumber,
-      phoneNumber,
-      check,
-    );
+    const { isValid, newErrors } = validateInputs(name, idNumber, phoneNumber);
     setErrors(newErrors);
 
     if (isValid) {
@@ -64,7 +48,7 @@ const SavingsSignup = () => {
 
   const ModalConfirm = () => {
     setIsModalOpen(false);
-    navigate('/savings/money');
+    navigate('/deposit/money');
   };
 
   const ModalClose = () => {
@@ -72,9 +56,9 @@ const SavingsSignup = () => {
   };
 
   return (
-    <div className='h-full'>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입' />
+    <div>
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar title='예금 가입' />
       </div>
 
       <div className='mt-20'>
@@ -89,7 +73,7 @@ const SavingsSignup = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           isError={!!errors.name}
-          className='mb-4'
+          className='mb-2'
         />
         {errors.name && <p className='mb-4 text-red-500'>{errors.name}</p>}
 
@@ -100,7 +84,7 @@ const SavingsSignup = () => {
           value={idNumber}
           onChange={(e) => setIdNumber(e.target.value)}
           isError={!!errors.idNumber}
-          className='mb-4'
+          className='mb-2'
         />
         {errors.idNumber && (
           <p className='mb-4 text-red-500'>{errors.idNumber}</p>
@@ -113,18 +97,10 @@ const SavingsSignup = () => {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           isError={!!errors.phoneNumber}
-          className='mb-4'
+          className='mb-2'
         />
         {errors.phoneNumber && (
           <p className='mb-4 text-red-500'>{errors.phoneNumber}</p>
-        )}
-      </div>
-
-      <div>
-        <p className='ml-4 text-xl font-bold text-gray-600'>자동이체 여부</p>
-        <CheckButton name='check' selected={check} setSelected={setCheck} />
-        {errors.check && (
-          <p className='mb-4 ml-4 mt-2 text-red-500'>{errors.check}</p>
         )}
       </div>
 
@@ -133,15 +109,15 @@ const SavingsSignup = () => {
           label='이전'
           size='medium'
           color='orange'
-          onClick={() => GoBack()}
           className='mr-2'
+          onClick={() => GoBack()}
         />
         <Button
           label='다음'
           size='medium'
           color='orange'
-          onClick={() => OpenModal()}
           className='ml-2'
+          onClick={() => OpenModal()}
         />
       </div>
 
@@ -173,4 +149,4 @@ const SavingsSignup = () => {
   );
 };
 
-export default SavingsSignup;
+export default DepositSignup;
