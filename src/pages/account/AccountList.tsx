@@ -2,9 +2,11 @@ import TopBar from "@/components/layouts/TopBar";
 import { BottomTab } from "@/components/layouts/BottomTab";
 import AccountInfo from "@/components/common/AccountInfo";
 import { CiCirclePlus } from "react-icons/ci";
+import { useNavigate } from "react-router";
 
 
 const AccountList = () => {
+    const navigate = useNavigate();
     return(
         <div className="">
             <TopBar 
@@ -27,7 +29,10 @@ const AccountList = () => {
                     buttonName="중도 해지"
                     moveTo="/main"
                 />
-                <div className='w-[320px] h-[128px] bg-gray-200 rounded-xl mt-[20px] flex flex-col justify-center items-center text-center'>
+                <div 
+                    className='w-[320px] h-[128px] bg-gray-200 rounded-xl mt-[20px] flex flex-col justify-center items-center text-center'
+                    onClick={() => navigate('/account/products')}    
+                >
                     <div className='text-[24px] text-[#5A6A59]'>
                         <span>계좌 개설</span>
                         
