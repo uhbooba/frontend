@@ -95,6 +95,6 @@ public class FinApiUserAccountService {
      * @return email
      */
     private String generateUniqueEmail(Integer userId) {
-        return "user" + userId + "@uhbooba.com";
+        return "user" + userId + "@uhbooba4.com";
     }
 }
