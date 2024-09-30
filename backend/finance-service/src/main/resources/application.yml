@@ -60,3 +60,4 @@ variables:
   bank-code: ${BANK_CODE}
   demand-deposit-product-id: ${DEMAND_DEPOSIT_PRODUCT_ID}
   foreign-demand-deposit-product-id: ${FOREIGN_DEMAND_DEPOSIT_PRODUCT_ID}
+  utility-payment-account-no: ${UTILITY_PAYMENT_ACCOUNT_NO}
