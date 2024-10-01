@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +31,10 @@ public class UserAccount {
     @Column(nullable = false, unique = true)
     private String userKey;
 
+    @Column
+    @Setter
+    private String username;
+
     // 계좌 정보와 연관 관계 설정
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;  // 사용자 계좌 목록
@@ -37,10 +42,12 @@ public class UserAccount {
     @Builder
     public UserAccount(
         Integer userId,
-        String userKey
+        String userKey,
+        String username
     ) {
         this.userId = userId;
         this.userKey = userKey;
+        this.username = username;
     }
 
     /**
