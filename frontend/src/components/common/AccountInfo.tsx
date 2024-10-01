@@ -19,10 +19,9 @@ const AccountInfo: React.FC<AccountInfoProps> = ({ accountType, acconutNumber, a
                     <div className='flex justify-between mr-2'>
                         <div className='text-[24px] text-[#5A6A59]'>{ accountType }</div>
                         <Button
-                            className='w-[90px] h-10'
                             label={buttonName}
-                            color='green'
-                            size='medium'
+                            color='lightOrange'
+                            size='customMedium'
                             onClick={() => navigate(moveTo)}
                         />
                     </div>
