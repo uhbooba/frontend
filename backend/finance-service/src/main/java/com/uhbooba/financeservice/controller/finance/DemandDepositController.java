@@ -139,7 +139,7 @@ public class DemandDepositController {
     }
 
     @PostMapping("/transactions/histories")
-    @Operation(summary = "입출금계좌 거래내역 조회")
+    @Operation(summary = "[사용 X] 입출금계좌 거래내역 조회")
     public CommonResponse<TransactionListResponse> getTransactionHistories(
         //        @RequestParam("userId") Integer userId,
         @RequestHeader HttpHeaders headers,
@@ -151,7 +151,7 @@ public class DemandDepositController {
     }
 
     @PostMapping("/transactions/histories/detail")
-    @Operation(summary = "입출금계좌 단일 거래내역 조회")
+    @Operation(summary = "[사용 X] 입출금계좌 단일 거래내역 조회")
     public CommonResponse<TransactionResponse> getTransactionHistory(
         //        @RequestParam("userId") Integer userId,
         @RequestHeader HttpHeaders headers,
