@@ -26,7 +26,7 @@ public class UtilityPaymentController {
     private final UtilityPaymentService utilityPaymentService;
 
     @PostMapping("/payment")
-    @Operation
+    @Operation(summary = "공과금 납부")
     public CommonResponse<?> payUtilityPayment(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody UtilityPaymentRequest request
@@ -36,4 +36,10 @@ public class UtilityPaymentController {
         return CommonResponse.ok("공과금 납부 성공");
     }
 
+    @PostMapping("/init/setting")
+    @Operation(summary = "딱 한 번만 사용하시죠(초기 세팅용)")
+    public CommonResponse<?> initUtilityPaymentSetting() {
+        utilityPaymentService.initValueForUtilities();
+        return CommonResponse.ok("초기 설정 완료");
+    }
 }
