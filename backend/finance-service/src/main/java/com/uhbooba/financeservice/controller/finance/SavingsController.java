@@ -33,7 +33,7 @@ public class SavingsController {
     private final SavingsService savingsService;
 
     @PostMapping("/products")
-    @Operation(summary = "적금 상품 만들기")
+    @Operation(summary = "[사용 X] 적금 상품 만들기")
     public CommonResponse<SavingsResponse> createSavings(
         @Valid @RequestBody SavingsCreateRequest dto
     ) {
@@ -77,7 +77,7 @@ public class SavingsController {
     }
 
     @DeleteMapping("/accounts")
-    @Operation(summary = "입출금 계좌 삭제")
+    @Operation(summary = "적금 계좌 삭제")
     public CommonResponse<SavingsAccountDeleteResponse> deleteSavingsAccount(
         @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
