@@ -11,6 +11,12 @@ import {
   selectPeriodAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
+import { getDepositProducts } from '@/services/deposit';
+
+interface ProductData {
+  accountName: string;
+  interestRate: string;
+}
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -18,9 +24,25 @@ const DepositProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productData, setProductData] = useState<ProductData | null>(null);
 
   useEffect(() => {
     setIsModalOpen(false);
+
+    const fetchDepositProduct = async () => {
+      try {
+        const response = await getDepositProducts();
+        const product = response.data.result[0];
+        setProductData({
+          accountName: product.accountName,
+          interestRate: product.interestRate,
+        });
+      } catch (error) {
+        console.log('예금상품 정보가져오는거 에러다.:', error);
+      }
+    };
+
+    fetchDepositProduct();
   }, [setIsModalOpen]);
 
   const GoBack = () => {
@@ -54,7 +76,9 @@ const DepositProduct = () => {
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
-            <span className='text-xl font-bold'>정기예금 2번 상품</span>
+            <span className='text-xl font-bold'>
+              {productData ? productData.accountName : '상품명 정보 없음'}
+            </span>
           </div>
         </div>
 
@@ -89,7 +113,9 @@ const DepositProduct = () => {
           <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>연 이자율</span>
-              <div className='mt-2 text-xl font-bold'>10%</div>
+              <div className='mt-2 text-xl font-bold'>
+                {productData ? productData.interestRate : '이자 정보 없음'}
+              </div>
             </div>
 
             <div>
