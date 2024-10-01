@@ -33,7 +33,7 @@ public class DepositController {
     private final DepositService depositService;
 
     @PostMapping("/products")
-    @Operation(summary = "예금 상품 만들기")
+    @Operation(summary = "[사용 X] 예금 상품 만들기")
     public CommonResponse<DepositResponse> createDeposit(
         @Valid @RequestBody DepositCreateRequest dto
     ) {
@@ -77,7 +77,7 @@ public class DepositController {
     }
 
     @DeleteMapping("/accounts")
-    @Operation(summary = "입출금 계좌 삭제")
+    @Operation(summary = "[사용 X] 입출금 계좌 삭제")
     public CommonResponse<DepositAccountDeleteResponse> deleteDepositAccount(
         @RequestParam("userId") Integer userId,
         @RequestParam("accountNo") String accountNo
