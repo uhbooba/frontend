@@ -16,13 +16,15 @@ import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepos
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositTransferResponse;
 import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionListResponse;
 import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionResponse;
+import com.uhbooba.financeservice.dto.response.TransactionTransferResponse;
 import com.uhbooba.financeservice.entity.Account;
 import com.uhbooba.financeservice.entity.AccountType;
+import com.uhbooba.financeservice.entity.Transaction;
 import com.uhbooba.financeservice.entity.UserAccount;
 import com.uhbooba.financeservice.exception.DemandDepositAccountAlreadyExistException;
+import com.uhbooba.financeservice.exception.DepositFailedException;
 import com.uhbooba.financeservice.exception.NotFoundException;
-import com.uhbooba.financeservice.mapper.AccountMapper;
-import com.uhbooba.financeservice.repository.AccountRepository;
+import com.uhbooba.financeservice.exception.TransferFailedException;
 import com.uhbooba.financeservice.service.finapi.FinApiDemandDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
 import java.util.List;
@@ -44,10 +46,8 @@ public class DemandDepositService {
     private String demandDepositProductId;
 
     private final UserAccountService userAccountService;
-
-    private final AccountRepository accountRepository;
-
-    private final AccountMapper accountMapper;
+    private final TransactionService transactionService;
+    private final AccountService accountService;
 
     private final FinApiDemandDepositService finApiDemandDepositService;
     private final JsonToDtoConverter jsonToDtoConverter;
@@ -100,9 +100,7 @@ public class DemandDepositService {
         DemandDepositAccountResponse accountResponse = getDemandDepositAccountInFinApi(userKey,
                                                                                        demandDepositAccount.accountNo());
         // 4. DB에 계좌 저장하기
-        Account account = accountMapper.toEntity(accountResponse);
-        account.setUserAccount(userAccount);
-        accountRepository.save(account);
+        accountService.createAccount(accountResponse, userAccount);
 
         return accountResponse;  // 최종 결과 반환
     }
@@ -140,8 +138,8 @@ public class DemandDepositService {
     private Account getDemandDepositAccountInInternal(
         UserAccount userAccount
     ) {
-        List<Account> accountList = accountRepository.findByAccountTypeCodeAndUserAccount(
-            ACCOUNT_TYPE, userAccount);
+        List<Account> accountList = accountService.getAccountsByCondition(ACCOUNT_TYPE,
+                                                                          userAccount);
         if(accountList.isEmpty()) {
             throw new NotFoundException("해당 사용자에 대해 수시 입출금 계좌를 찾을 수 없습니다.");
         }
@@ -180,19 +178,51 @@ public class DemandDepositService {
                                                   DemandDepositAccountBalanceResponse.class);
     }
 
+    /**
+     * 입금
+     *
+     * @param userId
+     * @param depositRequest
+     * @return
+     */
     public DemandDepositDepositResponse depositDemandDepositAccount(
         Integer userId,
         DemandDepositDepositAccountRequest depositRequest
     ) {
         UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
         String userKey = userAccount.getUserKey();
+        Account account = accountService.findByAccountNo(depositRequest.accountNo());
 
-        JsonNode deposit = finApiDemandDepositService.depositDemandDepositAccount(userKey,
-                                                                                  depositRequest)
-                                                     .block();
-        return jsonToDtoConverter.convertToObject(deposit, DemandDepositDepositResponse.class);
+        // 입금 트랜잭션 생성
+        Transaction transaction = transactionService.createTransactionRequest(depositRequest,
+                                                                              account);
+
+        try {
+            JsonNode deposit = finApiDemandDepositService.depositDemandDepositAccount(userKey,
+                                                                                      depositRequest)
+                                                         .block();
+
+            DemandDepositDepositResponse depositDepositResponse = jsonToDtoConverter.convertToObject(
+                deposit, DemandDepositDepositResponse.class);
+
+            // transaction 수정
+            transactionService.updateTransactionForSuccess(transaction,
+                                                           depositDepositResponse.transactionUniqueNo());
+            return depositDepositResponse;
+        } catch(Exception ex) {
+            transactionService.updateTransactionForFail(transaction, ex);
+            throw new DepositFailedException();
+        }
+
     }
 
+    /**
+     * 이체
+     *
+     * @param userId
+     * @param transferAccountRequest
+     * @return
+     */
     public List<DemandDepositTransferResponse> transferDemandDepositAccount(
         Integer userId,
         DemandDepositTransferAccountRequest transferAccountRequest
@@ -200,11 +230,39 @@ public class DemandDepositService {
         UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
         String userKey = userAccount.getUserKey();
 
-        JsonNode transfer = finApiDemandDepositService.transferDemandDepositAccount(userKey,
-                                                                                    transferAccountRequest)
-                                                      .block();
-        return jsonToDtoConverter.convertToList(transfer,
-                                                new TypeReference<List<DemandDepositTransferResponse>>() {});
+        // transaction 생성
+        Account transferAccount = accountService.findByAccountNo(
+            transferAccountRequest.depositAccountNo());
+        Account withdrawalAccount = accountService.findByAccountNo(
+            transferAccountRequest.withdrawalAccountNo());
+
+        TransactionTransferResponse transactions = transactionService.createTransactionRequest(
+            transferAccountRequest, transferAccount, withdrawalAccount);
+        try {
+            JsonNode transfer = finApiDemandDepositService.transferDemandDepositAccount(userKey,
+                                                                                        transferAccountRequest)
+                                                          .block();
+            List<DemandDepositTransferResponse> transferResponses = jsonToDtoConverter.convertToList(
+                transfer, new TypeReference<List<DemandDepositTransferResponse>>() {});
+            // 트랜잭션 성공 처리
+            for(DemandDepositTransferResponse transferResponse : transferResponses) {
+                if(transferResponse.transactionType()
+                                   .equals("2")) { // 출금
+                    transactionService.updateTransactionForSuccess(transactions.senderTransaction(),
+                                                                   transferResponse.transactionUniqueNo());
+                } else { // 입금
+                    transactionService.updateTransactionForSuccess(
+                        transactions.receiverTransaction(), transferResponse.transactionUniqueNo());
+                }
+            }
+
+            return transferResponses;
+        } catch(Exception ex) {
+            // 트랜잭션 실패 처리
+            transactionService.updateTransactionForFail(transactions.receiverTransaction(), ex);
+            transactionService.updateTransactionForFail(transactions.senderTransaction(), ex);
+            throw new TransferFailedException();
+        }
     }
 
     public TransactionListResponse getTransactionHistories(
