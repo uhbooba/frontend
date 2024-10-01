@@ -30,6 +30,7 @@ const EducationVideo = () => {
       try {
         const response = await getVideoByKeyword(keyword);
         setVideoData(response.data.data);
+        console.log('키워드 뭐있나보자', response.data.data);
       } catch (error) {
         console.log('keywordClick 에러', error);
       }
