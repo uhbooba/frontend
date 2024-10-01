@@ -5,10 +5,36 @@ import TopBar from '@/components/layouts/TopBar';
 // import { useState } from 'react';
 import TextBubble from '@/components/common/TextBubble';
 // import Button from '@/components/common/buttons/Button';
-import DottedCircle from '@/components/common/stamp/DottedCirlce';
+import Stamp from '@/components/common/stamp/Stamp';
 
 const MissionStamp = () => {
   //   const navigate = useNavigate();
+  const stampsInfo = [
+    {
+      isCompleted: true,
+      missionName: '계좌 생성 \n 마스터'
+    },
+    {
+      isCompleted: false,
+      missionName: '계좌 이체 \n 마스터'
+    },
+    {
+      isCompleted: false,
+      missionName: '자동 납부 \n 마스터'
+    },
+    {
+      isCompleted: false,
+      missionName: '정기 예금 \n 마스터'
+    },
+    {
+      isCompleted: false,
+      missionName: '공과금 납부 \n 마스터'
+    },
+    {
+      isCompleted: false,
+      missionName: '환전 \n 마스터'
+    },
+  ]
 
   return (
     <div className='flex h-screen flex-col bg-yellow-100'>
@@ -35,10 +61,12 @@ const MissionStamp = () => {
         <div className='mt-4 w-10/12 rounded-lg bg-white p-6 text-center text-2xl shadow-md'>
           <p className='mb-4'>내가 모은 스탬프</p>
           <div className='grid grid-cols-3 gap-4'>
-            {Array(6)
-              .fill(null)
-              .map((_, index) => (
-                <DottedCircle key={index} />
+            {stampsInfo.map((stamp, index) => (
+                <Stamp
+                  key={index}
+                  isCompleted={stamp.isCompleted}
+                   missionName={stamp.missionName}
+                />
               ))}
           </div>
         </div>
