@@ -1,7 +1,7 @@
 package com.uhbooba.financeservice.entity;
 
 
-public enum TransactionType {
+public enum ApiTransactionType {
 
     M("M", 1), // 입금
     D("D", 2), // 출금
@@ -10,7 +10,7 @@ public enum TransactionType {
     private final String requestCode;
     private final int responseCode;
 
-    TransactionType(
+    ApiTransactionType(
         String requestCode,
         int responseCode
     ) {
@@ -26,13 +26,13 @@ public enum TransactionType {
         return responseCode;
     }
 
-    public static TransactionType fromResponseCode(int responseCode) {
-        for(TransactionType type : values()) {
+    public static ApiTransactionType fromResponseCode(int responseCode) {
+        for(ApiTransactionType type : values()) {
             if(type.getResponseCode() == responseCode) {
                 return type;
             }
         }
         throw new IllegalArgumentException(
-            "Invalid response code for TransactionType: " + responseCode);
+            "Invalid response code for ApiTransactionType: " + responseCode);
     }
 }
