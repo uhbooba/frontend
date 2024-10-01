@@ -8,7 +8,7 @@ import lombok.Builder;
 public record DemandDepositAccountResponse(
     String bankCode,
     String bankName,
-    String userName,
+    String username,
     String accountNo,
     String accountName,
     String accountTypeCode,
