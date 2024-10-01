@@ -33,6 +33,9 @@ public class Account {
     @Setter
     private UserAccount userAccount; // 사용자 계정
 
+    @Column
+    private String username; // 사용자 이름
+
     @Column(nullable = false)
     private String accountNo; // 계좌 번호
 
@@ -53,11 +56,13 @@ public class Account {
         UserAccount userAccount,
         String accountNo,
         String accountName,
+        String username,
         AccountType accountTypeCode,
         String accountTypeName
     ) {
         this.userAccount = userAccount;
         this.accountNo = accountNo;
+        this.username = username;
         this.accountName = accountName;
         this.accountTypeCode = accountTypeCode;
         this.accountTypeName = accountTypeName;
