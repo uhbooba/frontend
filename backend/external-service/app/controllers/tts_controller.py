@@ -1,8 +1,5 @@
-import io
-
 from fastapi import APIRouter, Response
 from fastapi.responses import JSONResponse
-from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from ..services.tts_service import TtsService
@@ -19,7 +16,7 @@ class TtsRequest(BaseModel):
     text: str
 
 
-@router.post("")
+@router.post("/new")
 async def generate_audio(request: TtsRequest):
     """TTS 생성 API"""
     try:
@@ -38,18 +35,18 @@ async def generate_audio(request: TtsRequest):
         return JSONResponse(status_code=500, content=error_response)
 
 
-@router.get("/audio/{key}")
-async def get_audio(key: str):
-    """Redis에서 오디오 데이터 가져오기"""
+@router.get("/{tts_key}")
+async def find_audio(tts_key: str):
+    """금융사기용 TTS 음성 파일 찾기 API"""
+    # 유효성검사
     try:
-        audio_data = TtsService.get_value_by_key(key)
-        if audio_data is None:
-            return JSONResponse(
-                status_code=404,
-                content={"status": "error", "message": "Audio not found"},
-            )
-
-        return StreamingResponse(io.BytesIO(audio_data), media_type="audio/mpeg")
+        audio_data = await TtsService.get_tts_ai(tts_key)
+        return Response(
+            content=audio_data,
+            media_type="audio/mpeg",
+            headers={"Content-Disposition": f'attachment; filename="{tts_key}.mp3"'},
+        )
     except Exception as e:
-        error_response = {"status": "error", "message": str(e)}
-        return JSONResponse(status_code=500, content=error_response)
+        return JSONResponse(
+            status_code=404, content={"status": "error", "message": str(e)}
+        )

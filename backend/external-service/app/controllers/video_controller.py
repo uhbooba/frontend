@@ -18,7 +18,7 @@ router = APIRouter(prefix="/video", tags=["video"])
 def get_all_video(db: Session = Depends(get_db)):
     try:
         video_items = VideoService.get_all_videos(db)
-        return ok_res(data=video_items)
+        return ok_res(data=video_items, message=f"{len(video_items)}개의 영상 - 인기순")
     except Exception as e:
         return JSONResponse(
             status_code=500, content={"status": "error", "message": str(e)}
@@ -28,7 +28,7 @@ def get_all_video(db: Session = Depends(get_db)):
 @router.get("/search/{keyword}", response_model=ok_res)
 def search_videos(keyword: str, db: Session = Depends(get_db)):
     try:
-        video_items = VideoService.get_videos_by_keyword(db, keyword)
+        video_items = VideoService.get_videos_by_keyword(keyword, db)
         if not video_items:
             return JSONResponse(
                 status_code=404,
@@ -37,7 +37,7 @@ def search_videos(keyword: str, db: Session = Depends(get_db)):
                     "message": f"No videos found for keyword '{keyword}'",
                 },
             )
-        return ok_res(data=video_items)
+        return ok_res(data=video_items, message=f"{len(video_items)}개의 영상 - 최신순")
     except Exception as e:
         return JSONResponse(
             status_code=500, content={"status": "error", "message": str(e)}
@@ -48,7 +48,7 @@ def search_videos(keyword: str, db: Session = Depends(get_db)):
 def get_keywords(db: Session = Depends(get_db)):
     try:
         keywords = VideoService.get_all_keywords(db)
-        return ok_res(data=keywords)
+        return ok_res(data=keywords, message=f"{len(keywords)}개의 키워드")
     except Exception as e:
         return JSONResponse(
             status_code=500, content={"status": "error", "message": str(e)}
