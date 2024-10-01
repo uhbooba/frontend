@@ -77,7 +77,9 @@ public class FinApiExchangeService {
         requestBody.put("accountNo", exchangeRequest.accountNo());
         requestBody.put("exchangeCurrency", exchangeRequest.exchangeCurrency()
                                                            .toUpperCase()); // 대문자
-        requestBody.put("exchangeAmount", exchangeRequest.exchangeAmount());
+        requestBody.put("exchangeAmount",
+                        exchangeRequest.exchangeAmount() // api 문서에 double 이라고 되어있는데 int 만 받음
+                                       .intValue());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
@@ -149,7 +151,7 @@ public class FinApiExchangeService {
     ) {
         // 1. 요청 본문 생성
         Map<String, Object> requestBody = new HashMap<>();
-        
+
         requestBody.put("accountTypeUniqueNo", accountTypeUniqueNo);
         requestBody.put("currency", currency);
 
