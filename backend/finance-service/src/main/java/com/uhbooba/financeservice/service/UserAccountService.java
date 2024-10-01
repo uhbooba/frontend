@@ -10,6 +10,7 @@ import com.uhbooba.financeservice.service.finapi.FinApiUserAccountService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +23,11 @@ public class UserAccountService {
 
     private final UserAccountMapper userAccountMapper;
 
-    public void checkOrCreateUserAccount(Integer userId) {
+    @Transactional
+    public UserAccount checkOrCreateUserAccount(Integer userId) {
         UserAccount existedUserAccount = getUserAccountByUserId(userId);
         if(existedUserAccount != null) { // 이미 존재한다면 바로 끝
-            return;
+            return null;
         }
 
         JsonNode userAccount = finApiUserAccountService.getOrCreateUserAccount(userId)
@@ -35,9 +37,10 @@ public class UserAccountService {
 
         response.setRealUserId(userId);
         UserAccount entity = userAccountMapper.toEntity(response);
-        userAccountRepository.save(entity);
+        return userAccountRepository.save(entity);
     }
 
+    @Transactional(readOnly = true)
     public UserAccount getUserAccountByUserId(Integer userId) {
         return userAccountRepository.findByUserId(userId);
     }
