@@ -21,7 +21,7 @@ class AiRequest(BaseModel):
 def get_answer(request: AiRequest):
     userKey = 1
     try:
-        response = ChatService.get_answer(userKey, request.question)
+        response = ChatService.get_answer(str(userKey), request.question)
         return ok_res(data=response)
     except Exception as e:
         logging.error(f"Unexpected error: {str(e)}")

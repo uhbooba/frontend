@@ -81,7 +81,7 @@ class RedisHandler:
     def lpush(self, key: str, value):
         """리스트의 왼쪽(앞)에 값을 추가합니다."""
         existing_data = self.get(key)
-        if self.get(key) is None:
+        if existing_data is None:
             chat_history = []
         else:
             chat_history = existing_data
@@ -90,6 +90,7 @@ class RedisHandler:
 
         self.set(key, chat_history)
         logger.info(f"Redis(DB:{self.db})의 키 {key}에 값 추가 (lpush)")
+        return len(chat_history)
 
 
 #######################################################################
