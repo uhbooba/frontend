@@ -4,12 +4,12 @@ import Chatbot from '@/components/chatbot/ChatBot';
 
 const ChatBotPage = () => {
   return (
-    <div className='flex h-screen flex-col'>
+    <div className='flex h-[calc(100vh-120px)] flex-col'>
       {/* 상단바 */}
       <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar title='챗봇' />
       </div>
-      <div className='mb-16 mt-16 flex-1 overflow-auto'>
+      <div className='flex-1 overflow-hidden pb-2 pt-16'>
         <Chatbot />
       </div>
       {/* 하단탭 */}
