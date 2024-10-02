@@ -137,6 +137,7 @@ const SmishingMessageList = lazy(
 const SmishingMessageDetail = lazy(
   () => import('@/pages/smishingPrevention/SmishingMessageDetail'),
 );
+const MissionStamps = lazy(() => import('@/pages/gamification/MissionStamps'));
 
 const router = createBrowserRouter([
   {
@@ -251,6 +252,8 @@ const router = createBrowserRouter([
         path: 'prevention/messages/:messageType/ending',
         element: <SmishingEnding />,
       },
+      // 게이미피케이션
+      { path: 'stamp', element: <MissionStamps /> },
     ],
   },
 ]);

@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import KeywordButtons from '@/components/common/KeywordButtons';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
-import { getEducationVideos } from '@/services/education';
+import {
+  getEducationVideos,
+  getKeyword,
+  getVideoByKeyword,
+} from '@/services/education';
 
 // 비디오에 있는 속성들 타입 정해주기
 interface Video {
@@ -14,66 +18,65 @@ interface Video {
   upload_at: string;
 }
 
-const EducationVideo2 = () => {
+const EducationVideo = () => {
   const [selectKeyword, setSelectKeyword] = useState('모두 보기');
   const [videoData, setVideoData] = useState<Video[]>([]);
-  const [keywordData, setKeywordData] = useState<string[]>([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
 
-  const keywordClick = (keyword: string) => {
+  const keywordClick = async (keyword: string) => {
     setSelectKeyword(keyword);
+
+    if (keyword !== '모두 보기') {
+      try {
+        const response = await getVideoByKeyword(keyword);
+        setVideoData(response.data.data);
+      } catch (error) {
+        console.log('keywordClick 에러', error);
+      }
+    } else {
+      fetchAllVideo();
+    }
   };
 
-  const keywords = ['모두 보기', ...keywordData];
+  const fetchAllVideo = async () => {
+    try {
+      const response = await getEducationVideos();
+      setVideoData(response.data.data);
+    } catch (error) {
+      console.log('fetchAllVideo 에러', error);
+    }
+  };
+
+  const fetchKeywords = async () => {
+    try {
+      const response = await getKeyword();
+      setKeywords(response.data.data);
+    } catch (error) {
+      console.log('fetchKeywords 에러', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchKeywords = async () => {
-      try {
-        const response = await fetch(
-          'http://j11a402.p.ssafy.io:8080/external-service/video/keywords',
-        );
-        const data = await response.json();
-        if (data.status === 'success') {
-          setKeywordData(data.data);
-        }
-      } catch (error) {
-        console.log(`키워드 에러 : ${error}`);
-      }
-    };
-
+    fetchAllVideo();
     fetchKeywords();
   }, []);
 
-  // 확인용 콘솔로그
-  useEffect(() => {
-    console.log(`키워드 데이터 : ${keywordData}`);
-  }, [keywordData]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await getEducationVideos();
-        setVideoData(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchVideos();
-  }, []);
-
-  const filteredVideos = videoData.filter(
-    (video) => selectKeyword === '모두 보기' || video.keyword === selectKeyword,
-  );
+  const filteredVideos = Array.isArray(videoData)
+    ? videoData.filter(
+        (video) =>
+          selectKeyword === '모두 보기' || video.keyword === selectKeyword,
+      )
+    : [];
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
+      <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar title='교육영상' />
       </div>
 
       <div className='mt-20 border-b-2'>
         <KeywordButtons
-          keywords={keywords}
+          keywords={['모두 보기', ...keywords]}
           onKeywordClick={keywordClick}
           keywordBtnColor={selectKeyword}
         />
@@ -110,4 +113,4 @@ const EducationVideo2 = () => {
   );
 };
 
-export default EducationVideo2;
+export default EducationVideo;
