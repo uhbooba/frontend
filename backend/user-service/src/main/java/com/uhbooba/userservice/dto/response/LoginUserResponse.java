@@ -7,7 +7,8 @@ import lombok.Builder;
 public record LoginUserResponse(
 
     String name,
-    String username
+    String username,
+    Boolean isFirstLogin
 
 ) {
 
@@ -15,6 +16,7 @@ public record LoginUserResponse(
         return LoginUserResponse.builder()
             .name(data.getName())
             .username(data.getUsername())
+            .isFirstLogin(data.isFirstLogin())
             .build();
     }
 }

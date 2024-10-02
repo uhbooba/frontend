@@ -3,6 +3,8 @@ package com.uhbooba.apigateway.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uhbooba.apigateway.util.JWTUtil;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,15 +59,22 @@ public class AuthorizationHeaderFilter extends
                 return this.onError(response, "Invalid access token", HttpStatus.UNAUTHORIZED);
             }
 
+            Integer userId = jwtUtil.getId(accessToken);
             String username = jwtUtil.getUsername(accessToken);
             String name = jwtUtil.getName(accessToken);
 
+            log.info("Authorization header received userId: {}", userId);
             log.info("Authorization header received username: {}", username);
             log.info("Authorization header received name: {}", name);
 
+            // 인코딩
+            String encodedString;
+            encodedString = URLEncoder.encode(name, StandardCharsets.UTF_8);
+
             ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+                .header("X-UserId", String.valueOf(userId))
                 .header("X-Username", username)
-                .header("X-Name", name)
+                .header("X-Name", encodedString)
                 .build();
             exchange = exchange.mutate().request(modifiedRequest).build();
 

@@ -44,11 +44,12 @@ public class ReissueController {
 
         validateRefreshToken(refreshToken);
 
+        Integer id = jwtUtil.getUserId(refreshToken);
         String username = jwtUtil.getUsername(refreshToken);
         String name = jwtUtil.getName(refreshToken);
 
-        String newAccess = jwtUtil.createJwt("access", username, name, ACCESS_TOKEN_EXPIRATION);
-        String newRefresh = jwtUtil.createJwt("refresh", username, name, REFRESH_TOKEN_EXPIRATION);
+        String newAccess = jwtUtil.createJwt("access",id ,username, name, ACCESS_TOKEN_EXPIRATION);
+        String newRefresh = jwtUtil.createJwt("refresh",id ,username, name, REFRESH_TOKEN_EXPIRATION);
 
         refreshService.deleteRefreshToken(refreshToken);
         refreshService.saveRefreshToken(newRefresh, username);

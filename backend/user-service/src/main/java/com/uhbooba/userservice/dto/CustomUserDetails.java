@@ -34,6 +34,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getId();
     }
 
+    public Boolean isFirstLogin() {
+        return user.getIsFirstLogin();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
