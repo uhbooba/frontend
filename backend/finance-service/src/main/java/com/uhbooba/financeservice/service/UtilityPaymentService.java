@@ -1,8 +1,10 @@
 package com.uhbooba.financeservice.service;
 
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.UtilityPaymentRequest;
 import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositTransferAccountRequest;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountResponse;
+import com.uhbooba.financeservice.dto.response.AccountResponse;
 import com.uhbooba.financeservice.entity.Account;
 import com.uhbooba.financeservice.entity.AccountType;
 import com.uhbooba.financeservice.entity.UserAccount;
@@ -23,11 +25,11 @@ public class UtilityPaymentService {
     private final AccountService accountService;
 
     public void payUtilities(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         UtilityPaymentRequest request
     ) {
-        DemandDepositAccountResponse demandDepositAccount = demandDepositService.getDemandDepositAccount(
-            userId);
+        AccountResponse demandDepositAccount = demandDepositService.getDemandDepositAccount(
+            userHeaderInfo);
 
         DemandDepositTransferAccountRequest transferRequest = DemandDepositTransferAccountRequest.builder()
                                                                                                  .depositAccountNo(
@@ -42,21 +44,26 @@ public class UtilityPaymentService {
                                                                                                      "공과금 납부")
 
                                                                                                  .build();
-        demandDepositService.transferDemandDepositAccount(userId, transferRequest);
+        demandDepositService.transferDemandDepositAccount(userHeaderInfo, transferRequest);
     }
 
     @Transactional
     public void initValueForUtilities() {
         // 1. user account 만들기
         int userId = 1_000_000;
-        UserAccount userAccount = userAccountService.checkOrCreateUserAccount(userId);
+        String name = "한국 전력 공사";
+        UserHeaderInfo userHeaderInfo = UserHeaderInfo.builder()
+                                                      .userId(userId)
+                                                      .name(name)
+                                                      .build();
+        UserAccount userAccount = userAccountService.checkOrCreateUserAccount(userHeaderInfo);
 
         // 2. account(입출금) 만들기
         DemandDepositAccountResponse request = DemandDepositAccountResponse.builder()
-                                                                           .accountName("한국 전력 공사")
+                                                                           .accountName(name)
                                                                            .accountTypeCode(
                                                                                AccountType.DEMAND_DEPOSIT.getCode())
-                                                                           .username("한국 전력 공사")
+                                                                           .username(name)
                                                                            .accountNo(
                                                                                utilityPaymentAccountNo)
                                                                            .build();

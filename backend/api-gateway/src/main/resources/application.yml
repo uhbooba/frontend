@@ -58,17 +58,17 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/**
+            - Path=/user-service/**,/users/**
           filters:
-#            - RemoveRequestHeader=Cookie
+            #            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: finance-service
           uri: lb://finance-service
           predicates:
             - Path=/finances/**,/fin-api/**
-#          filters:
-#            - AuthorizationHeaderFilter
+          filters:
+            - AuthorizationHeaderFilter
 
         - id: finance-service
           uri: lb://finance-service

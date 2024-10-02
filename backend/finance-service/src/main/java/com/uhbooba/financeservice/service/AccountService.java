@@ -49,6 +49,7 @@ public class AccountService {
         // 4. DB에 계좌 저장하기
         Account account = accountMapper.toEntity(accountResponse);
         account.setUserAccount(userAccount);
+        account.setUsername(userAccount.getUsername());
         account.setAccountTypeCode(AccountType.FIXED_DEPOSIT);
         account.setAccountTypeName("예금");
         return accountRepository.save(account);
@@ -61,6 +62,7 @@ public class AccountService {
     ) {
         Account account = accountMapper.toEntity(savingsAccountResponse);
         account.setUserAccount(userAccount);
+        account.setUsername(userAccount.getUsername());
         account.setAccountTypeCode(AccountType.INSTALLMENT_SAVING);
         account.setAccountTypeName("적금");
         return accountRepository.save(account);
@@ -73,6 +75,7 @@ public class AccountService {
     ) {
         Account account = accountMapper.toEntity(accountResponse);
         account.setUserAccount(userAccount);  // 사용자 계정과 연결
+        account.setUsername(userAccount.getUsername());
         account.setAccountTypeName("외화 수시입출금");
         account.setAccountTypeCode(AccountType.FOREIGN_DEMAND_DEPOSIT);
         accountRepository.save(account);
