@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { formatContent } from '../utils/formatContent';
+import { formatContent } from '@/utils/formatContent';
 
 export const useFormattedContent = (
   content: string,
