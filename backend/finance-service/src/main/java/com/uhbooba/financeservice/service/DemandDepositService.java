@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositDepositAccountRequest;
 import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositGetTransactionRequest;
@@ -9,13 +10,13 @@ import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDeposi
 import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositTransferAccountRequest;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountBalanceResponse;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountCreateResponse;
-import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountHolderResponse;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositAccountResponse;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositDepositResponse;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositResponse;
 import com.uhbooba.financeservice.dto.finapi.response.demand_deposit.DemandDepositTransferResponse;
 import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionListResponse;
 import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionResponse;
+import com.uhbooba.financeservice.dto.response.AccountResponse;
 import com.uhbooba.financeservice.dto.response.TransactionTransferResponse;
 import com.uhbooba.financeservice.entity.Account;
 import com.uhbooba.financeservice.entity.AccountType;
@@ -25,6 +26,7 @@ import com.uhbooba.financeservice.exception.DemandDepositAccountAlreadyExistExce
 import com.uhbooba.financeservice.exception.DepositFailedException;
 import com.uhbooba.financeservice.exception.NotFoundException;
 import com.uhbooba.financeservice.exception.TransferFailedException;
+import com.uhbooba.financeservice.mapper.AccountMapper;
 import com.uhbooba.financeservice.service.finapi.FinApiDemandDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
 import java.util.List;
@@ -48,6 +50,8 @@ public class DemandDepositService {
     private final UserAccountService userAccountService;
     private final TransactionService transactionService;
     private final AccountService accountService;
+
+    private final AccountMapper accountMapper;
 
     private final FinApiDemandDepositService finApiDemandDepositService;
     private final JsonToDtoConverter jsonToDtoConverter;
@@ -73,10 +77,11 @@ public class DemandDepositService {
 
     @Transactional
     public DemandDepositAccountResponse createDemandDepositAccount(
-        Integer userId
+        UserHeaderInfo userHeaderInfo
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
 
         // 2. 이미 계좌가 있는지 확인
         try {
@@ -106,22 +111,13 @@ public class DemandDepositService {
     }
 
     @Transactional(readOnly = true)
-    public DemandDepositAccountResponse getDemandDepositAccount(
-        Integer userId
+    public AccountResponse getDemandDepositAccount(
+        UserHeaderInfo userHeaderInfo
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
-        String userKey = userAccount.getUserKey();
-
-        // 2. accountNo 찾기
-        Account account = getDemandDepositAccountInInternal(userAccount);
-        String accountNo = account.getAccountNo();
-
-        JsonNode demandDeposit = finApiDemandDepositService.getDemandDepositAccount(userKey,
-                                                                                    accountNo)
-                                                           .block();
-        return jsonToDtoConverter.convertToObject(demandDeposit,
-                                                  DemandDepositAccountResponse.class);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
+        return accountMapper.toDto(getDemandDepositAccountInInternal(userAccount));
     }
 
     private DemandDepositAccountResponse getDemandDepositAccountInFinApi(
@@ -149,26 +145,19 @@ public class DemandDepositService {
         return accountList.get(0);
     }
 
-    public DemandDepositAccountHolderResponse getDemandDepositAccountHolderName(
-        Integer userId,
+    public AccountResponse getDemandDepositAccountHolderName(
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
-        String userKey = userAccount.getUserKey();
-
-        JsonNode holder = finApiDemandDepositService.getDemandDepositAccountHolderName(userKey,
-                                                                                       accountNo)
-                                                    .block();
-        // userName 이 이메일 앞부분으로 자동으로 만들어짐
-        // TODO : userClient 만들어서 id로 찾아서 거기서 이름 빼오자! or userAccount 에 username 채워놓고 그거 주자
-        return jsonToDtoConverter.convertToObject(holder, DemandDepositAccountHolderResponse.class);
+        return accountMapper.toDto(accountService.findByAccountNo(accountNo));
     }
 
     public DemandDepositAccountBalanceResponse getDemandDepositAccountBalance(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         JsonNode balance = finApiDemandDepositService.getDemandDepositAccountBalance(userKey,
@@ -186,10 +175,11 @@ public class DemandDepositService {
      * @return
      */
     public DemandDepositDepositResponse depositDemandDepositAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         DemandDepositDepositAccountRequest depositRequest
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
         Account account = accountService.findByAccountNo(depositRequest.accountNo());
 
@@ -224,10 +214,11 @@ public class DemandDepositService {
      * @return
      */
     public List<DemandDepositTransferResponse> transferDemandDepositAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         DemandDepositTransferAccountRequest transferAccountRequest
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         // transaction 생성
@@ -266,10 +257,11 @@ public class DemandDepositService {
     }
 
     public TransactionListResponse getTransactionHistories(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         DemandDepositGetTransactionsRequest getTransactionRequest
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         JsonNode transactions = finApiDemandDepositService.getTransactionHistories(userKey,
@@ -279,10 +271,11 @@ public class DemandDepositService {
     }
 
     public TransactionResponse getTransactionHistory(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         DemandDepositGetTransactionRequest getTransactionRequest
     ) {
-        UserAccount userAccount = userAccountService.getUserAccountByUserId(userId);
+        UserAccount userAccount = userAccountService.getUserAccountByUserId(
+            userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         JsonNode transaction = finApiDemandDepositService.getTransactionHistory(userKey,
