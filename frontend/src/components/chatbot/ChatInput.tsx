@@ -16,15 +16,18 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex">
+    <form onSubmit={handleSubmit} className='flex'>
       <input
-        type="text"
+        type='text'
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        placeholder="질문을 입력하세요..."
-        className="flex-1 p-2 border border-gray-300 rounded-lg"
+        placeholder='질문을 입력해 주세요...'
+        className='flex-1 rounded-lg border border-gray-300 p-2'
       />
-      <button type="submit" className="ml-2 p-2 bg-blue-500 text-white rounded-lg">
+      <button
+        type='submit'
+        className='ml-2 rounded-lg bg-primary p-2 text-black'
+      >
         보내기
       </button>
     </form>
