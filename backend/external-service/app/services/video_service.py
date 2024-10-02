@@ -8,7 +8,7 @@ from ..schemas.video_schema import VideoItem
 class VideoService:
     @staticmethod
     def get_all_videos(db: Session):
-        videos = db.query(Video).order_by(desc(Video.upload_at)).all()
+        videos = db.query(Video).order_by(desc(Video.views)).all()
         return [
             VideoItem(
                 id=video.id,
@@ -23,7 +23,12 @@ class VideoService:
 
     @staticmethod
     def get_videos_by_keyword(keyword: str, db: Session):
-        videos = db.query(Video).filter(Video.keyword == keyword).all()
+        videos = (
+            db.query(Video)
+            .filter(Video.keyword == keyword)
+            .order_by(desc(Video.upload_at))
+            .all()
+        )
         return [
             VideoItem(
                 id=video.id,

@@ -15,7 +15,7 @@ import lombok.Setter;
 public class UserAccountResponse {
 
     private String userId;
-    private String userName;
+    private String name;
     private String userKey;
     @Setter
     private Integer realUserId;

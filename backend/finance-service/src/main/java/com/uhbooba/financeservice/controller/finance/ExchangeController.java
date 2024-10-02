@@ -66,7 +66,7 @@ public class ExchangeController {
     }
 
     @PostMapping("/products")
-    @Operation(summary = "외화 상품 만들기")
+    @Operation(summary = "[사용 X] 외화 상품 만들기")
     public CommonResponse<ForeignCurrencyProductResponse> exchangeProducts(
         @RequestBody ForeignCurrencyDemandDepositCreateRequest request
     ) {
@@ -75,7 +75,7 @@ public class ExchangeController {
     }
 
     @GetMapping("/products")
-    @Operation(summary = "외화 상품 조회")
+    @Operation(summary = "[사용 X] 외화 상품 조회")
     public CommonResponse<List<ForeignCurrencyProductResponse>> getExchangeProducts(
     ) {
         return CommonResponse.ok("외화 상품 조회 성공",
@@ -83,7 +83,7 @@ public class ExchangeController {
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "외화 계좌 만들기")
+    @Operation(summary = "[사용 X] 외화 계좌 만들기")
     public CommonResponse<ForeignCurrencyAccountResponse> exchangeAccount(
         @RequestParam("userId") Integer userId
     ) {
@@ -92,7 +92,7 @@ public class ExchangeController {
     }
 
     @GetMapping("/accounts")
-    @Operation(summary = "외화 계좌 조회")
+    @Operation(summary = "[사용 X] 외화 계좌 조회")
     public CommonResponse<List<ForeignCurrencyAccountResponse>> getExchangeAccounts(
         @RequestParam("userId") Integer userId
     ) {

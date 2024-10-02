@@ -23,6 +23,7 @@ public class ApiDescriptions {
     public static class DemandDepositController {
 
         public static final String DEMAND_DEPOSIT_CREATE_REQUEST = """
+            /n
             <b>DemandDepositCreateRequest</b>
 
             | Name               | Type    | Description                          |
@@ -30,9 +31,27 @@ public class ApiDescriptions {
             | bankCode           | String  | 은행 코드 (필수, 3자리)              |
             | accountName        | String  | 상품명 (필수, 최대 20자)             |
             | accountDescription | String  | 상품 설명 (선택, 최대 255자)         |
+            /n
             """;
 
-
+        public static final String DEMAND_DEPOSIT_ACCOUNT_RESPONSE = """
+            | result             | DemandDepositAccountResponse  | 응답 데이터 (API 결과 값)            |
+            \n
+            <b>DemandDepositAccountResponse</b>
+            \n
+            | Name               | Type    | Description                          |
+            |--------------------|---------|--------------------------------------|
+            | bankCode           | String  | 은행 코드 (해당 계좌가 속한 은행의 코드) |
+            | bankName           | String  | 은행 이름 (해당 계좌의 은행 이름)    |
+            | userName           | String  | 계좌 소유자 이름(영어로 나옴)               |
+            | accountNo          | String  | 계좌 번호 (해당 계좌의 고유 번호, 최대 16글자)    |
+            | accountName        | String  | 계좌 이름 (사용자가 설정한 계좌명, 최대 20글자)   |
+            | accountTypeCode    | String  | 계좌 유형 코드 (예: 1 : 수시입출금, 2: 정기예금, 3: 정기적금) |
+            | accountTypeName    | String  | 계좌 유형 이름 (예: "수시입출금", "정기예금" 등) |
+            | accountBalance     | String  | 계좌 잔액 (현재 계좌의 잔고 금액)    |
+            | currency           | String  | 통화 코드 (해당 계좌의 통화, 예: "KRW", "USD" 등) |
+            \n
+            """;
     }
 
     public static class Common {
@@ -46,6 +65,10 @@ public class ApiDescriptions {
             \n
             ## Output
             \n
+            | Name               | Type    | Description                          |
+            |--------------------|---------|--------------------------------------|
+            | statusCode         | int     | 상태 코드 (200: 성공, 400: 잘못된 요청, 404: 찾을 수 없음, 500: 서버 오류) |
+            | message            | String  | 응답 메시지 (결과에 대한 설명)        |
             """;
     }
 }

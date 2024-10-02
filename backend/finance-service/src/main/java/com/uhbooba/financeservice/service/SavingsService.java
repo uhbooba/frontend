@@ -9,13 +9,13 @@ import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsAccountResp
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsEarlyTerminationInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsExpiryInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsResponse;
+import com.uhbooba.financeservice.dto.request.TransactionUpdateRequest;
+import com.uhbooba.financeservice.dto.response.TransactionTransferResponse;
 import com.uhbooba.financeservice.entity.Account;
-import com.uhbooba.financeservice.entity.AccountType;
 import com.uhbooba.financeservice.entity.SavingsProduct;
 import com.uhbooba.financeservice.entity.UserAccount;
-import com.uhbooba.financeservice.mapper.AccountMapper;
+import com.uhbooba.financeservice.exception.SavingsFailedException;
 import com.uhbooba.financeservice.mapper.SavingsProductMapper;
-import com.uhbooba.financeservice.repository.AccountRepository;
 import com.uhbooba.financeservice.repository.SavingsProductRepository;
 import com.uhbooba.financeservice.service.finapi.FinApiSavingsService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
@@ -38,14 +38,14 @@ public class SavingsService {
 
     private final FinApiSavingsService finApiSavingsService;
     private final UserAccountService userAccountService;
+    private final AccountService accountService;
+    private final TransactionService transactionService;
 
     private final JsonToDtoConverter jsonToDtoConverter;
 
     private final SavingsProductRepository savingsProductRepository;
 
     private final SavingsProductMapper savingsProductMapper;
-    private final AccountMapper accountMapper;
-    private final AccountRepository accountRepository;
 
     @Transactional
     public SavingsResponse createSavings(
@@ -77,11 +77,13 @@ public class SavingsService {
      *
      * @return
      */
+    @Transactional(readOnly = true)
     public List<SavingsResponse> getAllSavings() {
         List<SavingsProduct> savingsProducts = savingsProductRepository.findAll();
         return savingsProductMapper.toDto(savingsProducts);
     }
 
+    @Transactional
     public SavingsAccountResponse createSavingsAccount(
         Integer userId,
         SavingsAccountCreateRequest dto
@@ -90,21 +92,41 @@ public class SavingsService {
         UserAccount userAccount = getUserAccountByUserId(userId);
         String userKey = userAccount.getUserKey();
 
-        JsonNode createdSavings = finApiSavingsService.createSavingsAccount(userKey, dto)
-                                                      .block();
+        Account sourceAccount = accountService.findByAccountNo(dto.withdrawalAccountNo());
 
-        SavingsAccountResponse savingsAccountResponse = jsonToDtoConverter.convertToObject(
-            createdSavings, SavingsAccountResponse.class);
+        // transaction 생성
+        TransactionTransferResponse transactionRequests = transactionService.createTransactionRequest(
+            dto, sourceAccount);
 
-        // 2. 적금 계좌 저장하기
-        Account account = accountMapper.toEntity(savingsAccountResponse);
-        account.setUserAccount(userAccount);
-        account.setAccountTypeCode(AccountType.INSTALLMENT_SAVING);
-        account.setAccountTypeName("적금");
+        try {
+            JsonNode createdSavings = finApiSavingsService.createSavingsAccount(userKey, dto)
+                                                          .block();
 
-        accountRepository.save(account);
+            SavingsAccountResponse savingsAccountResponse = jsonToDtoConverter.convertToObject(
+                createdSavings, SavingsAccountResponse.class);
 
-        return savingsAccountResponse;
+            // 2. 적금 계좌 저장하기
+            Account account = accountService.createAccount(savingsAccountResponse, userAccount);
+
+            // 기존 입출금 계좌에 대한 transaction 처리(transaction unique no 가 없음)
+            transactionService.updateTransactionForSuccess(transactionRequests.senderTransaction(),
+                                                           TransactionUpdateRequest.builder()
+                                                                                   .build());
+            // 예금 계좌에 대한 transaction 처리
+            transactionService.updateTransactionForSuccess(
+                transactionRequests.receiverTransaction(), TransactionUpdateRequest.builder()
+                                                                                   .account(account)
+                                                                                   .build());
+
+            return savingsAccountResponse;
+        } catch(Exception ex) {
+            // 트랜잭션 실패 처리
+            transactionService.updateTransactionForFail(transactionRequests.receiverTransaction(),
+                                                        ex);
+            transactionService.updateTransactionForFail(transactionRequests.senderTransaction(),
+                                                        ex);
+            throw new SavingsFailedException();
+        }
     }
 
     private UserAccount getUserAccountByUserId(Integer userId) {
@@ -177,8 +199,7 @@ public class SavingsService {
         JsonNode deletedSavings = finApiSavingsService.deleteSavingsAccount(userKey, accountNo)
                                                       .block();
         // 3. db 내에도 삭제하기
-        Account accountToDelete = accountRepository.findByAccountNo(accountNo);
-        accountRepository.delete(accountToDelete);
+        accountService.deleteAccount(accountNo);
 
         return jsonToDtoConverter.convertToObject(deletedSavings,
                                                   SavingsAccountDeleteResponse.class);

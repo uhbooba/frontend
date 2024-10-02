@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "account")
+@Table(name = "account", indexes = {@Index(name = "idx_account_no", columnList = "accountNo")})
 public class Account {
 
     @Id
@@ -31,6 +32,9 @@ public class Account {
     @JoinColumn(name = "user_account_id", nullable = false)
     @Setter
     private UserAccount userAccount; // 사용자 계정
+
+    @Column
+    private String username; // 사용자 이름
 
     @Column(nullable = false)
     private String accountNo; // 계좌 번호
@@ -52,11 +56,13 @@ public class Account {
         UserAccount userAccount,
         String accountNo,
         String accountName,
+        String username,
         AccountType accountTypeCode,
         String accountTypeName
     ) {
         this.userAccount = userAccount;
         this.accountNo = accountNo;
+        this.username = username;
         this.accountName = accountName;
         this.accountTypeCode = accountTypeCode;
         this.accountTypeName = accountTypeName;
