@@ -1,6 +1,7 @@
 package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.response.UserAccountResponse;
 import com.uhbooba.financeservice.entity.UserAccount;
 import com.uhbooba.financeservice.exception.UserAccountNotFoundException;
@@ -24,7 +25,8 @@ public class UserAccountService {
     private final UserAccountMapper userAccountMapper;
 
     @Transactional
-    public UserAccount checkOrCreateUserAccount(Integer userId) {
+    public UserAccount checkOrCreateUserAccount(UserHeaderInfo userHeaderInfo) {
+        Integer userId = userHeaderInfo.userId();
         UserAccount existedUserAccount = getUserAccountByUserId(userId);
         if(existedUserAccount != null) { // 이미 존재한다면 바로 끝
             return null;
@@ -37,6 +39,8 @@ public class UserAccountService {
 
         response.setRealUserId(userId);
         UserAccount entity = userAccountMapper.toEntity(response);
+        // 이름 넣기
+        entity.setUsername(userHeaderInfo.name());
         return userAccountRepository.save(entity);
     }
 
