@@ -4,7 +4,11 @@ import MessageBottom from '@/components/smishingPrevention/MessageBottom';
 import MessageBubble from '@/components/smishingPrevention/MessageBubble';
 import { SmishingButtonConfigType } from '@/components/smishingPrevention/SmishingButton';
 import QuizModal from '@/components/quiz/QuizModal';
-import { MessageType, smishingData } from '@/constants/SmishingData';
+import {
+  MessageType,
+  smishingData,
+  SmishingDataItemType,
+} from '@/constants/SmishingData';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
 import { useParams } from 'react-router';
 import SmishingEnding from '@/components/smishingPrevention/SmishingEnding'; // EndingScreen 컴포넌트 임포트
@@ -14,11 +18,16 @@ const SmishingMessageDetail = () => {
   const [data] = useState(smishingData); // 피싱 데이터
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 show
   const [isEnding, setIsEnding] = useState(false); // 엔딩 페이지 여부
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isSendingMessages, setIsSendingMessages] = useState(false); // 메세지 전송 중인지
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // 모달 데이터
   const [modalData, setModalData] = useState({
     title: '',
     detail: '',
   });
+
+  // 스미싱 데이터
   const [smishing, setSmishing] = useState(
     data[messageType as keyof typeof data] ?? {},
   );
@@ -30,15 +39,15 @@ const SmishingMessageDetail = () => {
   const formattedModalTitle = useFormattedContent(modalData.title, 'text-2xl');
   const formattedModalDetail = useFormattedContent(modalData.detail, 'text-xl');
 
-  // 문자 메세지 추가 딜레이
+  // 문자 메세지 추가 딜레이 -> 3초 뒤에 보내도록
   const addMessagesWithDelay = useCallback(
-    async (newMessages: MessageType[]) => {
+    async (newMessages: MessageType[], selectedData: SmishingDataItemType) => {
       if (newMessages.length > 0) {
+        setIsSendingMessages(true); // 메세지 전송 시작
         setCurrentMessageList((prevMessages) => [
           ...prevMessages,
           newMessages[0],
         ]);
-        scrollToBottom();
 
         for (let i = 1; i < newMessages.length; i++) {
           await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -46,12 +55,27 @@ const SmishingMessageDetail = () => {
             ...prevMessages,
             newMessages[i],
           ]);
-          scrollToBottom();
         }
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       }
+      setSmishing(selectedData);
+      setIsSendingMessages(false); // 메시지 전송 완료
     },
     [],
   );
+
+  // 상태 초기화
+  const resetState = () => {
+    const initialSmishing = data[messageType as keyof typeof data] ?? {};
+    setSmishing(initialSmishing);
+    setCurrentMessageList([initialSmishing?.message_list[0]]);
+    setIsEnding(false);
+    setIsModalOpen(false);
+    setModalData({
+      title: '',
+      detail: '',
+    });
+  };
 
   const handleButtonClick = (choice: string) => {
     const selectedData = data[choice];
@@ -74,13 +98,14 @@ const SmishingMessageDetail = () => {
       setIsModalOpen(true);
     } else {
       if (selectedData) {
-        setSmishing(selectedData); // smishing 데이터 업데이트
+        // setSmishing(selectedData); // smishing 데이터 업데이트
         const newMessages = selectedData.message_list.slice(1);
-        addMessagesWithDelay(newMessages);
+        addMessagesWithDelay(newMessages, selectedData);
       }
     }
   };
 
+  // 스미싱 버튼
   const buttons: SmishingButtonConfigType[] = Object.entries(
     smishing?.choice_list || {},
   ).map(([key, label]) => ({
@@ -94,12 +119,22 @@ const SmishingMessageDetail = () => {
     setIsModalOpen(false);
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollToBottom = useCallback(() => {
+    if (messagesContainerRef.current) {
+      const scrollHeight = messagesContainerRef.current.scrollHeight;
+      const height = messagesContainerRef.current.clientHeight;
+      const maxScrollTop = scrollHeight - height;
+      messagesContainerRef.current.scrollTop =
+        maxScrollTop > 0 ? maxScrollTop : 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [currentMessageList, scrollToBottom]);
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex max-h-screen flex-col'>
       <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar
           title={
@@ -126,9 +161,12 @@ const SmishingMessageDetail = () => {
           showXButton={false}
         />
       </div>
-      <div className='mt-16 flex flex-grow flex-col overflow-y-auto p-5 pb-56'>
+      <div className='mt-6 flex flex-grow flex-col overflow-hidden px-5 pt-16'>
         {!isEnding ? (
-          <div className='flex flex-1 flex-col overflow-y-auto p-4'>
+          <div
+            className='mb-64 h-full overflow-y-auto p-4'
+            ref={messagesContainerRef}
+          >
             {currentMessageList.map((message, index) => (
               <MessageBubble
                 key={index}
@@ -138,24 +176,30 @@ const SmishingMessageDetail = () => {
                 isUser={message.is_reply}
               />
             ))}
-            <div ref={messagesEndRef} />
           </div>
         ) : (
           <SmishingEnding
             sender={smishing?.sender}
             title={formattedModalTitle}
             detail={formattedModalDetail}
-            onRetry={() => setIsEnding(false)}
+            onRetry={resetState}
           />
         )}
       </div>
       {!isEnding && (
-        <div className='fixed bottom-0 w-full bg-white p-4'>
+        <div className='fixed bottom-0 w-full flex-shrink-0 bg-white p-4'>
           <div className='mx-auto flex w-full max-w-md flex-row items-center justify-center'>
             <MessageBottom isButton={true} buttons={buttons} />
           </div>
         </div>
       )}
+      {/* {!isEnding && (
+        <div className='fixed bottom-0 w-full bg-white p-4'>
+          <div className='mx-auto flex w-full max-w-md flex-row items-center justify-center'>
+            <MessageBottom isButton={true} buttons={buttons} />
+          </div>
+        </div>
+      )} */}
       {isModalOpen && (
         <QuizModal
           content={
