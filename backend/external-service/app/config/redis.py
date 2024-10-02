@@ -34,7 +34,7 @@ class RedisHandler:
     def __init__(cls, *args, **kwargs):
         pass
 
-    def set(self, key: str, value: bytes, expiration: int = None):
+    def set(self, key: str, value, expiration: int = None):
         """expiration이 유효한 양의 정수일 경우에만 만료 시간을 설정합니다"""
         self.redis_client.set(key, value)
 

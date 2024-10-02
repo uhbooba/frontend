@@ -17,7 +17,7 @@ router = APIRouter(prefix="/redis", tags=["(개발용)redis"])
 async def get_all_data(db_number: int):
     try:
         data = RedisService.get_all_data(db_number)
-        return ok_res(data={"db_number": db_number, "data": data}).dict()
+        return ok_res(data={"db_number": db_number, "data": data})
     except Exception as e:
         error_response = {
             "status": "error",
