@@ -1,4 +1,3 @@
-import jsonpickle
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
@@ -35,7 +34,7 @@ class VideoService:
             for video in videos
         ]
 
-        r_api_data.set(cache_key, jsonpickle.encode(VideoItems))
+        r_api_data.set(cache_key, VideoItems)
         logger.info(f"캐싱 데이터 생성 및 Redis 저장 완료 : API key is {cache_key}")
 
         return VideoItems
@@ -74,7 +73,7 @@ class VideoService:
             for video in videos
         ]
 
-        r_api_data.set(cache_key, jsonpickle.encode(VideoItems))
+        r_api_data.set(cache_key, VideoItems)
         logger.info(f"캐싱 데이터 생성 및 Redis 저장 완료 : API key is {cache_key}")
 
         return VideoItems
@@ -93,7 +92,7 @@ class VideoService:
         #####################################
         keywords = [keyword[0] for keyword in db.query(Video.keyword).distinct().all()]
 
-        r_api_data.set(cache_key, jsonpickle.encode(keywords))
+        r_api_data.set(cache_key, keywords)
         logger.info(f"캐싱 데이터 생성 및 Redis 저장 완료 : API key is {cache_key}")
 
         return keywords

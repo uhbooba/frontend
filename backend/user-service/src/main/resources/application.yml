@@ -22,6 +22,10 @@ spring:
       port: 6379
   jwt:
     secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
+  coolsms:
+    apikey: ${SMS_API_KEY}
+    secret: ${SMS_API_SECRET}
+    from: ${SMS_FROM_NUMBER}
 
 openapi:
   service:

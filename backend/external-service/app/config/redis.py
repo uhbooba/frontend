@@ -37,7 +37,7 @@ class RedisHandler:
 
     def set(self, key: str, value, expiration: int = None):
         """expiration이 유효한 양의 정수일 경우에만 만료 시간을 설정합니다"""
-        self.redis_client.set(key, value)
+        self.redis_client.set(key, jsonpickle.encode(value))
 
         if expiration is not None and isinstance(expiration, int) and expiration > 0:
             self.redis_client.expire(key, expiration)

@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SavingsService {
 
     private final static Set<String> interestRates = new HashSet<>(
-        Arrays.asList("1.0", "3.0", "5.0"));
+        Arrays.asList("7.0", "10.0", "12.0"));
 
     private final FinApiSavingsService finApiSavingsService;
     private final UserAccountService userAccountService;
