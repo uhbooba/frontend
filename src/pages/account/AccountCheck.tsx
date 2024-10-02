@@ -5,11 +5,10 @@ import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountHistory from '@/components/common/AccountHistory';
 
-
 const Modal = ({ show, onClose, onSave }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedType, setSelectedType] = useState('전체');
-  const [sortType, setSortType] = useState('최신순')
+  const [sortType, setSortType] = useState('최신순');
 
   if (!show) return null;
 
@@ -20,49 +19,67 @@ const Modal = ({ show, onClose, onSave }) => {
   };
 
   return (
-    <div 
-      className='fixed inset-0 flex items-center justify-center z-50'
+    <div
+      className='fixed inset-0 z-50 flex items-center justify-center'
       onClick={handleBackgroundClick}
     >
-      <div className='fixed inset-0 bg-black opacity-50 z-40' />
-      <div className='bg-white p-6 rounded-lg shadow-lg w-[320px] z-50'>
-        <h2 className='text-2xl font-bold mb-4'>필터 조건 설정</h2>
+      <div className='fixed inset-0 z-40 bg-black opacity-50' />
+      <div className='z-50 w-[320px] rounded-lg bg-white p-6 shadow-lg'>
+        <h2 className='mb-4 text-2xl font-bold'>필터 조건 설정</h2>
         <div className='mb-4'>
-          <label className='block mb-2'>기간</label>
-          <input 
+          <label className='mb-2 block'>기간</label>
+          <input
             type='date'
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className='w-full border px-2 py-1 rounded'
+            className='w-full rounded border px-2 py-1'
           />
           <div className='mb-4'>
-            <label className='block mb-2'>유형</label>
+            <label className='mb-2 block'>유형</label>
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className='w-full border px-2 py-1 rounded'
+              className='w-full rounded border px-2 py-1'
             >
               <option>전체</option>
               <option>입금</option>
               <option>출금</option>
             </select>
           </div>
+          <div className='mb-4'>
+            <label className='mb-4 block'>정렬</label>
+            <select 
+              value={sortType}
+              onChange={(e) => setSortType(e.target.value)}
+              className='w-full rounded border px-2 py-1'
+            >
+              <option>최신순</option>
+              <option>오래된순</option>
+            </select>
+          </div>
           <div className='flex justify-end space-x-4'>
-            <button onClick={onClose} className='px-4 py-2 bg-gray-300 rounded'>취소</button>
-            <button onClick={() => onSave(selectedDate, selectedType)} className='px-4 py-2 bg-blue-500 text-white rounded'>저장</button>
+            <button onClick={onClose} className='rounded bg-gray-300 px-4 py-2'>
+              취소
+            </button>
+            <button
+              onClick={() => onSave(selectedDate, selectedType, sortType)}
+              className='rounded bg-blue-500 px-4 py-2 text-white'
+            >
+              저장
+            </button>
           </div>
         </div>
-        <div className='fixed inset-0 bg-black opacity-50 z-30' />
+        <div className='fixed inset-0 z-30 bg-black opacity-50' />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const AccountCheck = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [filter, setFilter] = useState({ date: '전체 기간', type: '전체'});
-  
+  const [filter, setFilter] = useState({ date: '전체 기간', type: '전체', sort: '최신순' });
+
   const handleButtonClick = (route: string) => {
     navigate(route);
   };
@@ -70,19 +87,19 @@ const AccountCheck = () => {
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const saveFilter = (selectedDate: string, selectedType: string) => {
+  const saveFilter = (selectedDate: string, selectedType: string, sort: string) => {
     setFilter({
       date: selectedDate || '전체 기간',
-      type: selectedType || '전체'
+      type: selectedType || '전체',
+      sort: sort || '최신순',
     });
     setShowModal(false);
-  }
+  };
 
   const ButtonConfig: ButtonConfigType[] = [
     {
       label: '계좌 입금',
       route: '/account/add-cash',
-      
     },
     {
       label: '이체',
@@ -110,26 +127,25 @@ const AccountCheck = () => {
               <Button
                 key={index}
                 label={button.label}
-                size={button.size}
-                color={button.color}
+                size='customMedium'
+                color='lightOrange'
                 onClick={() => handleButtonClick(button.route)}
-                className={button.className}
+                className='flex-grow'
               />
             ))}
           </div>
           <div className='mx-[10px] mt-[5px] flex justify-between text-[24px] font-bold'>
-            <div>전체 기간</div>
-            <div>전체</div>
-            {/* 임시로 select문으로 해두고 골자만 짜두고 토클로 바꿀 예정 */}
-            <select name='' id=''>
-              <option>최신순▼</option>
-              <option>오래된순▲</option>
-            </select>
-            {/* <input type='checkbox' id='filter' hidden/>
-                    <label htmlFor="filter" className=''>
-                        <span className=''>최신순▼</span>
-                        <span className=''>오래된순▲</span>
-                    </label> */}
+            <div>{filter.date}</div>
+            <div>{filter.type}</div>
+            <div>{filter.sort}</div>
+            <button onClick={openModal} className='text-blue-500'>
+              필터 ▼
+            </button>
+            {/* <select name="" id="">
+                        <option>최신순▼</option>
+                        <option>오래된순▲</option>
+                    </select> */}
+            {/* <input type='checkbox' id='filter' hidden/> */}
           </div>
           <div>
             <AccountHistory />
@@ -140,7 +156,7 @@ const AccountCheck = () => {
         </div>
       </div>
 
-        <Modal  show={showModal} onClose={closeModal} onSave={saveFilter}/>
+      <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
     </div>
   );
 };
