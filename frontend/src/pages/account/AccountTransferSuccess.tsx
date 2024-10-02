@@ -4,7 +4,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
 
 const AccountTransferSuccess = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
