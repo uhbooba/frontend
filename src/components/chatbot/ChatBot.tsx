@@ -4,8 +4,8 @@ import ChatMessage from './ChatMessage';
 import { axiosInstance } from '@/utils/axiosInstance';
 
 const exampleQuestions = [
-  '챗봇이 뭐니?',
-  '노후 자금을 관리하기 위한 방법을 추천해줄 수 있니?',
+  '대표적인 모바일 뱅킹 앱 서비스가 뭐가 있을까?',
+  '온라인 금융거래를 할 때 주의할 점에 대해 알려줘.',
 ];
 
 const Chatbot: React.FC = () => {
@@ -21,7 +21,7 @@ const Chatbot: React.FC = () => {
     try {
       // Axios로 POST 요청 보낼 때는 data를 사용해야 합니다.
       const response = await axiosInstance.post(
-        '/external-service/ai/get_answer',
+        '/external-service/chat',
         {
           question, // 여기에 전송할 데이터를 넣습니다.
         },
