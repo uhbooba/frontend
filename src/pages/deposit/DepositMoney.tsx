@@ -72,6 +72,7 @@ const DepositMoney = () => {
   // 얼마로 시작할까요? 버튼 클릭 함수
   const amountClick = (index: number, amount: string) => {
     setAmountBtnColor(amount);
+    console.log(index);
 
     if (amount !== '직접입력') {
       setSelectMoney(formatMoney(amount.replace('원', '')));
