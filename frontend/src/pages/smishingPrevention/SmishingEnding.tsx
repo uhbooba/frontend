@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
-import { EndingType, smishingData } from '@/constants/SmishingData';
+import { smishingData } from '@/constants/SmishingData';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
 
 const SmishingEnding = () => {
@@ -10,9 +10,7 @@ const SmishingEnding = () => {
   const [data] = useState(smishingData); // 피싱 데이터
   const { endingId } = location.state;
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [endingData, setEndingData] = useState(
-    data[endingId as keyof typeof data] ?? {},
-  );
+  const [endingData] = useState(data[endingId as keyof typeof data] ?? {});
 
   useEffect(() => {
     if (scrollRef.current) {
