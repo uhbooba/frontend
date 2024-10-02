@@ -127,6 +127,16 @@ const AccountTransferSuccess = lazy(
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
 
+const SmishingAgree = lazy(
+  () => import('@/pages/smishingPrevention/SmishingAgree'),
+);
+const SmishingMessageList = lazy(
+  () => import('@/pages/smishingPrevention/SmishingMessageList'),
+);
+const SmishingMessageDetail = lazy(
+  () => import('@/pages/smishingPrevention/SmishingMessageDetail'),
+);
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -223,6 +233,19 @@ const router = createBrowserRouter([
         element: <AccountTransferPassword />,
       },
       { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
+      // 금융 사기 예방
+      {
+        path: 'prevention/agree',
+        element: <SmishingAgree />,
+      },
+      {
+        path: 'prevention/messages',
+        element: <SmishingMessageList />,
+      },
+      {
+        path: 'prevention/messages/:messageType',
+        element: <SmishingMessageDetail />,
+      },
     ],
   },
 ]);
