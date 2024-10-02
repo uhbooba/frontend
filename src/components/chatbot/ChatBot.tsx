@@ -3,6 +3,11 @@ import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import { axiosInstance } from '@/utils/axiosInstance';
 
+const exampleQuestions = [
+  '챗봇이 뭐니?',
+  '노후 자금을 관리하기 위한 방법을 추천해줄 수 있니?',
+];
+
 const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<
     { question: string; answer: string }[]
@@ -36,6 +41,10 @@ const Chatbot: React.FC = () => {
     }
   };
 
+  const handleExampleClick = (question: string) => {
+    handleSendMessage(question);
+  };
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -44,16 +53,36 @@ const Chatbot: React.FC = () => {
 
   return (
     <div className='flex h-full flex-col bg-gray-100 p-4'>
-      <div className='flex-1 overflow-auto rounded-lg border border-gray-300'>
-        {messages.map((msg, index) => (
-          <ChatMessage
-            key={index}
-            question={msg.question}
-            answer={msg.answer}
-          />
-        ))}
-        <div ref={messagesEndRef} />
+      <div className='mb-4 flex flex-1 flex-col overflow-hidden rounded-lg border-gray-300'>
+        {messages.length == 0 && (
+          <div className='mb-4 mt-4'>
+            <h3 className='text-lg font-bold'>추천 질문</h3>
+            <div className='grid grid-rows-2 gap-2'>
+              {exampleQuestions.map((question, index) => (
+                <button
+                  key={index}
+                  className='rounded bg-primary p-2 text-black hover:bg-blue-600'
+                  onClick={() => handleExampleClick(question)}
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className='flex-1 overflow-auto'>
+          {messages.map((msg, index) => (
+            <ChatMessage
+              key={index}
+              question={msg.question}
+              answer={msg.answer}
+            />
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
+
       <div className='fixed bottom-16 left-0 w-full border-t bg-white p-4'>
         <ChatInput onSend={handleSendMessage} />
       </div>
