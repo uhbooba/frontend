@@ -34,6 +34,7 @@ public class Account {
     private UserAccount userAccount; // 사용자 계정
 
     @Column
+    @Setter
     private String username; // 사용자 이름
 
     @Column(nullable = false)
