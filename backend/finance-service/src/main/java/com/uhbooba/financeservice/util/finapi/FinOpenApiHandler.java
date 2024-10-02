@@ -156,7 +156,6 @@ public class FinOpenApiHandler {
         }
 
         requestBody.put("Header", headerNode);
-
         return webClient.method(method)
                         .uri(baseUrl + url)
                         .bodyValue(requestBody)
@@ -169,6 +168,8 @@ public class FinOpenApiHandler {
                                                                           ObjectMapper objectMapper = new ObjectMapper();
                                                                           JsonNode errorJson = objectMapper.readTree(
                                                                               errorBody);
+                                                                          log.error("errorJson = "
+                                                                                        + errorJson);
                                                                           String responseCode = errorJson.path(
                                                                                                              "responseCode")
                                                                                                          .asText();

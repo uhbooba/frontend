@@ -22,7 +22,7 @@ public class CommonController {
     private final CommonService commonService;
 
     @GetMapping("/banks")
-    @Operation(summary = "bank code 가져오기")
+    @Operation(summary = "[사용 X]bank code 가져오기", description = "은행 코드 목록을 가져옵니다.")
     public CommonResponse<List<BankCodeResponse>> getBankCodes() {
 
         return CommonResponse.ok("조회 성공", commonService.getBankCodes());

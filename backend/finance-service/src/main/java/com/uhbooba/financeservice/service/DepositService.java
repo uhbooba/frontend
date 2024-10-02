@@ -9,13 +9,13 @@ import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountResp
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositEarlyTerminationInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositExpiryInterestResponse;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositResponse;
+import com.uhbooba.financeservice.dto.request.TransactionUpdateRequest;
+import com.uhbooba.financeservice.dto.response.TransactionTransferResponse;
 import com.uhbooba.financeservice.entity.Account;
-import com.uhbooba.financeservice.entity.AccountType;
 import com.uhbooba.financeservice.entity.DepositProduct;
 import com.uhbooba.financeservice.entity.UserAccount;
-import com.uhbooba.financeservice.mapper.AccountMapper;
+import com.uhbooba.financeservice.exception.DepositFailedException;
 import com.uhbooba.financeservice.mapper.DepositProductMapper;
-import com.uhbooba.financeservice.repository.AccountRepository;
 import com.uhbooba.financeservice.repository.DepositProductRepository;
 import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
@@ -38,14 +38,14 @@ public class DepositService {
 
     private final FinApiDepositService finApiDepositService;
     private final UserAccountService userAccountService;
+    private final AccountService accountService;
+    private final TransactionService transactionService;
 
     private final JsonToDtoConverter jsonToDtoConverter;
 
     private final DepositProductRepository depositProductRepository;
 
     private final DepositProductMapper depositProductMapper;
-    private final AccountMapper accountMapper;
-    private final AccountRepository accountRepository;
 
     @Transactional
     public DepositResponse createDeposit(
@@ -77,11 +77,13 @@ public class DepositService {
      *
      * @return
      */
+    @Transactional(readOnly = true)
     public List<DepositResponse> getAllDeposits() {
         List<DepositProduct> depositProducts = depositProductRepository.findAll();
         return depositProductMapper.toDto(depositProducts);
     }
 
+    @Transactional
     public DepositAccountResponse createDepositAccount(
         Integer userId,
         DepositAccountCreateRequest dto
@@ -90,21 +92,41 @@ public class DepositService {
         UserAccount userAccount = getUserAccountByUserId(userId);
         String userKey = userAccount.getUserKey();
 
-        JsonNode createdDeposit = finApiDepositService.createDepositAccount(userKey, dto)
-                                                      .block();
+        Account sourceAccount = accountService.findByAccountNo(dto.withdrawalAccountNo());
 
-        DepositAccountResponse depositAccountResponse = jsonToDtoConverter.convertToObject(
-            createdDeposit, DepositAccountResponse.class);
+        // transaction 생성
+        TransactionTransferResponse transactionRequests = transactionService.createTransactionRequest(
+            dto, sourceAccount);
 
-        // 2. 예금 계좌 저장하기
-        Account account = accountMapper.toEntity(depositAccountResponse);
-        account.setUserAccount(userAccount);
-        account.setAccountTypeCode(AccountType.FIXED_DEPOSIT);
-        account.setAccountTypeName("예금");
+        try {
+            JsonNode createdDeposit = finApiDepositService.createDepositAccount(userKey, dto)
+                                                          .block();
 
-        accountRepository.save(account);
+            DepositAccountResponse depositAccountResponse = jsonToDtoConverter.convertToObject(
+                createdDeposit, DepositAccountResponse.class);
 
-        return depositAccountResponse;
+            // 2. 예금 계좌 저장하기
+            Account account = accountService.createAccount(depositAccountResponse, userAccount);
+
+            // 기존 입출금 계좌에 대한 transaction 처리(transaction unique no 가 없음)
+            transactionService.updateTransactionForSuccess(transactionRequests.senderTransaction(),
+                                                           TransactionUpdateRequest.builder()
+                                                                                   .build());
+            // 예금 계좌에 대한 transaction 처리
+            transactionService.updateTransactionForSuccess(
+                transactionRequests.receiverTransaction(), TransactionUpdateRequest.builder()
+                                                                                   .account(account)
+                                                                                   .build());
+
+            return depositAccountResponse;
+        } catch(Exception ex) {
+            // 트랜잭션 실패 처리
+            transactionService.updateTransactionForFail(transactionRequests.receiverTransaction(),
+                                                        ex);
+            transactionService.updateTransactionForFail(transactionRequests.senderTransaction(),
+                                                        ex);
+            throw new DepositFailedException("예금 가입을 실패했습니다.");
+        }
     }
 
     private UserAccount getUserAccountByUserId(Integer userId) {
@@ -177,8 +199,7 @@ public class DepositService {
         JsonNode deletedDeposit = finApiDepositService.deleteDepositAccount(userKey, accountNo)
                                                       .block();
         // 3. db 내에도 삭제하기
-        Account accountToDelete = accountRepository.findByAccountNo(accountNo);
-        accountRepository.delete(accountToDelete);
+        accountService.deleteAccount(accountNo);
 
         return jsonToDtoConverter.convertToObject(deletedDeposit,
                                                   DepositAccountDeleteResponse.class);
