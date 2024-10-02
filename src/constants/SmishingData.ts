@@ -29,7 +29,7 @@ type EndingType = {
 } | null;
 
 // 각 항목의 타입
-type SmishingDataItemType = {
+export type SmishingDataItemType = {
   sender: string;
   message_list: MessageType[];
   choice_list: ChoiceType;

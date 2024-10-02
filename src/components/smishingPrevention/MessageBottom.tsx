@@ -7,7 +7,7 @@ type MessageBottomProps = {
 
 const MessageBottom: React.FC<MessageBottomProps> = ({ isButton, buttons }) => {
   return (
-    <div className='sticky bottom-0 w-full bg-white p-4'>
+    <div className='fixed bottom-0 left-0 right-0 bg-white p-4'>
       <div className='mx-auto flex w-full max-w-md flex-col items-center justify-center'>
         <div className='mb-3 flex w-full items-center rounded-md border px-3 py-2 shadow-md'>
           <input
@@ -29,7 +29,7 @@ const MessageBottom: React.FC<MessageBottomProps> = ({ isButton, buttons }) => {
           </button>
         </div>
         {isButton && buttons && (
-          <div>
+          <div className='w-full'>
             {buttons.map((button, index) => (
               <SmishingButton
                 key={index}
