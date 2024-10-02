@@ -1,14 +1,9 @@
-// import Button from '@/components/common/buttons/Button';
-// import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
-// import { useState } from 'react';
 import TextBubble from '@/components/common/TextBubble';
-// import Button from '@/components/common/buttons/Button';
-import Stamp from '@/components/common/stamp/Stamp';
+import Stamp from '@/components/gamification/MissionStamp';
 
 const MissionStamp = () => {
-  //   const navigate = useNavigate();
   const stampsInfo = [
     {
       isCompleted: true,

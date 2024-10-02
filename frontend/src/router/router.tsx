@@ -127,7 +127,7 @@ const AccountTransferSuccess = lazy(
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
 
-const MissionStamp = lazy(() => import('@/pages/gamification/MissionStamp'));
+const MissionStamps = lazy(() => import('@/pages/gamification/MissionStamps'));
 
 const router = createBrowserRouter([
   {
@@ -226,7 +226,7 @@ const router = createBrowserRouter([
       },
       { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
       // 게이미피케이션
-      { path: 'stamp', element: <MissionStamp /> },
+      { path: 'stamp', element: <MissionStamps /> },
     ],
   },
 ]);
