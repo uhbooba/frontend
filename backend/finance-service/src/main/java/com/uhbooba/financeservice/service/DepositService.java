@@ -19,10 +19,7 @@ import com.uhbooba.financeservice.mapper.DepositProductMapper;
 import com.uhbooba.financeservice.repository.DepositProductRepository;
 import com.uhbooba.financeservice.service.finapi.FinApiDepositService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,9 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class DepositService {
-
-    private final static Set<String> interestRates = new HashSet<>(
-        Arrays.asList("7.0", "10.0", "12.0"));
 
     private final FinApiDepositService finApiDepositService;
     private final UserAccountService userAccountService;
@@ -56,11 +50,8 @@ public class DepositService {
 
         DepositResponse depositResponse = jsonToDtoConverter.convertToObject(createdDeposit,
                                                                              DepositResponse.class);
-        // 예금 상품 (1.0%, 3.0%, 5.0%)저장
-        if(interestRates.contains(depositResponse.interestRate())) {
-            DepositProduct deposit = depositProductMapper.toEntity(depositResponse);
-            depositProductRepository.save(deposit);
-        }
+        DepositProduct deposit = depositProductMapper.toEntity(depositResponse);
+        depositProductRepository.save(deposit);
 
         return depositResponse;
     }
@@ -203,5 +194,27 @@ public class DepositService {
 
         return jsonToDtoConverter.convertToObject(deletedDeposit,
                                                   DepositAccountDeleteResponse.class);
+    }
+
+    @Transactional
+    public void depositInitSetting() {
+        String[] accountNames = new String[]{"정기예금 1번 상품", "정기예금 2번 상품", "정기예금 3번 상품"};
+        String[] subscriptionPeriods = new String[]{"90", "180", "365"};
+        Long[] minSubscriptionBalances = new Long[]{100000L, 500000L, 1000000L};
+        Long[] maxSubscriptionBalances = new Long[]{10000000L, 10000000L, 10000000L};
+        Double[] interestRates = new Double[]{7.0, 10.0, 12.0};
+
+        for(int i = 0; i < 3; i++) {
+            createDeposit(DepositCreateRequest.builder()
+                                              .bankCode("999")
+                                              .accountName(accountNames[i])
+                                              .accountDescription(accountNames[i] + "입니다.")
+                                              .subscriptionPeriod(subscriptionPeriods[i])
+                                              .minSubscriptionBalance(minSubscriptionBalances[i])
+                                              .maxSubscriptionBalance(maxSubscriptionBalances[i])
+                                              .interestRate(interestRates[i])
+                                              .rateDescription("이율은 " + interestRates[i] + "%입니다.")
+                                              .build());
+        }
     }
 }

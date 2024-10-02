@@ -40,6 +40,14 @@ public class SavingsController {
         return CommonResponse.ok("적금 상품 생성 완료", savingsService.createSavings(dto));
     }
 
+    @PostMapping("/products/init")
+    @Operation(summary = "[사용 주의] 적금 상품 초기 세팅")
+    public CommonResponse<?> createSavingsInitSetting(
+    ) {
+        savingsService.savingsInitSetting();
+        return CommonResponse.ok("적금 상품 생성 완료");
+    }
+
     @GetMapping("/products")
     @Operation(summary = "적금 상품 전체 조회")
     public CommonResponse<List<SavingsResponse>> getSavingsProducts() {
