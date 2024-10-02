@@ -19,10 +19,7 @@ import com.uhbooba.financeservice.mapper.SavingsProductMapper;
 import com.uhbooba.financeservice.repository.SavingsProductRepository;
 import com.uhbooba.financeservice.service.finapi.FinApiSavingsService;
 import com.uhbooba.financeservice.util.JsonToDtoConverter;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,8 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class SavingsService {
 
-    private final static Set<String> interestRates = new HashSet<>(
-        Arrays.asList("7.0", "10.0", "12.0"));
 
     private final FinApiSavingsService finApiSavingsService;
     private final UserAccountService userAccountService;
@@ -56,11 +51,8 @@ public class SavingsService {
 
         SavingsResponse savingsResponse = jsonToDtoConverter.convertToObject(createdSavings,
                                                                              SavingsResponse.class);
-        // 적금 상품 (1.0%, 3.0%, 5.0%)저장
-        if(interestRates.contains(savingsResponse.interestRate())) {
-            SavingsProduct savings = savingsProductMapper.toEntity(savingsResponse);
-            savingsProductRepository.save(savings);
-        }
+        SavingsProduct savings = savingsProductMapper.toEntity(savingsResponse);
+        savingsProductRepository.save(savings);
 
         return savingsResponse;
     }
@@ -203,5 +195,27 @@ public class SavingsService {
 
         return jsonToDtoConverter.convertToObject(deletedSavings,
                                                   SavingsAccountDeleteResponse.class);
+    }
+
+    @Transactional
+    public void savingsInitSetting() {
+        String[] accountNames = new String[]{"정기적금 1번 상품", "정기적금 2번 상품", "정기적금 3번 상품"};
+        String[] subscriptionPeriods = new String[]{"90", "180", "365"};
+        Long[] minSubscriptionBalances = new Long[]{10000L, 100000L, 500000L};
+        Long[] maxSubscriptionBalances = new Long[]{1000000L, 1000000L, 1000000L}; // 최대 100만원
+        Double[] interestRates = new Double[]{5.0, 7.0, 10.0};
+
+        for(int i = 0; i < 3; i++) {
+            createSavings(SavingsCreateRequest.builder()
+                                              .bankCode("999")
+                                              .accountName(accountNames[i])
+                                              .accountDescription(accountNames[i] + "입니다.")
+                                              .subscriptionPeriod(subscriptionPeriods[i])
+                                              .minSubscriptionBalance(minSubscriptionBalances[i])
+                                              .maxSubscriptionBalance(maxSubscriptionBalances[i])
+                                              .interestRate(interestRates[i])
+                                              .rateDescription("이율은 " + interestRates[i] + "%입니다.")
+                                              .build());
+        }
     }
 }

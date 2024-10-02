@@ -8,9 +8,9 @@ public record SavingsCreateRequest(
     String accountName,
     String accountDescription,
     String subscriptionPeriod,
-    String minSubscriptionBalance,
-    String maxSubscriptionBalance,
-    String interestRate,
+    Long minSubscriptionBalance,
+    Long maxSubscriptionBalance,
+    Double interestRate,
     String rateDescription
 ) {
 

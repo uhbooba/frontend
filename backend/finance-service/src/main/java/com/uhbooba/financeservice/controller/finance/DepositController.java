@@ -40,6 +40,13 @@ public class DepositController {
         return CommonResponse.ok("예금 상품 생성 완료", depositService.createDeposit(dto));
     }
 
+    @PostMapping("/products/init")
+    @Operation(summary = "[사용 주의] 예금 상품 초기 세팅")
+    public CommonResponse<?> initDeposit() {
+        depositService.depositInitSetting();
+        return CommonResponse.ok("예금 상품 초기 세팅 완료");
+    }
+
     @GetMapping("/products")
     @Operation(summary = "예금 상품 전체 조회")
     public CommonResponse<List<DepositResponse>> getDepositProducts() {
