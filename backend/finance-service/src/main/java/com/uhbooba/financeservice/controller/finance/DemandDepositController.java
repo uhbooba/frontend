@@ -102,7 +102,7 @@ public class DemandDepositController {
     }
 
     @GetMapping("/accounts/balances")
-    @Operation(summary = "입출금계좌 잔액 조회")
+    @Operation(summary = "[사용 X] 입출금계좌 잔액 조회")
     public CommonResponse<DemandDepositAccountBalanceResponse> getAccountBalance(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -118,7 +118,7 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts/deposit")
-    @Operation(summary = "입출금계좌에 예금")
+    @Operation(summary = "입출금계좌에 입금")
     public CommonResponse<DemandDepositDepositResponse> depositAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DemandDepositDepositAccountRequest accountRequest
