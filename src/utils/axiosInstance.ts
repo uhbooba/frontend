@@ -5,6 +5,7 @@ const { VITE_API_BASE_URL } = import.meta.env;
 const createAxiosInstance = (useAuth = false) => {
   const instance = axios.create({
     baseURL: VITE_API_BASE_URL,
+    // baseURL: 'http://j11a402.p.ssafy.io:8080',
     timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
