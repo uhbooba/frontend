@@ -38,9 +38,14 @@ def search_videos(keyword: str, db: Session = Depends(get_db)):
                 },
             )
         return ok_res(data=video_items, message=f"{len(video_items)}개의 영상 - 최신순")
+    except ValueError as e:
+        return JSONResponse(
+            status_code=404, content={"status": "Not Found", "message": str(e)}
+        )
     except Exception as e:
         return JSONResponse(
-            status_code=500, content={"status": "error", "message": str(e)}
+            status_code=500,
+            content={"status": "error", "message": f"Failed to get videos: {str(e)}"},
         )
 
 
@@ -51,5 +56,6 @@ def get_keywords(db: Session = Depends(get_db)):
         return ok_res(data=keywords, message=f"{len(keywords)}개의 키워드")
     except Exception as e:
         return JSONResponse(
-            status_code=500, content={"status": "error", "message": str(e)}
+            status_code=500,
+            content={"status": "error", "message": f"Failed to get keywords: {str(e)}"},
         )

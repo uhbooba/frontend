@@ -30,7 +30,12 @@ def get_quiz(part: int, db: Session = Depends(get_db)):
     try:
         data = QuizService.get_quizzes_by_part(part, db)
         return ok_res(data=data)
+    except ValueError as e:
+        return JSONResponse(
+            status_code=404, content={"status": "Not Found", "message": str(e)}
+        )
     except Exception as e:
         return JSONResponse(
-            status_code=404, content={"status": "error", "message": str(e)}
+            status_code=500,
+            content={"status": "error", "message": f"Failed to get quizzes: {str(e)}"},
         )
