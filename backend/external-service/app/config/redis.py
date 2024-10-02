@@ -1,3 +1,4 @@
+import jsonpickle
 import redis
 
 from ..config.config import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD
@@ -50,14 +51,32 @@ class RedisHandler:
         value = self.redis_client.get(key)
         if value:
             logger.info(f"Redis(DB:{self.db})에서 키 조회 성공: {key}")
+            try:
+                return jsonpickle.decode(value)
+            except:
+                return value
         else:
             logger.info(f"Redis(DB:{self.db})에서 키 조회 실패: {key}")
-        return value
 
     def get_all_keys(self):
         keys = self.redis_client.keys("*")
         logger.info(f"Redis(DB:{self.db})의 모든 키 조회: {len(keys)}개")
         return keys
+
+    def delete(self, key: str):
+        try:
+            if self.redis_client.exists(key):
+                self.redis_client.delete(key)
+                logger.info(f"Redis(DB:{self.db})의 키 삭제 성공 : {key}")
+                return True
+            else:
+                logger.info(f"Redis(DB:{self.db})의 키 삭제 실패 : {key}")
+                return False
+        except Exception as e:
+            logger.error(
+                f"Redis(DB:{self.db})의 키 '{key}' 삭제 중 오류 발생: {str(e)}"
+            )
+            return False
 
 
 #######################################################################

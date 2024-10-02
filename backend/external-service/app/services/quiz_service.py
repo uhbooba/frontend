@@ -28,7 +28,7 @@ class QuizService:
         cached_data = r_api_data.get(cache_key)
 
         if cached_data:
-            return jsonpickle.decode(cached_data)
+            return cached_data
 
         #####################################
         logger.info(f"캐싱된 데이터가 없음 : API key is {cache_key}")
@@ -58,7 +58,7 @@ class QuizService:
         cached_data = r_api_data.get(cache_key)
 
         if cached_data:
-            return jsonpickle.decode(cached_data)
+            return cached_data
 
         #####################################
         logger.info(f"캐싱된 데이터가 없음 : API key is GET:quiz:{part}")
