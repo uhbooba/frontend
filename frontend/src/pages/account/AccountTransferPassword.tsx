@@ -14,10 +14,7 @@ const AccountTransferPassword = () => {
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar 
-            title='계좌 이체' 
-            showXButton={false}
-        />
+        <TopBar title='계좌 이체' showXButton={false} />
       </div>
 
       <div className='mb-2 mt-20'>

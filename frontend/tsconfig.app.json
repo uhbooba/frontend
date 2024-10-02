@@ -36,5 +36,5 @@
       "@/router/*": ["src/router/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "service-worker.js"]
 }
