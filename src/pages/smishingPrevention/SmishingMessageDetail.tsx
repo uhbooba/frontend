@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import TopBar from '@/components/layouts/TopBar';
 import MessageBottom from '@/components/smishingPrevention/MessageBottom';
 import MessageBubble from '@/components/smishingPrevention/MessageBubble';
