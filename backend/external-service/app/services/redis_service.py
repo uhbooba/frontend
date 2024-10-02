@@ -45,4 +45,4 @@ class RedisService:
         for key in keys:
             r_api_data.delete(key)
 
-        return keys
+        return r_api_keys.get(table_name)

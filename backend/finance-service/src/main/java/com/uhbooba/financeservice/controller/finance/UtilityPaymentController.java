@@ -1,6 +1,7 @@
 package com.uhbooba.financeservice.controller.finance;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.UtilityPaymentRequest;
 import com.uhbooba.financeservice.service.UtilityPaymentService;
 import com.uhbooba.financeservice.util.CommonUtil;
@@ -31,8 +32,8 @@ public class UtilityPaymentController {
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody UtilityPaymentRequest request
     ) {
-        Integer userId = CommonUtil.getMemberId(headers);
-        utilityPaymentService.payUtilities(userId, request);
+        UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+        utilityPaymentService.payUtilities(userHeaderInfo, request);
         return CommonResponse.ok("공과금 납부 성공");
     }
 
