@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeGetEstimateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeRequest;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ForeignCurrencyDemandDepositCreateRequest;
@@ -88,10 +89,10 @@ public class ExchangeService {
      * @return
      */
     public ExchangeResponse doExchange(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         ExchangeRequest exchangeRequest
     ) {
-        UserAccount userAccount = getUserAccountByUserId(userId);
+        UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         Account account = accountService.findByAccountNo(exchangeRequest.accountNo());

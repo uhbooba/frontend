@@ -1,6 +1,7 @@
 package com.uhbooba.financeservice.controller.finance;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeGetEstimateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeRequest;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ForeignCurrencyDemandDepositCreateRequest;
@@ -11,15 +12,18 @@ import com.uhbooba.financeservice.dto.finapi.response.exchange.ExchangeResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyAccountResponse;
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyProductResponse;
 import com.uhbooba.financeservice.service.ExchangeService;
+import com.uhbooba.financeservice.util.CommonUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,10 +63,11 @@ public class ExchangeController {
     @PostMapping("/exchange")
     @Operation(summary = "환전")
     public CommonResponse<ExchangeResponse> exchangeCurrency(
-        @RequestParam("userId") Integer userId,
+        @RequestHeader HttpHeaders headers,
         @Valid @RequestBody ExchangeRequest dto
     ) {
-        return CommonResponse.ok("환전 성공", exchangeService.doExchange(userId, dto));
+        UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+        return CommonResponse.ok("환전 성공", exchangeService.doExchange(userHeaderInfo, dto));
     }
 
     @PostMapping("/products")
