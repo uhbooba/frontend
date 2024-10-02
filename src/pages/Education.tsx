@@ -30,8 +30,8 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '',
-    eduLabel: '(미션 스탬프)',
-    route: '/cancel/savings/explain',
+    eduLabel: '미션 스탬프',
+    route: '/stamp',
     size: 'small',
     className: 'flex h-32 bg-white shadow rounded-3xl',
     eduImg: '/assets/images/mission_stamp.png',
