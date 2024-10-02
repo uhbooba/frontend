@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsAccountDeleteResponse;
@@ -77,11 +78,11 @@ public class SavingsService {
 
     @Transactional
     public SavingsAccountResponse createSavingsAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         SavingsAccountCreateRequest dto
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = getUserAccountByUserId(userId);
+        UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         Account sourceAccount = accountService.findByAccountNo(dto.withdrawalAccountNo());
@@ -131,21 +132,21 @@ public class SavingsService {
     }
 
     public SavingsAccountResponse getSavingsAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode savingsAccount = finApiSavingsService.getSavingsAccount(userKey, accountNo)
                                                       .block();
         return jsonToDtoConverter.convertToObject(savingsAccount, SavingsAccountResponse.class);
     }
 
     public List<SavingsAccountResponse> getAllSavingsAccounts(
-        Integer userId
+        UserHeaderInfo userHeaderInfo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode savingsAccounts = finApiSavingsService.getSavingsAccounts(userKey)
                                                        .block();
         return jsonToDtoConverter.convertToList(savingsAccounts.get("list"),
@@ -153,11 +154,11 @@ public class SavingsService {
     }
 
     public SavingsExpiryInterestResponse getSavingsExpiryInterest(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode savingsExpiryInterest = finApiSavingsService.getSavingsExpiryInterest(userKey,
                                                                                        accountNo)
                                                              .block();
@@ -166,11 +167,11 @@ public class SavingsService {
     }
 
     public SavingsEarlyTerminationInterestResponse getSavingsEarlyTerminationInterest(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode nodeMono = finApiSavingsService.getSavingsEarlyTerminationInterest(userKey,
                                                                                     accountNo)
                                                 .block();
@@ -180,11 +181,11 @@ public class SavingsService {
 
     @Transactional
     public SavingsAccountDeleteResponse deleteSavingsAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = getUserAccountByUserId(userId);
+        UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         // 2. 삭제하기

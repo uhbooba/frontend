@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositAccountDeleteResponse;
@@ -76,11 +77,11 @@ public class DepositService {
 
     @Transactional
     public DepositAccountResponse createDepositAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         DepositAccountCreateRequest dto
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = getUserAccountByUserId(userId);
+        UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         Account sourceAccount = accountService.findByAccountNo(dto.withdrawalAccountNo());
@@ -130,21 +131,21 @@ public class DepositService {
     }
 
     public DepositAccountResponse getDepositAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode depositAccount = finApiDepositService.getDepositAccount(userKey, accountNo)
                                                       .block();
         return jsonToDtoConverter.convertToObject(depositAccount, DepositAccountResponse.class);
     }
 
     public List<DepositAccountResponse> getAllDepositAccounts(
-        Integer userId
+        UserHeaderInfo userHeaderInfo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode depositAccounts = finApiDepositService.getDepositAccounts(userKey)
                                                        .block();
         return jsonToDtoConverter.convertToList(depositAccounts.get("list"),
@@ -152,11 +153,11 @@ public class DepositService {
     }
 
     public DepositExpiryInterestResponse getDepositExpiryInterest(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode depositExpiryInterest = finApiDepositService.getDepositExpiryInterest(userKey,
                                                                                        accountNo)
                                                              .block();
@@ -165,11 +166,11 @@ public class DepositService {
     }
 
     public DepositEarlyTerminationInterestResponse getDepositEarlyTerminationInterest(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        String userKey = getUserKey(userId);
+        String userKey = getUserKey(userHeaderInfo.userId());
         JsonNode nodeMono = finApiDepositService.getDepositEarlyTerminationInterest(userKey,
                                                                                     accountNo)
                                                 .block();
@@ -179,11 +180,11 @@ public class DepositService {
 
     @Transactional
     public DepositAccountDeleteResponse deleteDepositAccount(
-        Integer userId,
+        UserHeaderInfo userHeaderInfo,
         String accountNo
     ) {
         // 1. 사용자 계정 찾기
-        UserAccount userAccount = getUserAccountByUserId(userId);
+        UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
         // 2. 삭제하기

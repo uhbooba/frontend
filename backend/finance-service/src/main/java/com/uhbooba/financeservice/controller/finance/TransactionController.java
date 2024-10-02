@@ -1,6 +1,7 @@
 package com.uhbooba.financeservice.controller.finance;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
+import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.response.TransactionOutputResponse;
 import com.uhbooba.financeservice.service.TransactionService;
 import com.uhbooba.financeservice.util.CommonUtil;
@@ -36,7 +37,7 @@ public class TransactionController {
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        Integer userId = CommonUtil.getMemberId(headers);
+        UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
 
         // Pageable 객체 생성
         Pageable pageable = PageRequest.of(page, size);
@@ -54,7 +55,7 @@ public class TransactionController {
         @RequestHeader HttpHeaders headers,
         @PathVariable("transaction_id") Integer transactionId
     ) {
-        Integer userId = CommonUtil.getMemberId(headers);
+        UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
         return CommonResponse.ok("완료", transactionService.getTransactionById(transactionId));
     }
 }
