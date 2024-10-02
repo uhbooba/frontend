@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,6 +55,28 @@ public class UserController {
     public CommonResponse<?> checkPhone(@PathVariable("phone") String phone) {
         userService.duplicatePhone(phone);
         return CommonResponse.ok("전화번호 사용 가능");
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "토큰으로 유저 정보 조회")
+    public CommonResponse<?> getUser(@RequestHeader("access") String access) {
+
+        String username = jwtUtil.getUsername(access);
+
+        UserResponse response = userService.getUserByUsername(username);
+
+        return CommonResponse.ok("유저 조회 성공", response);
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "유저 정보 수정(isFirstLogin, password)")
+    public CommonResponse<?> updateUser(@Valid @RequestBody UpdateUserRequest request) {
+
+        userService.updateUser(request);
+
+        return CommonResponse.ok("유저 정보 수정 성공");
     }
 
 }

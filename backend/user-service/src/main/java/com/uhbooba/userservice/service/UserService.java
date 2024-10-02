@@ -51,4 +51,23 @@ public class UserService {
 
         return UserResponse.of(user);
     }
+
+    private void getUserByPhone(String phone) {
+        User user = userRepository.findByPhone(phone)
+            .orElseThrow(() -> new NotFoundException(phone + "가 존재하지 않습니다."));
+
+    }
+
+    public void updateUser(UpdateUserRequest request) {
+
+        getUserByPhone(request.phone());
+
+        if (!Boolean.TRUE.equals(request.isLoginFirst())) {
+            userRepository.updatePasswordByPhone(request.phone(),
+                bCryptPasswordEncoder.encode(request.password()));
+        } else {
+            userRepository.updateFirstLoginByPhone(request.phone(), false);
+        }
+    }
+
 }
