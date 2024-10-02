@@ -28,7 +28,7 @@ const DepositAccount = () => {
 
     const fetchAccountDetails = async () => {
       try {
-        const response = await getUserFreeAccount(99); // 임시로 userId를 99로 설정
+        const response = await getUserFreeAccount();
         console.log(response.data.result);
         const account = response.data.result;
         if (account) {
@@ -105,7 +105,7 @@ const DepositAccount = () => {
           </div>
         ))
       ) : (
-        // 일단 api 못받아오면 하드코딩 뜨게함
+        // 일단 api 못받아오면 하드코딩 뜨게했음 아랫부분
         <div>
           <div
             onClick={() => accountClick(1)}
