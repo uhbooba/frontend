@@ -22,7 +22,7 @@ export const formatContent = (
               href={part}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-blue-500 hover:underline'
+              className='break-all text-blue-500 hover:underline'
               onClick={handleLinkClick}
             >
               {part}
