@@ -53,11 +53,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        Integer id = userDetails.getUserId();
         String username = userDetails.getUsername();
         String name = userDetails.getName();
 
-        String access = jwtUtil.createJwt("access", username, name, ACCESS_TOKEN_EXPIRATION);
-        String refresh = jwtUtil.createJwt("refresh", username, name, REFRESH_TOKEN_EXPIRATION);
+        String access = jwtUtil.createJwt("access", id, username, name, ACCESS_TOKEN_EXPIRATION);
+        String refresh = jwtUtil.createJwt("refresh", id, username, name, REFRESH_TOKEN_EXPIRATION);
 
         refreshService.saveRefreshToken(refresh, username);
 

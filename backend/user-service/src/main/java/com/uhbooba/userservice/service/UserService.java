@@ -1,6 +1,7 @@
 package com.uhbooba.userservice.service;
 
 import com.uhbooba.userservice.dto.request.SignupRequest;
+import com.uhbooba.userservice.dto.request.UpdateUserRequest;
 import com.uhbooba.userservice.dto.response.UserResponse;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
