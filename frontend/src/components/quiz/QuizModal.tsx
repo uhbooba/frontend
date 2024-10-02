@@ -1,5 +1,5 @@
 interface QuizModalProps {
-  content: string;
+  content: string | React.ReactNode;
   isCorrect: boolean;
   onNext?: () => void;
   onRetry?: () => void;
@@ -52,9 +52,9 @@ const QuizModal: React.FC<QuizModalProps> = ({
         </div>
         {/* 본문 */}
         <div className='rounded-xl bg-white p-8 px-10 pt-16 shadow-lg'>
-          <p className='mb-6 whitespace-pre-line text-center text-xl'>
+          <div className='mb-6 whitespace-pre-line text-center text-xl'>
             {content}
-          </p>
+          </div>
 
           {/* 버튼 */}
           <button
