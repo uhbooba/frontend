@@ -126,6 +126,7 @@ const AccountTransferSuccess = lazy(
   () => import('@/pages/account/AccountTransferSuccess'),
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
+const ChatBotPage = lazy(() => import('@/pages/chatBot/ChatBotPage'));
 
 const router = createBrowserRouter([
   {
@@ -223,6 +224,8 @@ const router = createBrowserRouter([
         element: <AccountTransferPassword />,
       },
       { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
+      // 챗봇
+      { path: 'chatbot', element: <ChatBotPage /> },
     ],
   },
 ]);
