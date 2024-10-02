@@ -6,16 +6,10 @@ logger = setup_logger("app")
 
 class RedisService:
     @staticmethod
-    def get_all_data(db_number):
-        """n번 db에 저장된 모든 key-value 데이터 반환"""
+    def get_all_key(db_number):
+        """n번 db에 저장된 모든 key 반환"""
         redis_client = RedisHandler.get_instance(db_number)
-        all_keys = redis_client.keys("*")
-        result = {}
-        for key in all_keys:
-            value = redis_client.get(key)
-            result[key.decode("utf-8")] = value.decode("utf-8") if value else None
-        logger.info(f"DB {db_number}의 모든 데이터 조회: {len(result)}개")
-        return result
+        return redis_client.get_all_keys()
 
     @staticmethod
     def get_data(db_number, key):
@@ -38,3 +32,9 @@ class RedisService:
         else:
             logger.info(f"DB {db_number}에서 키 '{key}' 삭제 실패")
         return result
+
+    @staticmethod
+    def set_data(db_number, key, value):
+        """n번 db에 저장된 해당 'key' 값을 가진 데이터 삭제"""
+        redis_client = RedisHandler.get_instance(db_number)
+        redis_client.set(key, value)
