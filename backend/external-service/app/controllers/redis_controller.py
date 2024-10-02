@@ -25,7 +25,7 @@ class KeyValueRequest(BaseModel):
 
 
 @router.get("/keys/{db_number}", response_model=ok_res)
-async def get_all_data(db_number: int):
+async def get_all_key(db_number: int):
     try:
         data = RedisService.get_all_key(db_number)
         return ok_res(message=f"db number is {db_number}", data=data)
@@ -39,7 +39,6 @@ async def get_all_data(db_number: int):
 
 @router.post("/{db_number}", response_model=ok_res)
 async def set_data(db_number: int, request: KeyValueRequest):
-    """set Data"""
     key = request.key
     value = request.value
 
@@ -75,3 +74,9 @@ async def delete_data(db_number: int, request: KeyRequest):
         }
         return JSONResponse(status_code=404, content=error_response)
     return ok_res(message=f"Key '{key}' deleted from DB {db_number}")
+
+
+@router.delete("/invalidation/{table_name}", response_model=ok_res)
+async def cache_invalidation(table_name: str):
+    result = RedisService.cache_invalidation(table_name)
+    return ok_res(message=f"table {table_name}'s API cache invalidation", data=result)

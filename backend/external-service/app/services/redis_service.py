@@ -1,5 +1,5 @@
 from ..config.logger import setup_logger
-from ..config.redis import RedisHandler
+from ..config.redis import RedisHandler, r_api_keys, r_api_data
 
 logger = setup_logger("app")
 
@@ -38,3 +38,11 @@ class RedisService:
         """n번 db에 저장된 해당 'key' 값을 가진 데이터 삭제"""
         redis_client = RedisHandler.get_instance(db_number)
         redis_client.set(key, value)
+
+    @staticmethod
+    def cache_invalidation(table_name):
+        keys = r_api_keys.get(table_name)
+        for key in keys:
+            r_api_data.delete(key)
+
+        return keys

@@ -1,6 +1,5 @@
 from itertools import groupby
 
-import jsonpickle
 from sqlalchemy.orm import Session
 
 from ..config.logger import setup_logger
@@ -46,7 +45,7 @@ class QuizService:
             for (part, topic), items in grouped_quizzes
         ]
 
-        r_api_data.set(cache_key, jsonpickle.encode(quizzes_by_parts))
+        r_api_data.set(cache_key, quizzes_by_parts)
         logger.info(f"캐싱 데이터 생성 및 Redis 저장 완료 : API key is {cache_key}")
 
         return quizzes_by_parts
@@ -72,7 +71,7 @@ class QuizService:
         quiz_items = [QuizService.quiz_to_quiz_item(quiz) for quiz in quizzes]
         quizzes_by_part = QuizResponse(part=part, topic=topic, quizzes=quiz_items)
 
-        r_api_data.set(cache_key, jsonpickle.encode(quizzes_by_part))
+        r_api_data.set(cache_key, quizzes_by_part)
         logger.info(f"캐싱 데이터 생성 및 Redis 저장 완료 : API key is {cache_key}")
 
         return quizzes_by_part
