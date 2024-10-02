@@ -20,7 +20,7 @@ type AlertMessageType = {
 } | null;
 
 // ending의 타입
-type EndingType = {
+export type EndingType = {
   img: string | null;
   title: string;
   detail: string;
@@ -35,12 +35,58 @@ export type SmishingDataItemType = {
   choice_list: ChoiceType;
   alert_message: AlertMessageType;
   ending: EndingType;
+  ending_id?: string;
 };
 
 // 전체 데이터 타입
 export type SmishingDataType = {
   [key: string]: SmishingDataItemType; //
 };
+
+export const messageList = [
+  {
+    id: 1,
+    phoneNumber: '010-9801-2324',
+    content: '엄마, 핸드폰이 고장나서 수리...',
+    time: '오후 12:30',
+    messageType: 'A0000',
+  },
+  {
+    id: 2,
+    phoneNumber: '010-5261-1881',
+    content: '[안심택배] 배송 출발 고객님의...',
+    time: '오전 11:20',
+    messageType: 'C0000',
+  },
+  {
+    id: 3,
+    phoneNumber: '1588-2187',
+    content: '축하합니다! 응모하신 임영웅 콘...',
+    time: '오후 12:30',
+    messageType: 'D0000_F',
+  },
+  {
+    id: 4,
+    phoneNumber: '010-0208-9712',
+    content: '[모바일 초대] 김지윤❤️차은우...',
+    time: '오전 12:30',
+    messageType: 'B0000',
+  },
+  {
+    id: 5,
+    phoneNumber: '031-2246-2924',
+    content: '귀하에게 민원이 접수되어 통...',
+    time: '오전 12:30',
+    messageType: 'F0000_F',
+  },
+  {
+    id: 6,
+    phoneNumber: '010-2363-4768',
+    content: 'S사 상한가 포착! 수익률 보장...',
+    time: '오전 12:30',
+    messageType: 'E0000',
+  },
+];
 
 export const smishingData: SmishingDataType = {
   A0000: {
@@ -61,6 +107,7 @@ export const smishingData: SmishingDataType = {
     },
     alert_message: null,
     ending: null,
+    ending_id: 'A0021_F',
   },
   A0001: {
     sender: '010-9801-2324',
@@ -190,7 +237,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_a.png',
       title: '"엄마 나 휴대폰 액정 깨졌어" 문자에 아직도 속으십니까',
       detail:
         '올해 2월 50대 여성 A씨는 낯선 문자메시지를 받았다. 누구냐는 물음에 "엄마 딸"이라며 보내 온 이모티콘이 평소 딸이 쓰던 것과 같아, A씨는 의심하지 못했다. 딸은 "출근 중 휴대폰 액정이 깨져 수리 중인데 급한 볼일을 봐야 한다"며 A씨에게 애플리케이션을 설치하고 신분증과 신용카드 사진을 찍어 보내도록 했다.',
@@ -345,7 +392,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_b.jpg',
       title: '모바일 청첩장 클릭했다가 1.4억 털렸다',
       detail:
         'A 씨는 예식장 정보 링크를 휴대전화 문자로 받았습니다.  클릭했지만 별다른 링크는 뜨지 않았고 A 씨는 별생각 없이 넘어갔습니다.  그리고 A 씨 명의의 보험사와 은행 등에서 1억 4천만 원 대출이 이뤄졌고 특정 계좌로 입금됐습니다.',
@@ -564,7 +611,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_c.jpg',
       title: '"물품 배송됐습니다" URL 무심코 눌렀다가 2억 털렸다',
       detail:
         '50대 남성 C씨는 지난해 7월 알 수 없는 발신자에게서 ‘상점 물품 배송했습니다. 확인 부탁합니다’라는 문자메시지를 받았다. 이 문자엔 인터넷 주소(URL)가 포함돼 있었는데, C씨는 이를 물품 배송 현황을 확인할 수 있는 사이트 주소로 오해하고 눌렀다.',
@@ -615,7 +662,8 @@ export const smishingData: SmishingDataType = {
     },
     alert_message: {
       title: '모르는 번호로 전화걸지 마세요',
-      detail: '걸지마!',
+      detail:
+        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \\n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
     },
     ending: null,
   },
@@ -733,7 +781,8 @@ export const smishingData: SmishingDataType = {
     },
     alert_message: {
       title: '모르는 번호로 전화걸지 마세요',
-      detail: '걸지마!',
+      detail:
+        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \\n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
     },
     ending: null,
   },
@@ -752,7 +801,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_d.png',
       title: '"당첨 축하드립니다!" 이벤트 사칭 스미싱 문자 사기 주의보',
       detail:
         "인터넷전문은행 케이뱅크와 편의점 CU 등에서 '세뱃돈 지급 이벤트'를 사칭한 스미싱 문자가 유포되자 금융당국이 대응에 나섰다.",
@@ -883,7 +932,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_e.png',
       title: '쏟아지는 도박·주식투자 문자',
       detail:
         '허위 사실이 담긴 호재성 문자 메시지를 대량 살포해 주가 부양을 도모한 일당이 재판에 넘겨졌다.',
@@ -906,7 +955,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_f.png',
       title: '공공기관 사칭 스미싱 20배 폭증',
       detail:
         '지난해 공공기관을 사칭한 스미싱 문자메시지가 2022년보다 20배 가까이 폭증한 것으로 나타났다. 금융당국은 설 연휴를 전후해 유사 범죄가 기승을 부릴 것으로 보고 주의를 당부했다.',
@@ -929,7 +978,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: null,
+      img: 'https://s3.youm.me/uhbooba/smithing/case_g.png',
       title: '‘신용등급 무관’·‘한시적 정책 상품’… 불법대출 문자 조심하세요',
       detail:
         '3일 금융감독원은 최근 공공기관이나 은행을 사칭한 불법대출 문자메시지가 급증했다며 소비자피해 주의 경보를 내렸다.',

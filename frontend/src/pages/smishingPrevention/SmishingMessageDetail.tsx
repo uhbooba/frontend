@@ -10,14 +10,13 @@ import {
   SmishingDataItemType,
 } from '@/constants/SmishingData';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
-import { useParams } from 'react-router';
-import SmishingEnding from '@/components/smishingPrevention/SmishingEnding'; // EndingScreen 컴포넌트 임포트
+import { useNavigate, useParams } from 'react-router';
 
 const SmishingMessageDetail = () => {
+  const navigate = useNavigate();
   const { messageType } = useParams(); // 시작 타입
   const [data] = useState(smishingData); // 피싱 데이터
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 show
-  const [isEnding, setIsEnding] = useState(false); // 엔딩 페이지 여부
   const [isSendingMessages, setIsSendingMessages] = useState(false); // 메세지 전송 중인지
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -64,12 +63,17 @@ const SmishingMessageDetail = () => {
     [],
   );
 
+  useEffect(() => {
+    return () => {
+      resetState();
+    };
+  }, []);
+
   // 상태 초기화
   const resetState = () => {
     const initialSmishing = data[messageType as keyof typeof data] ?? {};
     setSmishing(initialSmishing);
     setCurrentMessageList([initialSmishing?.message_list[0]]);
-    setIsEnding(false);
     setIsModalOpen(false);
     setModalData({
       title: '',
@@ -82,11 +86,7 @@ const SmishingMessageDetail = () => {
 
     // 엔딩 데이터가 존재하는 경우 엔딩 페이지로 전환
     if (selectedData?.ending) {
-      setIsEnding(true);
-      setModalData({
-        title: selectedData.ending.title,
-        detail: selectedData.ending.detail,
-      });
+      navigate('ending', { state: { endingId: choice } });
       return;
     }
 
@@ -98,12 +98,21 @@ const SmishingMessageDetail = () => {
       setIsModalOpen(true);
     } else {
       if (selectedData) {
-        // setSmishing(selectedData); // smishing 데이터 업데이트
         const newMessages = selectedData.message_list.slice(1);
         addMessagesWithDelay(newMessages, selectedData);
       }
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (smishing?.ending) {
+        navigate('ending', { state: { endingId: messageType } });
+      }
+    }, 10000); // 10초  후에 실행
+
+    return () => clearTimeout(timer); //  타이머 정리
+  }, []);
 
   // 스미싱 버튼
   const buttons: SmishingButtonConfigType[] = Object.entries(
@@ -162,44 +171,28 @@ const SmishingMessageDetail = () => {
         />
       </div>
       <div className='mt-6 flex flex-grow flex-col overflow-hidden px-5 pt-16'>
-        {!isEnding ? (
-          <div
-            className='mb-64 h-full overflow-y-auto p-4'
-            ref={messagesContainerRef}
-          >
-            {currentMessageList.map((message, index) => (
-              <MessageBubble
-                key={index}
-                imgUrl={message.img}
-                content={message.text}
-                time={message.time}
-                isUser={message.is_reply}
-              />
-            ))}
-          </div>
-        ) : (
-          <SmishingEnding
-            sender={smishing?.sender}
-            title={formattedModalTitle}
-            detail={formattedModalDetail}
-            onRetry={resetState}
-          />
-        )}
+        <div
+          className='mb-64 h-full overflow-y-auto p-4'
+          ref={messagesContainerRef}
+        >
+          {currentMessageList.map((message, index) => (
+            <MessageBubble
+              key={index}
+              imgUrl={message.img}
+              content={message.text}
+              time={message.time}
+              isUser={message.is_reply}
+            />
+          ))}
+        </div>
       </div>
-      {!isEnding && (
+      {!isSendingMessages && (
         <div className='fixed bottom-0 w-full flex-shrink-0 bg-white p-4'>
           <div className='mx-auto flex w-full max-w-md flex-row items-center justify-center'>
             <MessageBottom isButton={true} buttons={buttons} />
           </div>
         </div>
       )}
-      {/* {!isEnding && (
-        <div className='fixed bottom-0 w-full bg-white p-4'>
-          <div className='mx-auto flex w-full max-w-md flex-row items-center justify-center'>
-            <MessageBottom isButton={true} buttons={buttons} />
-          </div>
-        </div>
-      )} */}
       {isModalOpen && (
         <QuizModal
           content={

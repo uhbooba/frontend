@@ -5,10 +5,14 @@ import TopBar from '@/components/layouts/TopBar';
 const SmishingAgree = () => {
   const navigate = useNavigate();
 
+  const GoEdu = () => {
+    navigate('/education');
+  };
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='약관 동의' />
+        <TopBar title='약관 동의' onXButtonClick={GoEdu} />
       </div>
 
       <div className='mb-6 mt-24 p-5'>
