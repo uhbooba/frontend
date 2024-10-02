@@ -56,7 +56,7 @@ const TopBar: React.FC<TopBarProps> = ({
           </div>
           <div className='absolute right-20 top-3 flex-col'>
             <TbMessageChatbot
-              onClick={handleGoHome}
+              onClick={() => navigate('/chatbot')}
               size={32}
               className='mb-2'
             />
