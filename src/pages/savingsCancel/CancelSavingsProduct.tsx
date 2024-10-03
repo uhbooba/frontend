@@ -11,6 +11,11 @@ import {
   selectPeriodAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
+import {
+  getUserSavingsAccounts,
+  getEarlyTerminationInterest,
+} from '@/services/saving';
+import { CancelProductData } from '@/types/saving';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
@@ -18,10 +23,44 @@ const CancelSavingsProduct = () => {
   const [selectAccount] = useAtom(selectAccountAtom);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
+  const [productData, setProductData] = useState<CancelProductData | null>(
+    null,
+  );
 
   useEffect(() => {
     setIsModalOpen(false);
-  }, [setIsModalOpen]);
+
+    const fetchProductDetails = async () => {
+      try {
+        if (selectAccount) {
+          // 사용자 적금 계좌 목록에서 해당 계좌 정보를 가져옴
+          const response = await getUserSavingsAccounts(selectAccount);
+          if (response?.data?.result?.length > 0) {
+            const account = response.data.result[0];
+            // 중도해지 이자율을 가져오기 위해 추가 API 호출
+            const earlyTerminationResponse = await getEarlyTerminationInterest(
+              selectAccount,
+              account.accountNo,
+            );
+
+            setProductData({
+              accountName: account.accountName,
+              accountNo: account.accountNo,
+              interestRate: account.interestRate,
+              earlyTerminationInterestRate:
+                earlyTerminationResponse.data.result.earlyTerminationInterest,
+            });
+          } else {
+            console.error('해당 계좌의 적금 상품 정보를 가져올 수 없습니다.');
+          }
+        }
+      } catch (error) {
+        console.error('적금 계좌 정보 가져오는 중 에러 발생:', error);
+      }
+    };
+
+    fetchProductDetails();
+  }, [selectAccount]);
 
   const GoBack = () => {
     navigate(-1);
@@ -53,21 +92,26 @@ const CancelSavingsProduct = () => {
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
-            <span className='text-xl font-bold'>정기적금 2번 상품</span>
+            <span className='text-xl font-bold'>
+              {productData ? productData.accountName : '상품명 정보 없음'}
+            </span>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
-          <div className='mt-2 text-xl font-bold'>{selectAccount}</div>
-          {/* 계좌번호 예금 가입하면 새로 생기는 예금계좌 번호 가져오기 */}
+          <div className='mt-2 text-xl font-bold'>
+            {productData ? productData.accountNo : '계좌번호 정보 없음'}
+          </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <div className='grid grid-cols-3 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>이자율</span>
-              <div className='mt-2 text-xl font-bold'>5%</div>
+              <div className='mt-2 text-xl font-bold'>
+                {productData ? productData.interestRate : '정보 없음'}
+              </div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>월 납입액</span>
@@ -97,7 +141,11 @@ const CancelSavingsProduct = () => {
           <div className='flex'>
             <div>
               <span className='text-2xl text-gray-500'>중도해지 이자율</span>
-              <div className='mt-2 text-xl font-bold'>1%</div>
+              <div className='mt-2 text-xl font-bold'>
+                {productData
+                  ? productData.earlyTerminationInterestRate
+                  : '정보 없음'}
+              </div>
             </div>
             <div className='ml-12 text-left'>
               <span className='text-2xl text-gray-500'>이자 금액</span>
