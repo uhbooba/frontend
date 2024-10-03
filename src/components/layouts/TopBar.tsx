@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa';
 import { TbMessageChatbot } from 'react-icons/tb';
 
 type TopBarProps = {
-  title: string;
+  title: string | React.ReactNode;
   showBackButton?: boolean;
   showXButton?: boolean;
   showMainButton?: boolean;
