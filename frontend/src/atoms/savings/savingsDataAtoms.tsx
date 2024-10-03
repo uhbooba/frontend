@@ -1,9 +1,16 @@
 import { atom } from 'jotai';
 
+interface SelectedSavingsProduct {
+  name: string;
+  interestRate: number;
+  minimumAmount: number;
+  earlyInterestRate: number;
+}
+
+export const selectAccountAtom = atom<number | null>(null);
 export const selectMoneyAtom = atom('');
 export const selectPeriodAtom = atom('');
 export const maturityDateAtom = atom('');
-export const selectAccountAtom = atom<number | null>(null);
 export const checkAtom = atom('');
 export const errorsAtom = atom({
   name: '',
@@ -11,3 +18,6 @@ export const errorsAtom = atom({
   phoneNumber: '',
   accountNumber: '',
 });
+export const selectedSavingsProductAtom = atom<SelectedSavingsProduct | null>(
+  null,
+);
