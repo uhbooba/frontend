@@ -18,15 +18,19 @@ const QuizQuestion = () => {
   const WRONG_TEXT = '앗 오답입니다! \n다시 한번 풀어보세요!';
 
   // 퀴즈 불러오기
-  const getQuiz = async () => {
+  const fetchQuizData = async () => {
     if (part) {
-      const response = await getQuizItem(part);
-      setQuizData(response?.data?.data?.quizzes);
+      try {
+        const response = await getQuizItem(part);
+        setQuizData(response?.data?.data?.quizzes);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   useEffect(() => {
-    getQuiz();
+    fetchQuizData();
   }, []);
 
   const handleAnswer = (answer: string) => {
