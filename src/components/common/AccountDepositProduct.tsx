@@ -8,6 +8,7 @@ type AccountDepositProductProps = {
   minimumPeriod: number;
   moveTo: string;
   selectedProduct: string;
+  onClick: () => void;
 };
 
 const AccountDepositProduct: React.FC<AccountDepositProductProps> = ({
@@ -17,13 +18,14 @@ const AccountDepositProduct: React.FC<AccountDepositProductProps> = ({
   minimumPeriod,
   moveTo,
   selectedProduct,
+  onClick,
 }) => {
   const navigate = useNavigate();
 
   return (
     <div
       className='mt-[20px] h-[148px] w-[360px] rounded-xl bg-[#FFD362] text-center'
-      onClick={() => navigate(moveTo)}
+      onClick={onClick}
     >
       <div className='m-6 flex justify-between'>
         <div className='mt-6 flex h-[104px] w-[104px] flex-col justify-center rounded-xl bg-[#FFAF2A] text-center text-2xl font-extrabold'>

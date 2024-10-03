@@ -10,10 +10,12 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
   checkAtom,
+  selectedSavingsProductAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import { getSavingsProducts } from '@/services/saving';
 import { ProductData } from '@/types/saving';
+import { savingCalculateInterest } from '@/utils/savingCalculateInterest';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const SavingsProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [check] = useAtom(checkAtom);
   const [productData, setProductData] = useState<ProductData | null>(null);
+  const [selectedProduct] = useAtom(selectedSavingsProductAtom);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -44,6 +47,12 @@ const SavingsProduct = () => {
 
     fetchProductDetails();
   }, []);
+
+  const { interest, totalAmount } = savingCalculateInterest(
+    selectMoney,
+    selectedProduct?.interestRate ?? 0,
+    selectPeriod,
+  );
 
   const GoBack = () => {
     navigate(-1);
@@ -77,7 +86,8 @@ const SavingsProduct = () => {
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>
-              {productData ? productData.accountName : '상품명 정보 없음'}
+              {/* {productData ? productData.accountName : '상품명 정보 없음'} */}
+              {selectedProduct ? selectedProduct.name : '상품명 정보 없음'}
             </span>
           </div>
         </div>
@@ -119,12 +129,17 @@ const SavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {productData ? productData.interestRate : '이자 정보 없음'}
+                {/* {productData ? productData.interestRate : '이자 정보 없음'} */}
+                {selectedProduct
+                  ? `${selectedProduct.interestRate}%`
+                  : '이자 정보 없음'}
               </div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>예상 이자</span>
-              <div className='mt-2 text-xl font-bold'>138,750 원</div>
+              <div className='mt-2 text-xl font-bold'>
+                {interest.toLocaleString()} 원
+              </div>
             </div>
           </div>
         </div>
@@ -133,7 +148,9 @@ const SavingsProduct = () => {
           <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>예상 금액</span>
-              <div className='mt-2 text-xl font-bold'>2,173만 8,750원</div>
+              <div className='mt-2 text-xl font-bold'>
+                {totalAmount.toLocaleString()} 원
+              </div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>자동이체 여부</span>

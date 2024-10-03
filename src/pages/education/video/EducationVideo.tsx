@@ -52,6 +52,7 @@ const EducationVideo = () => {
     try {
       const response = await getKeyword();
       setKeywords(response.data.data);
+      console.log('가져온 전체 키워드:', response.data.data);
     } catch (error) {
       console.log('fetchKeywords 에러', error);
     }
@@ -75,7 +76,7 @@ const EducationVideo = () => {
         <TopBar title='교육영상' />
       </div>
 
-      <div className='mt-20 border-b-2'>
+      <div className='mt-16 border-b-2'>
         <KeywordButtons
           keywords={['모두 보기', ...keywords]}
           onKeywordClick={keywordClick}
