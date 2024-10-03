@@ -1,21 +1,37 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/common/buttons/Button';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
+import { getUserFreeAccount } from '@/services/account';
 
 const EducationDownload = () => {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const name = '이희주'; // 나중에 사용자 정보에서 이름 가져와서 여기에 넣기
+  const [userName, setUserName] = useState<string>('사용자 이름'); // 기본 이름 설정
   const currentDate = new Date().toLocaleDateString();
 
   const GoEdu = () => {
     navigate('/education');
   };
 
-  // 캔바스 사용해서 이미지 위에 글씨 올리는 구조
+  // 캔버스 사용해서 이미지 위에 글씨 올리는 구조
   useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const response = await getUserFreeAccount();
+        if (response?.data?.result?.username) {
+          setUserName(response.data.result.username); // API로부터 사용자 이름 가져오기
+        } else {
+          console.error('사용자 이름을 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error('사용자 정보 API 호출 중 오류 발생:', error);
+      }
+    };
+
+    fetchUserName();
+
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
 
@@ -39,14 +55,14 @@ const EducationDownload = () => {
 
         ctx.font = `bold ${40 * scaleRatio}px sans-serif`;
         ctx.fillStyle = 'black';
-        ctx.fillText(name, canvasWidth * 0.72, canvasHeight * 0.3); // 이름 위치 수정하는 곳
+        ctx.fillText(userName, canvasWidth * 0.72, canvasHeight * 0.3); // 이름 위치 수정하는 곳
 
         ctx.font = `bold ${45 * scaleRatio}px sans-serif`;
         ctx.fillStyle = 'black';
         ctx.fillText(currentDate, canvasWidth * 0.4, canvasHeight * 0.8); // 날짜 위치 수정하는 곳
       };
     }
-  }, [name, currentDate]);
+  }, [userName, currentDate]);
 
   const downloadImage = () => {
     const canvas = canvasRef.current;

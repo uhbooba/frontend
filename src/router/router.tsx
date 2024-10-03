@@ -138,6 +138,7 @@ const SmishingMessageDetail = lazy(
   () => import('@/pages/smishingPrevention/SmishingMessageDetail'),
 );
 const MissionStamps = lazy(() => import('@/pages/gamification/MissionStamps'));
+const ChatBotPage = lazy(() => import('@/pages/chatBot/ChatBotPage'));
 
 const router = createBrowserRouter([
   {
@@ -254,6 +255,8 @@ const router = createBrowserRouter([
       },
       // 게이미피케이션
       { path: 'stamp', element: <MissionStamps /> },
+      // 챗봇
+      { path: 'chatbot', element: <ChatBotPage /> },
     ],
   },
 ]);

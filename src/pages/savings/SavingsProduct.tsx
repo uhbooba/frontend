@@ -6,12 +6,14 @@ import BigModal from '@/components/modals/BigModal';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
-  checkAtom,
   maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
+  checkAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
+import { getSavingsProducts } from '@/services/saving';
+import { ProductData } from '@/types/saving';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();
@@ -20,10 +22,28 @@ const SavingsProduct = () => {
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [check] = useAtom(checkAtom);
+  const [productData, setProductData] = useState<ProductData | null>(null);
 
   useEffect(() => {
-    setIsModalOpen(false);
-  }, [setIsModalOpen]);
+    const fetchProductDetails = async () => {
+      try {
+        const response = await getSavingsProducts();
+        if (response?.data?.result?.length > 0) {
+          const product = response.data.result[0];
+          setProductData({
+            accountName: product.accountName,
+            interestRate: product.interestRate,
+          });
+        } else {
+          console.error('상품 정보가 아직 없음');
+        }
+      } catch (error) {
+        console.error('적금api 불러오다가 에러 뜸', error);
+      }
+    };
+
+    fetchProductDetails();
+  }, []);
 
   const GoBack = () => {
     navigate(-1);
@@ -41,14 +61,6 @@ const SavingsProduct = () => {
     setIsModalOpen(false);
   };
 
-  const parseCurrency = (value: string): number => {
-    return Number(value.replace(/[^0-9]/g, ''));
-  };
-
-  const formatCurrency = (value: number): string => {
-    return value.toLocaleString() + ' 원';
-  };
-
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
@@ -58,14 +70,15 @@ const SavingsProduct = () => {
       <div className='mb-6 mt-20'>
         <LevelBar currentLevel={4} totalLevel={5} />
       </div>
-
       <div className='p-4'>
         <div className='text-3xl font-bold'>가입 상품 안내</div>
 
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
-            <span className='text-xl font-bold'>정기적금 2번 상품</span>
+            <span className='text-xl font-bold'>
+              {productData ? productData.accountName : '상품명 정보 없음'}
+            </span>
           </div>
         </div>
 
@@ -91,10 +104,11 @@ const SavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>만기시 원금</span>
               <div className='mt-2 text-xl font-bold'>
-                {formatCurrency(
+                {(
                   Number(selectPeriod.replace('개월', '')) *
-                    parseCurrency(selectMoney),
-                )}
+                  Number(selectMoney.replace(/[^0-9]/g, ''))
+                ).toLocaleString()}{' '}
+                원
               </div>
             </div>
           </div>
@@ -104,7 +118,9 @@ const SavingsProduct = () => {
           <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>이자율</span>
-              <div className='mt-2 text-xl font-bold'>5%</div>
+              <div className='mt-2 text-xl font-bold'>
+                {productData ? productData.interestRate : '이자 정보 없음'}
+              </div>
             </div>
             <div>
               <span className='text-2xl text-gray-500'>예상 이자</span>
