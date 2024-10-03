@@ -2,13 +2,13 @@ import { axiosInstance } from '@/utils/axiosInstance';
 
 // 예금 상품 전체 조회
 export const getDepositProducts = () => {
-  const response = axiosInstance.get('/finances/deposits/products');
+  const response = axiosInstance('/finances/deposits/products');
   return response;
 };
 
 // 사용자의 예금 계좌 목록 조회
 export const getUserDepositAccounts = (userId: number) => {
-  const response = axiosInstance.get('/finances/deposits/accounts', {
+  const response = axiosInstance('/finances/deposits/accounts', {
     params: { userId },
   });
   return response;
@@ -19,7 +19,7 @@ export const getDepositExpiryInterests = (
   userId: number,
   accountNo: string,
 ) => {
-  const response = axiosInstance.get(
+  const response = axiosInstance(
     '/finances/deposits/accounts/expiry-interests',
     {
       params: { userId, accountNo },
@@ -33,7 +33,7 @@ export const getEarlyTerminationInterest = (
   userId: number,
   accountNo: string,
 ) => {
-  const response = axiosInstance.get(
+  const response = axiosInstance(
     '/finances/deposits/accounts/early-termination-interest',
     {
       params: { userId, accountNo },

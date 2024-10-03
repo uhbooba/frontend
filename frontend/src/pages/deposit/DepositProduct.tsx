@@ -12,11 +12,7 @@ import {
 } from '@/atoms/deposit/depositDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import { getDepositProducts } from '@/services/deposit';
-
-interface ProductData {
-  accountName: string;
-  interestRate: string;
-}
+import { ProductData } from '@/types/deposit';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -32,7 +28,7 @@ const DepositProduct = () => {
     const fetchDepositProduct = async () => {
       try {
         const response = await getDepositProducts();
-        const product = response.data.result[0];
+        const product = response?.data?.result[0];
         setProductData({
           accountName: product.accountName,
           interestRate: product.interestRate,

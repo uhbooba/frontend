@@ -9,12 +9,7 @@ import { useAtom } from 'jotai';
 import { selectAccountAtom } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
-
-interface AccountDetail {
-  accountName: string;
-  accountNo: string;
-  accountBalance: string;
-}
+import { AccountDetail } from '@/types/saving';
 
 const SavingsAccount = () => {
   const navigate = useNavigate();
@@ -30,7 +25,7 @@ const SavingsAccount = () => {
       try {
         const response = await getUserFreeAccount();
         console.log(response.data.result);
-        const account = response.data.result;
+        const account = response?.data?.result;
         if (account) {
           setAccountDetails([account]);
         } else {

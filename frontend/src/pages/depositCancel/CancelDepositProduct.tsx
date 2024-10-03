@@ -15,33 +15,7 @@ import {
   getEarlyTerminationInterest,
   getUserDepositAccounts,
 } from '@/services/deposit';
-
-// 중복되는 데이터 타입들 모음
-interface BaseAccountData {
-  bankCode: string;
-  bankName: string;
-  accountNo: string;
-  accountName: string;
-  interestRate: string;
-  accountCreateDate: string;
-}
-
-// 스웨거 '사용자의 예금 계좌 목록 조회' 데이터 타입
-interface AccountData extends BaseAccountData {
-  withdrawalBankCode: string;
-  withdrawalAccountNo: string;
-  subscriptionPeriod: string;
-  depositBalance: string;
-  accountExpiryDate: string;
-}
-
-// 스웨거 '중도 해지 시 이자' 데이터 타입
-interface TerminationInterestData extends BaseAccountData {
-  earlyTerminationDate: string;
-  depositBalance: string;
-  earlyTerminationInterest: string;
-  earlyTerminationBalance: string;
-}
+import { AccountData, TerminationInterestData } from '@/types/deposit';
 
 const CancelDepositProduct = () => {
   const navigate = useNavigate();
@@ -59,7 +33,7 @@ const CancelDepositProduct = () => {
     const fetchAccountData = async () => {
       try {
         const response = await getUserDepositAccounts(99); // 나중에는 userId를 넣어야 함, 임시로 99로 설정
-        const account = response.data.result[0]; // 일단 첫번째 0번 계좌로 가져오기
+        const account = response?.data?.result[0]; // 일단 첫번째 0번 계좌로 가져오기
         setAccountData(account);
 
         const interestResponse = await getEarlyTerminationInterest(
