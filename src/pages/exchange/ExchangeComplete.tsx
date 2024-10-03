@@ -3,14 +3,18 @@ import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import { useState } from 'react';
 import Button from '@/components/common/buttons/Button';
+import { useAtom } from 'jotai';
+import { accountNoAtom, exchangeAmountAtom } from '@/atoms/exchangeAtoms';
 
 const ExchangeComplete = () => {
   const navigate = useNavigate();
+  const [accountNo] = useAtom(accountNoAtom);
+  const [amount] = useAtom(exchangeAmountAtom);
 
   const [ExchangeData] = useState({
-    exchangeAdress: '000-1111-111111',
+    exchangeAdress: accountNo,
     exchangeAmount: 13,
-    krwAmount: 6500,
+    krwAmount: amount,
     exchangeDate: '2024/09/07',
   });
 

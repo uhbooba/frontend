@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
 import SmishingEnding from '@/pages/smishingPrevention/SmishingEnding';
+import ExchangeAccount from '@/pages/exchange/ExchangeAccount';
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -199,6 +200,7 @@ const router = createBrowserRouter([
       { path: 'exchange/explain', element: <ExchangeExplain /> },
       { path: 'exchange/agree', element: <ExchangeAgree /> },
       { path: 'exchange/money', element: <ExchangeMoney /> },
+      { path: 'exchange/account', element: <ExchangeAccount /> },
       { path: 'exchange/password', element: <ExchangePassword /> },
       { path: 'exchange/complete', element: <ExchangeComplete /> },
       { path: 'exchange/success', element: <ExchangeSuccess /> },

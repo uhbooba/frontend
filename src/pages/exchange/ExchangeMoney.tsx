@@ -7,11 +7,13 @@ import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
 import ExchangeConfirm from '@/components/exchange/ExchangeConfirm';
 import { useAtom } from 'jotai';
-import { exchangeDataAtom } from '@/atoms/exchangeAtoms';
+import { exchangeAmountAtom } from '@/atoms/exchangeAtoms';
+import { getExchangeRate } from '@/services/exchange';
+import ErrorText from '@/components/common/ErrorText';
 
 const ExchangeMoney = () => {
   const navigate = useNavigate();
-  const [usdAmount, setUsdAmount] = useAtom(exchangeDataAtom);
+  const [usdAmount, setUsdAmount] = useAtom(exchangeAmountAtom);
   const [krwAmount, setKrwAmount] = useState('');
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<
@@ -19,13 +21,21 @@ const ExchangeMoney = () => {
   >(null);
   const [isBottomOpen, setIsBottomOpen] = useState(false);
 
-  const exchangeRate = 1330;
+  const [exchangeRate, setExchangeRate] = useState<number>(0);
+  const [error, setError] = useState('');
 
   const GoBack = () => {
     navigate(-1);
   };
 
   const OpenModal = () => {
+    // 10달러 미만일 경우
+    if (parseFloat(usdAmount) < 10 || usdAmount === '') {
+      setError('10달러 이상부터 환전 가능합니다.');
+      return;
+    }
+
+    setError('');
     setIsBottomOpen(true);
   };
 
@@ -62,8 +72,24 @@ const ExchangeMoney = () => {
   const handleConfirmExchange = () => {
     // 환전 확인
     setIsBottomOpen(false);
-    navigate('/exchange/password');
+    navigate('/exchange/account');
   };
+
+  const fetchUSDRate = async () => {
+    try {
+      const response = await getExchangeRate('USD');
+
+      const rawExchangeRate = response.data?.result?.exchangeRate;
+
+      setExchangeRate(parseFloat(rawExchangeRate.replace(/,/g, '')));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUSDRate();
+  }, []);
 
   return (
     <div>
@@ -72,7 +98,7 @@ const ExchangeMoney = () => {
       </div>
 
       <div className='mb-6 mt-20'>
-        <LevelBar currentLevel={2} totalLevel={3} />
+        <LevelBar currentLevel={2} totalLevel={4} />
       </div>
 
       <div className='m-4'>
@@ -86,10 +112,14 @@ const ExchangeMoney = () => {
             setKeyOpen(true);
             setSelectedCurrency('USD');
           }}
-          onChange={(e) => setUsdAmount(e.target.value)}
-          className='mb-5'
+          isError={error !== ''}
+          onChange={(e) => {
+            setUsdAmount(e.target.value);
+            setError('');
+          }}
         />
-        <div className='my-3 flex justify-center'>
+        {error && <ErrorText content={error} />}
+        <div className='my-6 flex justify-center'>
           <div className='w-fit rounded-full border-2 border-primary p-2 text-primary'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -115,7 +145,11 @@ const ExchangeMoney = () => {
             setKeyOpen(true);
             setSelectedCurrency('KRW');
           }}
-          onChange={(e) => setKrwAmount(e.target.value)}
+          isError={error !== ''}
+          onChange={(e) => {
+            setKrwAmount(e.target.value);
+            setError('');
+          }}
           className='mb-5'
         />
       </div>
