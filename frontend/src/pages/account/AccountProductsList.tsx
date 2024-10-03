@@ -12,7 +12,7 @@ const AccountProductsList = () => {
     {
       name: '정기 예금',
       description: '목돈을 맡겨두고 높은 이자를 받아요.',
-      moveTo: '',
+      moveTo: '/account/products/deposit',
     },
     {
       name: '정기 적금',
