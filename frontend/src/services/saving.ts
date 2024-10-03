@@ -8,14 +8,14 @@ export const getSavingsProducts = () => {
 
 // 사용자의 적금 계좌 목록 조회
 export const getUserSavingsAccounts = (userId: number) => {
-  return axiosInstance.get('/finances/savings/accounts', {
+  return axiosInstance('/finances/savings/accounts', {
     params: { userId },
   });
 };
 
 // 적금 만기 이자 조회
 export const getExpiryInterest = (userId: number, accountNo: string) => {
-  return axiosInstance.get('/finances/savings/accounts/expiry-interests', {
+  return axiosInstance('/finances/savings/accounts/expiry-interests', {
     params: { userId, accountNo },
   });
 };
