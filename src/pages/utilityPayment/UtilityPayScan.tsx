@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import QrScanner from 'qr-scanner';
 import TopBar from '@/components/layouts/TopBar';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { utilityDataAtom } from '@/atoms/utilityAtoms';
 
 const UtilityPayScan = () => {
@@ -10,7 +10,7 @@ const UtilityPayScan = () => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const [utilityData, setUtilityData] = useAtom(utilityDataAtom);
+  const setUtilityData = useSetAtom(utilityDataAtom);
 
   useEffect(() => {
     const videoElem = videoRef.current;

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
-import { useState } from 'react';
 import Button from '@/components/common/buttons/Button';
 import LevelBar from '@/components/common/LevelBar';
 import { useAtom } from 'jotai';
@@ -10,7 +9,7 @@ import { utilityDataAtom } from '@/atoms/utilityAtoms';
 const UtilityPayMoney = () => {
   const navigate = useNavigate();
 
-  const [utilityData, setUtilityData] = useAtom(utilityDataAtom);
+  const [utilityData] = useAtom(utilityDataAtom);
 
   return (
     <div>

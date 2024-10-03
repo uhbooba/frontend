@@ -16,10 +16,10 @@ const UtilityPayPassword = () => {
     navigate('/utility/success');
 
     // 환전 시작
-    payUtility();
+    fetchPayUtility();
   };
 
-  const payUtility = async () => {
+  const fetchPayUtility = async () => {
     try {
       await postUtilityPay(utilityData.corporation, utilityData.amount);
     } catch (error) {
