@@ -2,7 +2,7 @@ import re
 from datetime import datetime, timedelta
 
 import requests
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
 from ..config.config import OPENAI_API_KEY
@@ -33,24 +33,25 @@ class ChatService:
         return re.sub(r"[\*_`#]+", "", text).strip()
 
     @staticmethod
-    def save_chat_history_to_db(key: str):
-        db = SessionLocal()
-
+    def save_chat_history_to_db(db: Session):
+        key_list = r_chat_log.get_all_keys()
+        user_cnt = len(key_list)
+        message_cnt = 0
         try:
-            chat_logs = r_chat_log.get(key)
+            for key in key_list:
+                chat_logs = r_chat_log.get(key)
+                for chat_log in reversed(chat_logs):
+                    chat_history = ChatHistory(**chat_log)
+                    db.add(chat_history)
+                    message_cnt += 1
 
-            for chat_log in reversed(chat_logs):
-                chat_history = ChatHistory(**chat_log)
-                db.add(chat_history)
-
-            db.commit()
-            r_chat_log.delete(key)
-
-            logger.info(f"Redis에 저장된 데이터 10개를 DB에 저장 완료: {key}")
-
-        except SQLAlchemyError as e:
-            db.rollback()
-            logger.info(f"DB 저장 중 오류 발생: {str(e)}")
+                db.commit()
+                r_chat_log.delete(key)
+            if message_cnt == 0:
+                return "메세지 기록이 없음"
+            message = f"{user_cnt}명 유저의 {message_cnt}개 메세지 DB에 저장 완료"
+            logger.info(message)
+            return message
 
         except Exception as e:
             logger.info(f"채팅 기록 저장 중 오류 발생: {str(e)}")
@@ -64,9 +65,7 @@ class ChatService:
         else:
             cnt = int(cnt)
         if cnt >= 10:
-            raise Exception(
-                f"오늘의 채팅 크레딧을 모두 썻습니다: user key is {userKey}"
-            )
+            raise Exception(f"오늘의 채팅 크레딧을 모두 썻습니다: user_id is {userKey}")
         request_time = current_kst_time()
 
         now_kst = request_time
@@ -110,8 +109,7 @@ class ChatService:
             "ai_output": answer,
         }
 
-        if r_chat_log.lpush(userKey, chat_history) > 10:
-            ChatService.save_chat_history_to_db(userKey)
+        r_chat_log.lpush(userKey, chat_history)
 
         return {
             "date": response_time.strftime("%Y-%m-%d"),

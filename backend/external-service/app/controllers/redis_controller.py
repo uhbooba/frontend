@@ -8,10 +8,11 @@ from ..schemas.success_response import ok_res
 from ..services.redis_service import RedisService
 
 # Setup
-router = APIRouter(prefix="/redis", tags=["(개발용)redis"])
+router = APIRouter(prefix="/redis", tags=["(개발용) redis"])
 
 
 # Constants
+# Schemas
 class KeyRequest(BaseModel):
     key: str
 
@@ -19,9 +20,6 @@ class KeyRequest(BaseModel):
 class KeyValueRequest(BaseModel):
     key: str
     value: Any
-
-
-# Schemas
 
 
 @router.get("/keys/{db_number}", response_model=ok_res)

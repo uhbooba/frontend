@@ -21,7 +21,10 @@ def get_all_quiz(db: Session = Depends(get_db)):
         data = QuizService.get_all_quizzes(db)
         return ok_res(data=data)
     except Exception as e:
-        error_response = {"status": "error", "data": f"Failed to get quizzes: {str(e)}"}
+        error_response = {
+            "status": "error",
+            "message": f"Failed to get quizzes: {str(e)}",
+        }
         return JSONResponse(status_code=500, content=error_response)
 
 
