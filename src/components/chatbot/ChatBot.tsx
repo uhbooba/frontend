@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
-import { axiosInstance } from '@/utils/axiosInstance';
+import { postChatBotQuestion } from '@/services/ai';
 
 const exampleQuestions = [
   '대표적인 모바일 뱅킹 앱 서비스가 뭐가 있을까?',
@@ -17,15 +17,9 @@ const Chatbot: React.FC = () => {
   const handleSendMessage = async (question: string) => {
     const userMessage = { question, answer: '' };
     setMessages((prev) => [...prev, userMessage]);
-
     try {
       // Axios로 POST 요청 보낼 때는 data를 사용해야 합니다.
-      const response = await axiosInstance.post(
-        '/external-service/chat',
-        {
-          question, // 여기에 전송할 데이터를 넣습니다.
-        },
-      );
+      const response = await postChatBotQuestion(question);
 
       // Axios는 응답 객체에 status가 바로 있으므로, response.status로 상태 확인
       if (response.status !== 200) {
@@ -33,7 +27,7 @@ const Chatbot: React.FC = () => {
       }
 
       // Axios 응답은 이미 JSON으로 파싱된 상태입니다.
-      const data = response.data;
+      const data = response.data.data;
       userMessage.answer = data.answer;
       setMessages((prev) => [...prev.slice(0, -1), userMessage]);
     } catch (error) {
