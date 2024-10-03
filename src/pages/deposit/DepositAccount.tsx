@@ -9,18 +9,15 @@ import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
-
-interface AccountDetail {
-  accountName: string;
-  accountNo: string;
-  accountBalance: string;
-}
+import { AccountDetail } from '@/types/deposit';
 
 const DepositAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [accountDetails, setAccountDetails] = useState<AccountDetail[]>([]);
+  const [accountDetails, setAccountDetails] = useState<AccountDetail | null>(
+    null,
+  );
 
   useEffect(() => {
     setSelectAccount(null);
@@ -32,7 +29,8 @@ const DepositAccount = () => {
         console.log(response.data.result);
         const account = response.data.result;
         if (account) {
-          setAccountDetails([account]);
+          setAccountDetails(account);
+          console.log(accountDetails?.accountBalance);
         } else {
           console.error('계좌가 없으요');
         }
@@ -56,8 +54,8 @@ const DepositAccount = () => {
     }
   };
 
-  const accountClick = (accountIndex: number) => {
-    setSelectAccount(accountIndex);
+  const accountClick = () => {
+    setSelectAccount(0);
   };
 
   const closeModal = () => {
@@ -82,63 +80,47 @@ const DepositAccount = () => {
         <span>출금계좌 선택</span>
       </div>
 
-      {accountDetails.length > 0 ? (
-        accountDetails.map((account, index) => (
-          <div
-            key={index}
-            onClick={() => accountClick(index)}
-            className={clsx(
-              'm-4 cursor-pointer rounded-lg border-2 p-4',
-              selectAccount === index
-                ? 'border-blue-400 text-blue-400'
-                : 'border-gray-200',
-            )}
-          >
-            <div className='text-base font-bold'>{account.accountName}</div>
-            <div className='text-sm text-gray-500'>{account.accountNo}</div>
-            <div className='mt-2 text-right'>
-              <span className='mr-6 text-gray-400'>출금가능금액</span>
-              <span className='font-bold text-black'>
-                {account.accountBalance} 원
-              </span>
-            </div>
+      {accountDetails ? (
+        <div
+          onClick={accountClick}
+          className={clsx(
+            'm-4 cursor-pointer rounded-lg border-2 p-4',
+            selectAccount === 0
+              ? 'border-blue-400 text-blue-400'
+              : 'border-gray-200',
+          )}
+        >
+          <div className='text-base font-bold'>
+            {accountDetails.accountName}
           </div>
-        ))
+          <div className='text-sm text-gray-500'>
+            {accountDetails.accountNo}
+          </div>
+          <div className='mt-2 text-right'>
+            <span className='mr-6 text-gray-400'>출금가능금액</span>
+            <span className='font-bold text-black'>
+              {accountDetails.accountBalance
+                ? `${accountDetails.accountBalance} 원'`
+                : '정보없음'}
+            </span>
+          </div>
+        </div>
       ) : (
-        // 일단 api 못받아오면 하드코딩 뜨게했음 아랫부분
-        <div>
-          <div
-            onClick={() => accountClick(1)}
-            className={clsx(
-              'm-4 cursor-pointer rounded-lg border-2 p-4',
-              selectAccount === 1
-                ? 'border-blue-400 text-blue-400'
-                : 'border-gray-200',
-            )}
-          >
-            <div className='text-base font-bold'>자유입출금 계좌 1</div>
-            <div className='text-sm text-gray-500'>183-217-673215</div>
-            <div className='mt-2 text-right'>
-              <span className='mr-6 text-gray-400'>출금가능금액</span>
-              <span className='font-bold text-black'>100,000,000 원</span>
-            </div>
-          </div>
-
-          <div
-            onClick={() => accountClick(2)}
-            className={clsx(
-              'm-4 cursor-pointer rounded-lg border-2 p-4',
-              selectAccount === 2
-                ? 'border-blue-400 text-blue-400'
-                : 'border-gray-200',
-            )}
-          >
-            <div className='text-base font-bold'>자유입출금 계좌 2</div>
-            <div className='text-sm text-gray-500'>323-123-215423</div>
-            <div className='mt-2 text-right'>
-              <span className='mr-6 text-gray-400'>출금가능금액</span>
-              <span className='font-bold text-black'>5,550,000 원</span>
-            </div>
+        // 일단 api 못받아오면 하드코딩 뜨게 했음 아랫부분
+        <div
+          onClick={accountClick}
+          className={clsx(
+            'm-4 cursor-pointer rounded-lg border-2 p-4',
+            selectAccount === 0
+              ? 'border-blue-400 text-blue-400'
+              : 'border-gray-200',
+          )}
+        >
+          <div className='text-base font-bold'>자유입출금 계좌 1</div>
+          <div className='text-sm text-gray-500'>183-217-673215</div>
+          <div className='mt-2 text-right'>
+            <span className='mr-6 text-gray-400'>출금가능금액</span>
+            <span className='font-bold text-black'>100,000,000 원</span>
           </div>
         </div>
       )}

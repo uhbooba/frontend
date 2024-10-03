@@ -13,11 +13,7 @@ import {
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import { getSavingsProducts } from '@/services/saving';
-
-interface ProductData {
-  accountName: string;
-  interestRate: string;
-}
+import { ProductData } from '@/types/saving';
 
 const SavingsProduct = () => {
   const navigate = useNavigate();

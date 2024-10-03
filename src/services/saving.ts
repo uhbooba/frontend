@@ -2,7 +2,7 @@ import { axiosInstance } from '@/utils/axiosInstance';
 
 // 적금 상품 전체 조회
 export const getSavingsProducts = () => {
-  const response = axiosInstance.get('/finances/savings/products');
+  const response = axiosInstance('/finances/savings/products');
   return response;
 };
 
@@ -25,7 +25,7 @@ export const getEarlyTerminationInterest = (
   userId: number,
   accountNo: string,
 ) => {
-  return axiosInstance.get(
+  return axiosInstance(
     '/finances/savings/accounts/early-termination-interest',
     {
       params: { userId, accountNo },

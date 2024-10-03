@@ -15,13 +15,7 @@ import {
   getUserSavingsAccounts,
   getEarlyTerminationInterest,
 } from '@/services/saving';
-
-interface ProductData {
-  accountName: string;
-  accountNo: string;
-  interestRate: string;
-  earlyTerminationInterestRate: string;
-}
+import { CancelProductData } from '@/types/saving';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
@@ -29,7 +23,9 @@ const CancelSavingsProduct = () => {
   const [selectAccount] = useAtom(selectAccountAtom);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [productData, setProductData] = useState<ProductData | null>(null);
+  const [productData, setProductData] = useState<CancelProductData | null>(
+    null,
+  );
 
   useEffect(() => {
     setIsModalOpen(false);
