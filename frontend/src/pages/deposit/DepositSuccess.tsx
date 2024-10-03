@@ -1,8 +1,15 @@
 import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
+import { useNavigate } from 'react-router';
 
 const DepositSuccess = () => {
+  const navigate = useNavigate();
+
+  const GoNext = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       <div className='fixed left-0 top-0 z-10 w-full'>
@@ -65,10 +72,11 @@ const DepositSuccess = () => {
           {/* 버튼 */}
           <div className='mb-3'>
             <Button
-              label='나의 계좌로 이동하기'
+              label='메인화면으로 이동하기'
               size='large'
               color='orange'
               className='w-full py-4'
+              onClick={() => GoNext()}
             />
           </div>
         </div>
