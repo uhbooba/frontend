@@ -38,6 +38,7 @@ public class AccountService {
         // 4. DB에 계좌 저장하기
         Account account = accountMapper.toEntity(accountResponse);
         account.setUserAccount(userAccount);
+        account.setUsername(userAccount.getUsername());
         return accountRepository.save(account);
     }
 
