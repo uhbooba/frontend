@@ -191,8 +191,8 @@ const router = createBrowserRouter([
       { path: 'education/download', element: <EducationDownload /> },
       // 퀴즈
       { path: 'quiz', element: <QuizMain /> },
-      { path: 'quiz/:type', element: <QuizQuestion /> },
-      { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      { path: 'quiz/:part', element: <QuizQuestion /> },
+      { path: 'quiz/:part/success', element: <QuizSuccess /> },
       // 환전
       { path: 'exchange/mission', element: <ExchangeMission /> },
       { path: 'exchange/explain', element: <ExchangeExplain /> },
