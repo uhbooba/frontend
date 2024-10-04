@@ -11,3 +11,9 @@ export const getUserFreeAccount = () => {
   });
   return response;
 };
+
+// 입출금 계좌 거래 내역 조회
+export const getUserFreeAccountTransactions = () => {
+  const response = axiosInstance('/finances/transactions');
+  return response;
+};
