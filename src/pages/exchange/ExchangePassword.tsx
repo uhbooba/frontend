@@ -15,12 +15,14 @@ const ExchangePassword = () => {
     console.log('비밀번호 확인용 :', password.join(''));
 
     fetchExchange(); // 추후 비밀번호 확인 추가 예정
-    navigate('/exchange/complete');
   };
 
   const fetchExchange = async () => {
     try {
-      await postExchange(accountNo, 'USD', amount);
+      const response = await postExchange(accountNo, 'USD', amount);
+      navigate('/exchange/complete', {
+        state: { exchangeResult: response.data?.result },
+      });
     } catch (error) {
       console.log(error);
     }
