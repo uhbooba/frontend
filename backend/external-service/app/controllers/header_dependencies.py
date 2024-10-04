@@ -2,7 +2,9 @@ from urllib.parse import unquote
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from ..config.logger import setup_logger
 
+logger = setup_logger("app")
 
 class UserHeaderInfo:
     def __init__(self, user_id: int, name: str):
@@ -16,9 +18,11 @@ def get_user_header_info(
         # x_name: Optional[str] = Header(None),
         # headers: Header(None)
 ):
+    # 헤더 정보 출력
+    for key, value in request.headers.items():
+        logger.info(f"[헤더] {key}: {value}")
     user_id = request.headers.x_userid
     user_name = request.headers.x_name
-    print(request.headers)
     if not user_id or not user_name:
         return JSONResponse(
             status_code=400,
