@@ -9,6 +9,7 @@ const createAxiosInstance = () => {
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true,
   });
 
   // 요청 인터셉터
@@ -17,7 +18,7 @@ const createAxiosInstance = () => {
       const accessToken = localStorage.getItem('ACCESS_TOKEN');
 
       if (accessToken) {
-        config.headers.access = `${accessToken}`;
+        config.headers['access'] = `${accessToken}`;
       }
       return config;
     },
@@ -25,8 +26,6 @@ const createAxiosInstance = () => {
       return Promise.reject(error);
     },
   );
-
-  instance.defaults.withCredentials = true;
 
   return instance;
 };
