@@ -22,16 +22,13 @@ const AddCash = () => {
     transactionSummary: string,
   ) => {
     if (selectedButton !== null) {
-      const addCash = async () => {
+      const addCash = () => {
         try {
-          const response = await postUserFreeAccountAddCash(
+          postUserFreeAccountAddCash(
             accountNo,
             transactionBalance,
             transactionSummary,
           );
-          if (response.status !== 200) {
-            throw new Error('Network response was not ok');
-          }
         } catch (error) {
           console.error('Error fetching answer:', error);
         }
