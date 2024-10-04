@@ -63,7 +63,9 @@ def get_message_list(
         return user_info
     print(user_info.name)
     try:
-        message_list, remain_count = SmishingService.get_message_list(user_info.id, db)
+        message_list, remain_count = SmishingService.get_message_list(
+            user_info.user_id, db
+        )
         message = (
             "메시지" if remain_count == 0 else f"읽지 않은 메시지\n{remain_count}개"
         )

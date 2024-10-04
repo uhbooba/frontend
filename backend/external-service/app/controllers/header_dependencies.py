@@ -9,8 +9,8 @@ logger = setup_logger("app")
 
 
 class UserHeaderInfo:
-    def __init__(self, id: int, name: str):
-        self.id = id
+    def __init__(self, user_id: int, name: str):
+        self.user_id = user_id
         self.name = name
 
 
@@ -26,4 +26,4 @@ def get_user_header_info(
             content={"status": "error", "message": "헤더에 토큰이 필요합니다"},
         )
 
-    return UserHeaderInfo(id=int(id), name=unquote(user_name))
+    return UserHeaderInfo(user_id=int(user_id), name=unquote(user_name))
