@@ -8,6 +8,8 @@ eureka:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
 
 spring:
+  jwt:
+    secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
   application:
     name: api-gateway
   #  security:
@@ -36,24 +38,64 @@ spring:
             allowedHeaders:
               - "*"
             exposedHeaders:
-              - "Content-Disposition"
+              - "access"
             allowCredentials: true
 
       routes:
+        #        - id: user-service
+        #          uri: lb://user-service
+        #          predicates:
+        #            - Path=/user-service/**,/users/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/env/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
         - id: user-service
           uri: lb://user-service
           predicates:
             - Path=/user-service/**,/users/**
+          filters:
+            #            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: finance-service
           uri: lb://finance-service
           predicates:
-            - Path=/finance-service/**,/finances/**
+            - Path=/finances/**,/fin-api/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: finance-service
+          uri: lb://finance-service
+          predicates:
+            - Path=/finance-service/**
+          filters:
+            - RewritePath=/finance-service/(?<segment>.*), /$\{segment}
+
+        # - id: external-service
+        #   uri: lb://external-service
+        #   predicates:
+        #     - Path=/external-service/**,/externals/**
 
         - id: external-service
           uri: lb://external-service
           predicates:
-            - Path=/external-service/**,/externals/**
+            - Path=/external-service/**
+          filters:
+            - RewritePath=/external-service/(?<segment>.*), /$\{segment}
+
+        - id: external-service
+          uri: lb://external-service
+          predicates:
+            - Path=/external-service/smishing/**, /external-service/chat/**, /externals/smishing/**, /externals/chat/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/external-service/(?<segment>.*), /$\{segment}
 
 springdoc:
   api-docs:

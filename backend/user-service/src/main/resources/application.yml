@@ -6,8 +6,8 @@ spring:
     name: user-service
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3307/uhbooba}
-    username: ${SPRING_DATASOURCE_USERNAME:uhbooba}
-    password: ${SPRING_DATASOURCE_PASSWORD:42seoul}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     properties:
@@ -16,6 +16,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+  jwt:
+    secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
+  coolsms:
+    apikey: ${SMS_API_KEY}
+    secret: ${SMS_API_SECRET}
+    from: ${SMS_FROM_NUMBER}
 
 openapi:
   service:
@@ -23,9 +33,9 @@ openapi:
     version: 1.0.0
 springdoc:
   api-docs:
-    path: /user-service/v3/api-docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /user-service/docs
+    path: /docs
 
 
 eureka:

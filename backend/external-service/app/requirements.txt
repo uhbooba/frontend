@@ -1,9 +1,14 @@
 fastapi
-requests
 uvicorn
 sqlalchemy
 pymysql
-pydantic[email]
-python-dotenv
+pydantic
 gTTS
 redis
+alembic
+langchain_community
+langchain
+jsonpickle
+
+requests
+python-dotenv

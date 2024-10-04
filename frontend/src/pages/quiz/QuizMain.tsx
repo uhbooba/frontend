@@ -10,12 +10,12 @@ const QuizMain = () => {
   };
 
   const quizItems = [
-    { title: '모바일뱅킹', path: 'mobile-banking' },
-    { title: '생활금융', path: 'daily-finance' },
-    { title: '금융사기 예방', path: 'fraud-prevention' },
-    { title: '기초 금융 상식', path: 'basic-finance' },
-    { title: '연금지식', path: 'pension-knowledge' },
-    { title: '상속지식', path: 'inheritance-knowledge' },
+    { part: 1, topic: '모바일 뱅킹 활용법' },
+    { part: 2, topic: '생활 속 금융' },
+    { part: 3, topic: '금융사기 주의' },
+    { part: 4, topic: '기초 금융 상식' },
+    { part: 5, topic: '연금 제도 이해' },
+    { part: 6, topic: '상속 및 유산 관리' },
   ];
 
   const GoEdu = () => {
@@ -28,10 +28,10 @@ const QuizMain = () => {
       <div>
         {quizItems.map((item) => (
           <QuizItem
-            key={item.path}
-            title={item.title}
+            key={item.part}
+            title={item.topic}
             icon={<img src='/assets/images/pig.png' className='h-16 w-16' />}
-            onClick={() => moveQuiz(item.path)}
+            onClick={() => moveQuiz(`${item.part}`)}
           />
         ))}
       </div>
