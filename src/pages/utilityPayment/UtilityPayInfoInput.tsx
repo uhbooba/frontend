@@ -57,6 +57,7 @@ const UtilityPayInfoInput = () => {
           }}
           onChange={(e) => setPaymentNumber(e.target.value)}
           className='mb-5'
+          inputMode='none'
         />
         <div className='my-1 flex items-center justify-center'>
           <div

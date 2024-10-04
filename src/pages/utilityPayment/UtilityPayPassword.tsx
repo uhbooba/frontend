@@ -2,13 +2,29 @@ import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
+import { postUtilityPay } from '@/services/utility';
+import { useAtom } from 'jotai';
+import { utilityDataAtom } from '@/atoms/utilityAtoms';
 
 const UtilityPayPassword = () => {
   const navigate = useNavigate();
 
+  const [utilityData] = useAtom(utilityDataAtom);
+
   const passwordComplete = (password: string[]) => {
     console.log('비밀번호 확인용 :', password.join(''));
     navigate('/utility/success');
+
+    // 환전 시작
+    fetchPayUtility();
+  };
+
+  const fetchPayUtility = async () => {
+    try {
+      await postUtilityPay(utilityData.corporation, utilityData.amount);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

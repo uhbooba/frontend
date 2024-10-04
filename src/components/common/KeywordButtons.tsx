@@ -33,10 +33,28 @@ const KeywordButtons: React.FC<KeywordButtonsProps> = ({
         ))}
       </div>
 
-      <div className='flex justify-between space-x-4 px-4 py-4'>
+      <div className='flex justify-between space-x-4 px-4 py-2'>
         {keywords.slice(3, 6).map((keyword, index) => (
           <Button
-            key={index}
+            key={index + 3}
+            label={keyword}
+            color='orange'
+            size='small'
+            onClick={() => onKeywordClick(keyword)}
+            className={clsx(
+              'border-2',
+              keywordBtnColor === keyword
+                ? 'font-bold opacity-100'
+                : 'opacity-50',
+            )}
+          />
+        ))}
+      </div>
+
+      <div className='mb-2 flex justify-between space-x-4 px-4'>
+        {keywords.slice(6, 9).map((keyword, index) => (
+          <Button
+            key={index + 6}
             label={keyword}
             color='orange'
             size='small'
