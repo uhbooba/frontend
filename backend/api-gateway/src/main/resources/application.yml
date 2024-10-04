@@ -84,13 +84,11 @@ spring:
             - Path=/external-service/smishing/**, /external-service/chat/**, /externals/smishing/**, /externals/chat/**
           filters:
             - AuthorizationHeaderFilter
-            - AddRequestHeader=X-Forwarded-Prefix, /external-service  # 헤더 추가
 
         - id: external-service
           uri: lb://external-service
           predicates:
             - Path=/external-service/**,/externals/**
-            - AddRequestHeader=X-Forwarded-Prefix, /external-service  # 헤더 추가
 
 
 springdoc:
