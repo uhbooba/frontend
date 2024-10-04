@@ -7,6 +7,7 @@ import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsAccountResp
 import com.uhbooba.financeservice.entity.Account;
 import com.uhbooba.financeservice.entity.AccountType;
 import com.uhbooba.financeservice.entity.UserAccount;
+import com.uhbooba.financeservice.exception.BalanceNotValidException;
 import com.uhbooba.financeservice.exception.NotFoundException;
 import com.uhbooba.financeservice.mapper.AccountMapper;
 import com.uhbooba.financeservice.repository.AccountRepository;
@@ -37,6 +38,7 @@ public class AccountService {
     ) {
         // 4. DB에 계좌 저장하기
         Account account = accountMapper.toEntity(accountResponse);
+        account.setBalance(0L);
         account.setUserAccount(userAccount);
         account.setUsername(userAccount.getUsername());
         return accountRepository.save(account);
@@ -49,6 +51,7 @@ public class AccountService {
     ) {
         // 4. DB에 계좌 저장하기
         Account account = accountMapper.toEntity(accountResponse);
+        account.setBalance(0L);
         account.setUserAccount(userAccount);
         account.setUsername(userAccount.getUsername());
         account.setAccountTypeCode(AccountType.FIXED_DEPOSIT);
@@ -62,6 +65,7 @@ public class AccountService {
         UserAccount userAccount
     ) {
         Account account = accountMapper.toEntity(savingsAccountResponse);
+        account.setBalance(0L);
         account.setUserAccount(userAccount);
         account.setUsername(userAccount.getUsername());
         account.setAccountTypeCode(AccountType.INSTALLMENT_SAVING);
@@ -75,6 +79,7 @@ public class AccountService {
         UserAccount userAccount
     ) {
         Account account = accountMapper.toEntity(accountResponse);
+        account.setBalance(0L);
         account.setUserAccount(userAccount);  // 사용자 계정과 연결
         account.setUsername(userAccount.getUsername());
         account.setAccountTypeName("외화 수시입출금");
@@ -88,6 +93,29 @@ public class AccountService {
         UserAccount userAccount
     ) {
         return accountRepository.findByAccountTypeCodeAndUserAccount(accountType, userAccount);
+    }
+
+    @Transactional
+    public Account addAccountBalance(
+        Account account,
+        Long updatedBalance
+    ) {
+        Long resultBalance = account.getBalance() + updatedBalance;
+        account.setBalance(resultBalance);
+        return accountRepository.save(account);
+    }
+
+    @Transactional
+    public Account subtractAccountBalance(
+        Account account,
+        Long updatedBalance
+    ) {
+        Long resultBalance = account.getBalance() - updatedBalance;
+        if(resultBalance < 0) {
+            throw new BalanceNotValidException("기존 잔액보다 큰 금액을 출금하려 합니다.");
+        }
+        account.setBalance(resultBalance);
+        return accountRepository.save(account);
     }
 
     @Transactional

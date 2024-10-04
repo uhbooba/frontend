@@ -49,6 +49,7 @@ public class ExchangeService {
     private final FinApiExchangeService finApiExchangeService;
     private final AccountService accountService;
     private final TransactionService transactionService;
+    private final ExchangeAccountService exchangeAccountService;
 
     private final JsonToDtoConverter jsonToDtoConverter;
 
@@ -113,7 +114,7 @@ public class ExchangeService {
                                                                                        createExchangeSummary(
                                                                                            exchangeResponse))
                                                                                    .build());
-
+            exchangeAccountService.updateExchangeAccount(exchangeResponse, account);
             return exchangeResponse;
         } catch(Exception ex) {
             // 트랜잭션 실패 처리
