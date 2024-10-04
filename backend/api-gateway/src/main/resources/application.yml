@@ -42,15 +42,11 @@ spring:
             allowCredentials: true
 
       routes:
-        #        - id: user-service
-        #          uri: lb://user-service
-        #          predicates:
-        #            - Path=/user-service/**,/users/**
 
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/env/**
+            - Path=/user-service/env/**, /env/**
           filters:
             - AuthorizationHeaderFilter
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -58,7 +54,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/**,/users/**
+            - Path=/user-service/**, /users/**, /sms/**, /reissue/**
           filters:
             #            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -80,15 +76,15 @@ spring:
         - id: external-service
           uri: lb://external-service
           predicates:
-            - Path=/external-service/**,/externals/**
+            - Path=/external-service/smishing/**, /external-service/chat/**, /externals/smishing/**, /externals/chat/**
+          filters:
+            - AuthorizationHeaderFilter
 
         - id: external-service
           uri: lb://external-service
           predicates:
-            - Path=/external-service/smishing/**, /external-service/chat/**, /externals/smishing/**, /externals/chat/**
-          filters:
-            - AuthorizationHeaderFilter
-            - RewritePath=/external-service/(?<segment>.*), /$\{segment}
+            - Path=/external-service/**,/externals/**
+
 
 springdoc:
   api-docs:
