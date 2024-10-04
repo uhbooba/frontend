@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from requests import Session
 from starlette.responses import JSONResponse
 
+from .header_dependencies import get_user_header_info, UserHeaderInfo
 from ..config.database import get_db
 from ..config.logger import setup_logger
 from ..schemas.success_response import ok_res
@@ -50,10 +51,19 @@ class StatusRequest(BaseModel):
     scenario: str
 
 
-@router.get("/{user_key}", response_model=ok_res)
-def get_message_list(user_key: int, db: Session = Depends(get_db)):
+@router.get(
+    "",
+    response_model=ok_res,
+)
+def get_message_list(
+        db: Session = Depends(get_db),
+        user_info: UserHeaderInfo = Depends(get_user_header_info),
+):
+    if isinstance(user_info, JSONResponse):
+        return user_info
+    print(user_info.name)
     try:
-        message_list, remain_count = SmishingService.get_message_list(user_key, db)
+        message_list, remain_count = SmishingService.get_message_list(user_info.id, db)
         message = (
             "메시지" if remain_count == 0 else f"읽지 않은 메시지\n{remain_count}개"
         )

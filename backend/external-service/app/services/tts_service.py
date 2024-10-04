@@ -2,8 +2,10 @@ import asyncio
 import hashlib
 import io
 
+import requests
 from gtts import gTTS
 
+from ..config.config import S3_URL
 from ..config.logger import setup_logger
 from ..config.redis import r_tts_audio, r_tts_hash, r_tts_ai
 
@@ -66,6 +68,16 @@ class TtsService:
         if cached_audio:
             logger.info(f"TTS 음성을 반환합니다 : tts_key is {tts_key}")
             return cached_audio
-        else:
-            logger.info(f"TTS 음성이 없습니다 : tts_key is {tts_key}")
-            raise Exception(f"TTS 음성을 찾을 수 없습니다: tts_key is {tts_key}")
+
+        logger.info(f"TTS 음성이 없어 원격 저장소에서 가져옵니다")
+
+        try:
+            response = requests.get(f"{S3_URL}/smishing/test.mp3")
+            # response = requests.get(f"{S3_URL}/smishing/{tts_key}.mp3")
+            response.raise_for_status()
+            audio_data = response.content
+            r_tts_ai.set(tts_key, audio_data)
+            logger.info(f"TTS 음성을 저장합니다 : tts_key is {tts_key}")
+            return audio_data
+        except Exception as e:
+            raise Exception(f"Failed to get mp3 file: {e}")
