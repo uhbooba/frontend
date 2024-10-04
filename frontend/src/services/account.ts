@@ -22,12 +22,12 @@ export const getUserFreeAccountTransactions = () => {
 };
 
 // 입출금 계좌 입금
-export const postUserFreeAccountAddCash = (
+export const postUserFreeAccountAddCash = async (
   accountNo: string,
   transactionBalance: number,
   transactionSummary: string,
 ) => {
-  const response = axiosInstance.post(
+  const response = await axiosInstance.post(
     '/finances/demand-deposits/accounts/deposit',
     {
       accountNo,
