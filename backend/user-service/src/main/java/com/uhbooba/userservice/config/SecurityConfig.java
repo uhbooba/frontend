@@ -55,9 +55,9 @@ public class SecurityConfig {
                 .frameOptions(frameOptions -> frameOptions.disable())
             )
 
-            .cors(cors -> cors
-                .configurationSource(configurationSource())
-            )
+//            .cors(cors -> cors
+//                .configurationSource(configurationSource())
+//            )
 
             .csrf((csrf) -> csrf
                 .disable()

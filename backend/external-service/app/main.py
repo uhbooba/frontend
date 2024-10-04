@@ -13,6 +13,7 @@ from .controllers import (
     tts_controller,
     video_controller,
     redis_controller,
+    smishing_controller,
 )
 from .eureka_register import register_with_eureka
 
@@ -29,6 +30,7 @@ app.include_router(quiz_controller.router)
 app.include_router(redis_controller.router)
 app.include_router(tts_controller.router)
 app.include_router(video_controller.router)
+app.include_router(smishing_controller.router)
 
 
 @app.get("/health-check")

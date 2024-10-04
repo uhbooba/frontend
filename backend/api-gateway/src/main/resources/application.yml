@@ -89,6 +89,14 @@ spring:
           filters:
             - RewritePath=/external-service/(?<segment>.*), /$\{segment}
 
+        - id: external-service
+          uri: lb://external-service
+          predicates:
+            - Path=/external-service/smishing/**, /external-service/chat/**, /externals/smishing/**, /externals/chat/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/external-service/(?<segment>.*), /$\{segment}
+
 springdoc:
   api-docs:
     enabled: true
