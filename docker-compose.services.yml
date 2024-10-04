@@ -1,0 +1,94 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - '3000:80'
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+  
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./backend/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+
+  user-service:
+    container_name: user-service
+    env_file:
+      - .env.user
+    build:
+      context: ./backend/user-service
+    ports:
+      - "8081:8081"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/user-service:/app/logs
+    depends_on:
+      - eureka-server
+
+  finance-service:
+    container_name: finance-service
+    env_file:
+      - .env.finance
+    build:
+      context: ./backend/finance-service
+    ports:
+      - "8082:8082"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/finance-service:/app/logs
+    depends_on:
+      - eureka-server
+
+  external-service:
+    container_name: external-service
+    env_file:
+      - .env.external
+    build:
+      context: ./backend/external-service
+    ports:
+      - "8083:8083"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/external-service:/app/logs
+    depends_on:
+      eureka-server:
+        condition: service_started
+
+  api-gateway:
+    container_name: api-gateway
+    env_file:
+      - .env.gateway
+    build:
+      context: ./backend/api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/gateway-service:/app/logs
+    depends_on:
+      - eureka-server
+      - user-service
+      - finance-service
+      - external-service
+
+networks:
+  uhbooba-net:

@@ -2,7 +2,9 @@ from urllib.parse import unquote
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from ..config.logger import setup_logger
 
+logger = setup_logger("app")
 
 class UserHeaderInfo:
     def __init__(self, user_id: int, name: str):

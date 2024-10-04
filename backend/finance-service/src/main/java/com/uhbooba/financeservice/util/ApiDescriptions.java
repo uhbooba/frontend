@@ -34,22 +34,19 @@ public class ApiDescriptions {
             /n
             """;
 
-        public static final String DEMAND_DEPOSIT_ACCOUNT_RESPONSE = """
+        public static final String ACCOUNT_RESPONSE = """
             | result             | DemandDepositAccountResponse  | 응답 데이터 (API 결과 값)            |
             \n
             <b>DemandDepositAccountResponse</b>
             \n
             | Name               | Type    | Description                          |
             |--------------------|---------|--------------------------------------|
-            | bankCode           | String  | 은행 코드 (해당 계좌가 속한 은행의 코드) |
-            | bankName           | String  | 은행 이름 (해당 계좌의 은행 이름)    |
-            | userName           | String  | 계좌 소유자 이름(영어로 나옴)               |
+            | username           | String  | 계좌 소유자 이름               |
             | accountNo          | String  | 계좌 번호 (해당 계좌의 고유 번호, 최대 16글자)    |
             | accountName        | String  | 계좌 이름 (사용자가 설정한 계좌명, 최대 20글자)   |
             | accountTypeCode    | String  | 계좌 유형 코드 (예: 1 : 수시입출금, 2: 정기예금, 3: 정기적금) |
             | accountTypeName    | String  | 계좌 유형 이름 (예: "수시입출금", "정기예금" 등) |
-            | accountBalance     | String  | 계좌 잔액 (현재 계좌의 잔고 금액)    |
-            | currency           | String  | 통화 코드 (해당 계좌의 통화, 예: "KRW", "USD" 등) |
+            | balance     | String  | 계좌 잔액 (현재 계좌의 잔고 금액)    |
             \n
             """;
     }

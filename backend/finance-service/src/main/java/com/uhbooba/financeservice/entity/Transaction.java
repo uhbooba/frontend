@@ -50,7 +50,7 @@ public class Transaction extends BaseEntity {
 
     @Column
     @Setter
-    private String transactionAfterBalance;
+    private Long transactionAfterBalance;
 
     @Column
     @Setter
@@ -59,7 +59,7 @@ public class Transaction extends BaseEntity {
     @Builder
     public Transaction(
         TransactionStatus status,
-        String transactionAfterBalance,
+        Long transactionAfterBalance,
         Long transactionBalance,
         String transactionSummary,
         TransactionType type,

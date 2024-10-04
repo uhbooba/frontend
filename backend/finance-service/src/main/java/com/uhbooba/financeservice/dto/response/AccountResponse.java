@@ -9,7 +9,8 @@ public record AccountResponse(
     String accountNo,
     String accountName,
     AccountType accountTypeCode,
-    String accountTypeName
+    String accountTypeName,
+    Long balance
 ) {
 
 }
