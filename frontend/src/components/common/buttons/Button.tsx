@@ -20,9 +20,9 @@ const BUTTON_COLORS = {
 export type ButtonConfigType = {
   label: string;
   route: string;
-  size: keyof typeof BUTTON_SIZES;
+  size?: keyof typeof BUTTON_SIZES;
   color?: keyof typeof BUTTON_COLORS;
-  className: string;
+  className?: string;
   img?: string;
   eduImg?: string;
   eduLabel?: string;
