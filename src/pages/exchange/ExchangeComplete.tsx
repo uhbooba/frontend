@@ -1,17 +1,12 @@
 import { useLocation, useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
-import { useState } from 'react';
 import Button from '@/components/common/buttons/Button';
-import { useAtom } from 'jotai';
-import { accountNoAtom, exchangeAmountAtom } from '@/atoms/exchangeAtoms';
 
 const ExchangeComplete = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { exchangeResult } = location.state;
-  const [accountNo] = useAtom(accountNoAtom);
-  const [amount] = useAtom(exchangeAmountAtom);
 
   const exchangeData = {
     exchangeAccountNo: exchangeResult?.accountInfo?.accountNo,
