@@ -9,6 +9,8 @@ import {
   selectAccountAtom,
   selectMoneyAtom,
   selectPeriodAtom,
+  selectedSavingsProductAtom,
+  maturityDateAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import {
@@ -16,6 +18,11 @@ import {
   getEarlyTerminationInterest,
 } from '@/services/saving';
 import { CancelProductData } from '@/types/saving';
+import { savingCalculateInterest } from '@/utils/savingCalculateInterest';
+import {
+  calculatePaymentMonths,
+  calculatePaidAmount,
+} from '@/utils/paymentCalculate';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
@@ -26,6 +33,8 @@ const CancelSavingsProduct = () => {
   const [productData, setProductData] = useState<CancelProductData | null>(
     null,
   );
+  const [selectedProduct] = useAtom(selectedSavingsProductAtom);
+  const [maturityDate] = useAtom(maturityDateAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -33,11 +42,10 @@ const CancelSavingsProduct = () => {
     const fetchProductDetails = async () => {
       try {
         if (selectAccount) {
-          // 사용자 적금 계좌 목록에서 해당 계좌 정보를 가져옴
           const response = await getUserSavingsAccounts(selectAccount);
           if (response?.data?.result?.length > 0) {
             const account = response.data.result[0];
-            // 중도해지 이자율을 가져오기 위해 추가 API 호출
+            // 중도해지 이자율 부르는 api
             const earlyTerminationResponse = await getEarlyTerminationInterest(
               selectAccount,
               account.accountNo,
@@ -78,6 +86,16 @@ const CancelSavingsProduct = () => {
     setIsModalOpen(false);
   };
 
+  const paymentMonths = calculatePaymentMonths(maturityDate, selectPeriod);
+
+  const paidAmount = calculatePaidAmount(paymentMonths, selectMoney);
+
+  const { interest, totalAmount } = savingCalculateInterest(
+    selectMoney,
+    selectedProduct!.earlyInterestRate,
+    String(paymentMonths),
+  );
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
@@ -93,7 +111,8 @@ const CancelSavingsProduct = () => {
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>
-              {productData ? productData.accountName : '상품명 정보 없음'}
+              {/* {productData ? productData.accountName : '상품명 정보 없음'} */}
+              {selectedProduct ? selectedProduct.name : '상품명 정보 없음'}
             </span>
           </div>
         </div>
@@ -110,7 +129,10 @@ const CancelSavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {productData ? productData.interestRate : '정보 없음'}
+                {/* {productData ? productData.interestRate : '정보 없음'} */}
+                {selectedProduct
+                  ? `${selectedProduct.interestRate}%`
+                  : '이자 정보 없음'}
               </div>
             </div>
             <div>
@@ -118,8 +140,8 @@ const CancelSavingsProduct = () => {
               <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
             </div>
             <div>
-              <span className='text-2xl text-gray-500'>약정 기간</span>
-              <div className='mt-2 text-xl font-bold'>{selectPeriod}</div>
+              <span className='ml-3 text-2xl text-gray-500'>약정 기간</span>
+              <div className='ml-7 mt-2 text-xl font-bold'>{selectPeriod}</div>
             </div>
           </div>
         </div>
@@ -128,11 +150,11 @@ const CancelSavingsProduct = () => {
           <div className='flex space-x-20'>
             <div>
               <span className='text-2xl text-gray-500'>납입 금액</span>
-              <div className='mt-2 text-xl font-bold'>660 만 원</div>
+              <div className='mt-2 text-xl font-bold'>{paidAmount} 원</div>
             </div>
             <div className=''>
               <span className='text-2xl text-gray-500'>납입 개월</span>
-              <div className='mt-2 text-xl font-bold'>11개월</div>
+              <div className='mt-2 text-xl font-bold'>{paymentMonths}개월</div>
             </div>
           </div>
         </div>
@@ -142,21 +164,28 @@ const CancelSavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>중도해지 이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {productData
+                {/* {productData
                   ? productData.earlyTerminationInterestRate
-                  : '정보 없음'}
+                  : '정보 없음'} */}
+                {selectedProduct
+                  ? `${selectedProduct.earlyInterestRate} %`
+                  : '없음'}
               </div>
             </div>
             <div className='ml-12 text-left'>
               <span className='text-2xl text-gray-500'>이자 금액</span>
-              <div className='mt-2 text-xl font-bold'>2,750원</div>
+              <div className='mt-2 text-xl font-bold'>
+                {interest.toLocaleString()}원
+              </div>
             </div>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>받을 금액</span>
-          <div className='mt-2 text-xl font-bold'>660만 2,750원</div>
+          <div className='mt-2 text-xl font-bold'>
+            {totalAmount.toLocaleString()}원
+          </div>
         </div>
 
         <div className='mt-4 flex items-center justify-between'>

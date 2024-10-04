@@ -154,7 +154,7 @@ const Main = () => {
         <div className='pb-2 pl-4 pr-4 pt-4 text-3xl font-bold'>
           {accountData && accountData.balance
             ? `${accountData.balance.toLocaleString()}원`
-            : '10,000,000원'}
+            : '11,000,000원'}
         </div>
 
         <div className='flex justify-around pt-4'>
