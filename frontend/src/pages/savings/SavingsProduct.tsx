@@ -25,6 +25,7 @@ const SavingsProduct = () => {
   const [check] = useAtom(checkAtom);
   const [productData, setProductData] = useState<ProductData | null>(null);
   const [selectedProduct] = useAtom(selectedSavingsProductAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -36,6 +37,7 @@ const SavingsProduct = () => {
             accountName: product.accountName,
             interestRate: product.interestRate,
           });
+          console.log(productData);
         } else {
           console.error('상품 정보가 아직 없음');
         }

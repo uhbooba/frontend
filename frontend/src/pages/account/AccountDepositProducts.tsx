@@ -3,7 +3,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import { useNavigate } from 'react-router';
 import AccountDepositProduct from '@/components/common/AccountDepositProduct';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import {
   selectedDepositProductAtom,
   selectedKeywordAtom,
@@ -12,12 +12,8 @@ import { selectedSavingsProductAtom } from '@/atoms/savings/savingsDataAtoms';
 
 const AccountDepositProducts = () => {
   const [selectedKeyword, setSelectedKeyword] = useAtom(selectedKeywordAtom);
-  const [selectedDepositProduct, setSelectedDepositProduct] = useAtom(
-    selectedDepositProductAtom,
-  );
-  const [selectedSavingsProduct, setSelectedSavingsProduct] = useAtom(
-    selectedSavingsProductAtom,
-  );
+  const setSelectedDepositProduct = useSetAtom(selectedDepositProductAtom);
+  const setSelectedSavingsProduct = useSetAtom(selectedSavingsProductAtom);
   const navigate = useNavigate();
 
   const keywordClick = (keyword: string) => {

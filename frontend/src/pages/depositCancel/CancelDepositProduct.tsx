@@ -43,7 +43,9 @@ const CancelDepositProduct = () => {
           99,
           account.accountNo,
         );
+
         setTerminationInterestData(interestResponse.data.result);
+        console.log(terminationInterestData);
       } catch (error) {
         console.error('api 오류났음', error);
       }
