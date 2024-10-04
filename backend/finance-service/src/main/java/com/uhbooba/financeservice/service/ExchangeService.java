@@ -114,6 +114,12 @@ public class ExchangeService {
                                                                                        createExchangeSummary(
                                                                                            exchangeResponse))
                                                                                    .build());
+            String amountStr = exchangeResponse.accountInfo()
+                                               .amount();
+            double amountDouble = Double.parseDouble(amountStr);  // 문자열을 double로 변환
+            long amountLong = (long) amountDouble;  // 소수점을 버리고 long으로 변환
+            accountService.subtractAccountBalance(account, amountLong);
+
             exchangeAccountService.updateExchangeAccount(exchangeResponse, account);
             return exchangeResponse;
         } catch(Exception ex) {
