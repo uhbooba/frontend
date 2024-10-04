@@ -52,6 +52,10 @@ public class Account {
     @Setter
     private String accountTypeName;
 
+    @Column
+    @Setter
+    private Long balance;
+
     @Builder
     public Account(
         UserAccount userAccount,
@@ -59,7 +63,8 @@ public class Account {
         String accountName,
         String username,
         AccountType accountTypeCode,
-        String accountTypeName
+        String accountTypeName,
+        Long balance
     ) {
         this.userAccount = userAccount;
         this.accountNo = accountNo;
@@ -67,5 +72,6 @@ public class Account {
         this.accountName = accountName;
         this.accountTypeCode = accountTypeCode;
         this.accountTypeName = accountTypeName;
+        this.balance = balance;
     }
 }
