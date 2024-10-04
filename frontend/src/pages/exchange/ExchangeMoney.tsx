@@ -30,8 +30,8 @@ const ExchangeMoney = () => {
 
   const OpenModal = () => {
     // 10달러 미만일 경우
-    if (parseFloat(usdAmount) < 10 || usdAmount === '') {
-      setError('10달러 이상부터 환전 가능합니다.');
+    if (parseFloat(usdAmount) < 100 || usdAmount === '') {
+      setError('100달러 이상부터 환전 가능합니다.');
       return;
     }
 
