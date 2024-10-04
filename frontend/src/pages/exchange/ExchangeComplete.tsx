@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import { useState } from 'react';
@@ -8,15 +8,18 @@ import { accountNoAtom, exchangeAmountAtom } from '@/atoms/exchangeAtoms';
 
 const ExchangeComplete = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { exchangeResult } = location.state;
   const [accountNo] = useAtom(accountNoAtom);
   const [amount] = useAtom(exchangeAmountAtom);
 
-  const [ExchangeData] = useState({
-    exchangeAdress: accountNo,
-    exchangeAmount: 13,
-    krwAmount: amount,
-    exchangeDate: '2024/09/07',
-  });
+  const exchangeData = {
+    exchangeAccountNo: exchangeResult?.accountInfo?.accountNo,
+    exchangeAmount: exchangeResult?.exchangeCurrency?.amount,
+    currencyName: exchangeResult?.exchangeCurrency?.currencyName,
+    krwAmount: exchangeResult?.accountInfo?.amount,
+    exchangeDate: new Date(),
+  };
 
   return (
     <div>
@@ -30,28 +33,28 @@ const ExchangeComplete = () => {
         <div>
           <Input
             label='출금 계좌'
-            value={ExchangeData.exchangeAdress}
+            value={exchangeData.exchangeAccountNo}
             readOnly={true}
             className='mb-5'
           />
           <Input
             label='충전 금액'
-            value={`${ExchangeData.exchangeAmount.toLocaleString()}달러`}
+            value={`${exchangeData?.exchangeAmount.toLocaleString()}${exchangeData.currencyName}`}
             readOnly={true}
             className='mb-5'
           />
           <Input
             label='원화 금액'
-            value={`${ExchangeData.krwAmount.toLocaleString()}원`}
+            value={`${Number(exchangeData.krwAmount).toLocaleString()}원`}
             readOnly={true}
             className='mb-5'
           />
-          <Input
+          {/* <Input
             label='거래일시'
-            value={ExchangeData.exchangeDate}
+            value={exchangeData.exchangeDate}
             readOnly={true}
             className='mb-5'
-          />
+          /> */}
         </div>
         <div>
           <Button
