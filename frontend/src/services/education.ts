@@ -17,3 +17,9 @@ export const getVideoByKeyword = (keyword: string) => {
   const response = axiosInstance(`/external-service/video/search/${keyword}`);
   return response;
 };
+
+// 교육 퀴즈
+export const getQuizItem = (part: string) => {
+  const response = axiosInstance(`/external-service/quiz/${part}`);
+  return response;
+};

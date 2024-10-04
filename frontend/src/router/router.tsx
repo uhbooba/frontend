@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
 import SmishingEnding from '@/pages/smishingPrevention/SmishingEnding';
+import ExchangeAccount from '@/pages/exchange/ExchangeAccount';
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -192,13 +193,14 @@ const router = createBrowserRouter([
       { path: 'education/download', element: <EducationDownload /> },
       // 퀴즈
       { path: 'quiz', element: <QuizMain /> },
-      { path: 'quiz/:type', element: <QuizQuestion /> },
-      { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      { path: 'quiz/:part', element: <QuizQuestion /> },
+      { path: 'quiz/:part/success', element: <QuizSuccess /> },
       // 환전
       { path: 'exchange/mission', element: <ExchangeMission /> },
       { path: 'exchange/explain', element: <ExchangeExplain /> },
       { path: 'exchange/agree', element: <ExchangeAgree /> },
       { path: 'exchange/money', element: <ExchangeMoney /> },
+      { path: 'exchange/account', element: <ExchangeAccount /> },
       { path: 'exchange/password', element: <ExchangePassword /> },
       { path: 'exchange/complete', element: <ExchangeComplete /> },
       { path: 'exchange/success', element: <ExchangeSuccess /> },

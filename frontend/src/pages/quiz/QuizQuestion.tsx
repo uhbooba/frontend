@@ -1,19 +1,37 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import TopBar from '@/components/layouts/TopBar';
 import QuizLevelBar from '@/components/quiz/QuizLevelBar';
 import QuizModal from '@/components/quiz/QuizModal';
-import { quizPartData } from '@/mocks/quizData';
+import { getQuizItem } from '@/services/education';
+import { QuizItem } from '@/types/quiz';
 
 const QuizQuestion = () => {
   const navigate = useNavigate();
+  const { part } = useParams();
   const totalQuestions = 5;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [quizData, setQuizData] = useState<QuizItem[]>([]);
+
   const WRONG_TEXT = '앗 오답입니다! \n다시 한번 풀어보세요!';
 
-  const currentQuestion = quizPartData[currentQuestionIndex];
+  // 퀴즈 불러오기
+  const fetchQuizData = async () => {
+    if (part) {
+      try {
+        const response = await getQuizItem(part);
+        setQuizData(response?.data?.data?.quizzes);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchQuizData();
+  }, []);
 
   const handleAnswer = (answer: string) => {
     setUserAnswers(answer);
@@ -21,7 +39,7 @@ const QuizQuestion = () => {
   };
 
   const handleNextQuestions = () => {
-    if (currentQuestionIndex < quizPartData.length - 1) {
+    if (currentQuestionIndex < quizData.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setShowModal(false);
     } else {
@@ -46,7 +64,9 @@ const QuizQuestion = () => {
       />
       <div className='my-8 flex flex-col px-4'>
         <h2 className='mb-6 text-4xl font-bold'>모바일뱅킹</h2>
-        <p className='mb-8 text-3xl'>{currentQuestion.question}</p>
+        <p className='mb-8 text-3xl'>
+          {quizData[currentQuestionIndex]?.question}
+        </p>
       </div>
       <div>
         <button
@@ -65,11 +85,11 @@ const QuizQuestion = () => {
       {showModal && (
         <QuizModal
           content={
-            userAnswers === currentQuestion.answer
-              ? currentQuestion.question
+            userAnswers === quizData[currentQuestionIndex].answer
+              ? quizData[currentQuestionIndex].comment
               : WRONG_TEXT
           }
-          isCorrect={userAnswers === currentQuestion.answer}
+          isCorrect={userAnswers === quizData[currentQuestionIndex].answer}
           onNext={handleNextQuestions}
           onRetry={handleRetry}
         />
