@@ -1,14 +1,20 @@
 import KeywordButtons from '@/components/common/KeywordButtons';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
-// import { useNavigate } from "react-router";
-import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import AccountDepositProduct from '@/components/common/AccountDepositProduct';
+import { useAtom, useSetAtom } from 'jotai';
+import {
+  selectedDepositProductAtom,
+  selectedKeywordAtom,
+} from '@/atoms/deposit/depositDataAtoms';
+import { selectedSavingsProductAtom } from '@/atoms/savings/savingsDataAtoms';
 
 const AccountDepositProducts = () => {
-  const [selectedKeyword, setSelectedKeyword] = useState('예금 상품');
-
-  // const navigate = useNavigate();
+  const [selectedKeyword, setSelectedKeyword] = useAtom(selectedKeywordAtom);
+  const setSelectedDepositProduct = useSetAtom(selectedDepositProductAtom);
+  const setSelectedSavingsProduct = useSetAtom(selectedSavingsProductAtom);
+  const navigate = useNavigate();
 
   const keywordClick = (keyword: string) => {
     setSelectedKeyword(keyword);
@@ -22,24 +28,27 @@ const AccountDepositProducts = () => {
       interestRate: 7,
       minimumAmmount: 100000,
       minimumPeriod: 6,
-      moveTo: '',
+      moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
+      earlyInterestRate: 1,
     },
     {
       name: '정기예금 2번 상품',
       interestRate: 10,
       minimumAmmount: 500000,
       minimumPeriod: 12,
-      moveTo: '',
+      moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
+      earlyInterestRate: 2,
     },
     {
       name: '정기예금 3번 상품',
       interestRate: 12,
       minimumAmmount: 1000000,
       minimumPeriod: 24,
-      moveTo: '',
+      moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
+      earlyInterestRate: 3,
     },
   ];
   const SavingsProducts = [
@@ -48,26 +57,56 @@ const AccountDepositProducts = () => {
       interestRate: 5,
       minimumAmmount: 10000,
       minimumPeriod: 6,
-      moveTo: '',
+      moveTo: '/savings',
       selectedProduct: '적금 상품',
+      earlyInterestRate: 1,
     },
     {
       name: '정기적금 2번 상품',
       interestRate: 7,
       minimumAmmount: 100000,
       minimumPeriod: 12,
-      moveTo: '',
+      moveTo: '/savings',
       selectedProduct: '적금 상품',
+      earlyInterestRate: 2,
     },
     {
       name: '정기적금 3번 상품',
       interestRate: 10,
       minimumAmmount: 500000,
       minimumPeriod: 24,
-      moveTo: '',
+      moveTo: '/savings',
       selectedProduct: '적금 상품',
+      earlyInterestRate: 3,
     },
   ];
+
+  const handleProductClick = (product: {
+    name: string;
+    interestRate: number;
+    minimumAmmount: number;
+    moveTo: string;
+    selectedProduct: string;
+    earlyInterestRate: number;
+  }) => {
+    if (product.selectedProduct === '예금 상품') {
+      setSelectedDepositProduct({
+        name: product.name,
+        interestRate: product.interestRate,
+        minimumAmount: product.minimumAmmount,
+        earlyInterestRate: product.earlyInterestRate,
+      });
+    } else {
+      setSelectedSavingsProduct({
+        name: product.name,
+        interestRate: product.interestRate,
+        minimumAmount: product.minimumAmmount,
+        earlyInterestRate: product.earlyInterestRate,
+      });
+    }
+
+    navigate(product.moveTo);
+  };
 
   return (
     <div>
@@ -93,6 +132,7 @@ const AccountDepositProducts = () => {
                 minimumPeriod={product.minimumPeriod}
                 moveTo={product.moveTo}
                 selectedProduct={product.selectedProduct}
+                onClick={() => handleProductClick(product)}
               />
             ))}
           </div>
@@ -107,6 +147,7 @@ const AccountDepositProducts = () => {
                 minimumPeriod={product.minimumPeriod}
                 moveTo={product.moveTo}
                 selectedProduct={product.selectedProduct}
+                onClick={() => handleProductClick(product)}
               />
             ))}
           </div>

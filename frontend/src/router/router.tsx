@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
+import SmishingEnding from '@/pages/smishingPrevention/SmishingEnding';
+import ExchangeAccount from '@/pages/exchange/ExchangeAccount';
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -127,6 +129,18 @@ const AccountTransferSuccess = lazy(
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
 
+const SmishingAgree = lazy(
+  () => import('@/pages/smishingPrevention/SmishingAgree'),
+);
+const SmishingMessageList = lazy(
+  () => import('@/pages/smishingPrevention/SmishingMessageList'),
+);
+const SmishingMessageDetail = lazy(
+  () => import('@/pages/smishingPrevention/SmishingMessageDetail'),
+);
+const MissionStamps = lazy(() => import('@/pages/gamification/MissionStamps'));
+const ChatBotPage = lazy(() => import('@/pages/chatBot/ChatBotPage'));
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -179,13 +193,14 @@ const router = createBrowserRouter([
       { path: 'education/download', element: <EducationDownload /> },
       // 퀴즈
       { path: 'quiz', element: <QuizMain /> },
-      { path: 'quiz/:type', element: <QuizQuestion /> },
-      { path: 'quiz/:type/success', element: <QuizSuccess /> },
+      { path: 'quiz/:part', element: <QuizQuestion /> },
+      { path: 'quiz/:part/success', element: <QuizSuccess /> },
       // 환전
       { path: 'exchange/mission', element: <ExchangeMission /> },
       { path: 'exchange/explain', element: <ExchangeExplain /> },
       { path: 'exchange/agree', element: <ExchangeAgree /> },
       { path: 'exchange/money', element: <ExchangeMoney /> },
+      { path: 'exchange/account', element: <ExchangeAccount /> },
       { path: 'exchange/password', element: <ExchangePassword /> },
       { path: 'exchange/complete', element: <ExchangeComplete /> },
       { path: 'exchange/success', element: <ExchangeSuccess /> },
@@ -223,6 +238,27 @@ const router = createBrowserRouter([
         element: <AccountTransferPassword />,
       },
       { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
+      // 금융 사기 예방
+      {
+        path: 'prevention/agree',
+        element: <SmishingAgree />,
+      },
+      {
+        path: 'prevention/messages',
+        element: <SmishingMessageList />,
+      },
+      {
+        path: 'prevention/messages/:messageType',
+        element: <SmishingMessageDetail />,
+      },
+      {
+        path: 'prevention/messages/:messageType/ending',
+        element: <SmishingEnding />,
+      },
+      // 게이미피케이션
+      { path: 'stamp', element: <MissionStamps /> },
+      // 챗봇
+      { path: 'chatbot', element: <ChatBotPage /> },
     ],
   },
 ]);

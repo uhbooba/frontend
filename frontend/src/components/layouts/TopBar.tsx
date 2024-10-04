@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa';
 import { TbMessageChatbot } from 'react-icons/tb';
 
 type TopBarProps = {
-  title: string;
+  title: string | React.ReactNode;
   showBackButton?: boolean;
   showXButton?: boolean;
   showMainButton?: boolean;
@@ -56,7 +56,7 @@ const TopBar: React.FC<TopBarProps> = ({
           </div>
           <div className='absolute right-20 top-3 flex-col'>
             <TbMessageChatbot
-              onClick={handleGoHome}
+              onClick={() => navigate('/chatbot')}
               size={32}
               className='mb-2'
             />

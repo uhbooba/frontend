@@ -2,11 +2,15 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import QrScanner from 'qr-scanner';
 import TopBar from '@/components/layouts/TopBar';
+import { useSetAtom } from 'jotai';
+import { utilityDataAtom } from '@/atoms/utilityAtoms';
 
 const UtilityPayScan = () => {
   const navigate = useNavigate();
 
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const setUtilityData = useSetAtom(utilityDataAtom);
 
   useEffect(() => {
     const videoElem = videoRef.current;
@@ -34,7 +38,15 @@ const UtilityPayScan = () => {
   }, []);
 
   const handleScan = (result: QrScanner.ScanResult) => {
-    console.log(result);
+    const data = JSON.parse(result?.data.replace(/'/g, '"'));
+
+    setUtilityData((prev) => ({
+      ...prev,
+      corporation: data.corporation,
+      amount: data.amount,
+    }));
+    console.log(data);
+
     navigate('/utility/money');
   };
 

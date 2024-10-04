@@ -1,7 +1,6 @@
-export interface QuizData {
-  part: number;
+export type QuizItem = {
   number: number;
   question: string;
+  answer: string;
   comment: string;
-  answer: 'O' | 'X';
-}
+};

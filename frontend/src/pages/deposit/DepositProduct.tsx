@@ -11,6 +11,10 @@ import {
   selectPeriodAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
+import { getDepositProducts } from '@/services/deposit';
+import { ProductData } from '@/types/deposit';
+import { selectedDepositProductAtom } from '@/atoms/deposit/depositDataAtoms';
+import { depositCalculateInterest } from '@/utils/depositCalculateInterest';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -18,10 +22,51 @@ const DepositProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productData, setProductData] = useState<ProductData | null>(null);
+  const [selectedProduct] = useAtom(selectedDepositProductAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
+
+    const fetchDepositProduct = async () => {
+      try {
+        const response = await getDepositProducts();
+        const product = response?.data?.result[0];
+        setProductData({
+          accountName: product?.accountName,
+          interestRate: product?.interestRate,
+        });
+        console.log(productData);
+      } catch (error) {
+        console.log('예금상품 정보가져오는거 에러다.:', error);
+      }
+    };
+
+    fetchDepositProduct();
   }, [setIsModalOpen]);
+
+  // const calculateInterest = () => {
+  //   if (selectedProduct && selectMoney) {
+  //     const interestRate = selectedProduct.interestRate / 100;
+  //     console.log('이자율', interestRate);
+  //     console.log('선택가입금액', selectMoney);
+  //     const selectMoneyNumber = Number(selectMoney.replace(/,/g, ''));
+  //     console.log('가입금액', selectMoneyNumber);
+
+  //     const interest = selectMoneyNumber * interestRate;
+  //     console.log('이자', interest);
+
+  //     const totalAmount = selectMoneyNumber + interest;
+
+  //     return { interest, totalAmount };
+  //   }
+  //   return { interest: 0, totalAmount: 0 };
+  // };
+
+  const { interest, totalAmount } = depositCalculateInterest(
+    selectMoney,
+    selectedProduct?.interestRate ?? 0,
+  );
 
   const GoBack = () => {
     navigate(-1);
@@ -54,7 +99,10 @@ const DepositProduct = () => {
         <div className='border-b border-gray-300 py-4 text-2xl'>
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
-            <span className='text-xl font-bold'>정기예금 2번 상품</span>
+            <span className='text-xl font-bold'>
+              {/* {productData ? productData.accountName : '상품명 정보 없음'} */}
+              {selectedProduct ? selectedProduct.name : '상품명 정보 없음'}
+            </span>
           </div>
         </div>
 
@@ -75,7 +123,10 @@ const DepositProduct = () => {
           <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>최소 금액</span>
-              <div className='mt-2 text-xl font-bold'>200,000 원</div>
+              <div className='mt-2 text-xl font-bold'>
+                {selectedProduct ? selectedProduct.minimumAmount : '정보 없음'}{' '}
+                원
+              </div>
             </div>
 
             <div>
@@ -89,19 +140,28 @@ const DepositProduct = () => {
           <div className='grid grid-cols-2 text-start'>
             <div>
               <span className='text-2xl text-gray-500'>연 이자율</span>
-              <div className='mt-2 text-xl font-bold'>10%</div>
+              <div className='mt-2 text-xl font-bold'>
+                {/* {productData ? productData.interestRate : '이자 정보 없음'} */}
+                {selectedProduct
+                  ? `${selectedProduct.interestRate} %`
+                  : '이자 정보 없음'}
+              </div>
             </div>
 
             <div>
               <span className='text-2xl text-gray-500'>예상 이자</span>
-              <div className='mt-2 text-xl font-bold'>138,750 원</div>
+              <div className='mt-2 text-xl font-bold'>
+                {interest.toLocaleString()} 원
+              </div>
             </div>
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>예상 금액</span>
-          <div className='mt-2 text-xl font-bold'>242 만 원</div>
+          <div className='mt-2 text-xl font-bold'>
+            {totalAmount.toLocaleString()} 원
+          </div>
         </div>
 
         <div className='mb-2 flex w-full items-center justify-center p-4'>

@@ -1,8 +1,7 @@
-import { QuizData } from '@/types/quiz';
+import { QuizItem } from '@/types/quiz';
 
-export const quizPartData: QuizData[] = [
+export const quizPartData: QuizItem[] = [
   {
-    part: 1,
     number: 1,
     question:
       '모바일뱅킹은 실시간으로 계좌 잔액, 거래 내역 등을 확인할 수 있는 장점이 있다',
@@ -11,7 +10,6 @@ export const quizPartData: QuizData[] = [
       '모바일뱅킹의 장점으로는 실시간 거래가 있으며, 실시간으로 계좌 잔액, 거래 내역 등을 확인하며 송금 및 이체와 같은 금융 거래도 즉시 처리됩니다.',
   },
   {
-    part: 1,
     number: 2,
     question: 'Wi-Fi에서는 모바일뱅킹을 이용해도 해킹이 되지 않는다',
     answer: 'X',
@@ -19,7 +17,6 @@ export const quizPartData: QuizData[] = [
       '사용자가 안전하지 않은 Wi-Fi 네트워크를 통해 접속하거나 악성 소프트웨어에 감염될 경우 개인 정보가 유출될 수 있습니다.',
   },
   {
-    part: 1,
     number: 3,
     question:
       '모바일뱅킹 이용 시 비밀번호는 영문자, 숫자, 특수문자를 조합하여 만들어야한다',
@@ -28,7 +25,6 @@ export const quizPartData: QuizData[] = [
       '비밀번호는 유추하기 쉬운 번호를 사용하지 말고 영문자, 숫자, 특수문자의 조합으로 구성되어야 하며, 주기적으로 변경해야 합니다.',
   },
   {
-    part: 1,
     number: 4,
     question:
       '모바일뱅킹 간편(고령자) 모드에서 글자 크기는 일반모드보다 20% 이상 크다',
@@ -37,7 +33,6 @@ export const quizPartData: QuizData[] = [
       '글자 크기와 색상, 아이콘 등을 고령층의 시각적 특성에 맞게 조정하였습니다. 글자 크기는 일반모드보다 20% 이상 크게 하고, 색상 대비도 높여 가독성을 향상시켰습니다.',
   },
   {
-    part: 1,
     number: 5,
     question:
       '모바일뱅킹 간편(고령자) 모드에서 조회는 송금하기, 이체는 내역보기로 용어가 변경되었다',
