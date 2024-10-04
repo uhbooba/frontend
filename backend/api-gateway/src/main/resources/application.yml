@@ -73,6 +73,11 @@ spring:
           filters:
             - RewritePath=/finance-service/(?<segment>.*), /$\{segment}
 
+        # - id: external-service
+        #   uri: lb://external-service
+        #   predicates:
+        #     - Path=/external-service/**,/externals/**
+
         - id: external-service
           uri: lb://external-service
           predicates:
