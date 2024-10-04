@@ -38,7 +38,7 @@ spring:
             allowedHeaders:
               - "*"
             exposedHeaders:
-              - "Content-Disposition"
+              - "access"
             allowCredentials: true
 
       routes:
