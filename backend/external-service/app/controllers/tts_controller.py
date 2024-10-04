@@ -38,7 +38,6 @@ async def generate_audio(request: TtsRequest):
 @router.get("/{tts_key}")
 async def find_audio(tts_key: str):
     """금융사기용 TTS 음성 파일 찾기 API"""
-    # 유효성검사
     try:
         audio_data = await TtsService.get_tts_ai(tts_key)
         return Response(
