@@ -46,13 +46,12 @@ def startup_event():
         openapi_schema["components"]["securitySchemes"] = {
             "API Header": {
                 "type": "apiKey",
-                "name": "access",  # 'access'라는 헤더를 사용할 수 있음
+                "name": "access",
                 "in": "header",
             }
         }
-        openapi_schema["security"] = [
-            {"API Header": []}
-        ]  # 보안 요구 사항을 추가하지만 실제로 검증은 안 함
+        openapi_schema["servers"] = [{"url": "/external-service"}]
+        openapi_schema["security"] = [{"API Header": []}]
         app.openapi_schema = openapi_schema
 
     register_with_eureka()
