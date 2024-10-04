@@ -2,7 +2,7 @@ package com.uhbooba.financeservice.controller.finance;
 
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
-import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.DEMAND_DEPOSIT_ACCOUNT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.ACCOUNT_RESPONSE;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
@@ -62,7 +62,7 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "[사용 X] 입출금 계좌 생성", description = "입출금 계좌를 생성합니다. \n 프론트에서 직접적인 호출 없이 User Service 와의 통신으로 자동 진행됩니다.")
+    @Operation(summary = "입출금 계좌 생성", description = "입출금 계좌를 생성합니다.")
     public CommonResponse<DemandDepositAccountResponse> createDemandDepositAccount(
         @RequestHeader HttpHeaders headers
     ) {
@@ -74,7 +74,7 @@ public class DemandDepositController {
 
     @GetMapping("/accounts/detail")
     @Operation(summary = "입출금계좌 조회", description = "입출금 계좌를 상세 조회 합니다." + INPUT + OUTPUT
-        + DEMAND_DEPOSIT_ACCOUNT_RESPONSE)
+        + ACCOUNT_RESPONSE)
     public CommonResponse<AccountResponse> getAccountDetail(
         @RequestHeader HttpHeaders headers
     ) {

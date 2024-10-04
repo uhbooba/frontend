@@ -7,12 +7,6 @@ import org.springframework.http.HttpHeaders;
 
 public class CommonUtil {
 
-    public static Integer getMemberId(HttpHeaders headers) {
-        return 1;
-        //        return Integer.valueOf(headers.get("member-passport")
-        //                                      .get(0));
-    }
-
     public static UserHeaderInfo getUserHeaderInfo(HttpHeaders headers) {
         String userServiceId = headers.get("X-UserId")
                                       .get(0);

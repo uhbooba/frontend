@@ -128,6 +128,7 @@ public class TransactionService {
         DemandDepositDepositAccountRequest request,
         Account account
     ) {
+        Long transactionBalance = request.transactionBalance();
         // transaction 생성
         TransactionCreateRequest transactionCreateRequest = TransactionCreateRequest.builder()
                                                                                     .account(
@@ -137,8 +138,10 @@ public class TransactionService {
                                                                                     .type(
                                                                                         TransactionType.DEPOSIT)
                                                                                     .transactionBalance(
-                                                                                        Double.valueOf(
-                                                                                            request.transactionBalance()))
+                                                                                        transactionBalance)
+                                                                                    .transactionAfterBalance(
+                                                                                        transactionBalance
+                                                                                            + account.getBalance())
                                                                                     .transactionSummary(
                                                                                         request.transactionSummary())
                                                                                     .build();
@@ -151,7 +154,7 @@ public class TransactionService {
         Account receiverAccount,
         Account senderAccount
     ) {
-
+        Long transactionBalance = request.transactionBalance();
         // 이체받는 transaction 생성
         TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
                                                                            .account(receiverAccount)
@@ -160,8 +163,10 @@ public class TransactionService {
                                                                            .type(
                                                                                TransactionType.DEPOSIT_TRANSFER)
                                                                            .transactionBalance(
-                                                                               Double.valueOf(
-                                                                                   request.transactionBalance()))
+                                                                               (transactionBalance))
+                                                                           .transactionAfterBalance(
+                                                                               transactionBalance
+                                                                                   + receiverAccount.getBalance())
                                                                            .transactionSummary(
                                                                                request.depositTransactionSummary())
                                                                            .build();
@@ -175,8 +180,10 @@ public class TransactionService {
                                                                          .type(
                                                                              TransactionType.WITHDRAWAL_TRANSFER)
                                                                          .transactionBalance(
-                                                                             Double.valueOf(
-                                                                                 request.transactionBalance()))
+                                                                             (transactionBalance))
+                                                                         .transactionAfterBalance(
+                                                                             senderAccount.getBalance()
+                                                                                 - transactionBalance)
                                                                          .transactionSummary(
                                                                              request.withdrawalTransactionSummary())
                                                                          .build();
@@ -196,7 +203,7 @@ public class TransactionService {
         DepositAccountCreateRequest request,
         Account sourceAccount
     ) {
-
+        Long transactionBalance = request.depositBalance();
         // 이체받는 transaction 생성
         TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
                                                                            .status(
@@ -204,8 +211,9 @@ public class TransactionService {
                                                                            .type(
                                                                                TransactionType.DEPOSIT_TRANSFER)
                                                                            .transactionBalance(
-                                                                               Double.valueOf(
-                                                                                   request.depositBalance()))
+                                                                               (transactionBalance))
+                                                                           .transactionAfterBalance(
+                                                                               transactionBalance)
                                                                            .transactionSummary(
                                                                                sourceAccount.getAccountNo()
                                                                                    + "로부터 예금 금액 입금")
@@ -220,8 +228,10 @@ public class TransactionService {
                                                                          .type(
                                                                              TransactionType.WITHDRAWAL_TRANSFER)
                                                                          .transactionBalance(
-                                                                             Double.valueOf(
-                                                                                 request.depositBalance()))
+                                                                             (transactionBalance))
+                                                                         .transactionAfterBalance(
+                                                                             sourceAccount.getBalance()
+                                                                                 - transactionBalance)
                                                                          .transactionSummary(
                                                                              "예금 금액 출금")
                                                                          .build();
@@ -241,6 +251,7 @@ public class TransactionService {
         SavingsAccountCreateRequest request,
         Account sourceAccount
     ) {
+        Long transactionBalance = request.depositBalance();
         // 이체받는 transaction 생성
         TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
                                                                            .status(
@@ -248,8 +259,9 @@ public class TransactionService {
                                                                            .type(
                                                                                TransactionType.DEPOSIT_TRANSFER)
                                                                            .transactionBalance(
-                                                                               Double.valueOf(
-                                                                                   request.depositBalance()))
+                                                                               (transactionBalance))
+                                                                           .transactionAfterBalance(
+                                                                               transactionBalance)
                                                                            .transactionSummary(
                                                                                sourceAccount.getAccountNo()
                                                                                    + "로부터 적금 금액 입금")
@@ -264,8 +276,10 @@ public class TransactionService {
                                                                          .type(
                                                                              TransactionType.WITHDRAWAL_TRANSFER)
                                                                          .transactionBalance(
-                                                                             Double.valueOf(
-                                                                                 request.depositBalance()))
+                                                                             (transactionBalance))
+                                                                         .transactionAfterBalance(
+                                                                             sourceAccount.getBalance()
+                                                                                 - transactionBalance)
                                                                          .transactionSummary(
                                                                              "적금 금액 출금")
                                                                          .build();
@@ -285,6 +299,7 @@ public class TransactionService {
         ExchangeRequest request,
         Account account
     ) {
+        Long transactionBalance = request.exchangeAmount();
         // 환전 transaction 생성
         TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
                                                                            .account(account)
@@ -294,6 +309,9 @@ public class TransactionService {
                                                                                TransactionType.EXCHANGE)
                                                                            .transactionBalance(
                                                                                request.exchangeAmount())
+                                                                           .transactionAfterBalance(
+                                                                               account.getBalance()
+                                                                                   - transactionBalance)
                                                                            .transactionSummary("환전")
                                                                            .build();
 
