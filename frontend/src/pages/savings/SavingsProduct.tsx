@@ -22,7 +22,6 @@ const SavingsProduct = () => {
   const [maturityDate] = useAtom(maturityDateAtom);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [check] = useAtom(checkAtom);
   const [productData, setProductData] = useState<ProductData | null>(null);
   const [selectedProduct] = useAtom(selectedSavingsProductAtom);
