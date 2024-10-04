@@ -36,6 +36,7 @@ const DepositProduct = () => {
           accountName: product?.accountName,
           interestRate: product?.interestRate,
         });
+        console.log(productData);
       } catch (error) {
         console.log('예금상품 정보가져오는거 에러다.:', error);
       }
@@ -64,7 +65,7 @@ const DepositProduct = () => {
 
   const { interest, totalAmount } = depositCalculateInterest(
     selectMoney,
-    selectedProduct?.interestRate,
+    selectedProduct?.interestRate ?? 0,
   );
 
   const GoBack = () => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 
 type AccountDepositProductProps = {
   name: string;
@@ -16,12 +15,9 @@ const AccountDepositProduct: React.FC<AccountDepositProductProps> = ({
   interestRate,
   minimumAmount,
   minimumPeriod,
-  moveTo,
   selectedProduct,
   onClick,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <div
       className='mt-[20px] h-[148px] w-[360px] rounded-xl bg-[#FFD362] text-center'

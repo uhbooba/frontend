@@ -1,12 +1,18 @@
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountProduct from '@/components/common/AccountProduct';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
 
+interface ProductItem {
+  name: string;
+  description: string;
+  moveTo: string;
+}
+
 const AccountProductsList = () => {
-  const [selectedKeyword, setSelectedKeyword] = useAtom(selectedKeywordAtom);
+  const setSelectedKeyword = useSetAtom(selectedKeywordAtom);
   const navigate = useNavigate();
 
   const ProductsList = [
@@ -27,7 +33,7 @@ const AccountProductsList = () => {
     },
   ];
 
-  const handleProductClick = (product) => {
+  const handleProductClick = (product: ProductItem) => {
     setSelectedKeyword(
       product.name.includes('예금') ? '예금 상품' : '적금 상품',
       // 클릭한거에 예금이 있으면 예금상품 버튼을 보여주고, 아니면 적금상품 버튼을 보여줌

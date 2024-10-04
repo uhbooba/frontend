@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 
 type AccountProductProps = {
   name: string;
@@ -11,11 +10,8 @@ type AccountProductProps = {
 const AccountProduct: React.FC<AccountProductProps> = ({
   name,
   description,
-  moveTo,
   onClick,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <div
       className='mt-[20px] h-[128px] w-[320px] rounded-xl bg-[#FFAF2A] text-center'

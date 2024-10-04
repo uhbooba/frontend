@@ -9,8 +9,12 @@ export const calculatePaymentMonths = (
   console.log('2 만기일 문자열', maturityDate);
 
   // 땡년땡월땡일 문자열을 다시 날짜형식으로 바꾸기
-  const convertToDate = (dateString) => {
+  const convertToDate = (dateString: string) => {
     const parts = dateString.match(/(\d{4})년 (\d{1,2})월 (\d{1,2})일/);
+    if (!parts) {
+      throw new Error('유효하지 않은 날짜 형식입니다.');
+    }
+
     const year = parseInt(parts[1], 10);
     const month = parseInt(parts[2], 10) - 1;
     const day = parseInt(parts[3], 10);
