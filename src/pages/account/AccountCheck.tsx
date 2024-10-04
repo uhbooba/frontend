@@ -26,7 +26,7 @@ interface Filter {
 }
 
 const Modal: React.FC<ModalProps> = ({ show, onClose, onSave }) => {
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState('전체 기간');
   const [selectedType, setSelectedType] = useState('전체');
   const [sortType, setSortType] = useState('최신순');
   const [customDate, setCustomDate] = useState(false);
@@ -44,13 +44,14 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, onSave }) => {
   };
 
   const handleDateButtonClick = (period: string) => {
-    setCustomDate(false);
-    setSelectedDate(period);
     if (period === '직접 설정') {
       setCustomDate(true);
-      setSelectedDate('');
+      setSelectedDate('직접 설정');
       setStartDate('');
       setEndDate('');
+    } else {
+      setCustomDate(false);
+      setSelectedDate(period);
     }
   };
 
@@ -201,26 +202,33 @@ const AccountCheck = () => {
     startDate: string,
     endDate: string,
   ) => {
-    if (
-      selectedDate === '직접 설정' &&
-      new Date(endDate) < new Date(startDate)
-    ) {
-      alert('종료일은 시작일보다 빠를 수 없습니다.');
-      return; // 종료일이 시작일보다 빠르면 종료
-    }
-
-    let dateFilter = selectedDate;
+    // Check if the custom date option is selected
     if (selectedDate === '직접 설정') {
-      dateFilter = `${startDate} ~ ${endDate}`;
+      // Check if either startDate or endDate is not selected
+      if (!startDate || !endDate) {
+        alert('시작일과 종료일을 모두 선택해야 합니다.');
+        return; // Exit the function if either date is not selected
+      }
+
+      // Ensure endDate is not before startDate
+      if (new Date(endDate) < new Date(startDate)) {
+        alert('종료일은 시작일보다 빠를 수 없습니다.');
+        return; // Exit the function if endDate is before startDate
+      }
+
+      // Format the date filter for custom selection
+      selectedDate = `${startDate} ~ ${endDate}`;
     }
 
+    // Update the filter state
     setFilter({
-      date: dateFilter || '전체 기간',
+      date: selectedDate || '전체 기간',
       type: selectedType || '전체',
       sort: sort || '최신순',
-      startDate: selectedDate === '직접 설정' ? startDate : undefined, // 조건에 따라 설정
-      endDate: selectedDate === '직접 설정' ? endDate : undefined, // 조건에 따라 설정
+      startDate: selectedDate === '직접 설정' ? startDate : undefined,
+      endDate: selectedDate === '직접 설정' ? endDate : undefined,
     });
+
     setShowModal(false);
   };
 
@@ -266,9 +274,17 @@ const AccountCheck = () => {
             onClick={openModal}
             className='mx-[10px] mt-[5px] flex justify-between text-[24px] font-bold'
           >
-            <div>{filter.date}</div>
-            <div>{filter.type}</div>
-            <div>{filter.sort}</div>
+            <div
+              className={`${
+                filter.date.length > 10
+                  ? 'whitespace-normal break-words text-[16px] leading-tight'
+                  : 'overflow-hidden text-ellipsis whitespace-nowrap text-[24px]'
+              } max-w-[120px]`} // Adjust max-width as needed
+            >
+              {filter.date}
+            </div>
+            <div className='text-[24px]'>{filter.type}</div>
+            <div className='text-[24px]'>{filter.sort}</div>
           </div>
           <div>
             <AccountHistory filter={filter} />
