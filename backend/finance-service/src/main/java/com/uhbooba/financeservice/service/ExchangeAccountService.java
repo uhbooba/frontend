@@ -42,9 +42,7 @@ public class ExchangeAccountService {
                                                          .exchangeRate(
                                                              exchangeResponse.exchangeCurrency()
                                                                              .exchangeRate())
-                                                         .balance(Long.valueOf(
-                                                             exchangeResponse.accountInfo()
-                                                                             .balance()))
+                                                         .balance(0L)
                                                          .currency(
                                                              exchangeResponse.exchangeCurrency()
                                                                              .currency())
@@ -63,9 +61,9 @@ public class ExchangeAccountService {
             exchangeAccount = createExchangeAccount(exchangeResponse, account);
         }
 
-        exchangeAccount.setBalance(Long.valueOf(
-            exchangeAccount.getBalance() + exchangeResponse.exchangeCurrency()
-                                                           .amount()));
+        exchangeAccount.setBalance(Long.valueOf(exchangeAccount.getBalance() + Long.parseLong(
+            exchangeResponse.exchangeCurrency()
+                            .amount())));
 
         return exchangeAccountRepository.save(exchangeAccount);
     }
