@@ -174,6 +174,7 @@ public class DemandDepositService {
      * @param depositRequest
      * @return
      */
+    @Transactional
     public DemandDepositDepositResponse depositDemandDepositAccount(
         UserHeaderInfo userHeaderInfo,
         DemandDepositDepositAccountRequest depositRequest
@@ -198,6 +199,9 @@ public class DemandDepositService {
             // transaction 수정
             transactionService.updateTransactionForSuccess(transaction,
                                                            depositDepositResponse.transactionUniqueNo());
+
+            // 잔액 수정
+            accountService.addAccountBalance(account, depositRequest.transactionBalance());
             return depositDepositResponse;
         } catch(Exception ex) {
             transactionService.updateTransactionForFail(transaction, ex);
@@ -209,7 +213,7 @@ public class DemandDepositService {
     /**
      * 이체
      *
-     * @param userId
+     * @param userHeaderInfo
      * @param transferAccountRequest
      * @return
      */
@@ -246,6 +250,12 @@ public class DemandDepositService {
                         transactions.receiverTransaction(), transferResponse.transactionUniqueNo());
                 }
             }
+
+            // 계좌 잔액 수정
+            accountService.addAccountBalance(transferAccount,
+                                             transferAccountRequest.transactionBalance());
+            accountService.subtractAccountBalance(withdrawalAccount,
+                                                  transferAccountRequest.transactionBalance());
 
             return transferResponses;
         } catch(Exception ex) {
