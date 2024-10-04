@@ -1,17 +1,20 @@
 from typing import Any
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from requests import Session
 
+from ..config.database import get_db
 from ..schemas.success_response import ok_res
 from ..services.redis_service import RedisService
 
 # Setup
-router = APIRouter(prefix="/redis", tags=["(개발용)redis"])
+router = APIRouter(prefix="/redis", tags=["(개발용) redis"])
 
 
 # Constants
+# Schemas
 class KeyRequest(BaseModel):
     key: str
 
@@ -21,7 +24,20 @@ class KeyValueRequest(BaseModel):
     value: Any
 
 
-# Schemas
+@router.get("/save_chat")
+def save_chat_history(db: Session = Depends(get_db)):
+    try:
+        message = RedisService.save_chat_history_to_db(db)
+        return ok_res(message=message)
+
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "status": "error",
+                "message": f"Failed to save chat log: {str(e)}",
+            },
+        )
 
 
 @router.get("/keys/{db_number}", response_model=ok_res)
