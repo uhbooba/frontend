@@ -3,7 +3,7 @@ import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
 import { createSavingsAccount, getSavingsProducts } from '@/services/saving';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import {
   savingAccountAtom,
@@ -15,7 +15,7 @@ import {
 const SavingsSuccess = () => {
   const navigate = useNavigate();
   const [selectedSavingProduct] = useAtom(selectedSavingsProductAtom); // 예금상품명 가져오기
-  const [, setSavingAccount] = useAtom(savingAccountAtom); // 예금 계좌정보 저장할곳
+  const setSavingAccount = useSetAtom(savingAccountAtom); // 예금 계좌정보 저장할곳
   const [withdrawalAccount] = useAtom(withdrawalAccountAtom); // 출금계좌 정보 가져올것
   const [selectMoney] = useAtom(selectMoneyAtom); // 예치 금액 가져오기
   const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(

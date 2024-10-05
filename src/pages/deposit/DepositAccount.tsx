@@ -4,7 +4,7 @@ import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/NoModal';
 import clsx from 'clsx';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import {
   selectAccountAtom,
   withdrawalAccountAtom,
@@ -20,7 +20,7 @@ const DepositAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [accountDetails, setAccountDetails] =
     useState<DepositAccountDetail | null>(null);
-  const [, setWithdrawalAccount] = useAtom(withdrawalAccountAtom);
+  const setWithdrawalAccount = useSetAtom(withdrawalAccountAtom);
 
   useEffect(() => {
     setSelectAccount(null);
@@ -29,13 +29,9 @@ const DepositAccount = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await getUserFreeAccount();
-        // console.log('리스폰 확인', response);
-        // console.log(response.data.result);
         const account = response.data.result;
         if (account) {
           setAccountDetails(account);
-          // console.log('저장한 계좌번호 확인', account);
-          // console.log(accountDetails?.balance);
         } else {
           console.error('계좌가 없으요');
         }
@@ -63,7 +59,6 @@ const DepositAccount = () => {
     if (accountDetails) {
       setSelectAccount(0);
       setWithdrawalAccount(accountDetails);
-      // console.log('저장한 계좌번호 확인2', accountDetails.accountNo);
     }
   };
 

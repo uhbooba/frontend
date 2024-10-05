@@ -5,7 +5,7 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/NoModal';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import {
   selectAccountAtom,
   withdrawalAccountAtom,
@@ -20,7 +20,7 @@ const SavingsAccount = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [accountDetails, setAccountDetails] =
     useState<SavingAccountDetail | null>(null);
-  const [, setWithdrawalAccount] = useAtom(withdrawalAccountAtom);
+  const setWithdrawalAccount = useSetAtom(withdrawalAccountAtom);
 
   useEffect(() => {
     setSelectAccount(null);

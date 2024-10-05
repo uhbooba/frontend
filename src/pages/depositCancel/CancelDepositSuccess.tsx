@@ -7,9 +7,12 @@ import {
   getUserDepositAccounts,
   deleteDepositAccount,
 } from '@/services/deposit';
+import { useSetAtom } from 'jotai';
+import { depositAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 
 const CancelDepositSuccess = () => {
   const navigate = useNavigate();
+  const setDepositAccount = useSetAtom(depositAccountAtom);
 
   useEffect(() => {
     const deleteAccount = async () => {
@@ -19,6 +22,7 @@ const CancelDepositSuccess = () => {
         if (response?.data?.result?.length > 0) {
           const account = response.data.result[0]; // 계좌 가져오기
           await deleteDepositAccount(account.accountNo); // 가져온 계좌 삭제
+          setDepositAccount(null);
         }
       } catch (error) {
         console.error('getUserDepositAccounts 에러', error);
@@ -26,7 +30,7 @@ const CancelDepositSuccess = () => {
     };
 
     deleteAccount();
-  }, []);
+  }, [setDepositAccount]);
 
   const GoNext = () => {
     navigate('/');
