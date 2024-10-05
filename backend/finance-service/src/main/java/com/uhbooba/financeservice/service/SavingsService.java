@@ -110,7 +110,9 @@ public class SavingsService {
                 transactionRequests.receiverTransaction(), TransactionUpdateRequest.builder()
                                                                                    .account(account)
                                                                                    .build());
-
+            // 계좌 잔액 변경
+            accountService.subtractAccountBalance(sourceAccount, dto.depositBalance());
+            accountService.addAccountBalance(account, dto.depositBalance());
             return savingsAccountResponse;
         } catch(Exception ex) {
             // 트랜잭션 실패 처리

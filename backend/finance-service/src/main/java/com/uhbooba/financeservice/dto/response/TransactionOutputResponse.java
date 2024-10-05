@@ -13,6 +13,6 @@ public record TransactionOutputResponse(
     TransactionStatus status,
     TransactionType type,
     Long transactionBalance,
-    String transactionAfterBalance,
+    Long transactionAfterBalance,
     String transactionSummary
 ) {}
