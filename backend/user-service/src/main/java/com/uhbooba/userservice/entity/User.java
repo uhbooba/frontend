@@ -31,6 +31,9 @@ public class User {
     @Column(nullable = false)
     private Boolean isFirstLogin;
 
+    @Column(nullable = false)
+    private Integer missionStatus;
+
     @Builder
     public User(String name, String username, String password, String phone) {
         this.name = name;
@@ -39,11 +42,30 @@ public class User {
         this.phone = phone;
         this.isTwoFactorAuthEnabled = false;
         this.isFirstLogin = true;
+        this.missionStatus = 0;
     }
 
     public User(String username, String name) {
         this.username = username;
         this.name = name;
+    }
+
+    public void setMissionCleared(int missionNumber) {
+        missionStatus |= (1 << missionNumber);
+    }
+
+    public boolean isMissionCleared(int missionNumber) {
+        return (missionStatus & (1 << missionNumber)) != 0;
+    }
+
+    public int getClearedMissionCount() {
+        int count = 0;
+        int status = missionStatus;
+        while (status != 0) {
+            count += (status & 1);
+            status >>= 1;
+        }
+        return count;
     }
 
 }
