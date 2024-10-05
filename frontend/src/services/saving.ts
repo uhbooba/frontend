@@ -2,7 +2,7 @@ import { axiosInstance } from '@/utils/axiosInstance';
 
 // 적금 상품 전체 조회
 export const getSavingsProducts = async () => {
-  const response = await axiosInstance('/finances/savings/products', {});
+  const response = await axiosInstance('/finances/savings/products');
   return response;
 };
 
