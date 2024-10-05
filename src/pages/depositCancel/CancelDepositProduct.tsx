@@ -9,6 +9,7 @@ import {
   selectMoneyAtom,
   selectPeriodAtom,
   selectedDepositProductAtom,
+  depositAccountAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import { useAtom } from 'jotai';
 import TopBar from '@/components/layouts/TopBar';
@@ -25,10 +26,11 @@ const CancelDepositProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   // const [selectAccount] = useAtom(selectAccountAtom);
-  const [accountData, setAccountData] = useState<AccountData | null>(null);
+  const [, setAccountData] = useState<AccountData | null>(null);
   const [terminationInterestData, setTerminationInterestData] =
     useState<TerminationInterestData | null>(null);
   const [selectedProduct] = useAtom(selectedDepositProductAtom);
+  const [depositAccount] = useAtom(depositAccountAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
@@ -38,7 +40,7 @@ const CancelDepositProduct = () => {
         const response = await getUserDepositAccounts(1);
         const account = response?.data?.result[0]; // 일단 첫번째 0번 계좌로 가져오기
         setAccountData(account);
-
+        console.log('계좌번호', depositAccount!.accountNo);
         const interestResponse = await getEarlyTerminationInterest(
           99,
           account.accountNo,
@@ -48,11 +50,12 @@ const CancelDepositProduct = () => {
         console.log(terminationInterestData);
       } catch (error) {
         console.error('api 오류났음', error);
+        console.log('계좌번호', depositAccount);
       }
     };
 
     fetchAccountData();
-  }, []);
+  }, [depositAccount]);
 
   const { interest, totalAmount } = depositCalculateInterest(
     selectMoney,
@@ -102,7 +105,10 @@ const CancelDepositProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
           <div className='mt-2 text-xl font-bold'>
-            {accountData ? accountData.accountNo : '아직 계좌번호 정보가 없음'}
+            {/* {accountData ? accountData.accountNo : '아직 계좌번호 정보가 없음'} */}
+            {depositAccount
+              ? depositAccount.accountNo
+              : '아직 생성된 예금 계좌 정보가 없음'}
           </div>
         </div>
 

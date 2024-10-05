@@ -9,11 +9,11 @@ import {
   maturityDateAtom,
   selectMoneyAtom,
   selectPeriodAtom,
+  selectedDepositProductAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
 import { getDepositProducts } from '@/services/deposit';
 import { ProductData } from '@/types/deposit';
-import { selectedDepositProductAtom } from '@/atoms/deposit/depositDataAtoms';
 import { depositCalculateInterest } from '@/utils/depositCalculateInterest';
 
 const DepositProduct = () => {
@@ -44,24 +44,6 @@ const DepositProduct = () => {
 
     fetchDepositProduct();
   }, [setIsModalOpen]);
-
-  // const calculateInterest = () => {
-  //   if (selectedProduct && selectMoney) {
-  //     const interestRate = selectedProduct.interestRate / 100;
-  //     console.log('이자율', interestRate);
-  //     console.log('선택가입금액', selectMoney);
-  //     const selectMoneyNumber = Number(selectMoney.replace(/,/g, ''));
-  //     console.log('가입금액', selectMoneyNumber);
-
-  //     const interest = selectMoneyNumber * interestRate;
-  //     console.log('이자', interest);
-
-  //     const totalAmount = selectMoneyNumber + interest;
-
-  //     return { interest, totalAmount };
-  //   }
-  //   return { interest: 0, totalAmount: 0 };
-  // };
 
   const { interest, totalAmount } = depositCalculateInterest(
     selectMoney,
@@ -124,7 +106,9 @@ const DepositProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>최소 금액</span>
               <div className='mt-2 text-xl font-bold'>
-                {selectedProduct ? selectedProduct.minimumAmount : '정보 없음'}{' '}
+                {selectedProduct
+                  ? selectedProduct.minimumAmount.toLocaleString()
+                  : '정보 없음'}{' '}
                 원
               </div>
             </div>
