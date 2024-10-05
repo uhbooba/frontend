@@ -71,6 +71,7 @@ const DepositMoney = () => {
 
   // 얼마로 시작할까요? 버튼 클릭 함수
   const amountClick = (index: number, amount: string) => {
+    console.log(index);
     setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
