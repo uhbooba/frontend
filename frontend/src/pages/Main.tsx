@@ -101,11 +101,10 @@ const Main = () => {
             accountNo: account.accountNo,
             balance: account.balance,
           });
-        } else {
-          console.error('계좌 정보를 가져올 수 없습니다.');
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
+        console.log();
       }
     };
 
