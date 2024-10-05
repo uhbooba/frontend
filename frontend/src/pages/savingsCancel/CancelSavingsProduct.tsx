@@ -13,11 +13,7 @@ import {
   savingAccountAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
-import {
-  getUserSavingsAccounts,
-  getEarlyTerminationInterest,
-} from '@/services/saving';
-import { CancelProductData } from '@/types/saving';
+
 import { savingCalculateInterest } from '@/utils/savingCalculateInterest';
 import {
   calculatePaymentMonths,
@@ -29,40 +25,12 @@ const CancelSavingsProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [, setProductData] = useState<CancelProductData | null>(null);
   const [selectedProduct] = useAtom(selectedSavingsProductAtom);
   const [maturityDate] = useAtom(maturityDateAtom);
   const [savingAccount] = useAtom(savingAccountAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
-
-    const fetchProductDetails = async () => {
-      try {
-        // 계좌번호 정보를 가져오기 위해 API 호출
-        const response = await getUserSavingsAccounts();
-        if (response?.data?.result?.length > 0) {
-          const account = response.data.result[0]; // 계좌를 가져옴
-          // 중도해지 이자율 API 호출
-          const earlyTerminationResponse = await getEarlyTerminationInterest(
-            99,
-            account.accountNo,
-          );
-
-          setProductData({
-            accountName: account.accountName,
-            accountNo: account.accountNo,
-            interestRate: account.interestRate,
-            earlyTerminationInterestRate:
-              earlyTerminationResponse.data.result.earlyTerminationInterest,
-          });
-        }
-      } catch (error) {
-        console.error('적금 계좌 정보 가져오는 중 에러 발생:', error);
-      }
-    };
-
-    fetchProductDetails();
   }, [savingAccount]);
 
   const GoBack = () => {

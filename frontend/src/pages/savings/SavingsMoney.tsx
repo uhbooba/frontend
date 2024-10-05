@@ -63,6 +63,7 @@ const SavingsMoney = () => {
 
   // 얼마씩 적금할까요? 버튼 클릭 함수
   const amountClick = (index: number, amount: string) => {
+    console.log(index);
     setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
