@@ -2,9 +2,93 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
+import { createSavingsAccount, getSavingsProducts } from '@/services/saving';
+import { useAtom, useSetAtom } from 'jotai';
+import { useEffect, useState } from 'react';
+import {
+  savingAccountAtom,
+  selectedSavingsProductAtom,
+  withdrawalAccountAtom,
+  selectMoneyAtom,
+} from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsSuccess = () => {
   const navigate = useNavigate();
+  const [selectedSavingProduct] = useAtom(selectedSavingsProductAtom); // 예금상품명 가져오기
+  const setSavingAccount = useSetAtom(savingAccountAtom); // 예금 계좌정보 저장할곳
+  const [withdrawalAccount] = useAtom(withdrawalAccountAtom); // 출금계좌 정보 가져올것
+  const [selectMoney] = useAtom(selectMoneyAtom); // 예치 금액 가져오기
+  const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
+    null,
+  ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
+
+  // 적금상품전체조회api부터 해야함
+  useEffect(() => {
+    const fetchAccountTypeUniqueNo = async () => {
+      if (!selectedSavingProduct) {
+        console.error('선택된 적금 상품이 없습니다.');
+        return;
+      }
+
+      try {
+        const response = await getSavingsProducts();
+        const products = response?.data?.result || [];
+
+        // 선택된 상품명과 일치하는 상품 정보 찾기
+        const selectedProductInfo = products.find(
+          (product: any) => product.accountName === selectedSavingProduct.name,
+        );
+
+        if (selectedProductInfo) {
+          setAccountTypeUniqueNo(selectedProductInfo.accountTypeUniqueNo); // 선택된 상품의 고유 번호 저장
+        }
+      } catch (error) {
+        console.error('api 호출 자체 에러', error);
+      }
+    };
+
+    fetchAccountTypeUniqueNo();
+  }, [selectedSavingProduct]);
+
+  // 이건 적금계좌 생성 api 하는거
+  useEffect(() => {
+    const createAccount = async () => {
+      if (!selectedSavingProduct) {
+        console.error('선택된 적금 상품이 없습니다.');
+        return;
+      }
+
+      try {
+        // 금액버튼 문자열이니까 쉼표도 없애고 숫자로 바꿔줘야됨
+        if (!selectMoney) {
+          console.error('유효한 예치 금액이 없습니다.');
+          return;
+        }
+        const savingBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
+        const response = await createSavingsAccount(
+          withdrawalAccount!.accountNo,
+          accountTypeUniqueNo!,
+          savingBalance,
+        );
+
+        if (response?.data?.result) {
+          setSavingAccount(response.data.result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (accountTypeUniqueNo) {
+      createAccount(); // 고유번호 가져왔으면 이제 적금 계좌 생성 api 쓰기
+    }
+  }, [
+    setSavingAccount,
+    selectedSavingProduct,
+    withdrawalAccount,
+    selectMoney,
+    accountTypeUniqueNo,
+  ]);
 
   const GoNext = () => {
     navigate('/');

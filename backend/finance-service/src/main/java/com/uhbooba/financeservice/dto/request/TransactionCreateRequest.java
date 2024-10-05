@@ -11,8 +11,8 @@ public record TransactionCreateRequest(
     String transactionUniqueNo,
     TransactionStatus status,
     TransactionType type,
-    Double transactionBalance,
-    String transactionAfterBalance,
+    Long transactionBalance,
+    Long transactionAfterBalance,
     String transactionSummary
 ) {
 

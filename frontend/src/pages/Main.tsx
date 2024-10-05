@@ -56,13 +56,7 @@ const ButtonConfig: ButtonConfigType[] = [
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
   },
-  {
-    label: '예금 가입 (추후 삭제 예정)',
-    route: '/deposit',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
-  },
+
   {
     label: '예금 중도 해지 (추후 삭제 예정)',
     route: '/cancel/deposit/explain',
@@ -70,13 +64,7 @@ const ButtonConfig: ButtonConfigType[] = [
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/icons/warning.png',
   },
-  {
-    label: '적금 가입 (추후 삭제 예정)',
-    route: '/savings',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
-  },
+
   {
     label: '적금 중도해지(추후 삭제 예정)',
     route: '/cancel/savings/explain',
@@ -101,11 +89,10 @@ const Main = () => {
             accountNo: account.accountNo,
             balance: account.balance,
           });
-        } else {
-          console.error('계좌 정보를 가져올 수 없습니다.');
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
+        console.log();
       }
     };
 

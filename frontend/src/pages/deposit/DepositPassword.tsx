@@ -6,8 +6,7 @@ import TopBar from '@/components/layouts/TopBar';
 const DepositPassword = () => {
   const navigate = useNavigate();
 
-  const passwordComplete = (password: string[]) => {
-    console.log('비밀번호 확인용 :', password.join(''));
+  const passwordComplete = () => {
     navigate('/deposit/success');
   };
 

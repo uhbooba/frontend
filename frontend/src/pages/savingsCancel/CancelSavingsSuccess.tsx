@@ -2,13 +2,39 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
+import { useSetAtom } from 'jotai';
+import { savingAccountAtom } from '@/atoms/savings/savingsDataAtoms';
+import {
+  deleteSavingsAccount,
+  getUserSavingsAccounts,
+} from '@/services/saving';
+import { useEffect } from 'react';
 
 const CancelSavingsSuccess = () => {
   const navigate = useNavigate();
+  const setSavingAccount = useSetAtom(savingAccountAtom);
 
   const GoNext = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    const deleteAccount = async () => {
+      try {
+        // 적금 계좌 목록 조회하기
+        const response = await getUserSavingsAccounts();
+        if (response?.data?.result?.length > 0) {
+          const account = response.data.result[0]; // 계좌 가져오기
+          await deleteSavingsAccount(account.accountNo); // 가져온 계좌 삭제
+          setSavingAccount(null);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    deleteAccount();
+  }, [setSavingAccount]);
 
   return (
     <div>
@@ -58,7 +84,7 @@ const CancelSavingsSuccess = () => {
           size='large'
           color='orange'
           className='w-full py-4'
-          onClick={() => GoNext()}
+          onClick={GoNext}
         />
       </div>
 
