@@ -59,9 +59,10 @@ def get_message_list(
         db: Session = Depends(get_db),
         user_info: UserHeaderInfo = Depends(get_user_header_info),
 ):
+    """헤더에 토큰이 필요합니다"""
+
     if isinstance(user_info, JSONResponse):
         return user_info
-    print(user_info.name)
     try:
         message_list, remain_count = SmishingService.get_message_list(
             user_info.user_id, db
@@ -78,10 +79,16 @@ def get_message_list(
         return JSONResponse(status_code=500, content=error_response)
 
 
-@router.post("/{user_key}", response_model=ok_res)
+@router.post("", response_model=ok_res)
 def set_user_smishing_status(
-        user_key: int, request: StatusRequest, db: Session = Depends(get_db)
+        request: StatusRequest,
+        db: Session = Depends(get_db),
+        user_info: UserHeaderInfo = Depends(get_user_header_info),
 ):
+    """헤더에 토큰이 필요합니다"""
+
+    if isinstance(user_info, JSONResponse):
+        return user_info
     if request.scenario not in valid_scenarios:
         error_response = {
             "status": "error",
@@ -93,8 +100,8 @@ def set_user_smishing_status(
         )
 
     try:
-        SmishingService.set_user_status(user_key, request.scenario, db)
-        return ok_res(data=request, message=f"user_id is {user_key}")
+        SmishingService.set_user_status(user_info.user_id, request.scenario, db)
+        return ok_res(data=request, message=f"user_id is {user_info.user_id}")
     except ValueError as e:
         return JSONResponse(
             status_code=404, content={"status": "Not Found", "message": str(e)}
