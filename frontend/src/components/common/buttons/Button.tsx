@@ -14,7 +14,7 @@ const BUTTON_COLORS = {
   green: 'bg-green-main',
   white: 'bg-white-500',
   blue: 'bg-blue-500',
-  lightOrange: 'bg-[#FFD362]'
+  lightOrange: 'bg-[#FFD362]',
 };
 
 export type ButtonConfigType = {
@@ -26,6 +26,7 @@ export type ButtonConfigType = {
   img?: string;
   eduImg?: string;
   eduLabel?: string;
+  amount?: number;
 };
 
 type ButtonProps = {
