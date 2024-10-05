@@ -2,7 +2,6 @@ package com.uhbooba.userservice.service;
 
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.dto.request.UpdateUserRequest;
-import com.uhbooba.userservice.dto.response.UserResponse;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
 import com.uhbooba.userservice.exception.NotFoundException;
@@ -10,7 +9,6 @@ import com.uhbooba.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,25 +66,6 @@ public class UserService {
         } else {
             userRepository.updateFirstLoginByPhone(request.phone(), false);
         }
-    }
-
-    @Transactional
-    public void clearMission(String userId, int missionNumber) {
-        User user = getUserByUsername(userId);
-        user.setMissionCleared(missionNumber);
-        userRepository.save(user);
-    }
-
-    @Transactional(readOnly = true)
-    public boolean isMissionCleared(String userId, int missionNumber) {
-        User user = getUserByUsername(userId);
-        return user.isMissionCleared(missionNumber);
-    }
-
-    @Transactional(readOnly = true)
-    public int getClearedMissionCount(String userId) {
-        User user = getUserByUsername(userId);
-        return user.getClearedMissionCount();
     }
 
 }
