@@ -19,7 +19,6 @@ const CancelDepositProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
-
   const [selectedProduct] = useAtom(selectedDepositProductAtom);
   const [depositAccount] = useAtom(depositAccountAtom);
 
