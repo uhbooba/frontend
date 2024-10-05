@@ -10,6 +10,7 @@ import com.uhbooba.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,11 +47,9 @@ public class UserService {
             });
     }
 
-    public UserResponse getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username)
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
             .orElseThrow(() -> new NotFoundException(username + "가 존재하지 않습니다."));
-
-        return UserResponse.of(user);
     }
 
     private void getUserByPhone(String phone) {
@@ -69,6 +68,25 @@ public class UserService {
         } else {
             userRepository.updateFirstLoginByPhone(request.phone(), false);
         }
+    }
+
+    @Transactional
+    public void clearMission(String userId, int missionNumber) {
+        User user = getUserByUsername(userId);
+        user.setMissionCleared(missionNumber);
+        userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isMissionCleared(String userId, int missionNumber) {
+        User user = getUserByUsername(userId);
+        return user.isMissionCleared(missionNumber);
+    }
+
+    @Transactional(readOnly = true)
+    public int getClearedMissionCount(String userId) {
+        User user = getUserByUsername(userId);
+        return user.getClearedMissionCount();
     }
 
 }

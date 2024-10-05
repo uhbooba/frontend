@@ -69,7 +69,7 @@ public class UserController {
 
         String username = jwtUtil.getUsername(access);
 
-        UserResponse response = userService.getUserByUsername(username);
+        UserResponse response = UserResponse.of(userService.getUserByUsername(username));
 
         return CommonResponse.ok("유저 조회 성공", response);
     }
@@ -82,6 +82,38 @@ public class UserController {
         userService.updateUser(request);
 
         return CommonResponse.ok("유저 정보 수정 성공");
+    }
+
+    @PatchMapping("/missions/{missionNumber}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "미션 클리어 설정")
+    public CommonResponse<?> clearMission(@RequestHeader("access") String access,
+        @PathVariable("missionNumber") int missionNumber) {
+
+        String username = jwtUtil.getUsername(access);
+        userService.clearMission(username, missionNumber);
+        return CommonResponse.ok("미션 클리어 성공");
+    }
+
+    @GetMapping("/missions/{missionNumber}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "특정 미션 클리어 여부 확인")
+    public CommonResponse<?> isMissionCleared(@RequestHeader("access") String access,
+        @PathVariable("missionNumber") int missionNumber) {
+
+        String username = jwtUtil.getUsername(access);
+        boolean isCleared = userService.isMissionCleared(username, missionNumber);
+        return CommonResponse.ok("미션 클리어 여부 조회 성공", isCleared);
+    }
+
+    @GetMapping("/missions")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "현재 몇 단계까지 완료했는지 확인")
+    public CommonResponse<?> getClearedMissionCount(@RequestHeader("access") String access) {
+
+        String username = jwtUtil.getUsername(access);
+        int clearedCount = userService.getClearedMissionCount(username);
+        return CommonResponse.ok("미션 진행 단계 조회 성공", clearedCount);
     }
 
 }
