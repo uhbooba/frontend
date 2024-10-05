@@ -40,9 +40,9 @@ const CancelSavingsProduct = () => {
     const fetchProductDetails = async () => {
       try {
         // 계좌번호 정보를 가져오기 위해 API 호출
-        const response = await getUserSavingsAccounts(1);
+        const response = await getUserSavingsAccounts();
         if (response?.data?.result?.length > 0) {
-          const account = response.data.result[0]; // 첫 번째 계좌를 가져옴
+          const account = response.data.result[0]; // 계좌를 가져옴
           // 중도해지 이자율 API 호출
           const earlyTerminationResponse = await getEarlyTerminationInterest(
             99,
@@ -56,8 +56,6 @@ const CancelSavingsProduct = () => {
             earlyTerminationInterestRate:
               earlyTerminationResponse.data.result.earlyTerminationInterest,
           });
-        } else {
-          console.error('적금 계좌 정보를 가져올 수 없습니다.');
         }
       } catch (error) {
         console.error('적금 계좌 정보 가져오는 중 에러 발생:', error);

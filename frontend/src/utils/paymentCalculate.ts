@@ -5,8 +5,6 @@ export const calculatePaymentMonths = (
   selectPeriod: string,
 ): number => {
   const currentDate = new Date();
-  console.log('1 현재날짜', currentDate);
-  console.log('2 만기일 문자열', maturityDate);
 
   // 땡년땡월땡일 문자열을 다시 날짜형식으로 바꾸기
   const convertToDate = (dateString: string) => {
@@ -22,18 +20,14 @@ export const calculatePaymentMonths = (
   };
 
   const maturityDateObj = convertToDate(maturityDate);
-  console.log('3 만기일 날짜형식', maturityDateObj);
 
   const minusTimeSecond = maturityDateObj!.getTime() - currentDate.getTime();
-  console.log('4 두 날짜 차이 밀리초로 나온거', minusTimeSecond);
 
   const minusTimeMonth = Math.floor(
     minusTimeSecond / (1000 * 60 * 60 * 24 * 30),
   );
-  console.log('5 두 날짜차이를 개월로 바꾼거', minusTimeMonth);
 
   const periodNumber = Number(selectPeriod.replace(/[^0-9]/g, ''));
-  console.log('6 약정기간 숫자로 바꾼거 ', periodNumber);
 
   return periodNumber - minusTimeMonth;
 };
@@ -43,7 +37,6 @@ export const calculatePaidAmount = (
   selectMoney: string,
 ): number => {
   const selectMoneyNumber = Number(selectMoney.replace(/,/g, ''));
-  console.log('월납입액 숫자만', selectMoneyNumber);
 
   return paymentMonths * selectMoneyNumber;
 };

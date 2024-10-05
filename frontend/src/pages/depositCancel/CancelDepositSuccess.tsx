@@ -2,9 +2,31 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import {
+  getUserDepositAccounts,
+  deleteDepositAccount,
+} from '@/services/deposit';
 
 const CancelDepositSuccess = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const deleteAccount = async () => {
+      try {
+        // 예금 계좌 목록 조회
+        const response = await getUserDepositAccounts();
+        if (response?.data?.result?.length > 0) {
+          const account = response.data.result[0]; // 계좌 가져오기
+          await deleteDepositAccount(account.accountNo); // 가져온 계좌 삭제
+        }
+      } catch (error) {
+        console.error('getUserDepositAccounts 에러', error);
+      }
+    };
+
+    deleteAccount();
+  }, []);
 
   const GoNext = () => {
     navigate('/');

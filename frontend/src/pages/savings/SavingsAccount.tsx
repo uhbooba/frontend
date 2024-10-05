@@ -29,12 +29,9 @@ const SavingsAccount = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await getUserFreeAccount();
-        console.log(response.data.result);
         const account = response?.data?.result;
         if (account) {
           setAccountDetails(account);
-        } else {
-          console.error('계좌가 없으요');
         }
       } catch (error) {
         console.error('에러났어', error);
@@ -60,7 +57,6 @@ const SavingsAccount = () => {
     if (accountDetails) {
       setSelectAccount(0);
       setWithdrawalAccount(accountDetails);
-      console.log('계좌번호저장한거', accountDetails.accountNo);
     }
   };
 
