@@ -41,12 +41,6 @@ const SavingsSuccess = () => {
 
         if (selectedProductInfo) {
           setAccountTypeUniqueNo(selectedProductInfo.accountTypeUniqueNo); // 선택된 상품의 고유 번호 저장
-          console.log(
-            '선택된 상품의 고유 번호:',
-            selectedProductInfo.accountTypeUniqueNo,
-          );
-        } else {
-          console.error('이름 같은 상품이 없을때 뜨는 에러');
         }
       } catch (error) {
         console.error('api 호출 자체 에러', error);
@@ -77,26 +71,11 @@ const SavingsSuccess = () => {
           savingBalance,
         );
 
-        console.log('적금 계좌 생성 성공:', response.data);
-        console.log('출금계좌번호', withdrawalAccount!.accountNo);
-        console.log('상품명 :', selectedSavingProduct.name);
-        console.log('예치금액 숫자화', savingBalance);
-        console.log('예치금액', selectMoney);
-        console.log('저장할 계좌 데이터:', response.data.result);
-
         if (response?.data?.result) {
-          console.log('저장할 계좌 데이터:', response.data.result);
           setSavingAccount(response.data.result);
         }
       } catch (error) {
-        const savingBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
-
         console.log(error);
-        console.log('출금계좌번호', withdrawalAccount!.accountNo);
-        console.log('상품명 :', selectedSavingProduct.name);
-        console.log('상품유니크 :', accountTypeUniqueNo);
-        console.log('예치금액', selectMoney);
-        console.log('예치금액 숫자화', savingBalance);
       }
     };
 

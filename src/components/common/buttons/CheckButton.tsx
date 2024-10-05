@@ -9,7 +9,6 @@ const CheckButton = ({
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(e.target.value);
-    console.log(e.target.value)
   };
   return (
     <div className='ml-4 flex items-center space-x-4'>

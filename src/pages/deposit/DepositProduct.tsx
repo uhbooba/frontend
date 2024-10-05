@@ -12,8 +12,6 @@ import {
   selectedDepositProductAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
-import { getDepositProducts } from '@/services/deposit';
-import { ProductData } from '@/types/deposit';
 import { depositCalculateInterest } from '@/utils/depositCalculateInterest';
 
 const DepositProduct = () => {
@@ -22,27 +20,10 @@ const DepositProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [productData, setProductData] = useState<ProductData | null>(null);
   const [selectedProduct] = useAtom(selectedDepositProductAtom);
 
   useEffect(() => {
     setIsModalOpen(false);
-
-    const fetchDepositProduct = async () => {
-      try {
-        const response = await getDepositProducts();
-        const product = response?.data?.result[0];
-        setProductData({
-          accountName: product?.accountName,
-          interestRate: product?.interestRate,
-        });
-        console.log(productData);
-      } catch (error) {
-        console.log('예금상품 정보가져오는거 에러다.:', error);
-      }
-    };
-
-    fetchDepositProduct();
   }, [setIsModalOpen]);
 
   const { interest, totalAmount } = depositCalculateInterest(

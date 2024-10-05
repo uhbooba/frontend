@@ -13,8 +13,6 @@ import {
   selectedSavingsProductAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
-import { getSavingsProducts } from '@/services/saving';
-import { ProductData } from '@/types/saving';
 import { savingCalculateInterest } from '@/utils/savingCalculateInterest';
 
 const SavingsProduct = () => {
@@ -23,28 +21,11 @@ const SavingsProduct = () => {
   const [selectMoney] = useAtom(selectMoneyAtom);
   const [selectPeriod] = useAtom(selectPeriodAtom);
   const [check] = useAtom(checkAtom);
-  const [productData, setProductData] = useState<ProductData | null>(null);
   const [selectedProduct] = useAtom(selectedSavingsProductAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsModalOpen(false);
-
-    const fetchDepositProduct = async () => {
-      try {
-        const response = await getSavingsProducts();
-        const product = response?.data?.result[0];
-        setProductData({
-          accountName: product?.accountName,
-          interestRate: product?.interestRate,
-        });
-        console.log(productData);
-      } catch (error) {
-        console.log('적금상품 정보가져오는거 에러다.:', error);
-      }
-    };
-
-    fetchDepositProduct();
   }, [setIsModalOpen]);
 
   const { interest, totalAmount } = savingCalculateInterest(
@@ -85,7 +66,6 @@ const SavingsProduct = () => {
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>
-              {/* {productData ? productData.accountName : '상품명 정보 없음'} */}
               {selectedProduct ? selectedProduct.name : '상품명 정보 없음'}
             </span>
           </div>
@@ -128,7 +108,6 @@ const SavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {/* {productData ? productData.interestRate : '이자 정보 없음'} */}
                 {selectedProduct
                   ? `${selectedProduct.interestRate}%`
                   : '이자 정보 없음'}

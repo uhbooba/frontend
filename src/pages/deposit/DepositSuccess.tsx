@@ -41,12 +41,6 @@ const DepositSuccess = () => {
 
         if (selectedProductInfo) {
           setAccountTypeUniqueNo(selectedProductInfo.accountTypeUniqueNo); // 선택된 상품의 고유 번호 저장
-          console.log(
-            '선택된 상품의 고유 번호:',
-            selectedProductInfo.accountTypeUniqueNo,
-          );
-        } else {
-          console.error('이름 같은 상품이 없을때 뜨는 에러');
         }
       } catch (error) {
         console.error('api 호출 자체 에러', error);
@@ -67,7 +61,7 @@ const DepositSuccess = () => {
       try {
         // 금액버튼 문자열이니까 쉼표도 없애고 숫자로 바꿔줘야됨
         if (!selectMoney) {
-          console.error('유효한 예치 금액이 없습니다.');
+          console.error('예치 금액이 없습니다.');
           return;
         }
         const depositBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
@@ -77,15 +71,7 @@ const DepositSuccess = () => {
           depositBalance,
         );
 
-        console.log('예금 계좌 생성 성공:', response.data);
-        console.log('출금계좌번호', withdrawalAccount!.accountNo);
-        console.log('상품명 :', selectedDepositProduct.name);
-        console.log('예치금액 숫자화', depositBalance);
-        console.log('예치금액', selectMoney);
-        console.log('저장할 계좌 데이터:', response.data.result);
-
         if (response?.data?.result) {
-          console.log('저장할 계좌 데이터:', response.data.result);
           setDepositAccount(response.data.result);
         }
       } catch (error) {

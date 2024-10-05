@@ -27,7 +27,7 @@ const CancelDepositProduct = () => {
   const [selectPeriod] = useAtom(selectPeriodAtom);
   // const [selectAccount] = useAtom(selectAccountAtom);
   const [, setAccountData] = useState<AccountData | null>(null);
-  const [terminationInterestData, setTerminationInterestData] =
+  const [, setTerminationInterestData] =
     useState<TerminationInterestData | null>(null);
   const [selectedProduct] = useAtom(selectedDepositProductAtom);
   const [depositAccount] = useAtom(depositAccountAtom);
@@ -40,17 +40,14 @@ const CancelDepositProduct = () => {
         const response = await getUserDepositAccounts(1);
         const account = response?.data?.result[0]; // 일단 첫번째 0번 계좌로 가져오기
         setAccountData(account);
-        console.log('계좌번호', depositAccount!.accountNo);
         const interestResponse = await getEarlyTerminationInterest(
           99,
           account.accountNo,
         );
 
         setTerminationInterestData(interestResponse.data.result);
-        console.log(terminationInterestData);
       } catch (error) {
         console.error('api 오류났음', error);
-        console.log('계좌번호', depositAccount);
       }
     };
 
