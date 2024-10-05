@@ -8,7 +8,7 @@ export const getUserFreeAccount = async () => {
       headers: {
         access:
           // 유효기간
-          'eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6MywidXNlcm5hbWUiOiJueWFtIiwibmFtZSI6IuuDoOuDoOydtCIsImlhdCI6MTcyODA0Njg2MiwiZXhwIjoxNzI4MDYxMjYyfQ.DT5-R1Q3e4fFe_oQfEnicjQuvK7d7tcn1qyztcirJto',
+          'eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6NSwidXNlcm5hbWUiOiJiZWFuIiwibmFtZSI6Iuy1nOyYgeu5iCIsImlhdCI6MTcyODEzNDc1NiwiZXhwIjoxNzI4MTQ5MTU2fQ.V-BQpJkp-I1B-hZaqdh5vrwI2ZRH1YS4vN_KMoL0Fjg',
       },
     },
   );
