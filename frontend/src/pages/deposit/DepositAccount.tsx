@@ -5,19 +5,22 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/NoModal';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
-import { selectAccountAtom } from '@/atoms/deposit/depositDataAtoms';
+import {
+  selectAccountAtom,
+  withdrawalAccountAtom,
+} from '@/atoms/deposit/depositDataAtoms';
 import { useEffect, useState } from 'react';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
-import { AccountDetail } from '@/types/deposit';
+import { DepositAccountDetail } from '@/types/deposit';
 
 const DepositAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(selectAccountAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [accountDetails, setAccountDetails] = useState<AccountDetail | null>(
-    null,
-  );
+  const [accountDetails, setAccountDetails] =
+    useState<DepositAccountDetail | null>(null);
+  const [, setWithdrawalAccount] = useAtom(withdrawalAccountAtom);
 
   useEffect(() => {
     setSelectAccount(null);
@@ -26,11 +29,13 @@ const DepositAccount = () => {
     const fetchAccountDetails = async () => {
       try {
         const response = await getUserFreeAccount();
-        console.log(response.data.result);
+        // console.log('리스폰 확인', response);
+        // console.log(response.data.result);
         const account = response.data.result;
         if (account) {
           setAccountDetails(account);
-          console.log(accountDetails?.accountBalance);
+          // console.log('저장한 계좌번호 확인', account);
+          // console.log(accountDetails?.balance);
         } else {
           console.error('계좌가 없으요');
         }
@@ -55,7 +60,11 @@ const DepositAccount = () => {
   };
 
   const accountClick = () => {
-    setSelectAccount(0);
+    if (accountDetails) {
+      setSelectAccount(0);
+      setWithdrawalAccount(accountDetails);
+      // console.log('저장한 계좌번호 확인2', accountDetails.accountNo);
+    }
   };
 
   const closeModal = () => {
@@ -99,8 +108,8 @@ const DepositAccount = () => {
           <div className='mt-2 text-right'>
             <span className='mr-6 text-gray-400'>출금가능금액</span>
             <span className='font-bold text-black'>
-              {accountDetails.accountBalance
-                ? `${accountDetails.accountBalance} 원'`
+              {accountDetails.balance
+                ? `${accountDetails.balance.toLocaleString()} 원`
                 : '정보없음'}
             </span>
           </div>

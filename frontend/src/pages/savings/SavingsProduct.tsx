@@ -28,26 +28,24 @@ const SavingsProduct = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
+    setIsModalOpen(false);
+
+    const fetchDepositProduct = async () => {
       try {
         const response = await getSavingsProducts();
-        if (response?.data?.result?.length > 0) {
-          const product = response.data.result[0];
-          setProductData({
-            accountName: product.accountName,
-            interestRate: product.interestRate,
-          });
-          console.log(productData);
-        } else {
-          console.error('상품 정보가 아직 없음');
-        }
+        const product = response?.data?.result[0];
+        setProductData({
+          accountName: product?.accountName,
+          interestRate: product?.interestRate,
+        });
+        console.log(productData);
       } catch (error) {
-        console.error('적금api 불러오다가 에러 뜸', error);
+        console.log('적금상품 정보가져오는거 에러다.:', error);
       }
     };
 
-    fetchProductDetails();
-  }, []);
+    fetchDepositProduct();
+  }, [setIsModalOpen]);
 
   const { interest, totalAmount } = savingCalculateInterest(
     selectMoney,

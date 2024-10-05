@@ -1,3 +1,10 @@
+// SavingAccount에서 사용
+export interface SavingAccountDetail {
+  accountName: string;
+  accountNo: string;
+  balance: string;
+}
+
 // CancelSavingProduct 에서 사용
 export interface CancelProductData {
   accountName: string;
@@ -10,11 +17,4 @@ export interface CancelProductData {
 export interface ProductData {
   accountName: string;
   interestRate: string;
-}
-
-// SavingAccount에서 사용
-export interface AccountDetail {
-  accountName: string;
-  accountNo: string;
-  accountBalance: string;
 }

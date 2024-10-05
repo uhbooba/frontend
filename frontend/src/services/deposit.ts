@@ -2,7 +2,11 @@ import { axiosInstance } from '@/utils/axiosInstance';
 
 // 예금 상품 전체 조회
 export const getDepositProducts = async () => {
-  const response = await axiosInstance('/finances/deposits/products');
+  const response = await axiosInstance('/finances/deposits/products', {
+    headers: {
+      access: `eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6MywidXNlcm5hbWUiOiJueWFtIiwibmFtZSI6IuuDoOuDoOydtCIsImlhdCI6MTcyODA0Njg2MiwiZXhwIjoxNzI4MDYxMjYyfQ.DT5-R1Q3e4fFe_oQfEnicjQuvK7d7tcn1qyztcirJto`,
+    },
+  });
   return response;
 };
 
@@ -39,5 +43,30 @@ export const getEarlyTerminationInterest = async (
       params: { userId, accountNo },
     },
   );
+  return response;
+};
+
+// 예금 계좌 생성
+export const createDepositAccount = async (
+  withdrawalAccountNo: string,
+  accountTypeUniqueNo: string,
+  depositBalance: number,
+) => {
+  const bodyData = {
+    withdrawalAccountNo,
+    accountTypeUniqueNo,
+    depositBalance,
+  };
+
+  const response = await axiosInstance.post(
+    '/finances/deposits/accounts',
+    bodyData,
+    {
+      headers: {
+        access: `eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6MywidXNlcm5hbWUiOiJueWFtIiwibmFtZSI6IuuDoOuDoOydtCIsImlhdCI6MTcyODA0Njg2MiwiZXhwIjoxNzI4MDYxMjYyfQ.DT5-R1Q3e4fFe_oQfEnicjQuvK7d7tcn1qyztcirJto`,
+      },
+    },
+  );
+
   return response;
 };

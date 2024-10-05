@@ -1,8 +1,9 @@
 // DepositAccount 에서 사용
-export interface AccountDetail {
+export interface DepositAccountDetail {
   accountName: string;
   accountNo: string;
   accountBalance: string;
+  balance: number;
 }
 
 // DepositProduct 에서 사용
