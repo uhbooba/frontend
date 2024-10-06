@@ -26,6 +26,11 @@ spring:
     apikey: ${SMS_API_KEY}
     secret: ${SMS_API_SECRET}
     from: ${SMS_FROM_NUMBER}
+  message:
+    kafka:
+      host: ${KAFKA_HOST}
+      port: ${KAFKA_PORT}
+      group-id: ${KAFKA_GROUP_ID}
 
 openapi:
   service:
