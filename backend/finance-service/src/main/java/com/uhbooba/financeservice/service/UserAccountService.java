@@ -29,7 +29,7 @@ public class UserAccountService {
         Integer userId = userHeaderInfo.userId();
         UserAccount existedUserAccount = getUserAccountByUserId(userId);
         if(existedUserAccount != null) { // 이미 존재한다면 바로 끝
-            return null;
+            return existedUserAccount;
         }
 
         JsonNode userAccount = finApiUserAccountService.getOrCreateUserAccount(userId)
