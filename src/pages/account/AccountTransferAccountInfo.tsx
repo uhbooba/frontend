@@ -34,6 +34,13 @@ const AccountTransferAccountInfo = () => {
     navigate('/account/transfer/amount');
   };
 
+  const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value) && value.length <= 16) {
+      setAccountNumber(value);
+    }
+  }
+
   return (
     <div className='flex h-screen flex-col'>
       <div className='w-full'>
@@ -65,11 +72,7 @@ const AccountTransferAccountInfo = () => {
             <div className='absolute z-10 w-full rounded border border-gray-300 bg-white shadow-lg'>
               <ul className='max-h4-48 overflow-auto'>
                 {[
-                  '국민은행',
-                  '신한은행',
-                  '하나은행',
-                  '우리은행',
-                  '농협은행',
+                  '싸피은행',
                 ].map((bank) => (
                   <li
                     key={bank}
