@@ -22,7 +22,7 @@ const DepositSuccess2 = () => {
           backgroundImage: `url("/assets/images/money_rain.png")`,
           backgroundSize: '420px auto',
           backgroundPosition: 'center -50px',
-          // 이미지 한장만 나오게하고싶으면 나중ㅇ테 이거 주석 해제하면 됨
+          // 이미지 한장만 나오게하고싶으면 나중에 이거 주석 해제하면 됨
           // backgroundRepeat: "no-repeat",
         }}
       >
@@ -34,16 +34,16 @@ const DepositSuccess2 = () => {
         {/* 말풍선 부분 */}
         <div className='relative mt-24 w-[290px] font-bold'>
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
-            <p className='text-start text-xl text-black'>
-              예금 상품 가입 완료!
-            </p>
+            <p className='text-start text-xl text-black'>축하합니다~~</p>
             <p className='mt-2 text-start text-xl text-black'>
-              이제 만기일까지 기다리면
+              5단계 미션을 성공했어요!
             </p>
             <p className='mt-4 text-start text-xl text-black'>
-              나중에 많은 이자와 함께
+              다음 미션에서는
             </p>
-            <p className='text-start text-xl text-black'>목돈이 돌아올거야!</p>
+            <p className='text-start text-xl text-black'>
+              공과금 납부를 해봐요!
+            </p>
 
             {/* 말풍선 꼬리 부분 */}
             <div className='absolute bottom-[-22px] left-[70%] -translate-x-1/2 transform'>
