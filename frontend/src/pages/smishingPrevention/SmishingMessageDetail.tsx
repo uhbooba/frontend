@@ -11,6 +11,7 @@ import {
 } from '@/constants/SmishingData';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
 import { useNavigate, useParams } from 'react-router';
+import { getSmishingTTS } from '@/services/education';
 
 const SmishingMessageDetail = () => {
   const navigate = useNavigate();
@@ -142,9 +143,25 @@ const SmishingMessageDetail = () => {
     scrollToBottom();
   }, [currentMessageList, scrollToBottom]);
 
+  // TTS 클릭
+  const handleTTS = async (ttsKey: string | null) => {
+    if (!ttsKey) return;
+    try {
+      const response = await getSmishingTTS(ttsKey);
+      console.log(response);
+
+      const blob = new Blob([response.data], { type: 'audio/wav' });
+
+      const blobUrl = URL.createObjectURL(blob); // Blob URL 생성
+      new Audio(blobUrl).play(); // Audio 객체 생성 및 재생
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className='flex max-h-screen flex-col'>
-      <div className='fixed left-0 top-0 z-10 w-full'>
+      <div className='scrollbar-none fixed left-0 top-0 z-10 w-full'>
         <TopBar
           title={
             <div className='flex flex-row items-center justify-center'>
@@ -172,7 +189,7 @@ const SmishingMessageDetail = () => {
       </div>
       <div className='mt-6 flex flex-grow flex-col overflow-hidden px-5 pt-16'>
         <div
-          className='mb-64 h-full overflow-y-auto p-4'
+          className='scrollbar-none mb-64 h-full overflow-y-auto p-4'
           ref={messagesContainerRef}
         >
           {currentMessageList.map((message, index) => (
@@ -182,6 +199,7 @@ const SmishingMessageDetail = () => {
               content={message.text}
               time={message.time}
               isUser={message.is_reply}
+              onTTSClick={() => handleTTS(message.tts_key)}
             />
           ))}
         </div>
@@ -203,6 +221,7 @@ const SmishingMessageDetail = () => {
           }
           isCorrect={false}
           onRetry={closeModal}
+          retryText='다시 선택'
         />
       )}
     </div>

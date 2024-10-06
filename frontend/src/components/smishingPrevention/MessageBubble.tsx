@@ -6,6 +6,7 @@ type MessageBubbleProps = {
   time: string;
   isUser: boolean;
   imgUrl?: string | null;
+  onTTSClick?: () => void;
 };
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({
@@ -13,6 +14,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
   time,
   isUser,
   imgUrl,
+  onTTSClick,
 }) => {
   const formattedContent = useFormattedContent(content, 'text-2xl');
 
@@ -42,7 +44,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         </div>
         {/* TTS 버튼 */}
         {!isUser && (
-          <div className='ml-3 rounded-full bg-blue-500 p-3'>
+          <div
+            className='ml-3 cursor-pointer rounded-full bg-blue-500 p-3'
+            onClick={onTTSClick}
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'

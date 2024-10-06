@@ -43,51 +43,6 @@ export type SmishingDataType = {
   [key: string]: SmishingDataItemType; //
 };
 
-export const messageList = [
-  {
-    id: 1,
-    phoneNumber: '010-9801-2324',
-    content: '엄마, 핸드폰이 고장나서 수리...',
-    time: '오후 12:30',
-    messageType: 'A0000',
-  },
-  {
-    id: 2,
-    phoneNumber: '010-5261-1881',
-    content: '[안심택배] 배송 출발 고객님의...',
-    time: '오전 11:20',
-    messageType: 'C0000',
-  },
-  {
-    id: 3,
-    phoneNumber: '1588-2187',
-    content: '축하합니다! 응모하신 임영웅 콘...',
-    time: '오후 12:30',
-    messageType: 'D0000_F',
-  },
-  {
-    id: 4,
-    phoneNumber: '010-0208-9712',
-    content: '[모바일 초대] 김지윤❤️차은우...',
-    time: '오전 12:30',
-    messageType: 'B0000',
-  },
-  {
-    id: 5,
-    phoneNumber: '031-2246-2924',
-    content: '귀하에게 민원이 접수되어 통...',
-    time: '오전 12:30',
-    messageType: 'F0000_F',
-  },
-  {
-    id: 6,
-    phoneNumber: '010-2363-4768',
-    content: 'S사 상한가 포착! 수익률 보장...',
-    time: '오전 12:30',
-    messageType: 'E0000',
-  },
-];
-
 export const smishingData: SmishingDataType = {
   A0000: {
     sender: '010-9801-2324',
