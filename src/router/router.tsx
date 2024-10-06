@@ -43,6 +43,7 @@ const CancelSavingsSuccess = lazy(
   () => import('@/pages/savingsCancel/CancelSavingsSuccess'),
 );
 const SavingsExplain = lazy(() => import('@/pages/savings/SavingsExplain'));
+const SavingsMission = lazy(() => import('@/pages/savings/savingsMission'));
 const SavingsAgree = lazy(() => import('@/pages/savings/SavingsAgree'));
 const SavingsMoney = lazy(() => import('@/pages/savings/SavingsMoney'));
 const SavingsAccount = lazy(() => import('@/pages/savings/SavingsAccount'));
@@ -167,6 +168,7 @@ const router = createBrowserRouter([
       { path: 'deposit/success2', element: <DepositSuccess2 /> },
       // 적금
       { path: 'savings', element: <SavingsExplain /> },
+      { path: 'savings/mission', element: <SavingsMission /> },
       { path: 'savings/agree', element: <SavingsAgree /> },
       { path: 'savings/signup', element: <SavingsSignup /> },
       { path: 'savings/money', element: <SavingsMoney /> },

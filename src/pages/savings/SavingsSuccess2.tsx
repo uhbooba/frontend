@@ -121,13 +121,13 @@ const SavingsSuccess = () => {
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
             <p className='text-start text-xl text-black'>축하합니다~~</p>
             <p className='mt-2 text-start text-xl text-black'>
-              4단계 미션을 성공했어요!
+              4단계 미션을 성공했어요! 적금 가입을 완료했어요!
             </p>
             <p className='mt-4 text-start text-xl text-black'>
-              다음 미션에서는 가입한
+              차곡차곡 적금을 들면
             </p>
             <p className='text-start text-xl text-black'>
-              예금 중도해지를 해봐요!
+              나중에 목돈이 될거에요!
             </p>
 
             {/* 말풍선 꼬리 부분 */}
