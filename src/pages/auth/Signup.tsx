@@ -18,8 +18,10 @@ import {
 } from '@/utils/validation';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
@@ -176,6 +178,8 @@ const Signup = () => {
       try {
         await postSignup(userName, userId, password, phoneNumber);
         console.log('회원가입 성공');
+
+        navigate('/login');
       } catch (error) {
         console.error(error);
       }
