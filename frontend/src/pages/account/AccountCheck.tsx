@@ -218,7 +218,11 @@ const AccountCheck = () => {
   }, []);
 
   const handleButtonClick = (route: string) => {
-    navigate(route);
+    if (accountData && accountData.accountNo) {
+      navigate(route, { state: { accountNo: accountData.accountNo } });
+    } else {
+      navigate(route); // accountNo가 없을 경우 기본 동작
+    }
   };
 
   const openModal = () => setShowModal(true);
