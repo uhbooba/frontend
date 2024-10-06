@@ -118,7 +118,7 @@ const ExchangeMoney = () => {
             setError('');
           }}
         />
-        {error && <ErrorText content={error} />}
+        {error && <ErrorText>{error}</ErrorText>}
         <div className='my-6 flex justify-center'>
           <div className='w-fit rounded-full border-2 border-primary p-2 text-primary'>
             <svg
