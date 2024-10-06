@@ -69,7 +69,7 @@ public class UserController {
 
         String username = jwtUtil.getUsername(access);
 
-        UserResponse response = userService.getUserByUsername(username);
+        UserResponse response = UserResponse.of(userService.getUserByUsername(username));
 
         return CommonResponse.ok("유저 조회 성공", response);
     }
