@@ -1,10 +1,12 @@
 package com.uhbooba.userservice.controller;
 
 import com.uhbooba.userservice.dto.CommonResponse;
+import com.uhbooba.userservice.dto.response.MissionStatusResponse;
 import com.uhbooba.userservice.service.MissionService;
 import com.uhbooba.userservice.util.JWTUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,7 +34,7 @@ public class MissionController {
     public CommonResponse<?> getClearedMissionCount(@RequestHeader("access") String access) {
 
         String username = jwtUtil.getUsername(access);
-        int response = missionService.getClearedMissionCount(username);
+        List<MissionStatusResponse> response = missionService.getClearedMissionCount(username);
         return CommonResponse.ok("미션 진행 단계 조회 성공", response);
     }
 

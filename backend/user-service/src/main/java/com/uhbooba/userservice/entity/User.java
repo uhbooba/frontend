@@ -50,22 +50,8 @@ public class User {
         this.name = name;
     }
 
-    public void setMissionCleared(int missionNumber) {
-        missionStatus |= (1 << missionNumber);
-    }
-
-    public boolean isMissionCleared(int missionNumber) {
-        return (missionStatus & (1 << missionNumber)) != 0;
-    }
-
-    public int getClearedMissionCount() {
-        int count = 0;
-        int status = missionStatus;
-        while (status != 0) {
-            count += (status & 1);
-            status >>= 1;
-        }
-        return count;
+    public void updateMission(int missionNumber) {
+        this.missionStatus |= (1 << missionNumber);
     }
 
 }
