@@ -7,7 +7,7 @@ const SavingsMission = () => {
   const navigate = useNavigate();
 
   const GoExplain = () => {
-    navigate('/savings');
+    navigate('/savings/explain');
   };
 
   return (

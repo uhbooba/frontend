@@ -3,7 +3,7 @@ import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
 
-const DepositSuccess2 = () => {
+const DepositSuccessMission = () => {
   const navigate = useNavigate();
 
   const GoNext = () => {
@@ -89,4 +89,4 @@ const DepositSuccess2 = () => {
   );
 };
 
-export default DepositSuccess2;
+export default DepositSuccessMission;
