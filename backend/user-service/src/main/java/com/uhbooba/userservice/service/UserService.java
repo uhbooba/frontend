@@ -2,6 +2,7 @@ package com.uhbooba.userservice.service;
 
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.dto.request.UpdateUserRequest;
+import com.uhbooba.userservice.dto.response.UserSignupMessageResponse;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
 import com.uhbooba.userservice.exception.NotFoundException;
@@ -17,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void signup(SignupRequest request) {
+    public UserSignupMessageResponse signup(SignupRequest request) {
         duplicateUsername(request.username());
         duplicatePhone(request.phone());
 
@@ -28,7 +29,8 @@ public class UserService {
             .phone(request.phone())
             .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return UserSignupMessageResponse.of(savedUser);
     }
 
     public void duplicatePhone(String phone) {

@@ -4,7 +4,9 @@ import com.uhbooba.userservice.dto.CommonResponse;
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.dto.request.UpdateUserRequest;
 import com.uhbooba.userservice.dto.response.UserResponse;
+import com.uhbooba.userservice.dto.response.UserSignupMessageResponse;
 import com.uhbooba.userservice.exception.SignupFormatException;
+import com.uhbooba.userservice.service.KafkaProducerService;
 import com.uhbooba.userservice.service.UserService;
 import com.uhbooba.userservice.util.JWTUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +35,7 @@ public class UserController {
 
     private final UserService userService;
     private final JWTUtil jwtUtil;
+    private final KafkaProducerService kafkaProducerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,7 +45,10 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             throw new SignupFormatException();
         }
-        userService.signup(request);
+        UserSignupMessageResponse data = userService.signup(request);
+
+        kafkaProducerService.send("user-signup-topic", data);
+
         return CommonResponse.created("회원가입 성공");
     }
 
