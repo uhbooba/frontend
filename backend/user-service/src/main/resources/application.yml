@@ -5,7 +5,7 @@ spring:
   application:
     name: user-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3307/uhbooba}
+    url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
@@ -21,7 +21,7 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
   jwt:
-    secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
+    secret: ${JWT_SECRET}
   coolsms:
     apikey: ${SMS_API_KEY}
     secret: ${SMS_API_SECRET}
