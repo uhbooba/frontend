@@ -120,7 +120,7 @@ public class SavingsService {
                                                         ex);
             transactionService.updateTransactionForFail(transactionRequests.senderTransaction(),
                                                         ex);
-            throw new SavingsFailedException();
+            throw new SavingsFailedException(ex.getMessage());
         }
     }
 
