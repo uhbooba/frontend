@@ -64,7 +64,7 @@ const Login = () => {
             readOnly
             onClick={() => setKeyOpen(true)}
           />
-          {errorMessage && <ErrorText content={errorMessage} />}
+          {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
           <div className='mt-3 flex flex-col justify-center'>
             <Button label='로그인' className='mb-3' onClick={handleLogin} />
             <Button label='회원가입' onClick={() => navigate('/signup')} />
