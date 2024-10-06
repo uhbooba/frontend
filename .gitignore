@@ -218,3 +218,9 @@ prometheus/
 kafka-data/
 zookeeper-data/
 redis.conf
+
+external-db-data/
+finance-db-data/
+redis-data/
+user-db-data/
+user-redis-data/
