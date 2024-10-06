@@ -18,7 +18,6 @@ export const validatePhoneNumber = (phone: string) => {
 
 export const validatePassword = (pw: string) => {
   if (!pw.trim()) return '비밀번호를 입력해주세요.';
-  if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pw))
-    return '비밀번호는 8자 이상의 영문자와 숫자 조합이어야 합니다.';
+  if (!/^\d{6}$/.test(pw)) return '비밀번호는 6자리 숫자여야 합니다.';
   return '';
 };
