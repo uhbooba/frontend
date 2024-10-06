@@ -205,7 +205,7 @@ public class DemandDepositService {
             return depositDepositResponse;
         } catch(Exception ex) {
             transactionService.updateTransactionForFail(transaction, ex);
-            throw new DepositFailedException();
+            throw new DepositFailedException(ex.getMessage());
         }
 
     }
@@ -262,7 +262,7 @@ public class DemandDepositService {
             // 트랜잭션 실패 처리
             transactionService.updateTransactionForFail(transactions.receiverTransaction(), ex);
             transactionService.updateTransactionForFail(transactions.senderTransaction(), ex);
-            throw new TransferFailedException();
+            throw new TransferFailedException(ex.getMessage());
         }
     }
 

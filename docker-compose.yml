@@ -1,0 +1,143 @@
+services:
+  redis:
+    image: redis:7.2.3
+    container_name: uhbooba-redis
+    networks:
+      - uhbooba-net
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  user-redis:
+    image: redis:7.2.3
+    container_name: user-redis
+    networks:
+      - uhbooba-net
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./user-redis-data:/data
+
+
+  user-db:
+    image: mariadb:latest
+    container_name: user-db
+    env_file:
+      - .env.db
+    ports:
+      - "3307:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./user-db-data:/var/lib/mysql
+    restart: always
+
+  finance-db:
+    image: mariadb:latest
+    container_name: finance-db
+    env_file:
+      - .env.db
+    ports:
+      - "3308:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./finance-db-data:/var/lib/mysql
+    restart: always
+
+  external-db:
+    image: mariadb:latest
+    container_name: external-db
+    env_file:
+      - .env.db
+    ports:
+      - "3309:3306"
+    networks:
+      - uhbooba-net
+    volumes:
+      - ./external-db-data:/var/lib/mysql
+    restart: always
+
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./backend/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+
+  user-service:
+    container_name: user-service
+    env_file:
+      - .env.user
+    build:
+      context: ./backend/user-service
+    ports:
+      - "8081:8081"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/user-service:/app/logs
+    depends_on:
+      - eureka-server
+
+  finance-service:
+    container_name: finance-service
+    env_file:
+      - .env.finance
+    build:
+      context: ./backend/finance-service
+    ports:
+      - "8082:8082"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/finance-service:/app/logs
+    depends_on:
+      - eureka-server
+
+  external-service:
+    container_name: external-service
+    env_file:
+      - .env.external
+    build:
+      context: ./backend/external-service
+    ports:
+      - "8083:8083"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/external-service:/app/logs
+    depends_on:
+      - eureka-server
+
+  api-gateway:
+    container_name: api-gateway
+    env_file:
+      - .env.gateway
+    build:
+      context: ./backend/api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - uhbooba-net
+    restart: on-failure
+    volumes:
+      - ./logs/gateway-service:/app/logs
+    depends_on:
+      - eureka-server
+      - user-service
+      - finance-service
+      - external-service
+
+networks:
+  uhbooba-net:
+    driver: bridge

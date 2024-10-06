@@ -1,5 +1,15 @@
 package com.uhbooba.financeservice.controller.finance;
 
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.EARLY_SAVINGS_EXPIRE_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_ACCOUNT_CREATE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_ACCOUNT_LIST_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_ACCOUNT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_EXPIRE_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_PRODUCT_RESPONSE;
+
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsAccountCreateRequest;
@@ -53,13 +63,14 @@ public class SavingsController {
     }
 
     @GetMapping("/products")
-    @Operation(summary = "적금 상품 전체 조회")
+    @Operation(summary = "적금 상품 전체 조회", description = INPUT + OUTPUT + SAVINGS_PRODUCT_RESPONSE)
     public CommonResponse<List<SavingsResponse>> getSavingsProducts() {
         return CommonResponse.ok("적금 상품 조회 완료", savingsService.getAllSavings());
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "적금 계좌 생성")
+    @Operation(summary = "적금 계좌 생성", description = INPUT + SAVINGS_ACCOUNT_CREATE + OUTPUT
+        + SAVINGS_ACCOUNT_RESPONSE)
     public CommonResponse<SavingsAccountResponse> createSavingsAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody SavingsAccountCreateRequest dto
@@ -70,7 +81,8 @@ public class SavingsController {
     }
 
     @GetMapping("/accounts/expiry-interests")
-    @Operation(summary = "적금 만기 이자 조회")
+    @Operation(summary = "적금 만기 이자 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + SAVINGS_EXPIRE_RESPONSE)
     public CommonResponse<SavingsExpiryInterestResponse> getSavingsExpiryInterest(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -82,7 +94,8 @@ public class SavingsController {
     }
 
     @GetMapping("/accounts/early-termination-interest")
-    @Operation(summary = "적금 중도 해지 시 이자 조회")
+    @Operation(summary = "적금 중도 해지 시 이자 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + EARLY_SAVINGS_EXPIRE_RESPONSE)
     public CommonResponse<SavingsEarlyTerminationInterestResponse> getSavingsEarlyTerminationInterest(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -94,7 +107,7 @@ public class SavingsController {
     }
 
     @DeleteMapping("/accounts")
-    @Operation(summary = "적금 계좌 삭제")
+    @Operation(summary = "적금 계좌 삭제", description = INPUT + ACCOUNT_NO + OUTPUT)
     public CommonResponse<SavingsAccountDeleteResponse> deleteSavingsAccount(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -105,7 +118,8 @@ public class SavingsController {
     }
 
     @GetMapping("/accounts/detail")
-    @Operation(summary = "적금 계좌 상세 조회")
+    @Operation(summary = "적금 계좌 상세 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + SAVINGS_ACCOUNT_RESPONSE)
     public CommonResponse<SavingsAccountResponse> getSavingsAccount(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -116,7 +130,8 @@ public class SavingsController {
     }
 
     @GetMapping("/accounts")
-    @Operation(summary = "사용자의 적금 계좌 목록 조회")
+    @Operation(summary = "사용자의 적금 계좌 목록 조회", description = INPUT + OUTPUT
+        + SAVINGS_ACCOUNT_LIST_RESPONSE)
     public CommonResponse<List<SavingsAccountResponse>> getSavingsAccounts(
         @RequestHeader HttpHeaders headers
     ) {

@@ -5,4 +5,8 @@ public class TransferFailedException extends RuntimeException {
     public TransferFailedException() {
         super("이체에 실패했습니다");
     }
+
+    public TransferFailedException(String message) {
+        super(message);
+    }
 }
