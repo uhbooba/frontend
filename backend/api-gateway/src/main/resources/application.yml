@@ -46,7 +46,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/env/**, /env/**
+            - Path=/user-service/env/**, /env/**, /user-service/missions/**, /missions/**
           filters:
             - AuthorizationHeaderFilter
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
