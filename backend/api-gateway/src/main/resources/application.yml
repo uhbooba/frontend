@@ -9,7 +9,7 @@ eureka:
 
 spring:
   jwt:
-    secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
+    secret: ${JWT_SECRET}
   application:
     name: api-gateway
   #  security:
