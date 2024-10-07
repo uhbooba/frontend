@@ -11,8 +11,8 @@ const UtilityPayPassword = () => {
 
   const [utilityData] = useAtom(utilityDataAtom);
 
-  const passwordComplete = (password: string[]) => {
-    console.log('비밀번호 확인용 :', password.join(''));
+  const passwordComplete = (password: string) => {
+    console.log('비밀번호 확인용 :', password);
     navigate('/utility/success');
 
     // 환전 시작

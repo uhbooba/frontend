@@ -2,26 +2,37 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { deleteDepositAccount } from '@/services/deposit';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
-  getUserDepositAccounts,
-  deleteDepositAccount,
-} from '@/services/deposit';
-import { useSetAtom } from 'jotai';
-import { depositAccountAtom } from '@/atoms/deposit/depositDataAtoms';
+  depositAccountAtom,
+  selectedAccountAtom,
+} from '@/atoms/deposit/depositDataAtoms';
+import { setMissionClearStatus } from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 const CancelDepositSuccess = () => {
   const navigate = useNavigate();
   const setDepositAccount = useSetAtom(depositAccountAtom);
+  const selectedAccount = useAtomValue(selectedAccountAtom);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 미션 성공하면 뜨는 모달
 
+  // 미션 성공하면 1초 있다가 성공모달 뜨게 하기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSuccessModalOpen(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 이건 예금 계좌 삭제하는 api 호출
   useEffect(() => {
     const deleteAccount = async () => {
       try {
-        // 예금 계좌 목록 조회
-        const response = await getUserDepositAccounts();
-        if (response?.data?.result?.length > 0) {
-          const account = response.data.result[0]; // 계좌 가져오기
-          await deleteDepositAccount(account.accountNo); // 가져온 계좌 삭제
+        if (selectedAccount) {
+          await deleteDepositAccount(selectedAccount.accountNo); // 선택된 계좌 삭제
           setDepositAccount(null);
         }
       } catch (error) {
@@ -30,7 +41,20 @@ const CancelDepositSuccess = () => {
     };
 
     deleteAccount();
-  }, [setDepositAccount]);
+  }, [setDepositAccount, selectedAccount]);
+
+  // 미션 성공 api 호출
+  useEffect(() => {
+    const clearMission = async () => {
+      try {
+        await setMissionClearStatus(5);
+      } catch (error) {
+        console.error('setMissionClearStatus 에러', error);
+      }
+    };
+
+    clearMission();
+  }, [selectedAccount]);
 
   const GoNext = () => {
     navigate('/');
@@ -38,6 +62,14 @@ const CancelDepositSuccess = () => {
 
   return (
     <div>
+      {/* 미션 성공 모달 */}
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='예금 중도해지'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
+
       <div className='fixed left-0 top-0 w-full'>
         <TopBar title='예금 중도해지' showBackButton={false} />
       </div>
