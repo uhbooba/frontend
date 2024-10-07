@@ -39,11 +39,13 @@ export const createDepositAccount = async (
   withdrawalAccountNo: string,
   accountTypeUniqueNo: string,
   depositBalance: number,
+  password: string,
 ) => {
   const bodyData = {
     withdrawalAccountNo,
     accountTypeUniqueNo,
     depositBalance,
+    password,
   };
 
   const response = await axiosInstance.post(

@@ -41,7 +41,7 @@ const AccountDepositList = () => {
       const response = await getMissionClearStatus(5); // 5단계 미션 클리어 했는지확인
       const missionCleared = response?.result === true;
 
-      if (accountType === '정기 예금') {
+      if (accountType === '예금 계좌') {
         setSelectedAccount(account); // 예금 계좌 정보 저장
         if (missionCleared) {
           navigate('/cancel/deposit/explain'); // 미션 성공한 기록 있으면 설명페이지로
@@ -72,13 +72,13 @@ const AccountDepositList = () => {
             {depositAccounts.map((account, index) => (
               <AccountInfo
                 key={`deposit-${index}`}
-                accountType='정기 예금'
+                accountType='예금 계좌'
                 accountNumber={account.accountNo}
-                amount={account.depositBalance}
+                amount={parseInt(account.depositBalance, 10)}
                 buttonName='중도 해지'
                 moveTo=''
                 onClick={() => {
-                  handleCancelClick('정기 예금', account);
+                  handleCancelClick('예금 계좌', account);
                 }}
               />
             ))}
@@ -87,7 +87,7 @@ const AccountDepositList = () => {
                 key={`savings-${index}`}
                 accountType='적금 계좌'
                 accountNumber={account.accountNo}
-                amount={account.depositBalance}
+                amount={parseInt(account.depositBalance, 10)}
                 buttonName='중도 해지'
                 moveTo=''
                 onClick={() => {

@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 import { calculateMaturityDate } from '@/utils/dateUtil';
 import TopBar from '@/components/layouts/TopBar';
+import { getUserFreeAccount } from '@/services/account';
 
 const DepositMoney = () => {
   const navigate = useNavigate();
@@ -27,9 +28,26 @@ const DepositMoney = () => {
   const [amountBtnColor, setAmountBtnColor] = useState('');
   const [periodBtnColor, setPeriodBtnColor] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userBalance, setUserBalance] = useState(0); // 계좌 잔액 확인 상태
 
   useEffect(() => {
     resetState();
+  }, []);
+
+  // 사용자 수시입출금 계좌 잔액 조회 api 호출하는거
+  useEffect(() => {
+    const fetchUserBalance = async () => {
+      try {
+        const response = await getUserFreeAccount();
+        if (response?.data?.result) {
+          setUserBalance(response.data.result.balance);
+        }
+      } catch (error) {
+        console.error('getUserFreeAccount 에러', error);
+      }
+    };
+
+    fetchUserBalance();
   }, []);
 
   const resetState = () => {
@@ -60,7 +78,13 @@ const DepositMoney = () => {
     if (!selectMoney || !selectPeriod) {
       setIsModalOpen(true); // 금액, 기간 전부 고르지 않으면 모달 뜨게하기
     } else {
-      navigate('/deposit/account');
+      const selectedAmount = parseInt(selectMoney.replace(/,/g, ''), 10);
+      if (selectedAmount > userBalance) {
+        // 선택금액보다 사용자 계좌 잔액이 부족하면 모달 뜨게 하기
+        setIsModalOpen(true);
+      } else {
+        navigate('/deposit/account');
+      }
     }
   };
 
@@ -214,13 +238,30 @@ const DepositMoney = () => {
         <BottomTab />
       </div>
 
-      {/* 모달 추가 */}
-      <NoModal
+      {/* <NoModal
         isOpen={isModalOpen}
         ModalClose={ModalClose}
         imageSrc='/assets/icons/warning.png'
         title='선택하지 않았어요!'
         description='금액과 기간을 모두 선택해주세요.'
+      /> */}
+
+      <NoModal
+        isOpen={isModalOpen}
+        ModalClose={ModalClose}
+        imageSrc='/assets/icons/warning.png'
+        title={
+          selectMoney &&
+          userBalance < parseInt(selectMoney.replace(/,/g, ''), 10)
+            ? '잔액 부족'
+            : '선택하지 않았어요!'
+        }
+        description={
+          selectMoney &&
+          userBalance < parseInt(selectMoney.replace(/,/g, ''), 10)
+            ? '계좌에 잔액이 부족합니다.'
+            : '금액과 기간을 모두 선택해주세요.'
+        }
       />
     </div>
   );

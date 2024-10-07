@@ -10,6 +10,7 @@ import {
   selectedSavingsProductAtom,
   withdrawalAccountAtom,
   selectMoneyAtom,
+  savingPasswordAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 
 const SavingsSuccess = () => {
@@ -21,6 +22,7 @@ const SavingsSuccess = () => {
   const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
+  const [savingPassword] = useAtom(savingPasswordAtom);
 
   // 적금상품전체조회api부터 해야함
   useEffect(() => {
@@ -69,6 +71,7 @@ const SavingsSuccess = () => {
           withdrawalAccount!.accountNo,
           accountTypeUniqueNo!,
           savingBalance,
+          savingPassword,
         );
 
         if (response?.data?.result) {
@@ -88,6 +91,7 @@ const SavingsSuccess = () => {
     withdrawalAccount,
     selectMoney,
     accountTypeUniqueNo,
+    savingPassword,
   ]);
 
   const GoNext = () => {
