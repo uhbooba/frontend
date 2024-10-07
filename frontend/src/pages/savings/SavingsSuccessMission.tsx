@@ -10,8 +10,10 @@ import {
   selectedSavingsProductAtom,
   withdrawalAccountAtom,
   selectMoneyAtom,
+  savingPasswordAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import { setMissionClearStatus } from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 const SavingsSuccessMission = () => {
   const navigate = useNavigate();
@@ -22,6 +24,17 @@ const SavingsSuccessMission = () => {
   const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 미션 성공하면 뜨는 모달
+  const [savingPassword] = useAtom(savingPasswordAtom);
+
+  // 미션 성공하면 1초 있다가 성공모달 뜨게 하기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSuccessModalOpen(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // 적금상품전체조회api부터 해야함
   useEffect(() => {
@@ -70,6 +83,7 @@ const SavingsSuccessMission = () => {
           withdrawalAccount!.accountNo,
           accountTypeUniqueNo!,
           savingBalance,
+          savingPassword,
         );
 
         if (response?.data?.result) {
@@ -89,6 +103,7 @@ const SavingsSuccessMission = () => {
     withdrawalAccount,
     selectMoney,
     accountTypeUniqueNo,
+    savingPassword,
   ]);
 
   // 4단계 미션 성공했다고 api 보내기
@@ -113,6 +128,14 @@ const SavingsSuccessMission = () => {
       <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar title='적금 가입' showBackButton={false} />
       </div>
+
+      {/* 미션 성공 모달 */}
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='적금 가입'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
 
       {/* 배경 이미지 설정 */}
       <div

@@ -36,7 +36,24 @@ export const checkUsername = async (username: string) => {
 };
 
 // 비밀번호 확인
-export const checkPassword = () => {};
+export const checkPassword = async (id: number, password: string) => {
+  const bodyData = {
+    id,
+    password,
+  };
+  const response = await axiosInstance.post('/users/password', bodyData);
+  return response.data; // true여야지 통과임
+};
+
+// 토큰으로 유저 정보 조회
+export const getUserInfo = async (accessToken: string) => {
+  const response = await axiosInstance.get('/users', {
+    headers: {
+      access: accessToken,
+    },
+  });
+  return response.data; // 서버의 응답 데이터 반환
+};
 
 // sms 전송
 export const postSms = async (phone: string) => {
