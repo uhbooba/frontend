@@ -23,7 +23,6 @@ const DepositSuccess = () => {
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
   const [depositPassword] = useAtom(depositPasswordAtom); // 패스워드아톰
-  console.log('비번', depositPassword);
 
   // 예금상품전체조회api부터 해야함
   useEffect(() => {
