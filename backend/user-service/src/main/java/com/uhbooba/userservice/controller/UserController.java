@@ -2,7 +2,7 @@ package com.uhbooba.userservice.controller;
 
 import com.uhbooba.userservice.dto.CommonResponse;
 import com.uhbooba.userservice.dto.request.SignupRequest;
-import com.uhbooba.userservice.dto.request.UpdateUserRequest;
+import com.uhbooba.userservice.dto.request.UpdatePasswordRequest;
 import com.uhbooba.userservice.dto.response.UserResponse;
 import com.uhbooba.userservice.dto.response.UserSignupMessageResponse;
 import com.uhbooba.userservice.exception.SignupFormatException;
@@ -83,9 +83,9 @@ public class UserController {
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "유저 정보 수정(isFirstLogin, password)")
-    public CommonResponse<?> updateUser(@Valid @RequestBody UpdateUserRequest request) {
+    public CommonResponse<?> updatePasswordUser(@Valid @RequestBody UpdatePasswordRequest request) {
 
-        userService.updateUser(request);
+        userService.updatePasswordUser(request);
 
         return CommonResponse.ok("유저 정보 수정 성공");
     }

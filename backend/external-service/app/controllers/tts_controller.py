@@ -7,8 +7,8 @@ from ..services.tts_service import TtsService
 # Setup
 router = APIRouter(prefix="/tts", tags=["tts"])
 
-
 # Constants
+tts_keys = {"A1", "A2", "B1", "B2", "C1", "C2", "C3", "D1", "E1", "E2", "F1", "G1"}
 
 
 # Schemas
@@ -38,6 +38,15 @@ async def generate_audio(request: TtsRequest):
 @router.get("/{tts_key}")
 async def find_audio(tts_key: str):
     """금융사기용 TTS 음성 파일 찾기 API"""
+    if tts_key not in tts_keys:
+        error_response = {
+            "status": "error",
+            "data": "Invalid tts_key. The provided key is not valid or supported.",
+        }
+        return JSONResponse(
+            status_code=400,
+            content=error_response,
+        )
     try:
         audio_data = await TtsService.get_tts_ai(tts_key)
         return Response(
@@ -45,7 +54,7 @@ async def find_audio(tts_key: str):
             media_type="audio/mpeg",
             headers={"Content-Disposition": f'attachment; filename="{tts_key}.mp3"'},
         )
+
     except Exception as e:
-        return JSONResponse(
-            status_code=404, content={"status": "error", "message": str(e)}
-        )
+        error_response = {"status": "error", "message": str(e)}
+        return JSONResponse(status_code=500, content=error_response)

@@ -48,7 +48,7 @@ async def get_all_key(db_number: int):
     except Exception as e:
         error_response = {
             "status": "error",
-            "data": f"Redis error get_all_data: {str(e)}",
+            "message": f"Redis error get_all_data: {str(e)}",
         }
         return JSONResponse(status_code=500, content=error_response)
 

@@ -28,6 +28,8 @@ spring:
               - "https://localhost:80"
               - "http://localhost:5173"
               - "https://localhost:5173"
+              - "https://j11a402.q.ssafy.io:3000"
+              - "https://j11a402.q.ssafy.io"
             allowedMethods:
               - GET
               - POST
