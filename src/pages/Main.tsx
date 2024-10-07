@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
+import { setMissionClearStatus } from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 interface AccountData {
   accountName: string;
@@ -59,8 +60,37 @@ const ButtonConfig: ButtonConfigType[] = [
 ];
 
 const Main = () => {
+  const location = useLocation();
+  const { isFirstLogin } = location.state;
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState<AccountData | null>(null);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  // 로그인 미션 확인
+  useEffect(() => {
+    const fetchLoginMission = async () => {
+      try {
+        const response = await setMissionClearStatus(1);
+
+        if (response?.statusCode === 200) {
+          const timer = setTimeout(() => {
+            setIsSuccessModalOpen(true);
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (location.state && location.state.isFirstLogin !== undefined) {
+      if (isFirstLogin) {
+        fetchLoginMission();
+      }
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, []);
 
   useEffect(() => {
     const fetchAccountDetails = async () => {
@@ -97,13 +127,15 @@ const Main = () => {
 
   return (
     <div className='min-h-screen bg-orange-100/40'>
-      <TopBar
-        title=''
-        showBackButton={false}
-        showXButton={false}
-        showMainButton={true}
-      />
-
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar
+          title=''
+          showBackButton={false}
+          showXButton={false}
+          showMainButton={true}
+        />
+      </div>
+      <div className='h-2' />
       {/* 메인계좌 디브 */}
       <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
         <div className='flex pt-2'>
@@ -158,11 +190,12 @@ const Main = () => {
           />
         ))}
       </div>
-
-      {/* 바텀탭 */}
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='로그인'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
