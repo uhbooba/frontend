@@ -69,7 +69,7 @@ const DepositSuccess = () => {
         // 금액버튼 문자열이니까 쉼표도 없애고 숫자로 바꿔줘야됨
         const depositBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
 
-        // 실제 API 호출
+        // 예금계좌 생성 api 호출
         const response = await createDepositAccount(
           withdrawalAccount!.accountNo,
           accountTypeUniqueNo!,
@@ -81,7 +81,7 @@ const DepositSuccess = () => {
           setDepositAccount(response.data.result);
         }
       } catch (error) {
-        console.error('예금 계좌 생성 중 오류 발생:', error);
+        console.error(error);
       }
     };
 
