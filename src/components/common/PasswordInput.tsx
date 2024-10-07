@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 interface PasswordInputProps {
-  onComplete: (password: string[]) => void;
+  onComplete: (password: string) => void;
 }
 
 const PasswordInput: React.FC<PasswordInputProps> = ({ onComplete }) => {
@@ -19,7 +19,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ onComplete }) => {
 
   useEffect(() => {
     if (password.length === 6) {
-      onComplete(password);
+      onComplete(password.join(''));
     }
   }, [password, onComplete]);
 
