@@ -11,8 +11,8 @@ const ExchangePassword = () => {
   const [accountNo] = useAtom(accountNoAtom);
   const [amount] = useAtom(exchangeAmountAtom);
 
-  const passwordComplete = (password: string[]) => {
-    console.log('비밀번호 확인용 :', password.join(''));
+  const passwordComplete = (password: string) => {
+    console.log('비밀번호 확인용 :', password);
 
     fetchExchange(); // 추후 비밀번호 확인 추가 예정
   };
