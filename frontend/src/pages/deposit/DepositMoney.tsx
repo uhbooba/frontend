@@ -110,7 +110,7 @@ const DepositMoney = () => {
   ];
 
   // 기간 버튼 내용값
-  const periods = ['6개월', '12개월', '24개월', '36개월'];
+  const periods = ['3개월', '6개월', '12개월'];
 
   // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {

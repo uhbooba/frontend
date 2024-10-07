@@ -8,6 +8,10 @@ export const calculatePaymentMonths = (
 
   // 땡년땡월땡일 문자열을 다시 날짜형식으로 바꾸기
   const convertToDate = (dateString: string) => {
+    if (!dateString) {
+      throw new Error('maturityDate가 없음');
+    }
+
     const parts = dateString.match(/(\d{4})년 (\d{1,2})월 (\d{1,2})일/);
     if (!parts) {
       throw new Error('유효하지 않은 날짜 형식입니다.');

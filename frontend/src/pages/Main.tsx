@@ -30,7 +30,7 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '예적금',
-    route: '/account/list',
+    route: '/account/deposit/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
@@ -55,22 +55,6 @@ const ButtonConfig: ButtonConfigType[] = [
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
-  },
-
-  {
-    label: '예금 중도 해지 (추후 삭제 예정)',
-    route: '/cancel/deposit/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
-  },
-
-  {
-    label: '적금 중도해지(추후 삭제 예정)',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
   },
 ];
 

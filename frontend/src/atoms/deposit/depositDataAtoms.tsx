@@ -21,3 +21,5 @@ export const selectedKeywordAtom = atom('예금 상품');
 export const depositAccountAtom = atom<DepositAccountDetail | null>(null);
 // 예금 가입 시 출금계좌 정보를 저장할거
 export const withdrawalAccountAtom = atom<DepositAccountDetail | null>(null);
+// 중도해지 시 클릭한 계좌 정보 중도해지 설명페이지에서 보여줘야함
+export const selectedAccountAtom = atom<any | null>(null);
