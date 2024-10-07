@@ -22,9 +22,8 @@ const AccountTransferPassword = () => {
     withdrawalTransactionSummaryAtom,
   );
 
-  const passwordComplete = (password: string[]) => {
-    const passwordString = password.join('');
-    console.log('비밀번호 확인용 :', passwordString);
+  const passwordComplete = (password: string) => {
+    console.log('비밀번호 확인용 :', password);
     const transfer = () => {
       try {
         postUserFreeAccountTransfer(
@@ -39,7 +38,7 @@ const AccountTransferPassword = () => {
           // 출금할 계좌 기록
           withdrawalTransactionSummary,
           // 비밀번호
-          passwordString,
+          password,
         );
       } catch (error) {
         console.error('Error fetching answer:', error);
