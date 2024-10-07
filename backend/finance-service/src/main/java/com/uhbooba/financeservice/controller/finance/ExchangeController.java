@@ -8,6 +8,7 @@ import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_
 import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_REQ;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_RES;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Input.CURRENCY;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.PASSWORD;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
@@ -22,6 +23,7 @@ import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyAc
 import com.uhbooba.financeservice.dto.finapi.response.exchange.ForeignCurrencyProductResponse;
 import com.uhbooba.financeservice.service.ExchangeService;
 import com.uhbooba.financeservice.util.CommonUtil;
+import com.uhbooba.financeservice.util.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -45,6 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExchangeController {
 
     private final ExchangeService exchangeService;
+    private final PasswordService passwordService;
 
     @GetMapping("/bank-currencies")
     @Operation(summary = "통화코드 조회")
@@ -71,12 +74,16 @@ public class ExchangeController {
     }
 
     @PostMapping("/exchange")
-    @Operation(summary = "환전", description = INPUT + EXCHANGE_REQ + OUTPUT + EXCHANGE_RES)
+    @Operation(summary = "환전", description = INPUT + EXCHANGE_REQ + PASSWORD + OUTPUT
+        + EXCHANGE_RES)
     public CommonResponse<ExchangeResponse> exchangeCurrency(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody ExchangeRequest dto
     ) {
         UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+
+        passwordService.validatePassword(userHeaderInfo.userId(), dto.password());
+
         return CommonResponse.ok("환전 성공", exchangeService.doExchange(userHeaderInfo, dto));
     }
 
