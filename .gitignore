@@ -224,3 +224,8 @@ finance-db-data/
 redis-data/
 user-db-data/
 user-redis-data/
+loki/
+promtail/
+prometheus/
+grafana/
+tempo/
