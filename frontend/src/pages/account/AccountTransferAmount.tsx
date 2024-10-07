@@ -62,6 +62,10 @@ const AccountTransferAmount = () => {
     setAmount((prev) => Math.floor(prev / 10));
   };
 
+  const setAmountToZero = () => {
+    setAmount(0)
+  }
+
   const handleSubmit = () => {
     if (!amount) {
       alert('입금할 금액을 선택해주세요.');
@@ -90,15 +94,25 @@ const AccountTransferAmount = () => {
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
-        <Input
-          label='얼마를 보낼까요?'
-          variant='full'
-          placeholder='금액을 입력해 주세요.'
-          value={`${amount}원`}
-          onChange={(e) => setAmount(Number(e.target.value))}
-        />
+        <div className='relative'>
+          <Input
+            label='얼마를 보낼까요?'
+            variant='full'
+            placeholder='금액을 입력해 주세요.'
+            value={`${amount}원`}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            className='pr-20'
+          />
 
-        <div className='relative mt-4 flex'>
+          <Button
+            label='지우기'
+            size='customMedium'  
+            className='absolute right-2 top-14 -translate-y-1/2 transform'
+            onClick={setAmountToZero}
+          />
+        </div>
+
+        <div className='mt-4'>
           <MoneyInput
             amounts={amountLabels}
             onAmountClick={(index) => handleAmountSelect(index)}
