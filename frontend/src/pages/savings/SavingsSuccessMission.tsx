@@ -10,6 +10,7 @@ import {
   selectedSavingsProductAtom,
   withdrawalAccountAtom,
   selectMoneyAtom,
+  savingPasswordAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import { setMissionClearStatus } from '@/services/mission';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
@@ -24,6 +25,7 @@ const SavingsSuccessMission = () => {
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 미션 성공하면 뜨는 모달
+  const [savingPassword] = useAtom(savingPasswordAtom);
 
   // 미션 성공하면 1초 있다가 성공모달 뜨게 하기
   useEffect(() => {
@@ -81,6 +83,7 @@ const SavingsSuccessMission = () => {
           withdrawalAccount!.accountNo,
           accountTypeUniqueNo!,
           savingBalance,
+          savingPassword,
         );
 
         if (response?.data?.result) {
@@ -100,6 +103,7 @@ const SavingsSuccessMission = () => {
     withdrawalAccount,
     selectMoney,
     accountTypeUniqueNo,
+    savingPassword,
   ]);
 
   // 4단계 미션 성공했다고 api 보내기

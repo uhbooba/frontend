@@ -74,7 +74,7 @@ const AccountDepositList = () => {
                 key={`deposit-${index}`}
                 accountType='정기 예금'
                 accountNumber={account.accountNo}
-                amount={account.depositBalance}
+                amount={parseInt(account.depositBalance, 10)}
                 buttonName='중도 해지'
                 moveTo=''
                 onClick={() => {
@@ -87,7 +87,7 @@ const AccountDepositList = () => {
                 key={`savings-${index}`}
                 accountType='적금 계좌'
                 accountNumber={account.accountNo}
-                amount={account.depositBalance}
+                amount={parseInt(account.depositBalance, 10)}
                 buttonName='중도 해지'
                 moveTo=''
                 onClick={() => {
