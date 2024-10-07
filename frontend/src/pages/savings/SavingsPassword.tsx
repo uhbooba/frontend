@@ -17,15 +17,8 @@ const Savingspassword = () => {
 
   const passwordComplete = async (password: string) => {
     try {
-      const accessToken = window.localStorage.getItem('ACCESS_TOKEN');
-
-      if (!accessToken) {
-        console.error('토큰이 없음.');
-        return;
-      }
-
       // 사용자 정보 조회하는 api 부르기
-      const userInfo = await getUserInfo(accessToken);
+      const userInfo = await getUserInfo();
       const userId = userInfo.result.id;
       // 비밀번호 확인 api 부르기
       const isPasswordCorrect = await checkPassword(userId, password);
