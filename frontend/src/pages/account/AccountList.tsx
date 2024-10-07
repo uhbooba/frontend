@@ -72,7 +72,7 @@ const AccountList = () => {
           <AccountInfo
             key={`free-${index}`}
             accountType={account.accountName}
-            acconutNumber={account.accountNo}
+            accountNumber={account.accountNo}
             amount={Number(account.balance)}
             buttonName='계좌 이체'
             moveTo='/account/transfer/account-info'
@@ -84,7 +84,7 @@ const AccountList = () => {
           <AccountInfo
             key={`deposit-${index}`}
             accountType={account.accountName}
-            acconutNumber={account.accountNo}
+            accountNumber={account.accountNo}
             amount={Number(account.balance)}
             buttonName='중도 해지'
             moveTo='/main'
@@ -96,7 +96,7 @@ const AccountList = () => {
           <AccountInfo
             key={`savings-${index}`}
             accountType={account.accountName}
-            acconutNumber={account.accountNo}
+            accountNumber={account.accountNo}
             amount={Number(account.balance)}
             buttonName='중도 해지'
             moveTo='/main'
