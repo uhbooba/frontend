@@ -42,7 +42,7 @@ const AccountTransferAmount = () => {
   const amountValues = [10000, 50000, 100000, 1000000, balance, 0];
 
   const GoBack = () => {
-    navigate(-1);
+    navigate('/account/transfer/account-info', { state: 'back-navigation' });
   };
 
   const handleAmountSelect = (index: number) => {
@@ -107,7 +107,7 @@ const AccountTransferAmount = () => {
         if (response?.data?.result) {
           const account = response.data.result;
           setBalance(account.balance);
-          setWithdrawalUsername(account.username)
+          setWithdrawalUsername(account.username);
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
