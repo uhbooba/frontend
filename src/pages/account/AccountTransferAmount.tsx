@@ -10,10 +10,11 @@ import Keypad from '@/components/common/KeyPad';
 import { getUserFreeAccount } from '@/services/account';
 import { useAtom } from 'jotai';
 import {
-  accountHolderNameAtomn,
   depositAccountNoAtom,
   transactionBalanceAtom,
   selectedBankAtom,
+  depositTransactionSummaryAtom,
+  withdrawalTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAmount = () => {
@@ -24,7 +25,8 @@ const AccountTransferAmount = () => {
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo] = useAtom(depositAccountNoAtom);
-  const [accountHolderName] = useAtom(accountHolderNameAtomn);
+  const [depositUsername] = useAtom(depositTransactionSummaryAtom);
+  const [, setWithdrawalUsername] = useAtom(withdrawalTransactionSummaryAtom);
   const [balance, setBalance] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -85,7 +87,7 @@ const AccountTransferAmount = () => {
 
   const handleSubmit = () => {
     if (!transactionBalance) {
-      alert('입금할 금액을 선택해주세요.');
+      setErrorMessage('입금할 금액을 선택해주세요.');
       return;
     }
     if (transactionBalance > balance) {
@@ -105,6 +107,7 @@ const AccountTransferAmount = () => {
         if (response?.data?.result) {
           const account = response.data.result;
           setBalance(account.balance);
+          setWithdrawalUsername(account.username)
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
@@ -128,7 +131,7 @@ const AccountTransferAmount = () => {
         <div>
           {selectedBank} {depositAccountNo}
         </div>
-        {accountHolderName}님께
+        {depositUsername}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
