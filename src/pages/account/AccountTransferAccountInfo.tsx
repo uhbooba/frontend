@@ -16,6 +16,7 @@ const AccountTransferAccountInfo = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
   const [accountNumber, setAccountNumber] = useAtom(accountNumberAtom);
+  const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
   const GoBack = () => {
     navigate(-1);
@@ -28,7 +29,7 @@ const AccountTransferAccountInfo = () => {
 
   const handleSubmit = () => {
     if (!accountNumber || !selectedBank) {
-      alert('계좌번호와 은행을 선택해 주세요.');
+      setErrorMessage('계좌번호와 은행을 선택해 주세요.');
       return;
     }
     navigate('/account/transfer/amount');
@@ -38,6 +39,9 @@ const AccountTransferAccountInfo = () => {
     const value = e.target.value;
     if (/^\d*$/.test(value) && value.length <= 16) {
       setAccountNumber(value);
+      setErrorMessage(''); // 입력이 올바르면 에러 메시지 초기화
+    } else if (value.length > 16) {
+      setErrorMessage('계좌번호는 최대 16자리까지 입력 가능합니다.'); // 에러 메시지 설정
     }
   }
 
@@ -57,8 +61,12 @@ const AccountTransferAccountInfo = () => {
           variant='full'
           placeholder='계좌번호를 입력해 주세요.'
           value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
+          onChange={handleAccountNumberChange}
+          className={errorMessage ? 'border-red-500' : ''} // 에러 시 테두리 빨간색
         />
+        {errorMessage && (
+          <div className="mt-1 text-sm text-red-500">{errorMessage}</div> // 경고 문구
+        )}
 
         <div className='relative mt-4'>
           <Button
