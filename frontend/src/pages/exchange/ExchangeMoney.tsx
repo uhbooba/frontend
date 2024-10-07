@@ -6,8 +6,8 @@ import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
 import ExchangeConfirm from '@/components/exchange/ExchangeConfirm';
-import { useAtom } from 'jotai';
-import { exchangeAmountAtom } from '@/atoms/exchangeAtoms';
+import { useAtom, useAtomValue } from 'jotai';
+import { exchangeAmountAtom, exchangeMissionAtom } from '@/atoms/exchangeAtoms';
 import { getExchangeRate } from '@/services/exchange';
 import ErrorText from '@/components/common/ErrorText';
 import TitleText from '@/components/common/TitleText';
@@ -22,6 +22,7 @@ const ExchangeMoney = () => {
     'USD' | 'KRW' | null
   >(null);
   const [isBottomOpen, setIsBottomOpen] = useState(false);
+  const isMission = useAtomValue(exchangeMissionAtom);
 
   const [exchangeRate, setExchangeRate] = useState<number>(0);
   const [error, setError] = useState('');
@@ -37,7 +38,10 @@ const ExchangeMoney = () => {
       return;
     }
 
-    setError('');
+    if (isMission && parseFloat(usdAmount) !== 150) {
+      setError('150달러를 환전해야 합니다.');
+      return;
+    }
     setIsBottomOpen(true);
   };
 
