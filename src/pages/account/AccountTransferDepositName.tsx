@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import {
-  accountHolderNameAtomn,
   depositAccountNoAtom,
   transactionBalanceAtom,
   withdrawalTransactionSummaryAtom,
@@ -22,18 +20,11 @@ const AccountTransferDepositName = () => {
   // const [keyOpen, setKeyOpen] = useState(false)
   const [selectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo] = useAtom(depositAccountNoAtom);
-  const [accountHolderName] = useAtom(accountHolderNameAtomn);
   const [withdrawalTransactionSummary, setWithdrawalTransactionSummary] =
     useAtom(withdrawalTransactionSummaryAtom);
   const [depositTransactionSummary, setDepositTransactionSummary] = useAtom(
     depositTransactionSummaryAtom,
   );
-
-  useEffect(() => {
-    // 추후 사용자의 실제 이름을 변수로 받아서 이용
-    setWithdrawalTransactionSummary('예금주명');
-    setDepositTransactionSummary('예금주명');
-  }, []);
 
   return (
     <div className='flex h-screen flex-col'>
@@ -49,7 +40,7 @@ const AccountTransferDepositName = () => {
         <div>
           {selectedBank} {depositAccountNo}
         </div>
-        {accountHolderName}님께
+        {depositTransactionSummary}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
