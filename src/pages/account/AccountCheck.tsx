@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountHistory from '@/components/common/AccountHistory';
+import { getUserFreeAccount } from '@/services/account';
+
+interface AccountData {
+  accountName: string;
+  accountNo: string;
+  balance: string;
+}
 
 interface ModalProps {
   show: boolean;
@@ -179,6 +186,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, onSave }) => {
 
 const AccountCheck = () => {
   const navigate = useNavigate();
+  const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState<Filter>({
     date: '전체 기간',
@@ -188,8 +196,33 @@ const AccountCheck = () => {
     endDate: undefined,
   });
 
+  useEffect(() => {
+    const fetchAccountDetails = async () => {
+      try {
+        const response = await getUserFreeAccount();
+        if (response?.data?.result) {
+          const account = response.data.result;
+          setAccountData({
+            accountName: account.accountName,
+            accountNo: account.accountNo,
+            balance: account.balance,
+          });
+        }
+      } catch (error) {
+        console.error('계좌 정보 API 호출 중 오류 발생:', error);
+        console.log();
+      }
+    };
+
+    fetchAccountDetails();
+  }, []);
+
   const handleButtonClick = (route: string) => {
-    navigate(route);
+    if (accountData && accountData.accountNo) {
+      navigate(route, { state: { accountNo: accountData.accountNo } });
+    } else {
+      navigate(route); // accountNo가 없을 경우 기본 동작
+    }
   };
 
   const openModal = () => setShowModal(true);
@@ -254,9 +287,17 @@ const AccountCheck = () => {
       <div className='mt-[20px] flex justify-center'>
         <div className='h-[200px] w-[320px] rounded-xl bg-[#FFAF2A]'>
           <div className='mb-[5px] ml-[20px] mt-[10px] font-bold'>
-            <div className='text-[24px] text-[#5A6A59]'>자유 입출금 통장</div>
-            <div className='mb-[20px] text-[16px]'>352-1263-3781-83</div>
-            <div className='text-[28px]'>잔액 26,305,219원</div>
+            <div className='text-[24px] text-[#5A6A59]'>
+              {accountData ? accountData.accountName : '자유입출금 계좌'}
+            </div>
+            <div className='mb-[20px] text-[16px]'>
+              {accountData ? accountData.accountNo : '111-222-333333'}
+            </div>
+            <div className='text-[28px]'>
+              {accountData && accountData.balance
+                ? `${accountData.balance.toLocaleString()}원`
+                : '11,000,000원'}
+            </div>
           </div>
           <div className='flex justify-between space-x-4 p-4'>
             {ButtonConfig.map((button, index) => (

@@ -3,6 +3,8 @@ export interface SavingAccountDetail {
   accountName: string;
   accountNo: string;
   balance: string;
+  depositBalance: string;
+  subscriptionPeriod: string;
 }
 
 // CancelSavingProduct 에서 사용
