@@ -10,6 +10,8 @@ import { useAtom } from 'jotai';
 import { exchangeAmountAtom } from '@/atoms/exchangeAtoms';
 import { getExchangeRate } from '@/services/exchange';
 import ErrorText from '@/components/common/ErrorText';
+import TitleText from '@/components/common/TitleText';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const ExchangeMoney = () => {
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ const ExchangeMoney = () => {
   const handleConfirmExchange = () => {
     // 환전 확인
     setIsBottomOpen(false);
-    navigate('/exchange/account');
+    navigate('/exchange/account', { state: { krwAmount } });
   };
 
   const fetchUSDRate = async () => {
@@ -93,80 +95,90 @@ const ExchangeMoney = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='환전' />
-      </div>
-
-      <div className='mb-6 mt-20'>
+      <TopBar title='환전' />
+      <MainWrapper>
         <LevelBar currentLevel={2} totalLevel={4} />
-      </div>
+        <div>
+          <TitleText>얼마를 환전하시나요?</TitleText>
+          <Input
+            label='미국 USD'
+            value={Number(usdAmount).toLocaleString()}
+            onClick={() => {
+              setKeyOpen(true);
+              setSelectedCurrency('USD');
+            }}
+            isError={error !== ''}
+            onChange={(e) => {
+              setUsdAmount(e.target.value);
+              setError('');
+            }}
+          />
+          {error && <ErrorText>{error}</ErrorText>}
+          <div className='my-6 flex justify-center'>
+            <div className='w-fit rounded-full border-2 border-primary p-2 text-primary'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={3}
+                stroke='currentColor'
+                className='size-8'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M4.499 8.248h15m-15 7.501h15'
+                />
+              </svg>
+            </div>
+          </div>
 
-      <div className='m-4'>
-        <div className='pb-4 pl-4 text-3xl font-bold'>
-          <span>얼마를 환전하시나요?</span>
+          <Input
+            label='한국 KRW'
+            value={Number(krwAmount).toLocaleString()}
+            onClick={() => {
+              setKeyOpen(true);
+              setSelectedCurrency('KRW');
+            }}
+            isError={error !== ''}
+            onChange={(e) => {
+              setKrwAmount(e.target.value);
+              setError('');
+            }}
+            className='mb-5'
+          />
         </div>
-        <Input
-          label='미국 USD'
-          value={Number(usdAmount).toLocaleString()}
-          onClick={() => {
-            setKeyOpen(true);
-            setSelectedCurrency('USD');
-          }}
-          isError={error !== ''}
-          onChange={(e) => {
-            setUsdAmount(e.target.value);
-            setError('');
-          }}
-        />
-        {error && <ErrorText>{error}</ErrorText>}
-        <div className='my-6 flex justify-center'>
-          <div className='w-fit rounded-full border-2 border-primary p-2 text-primary'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={3}
-              stroke='currentColor'
-              className='size-8'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M4.499 8.248h15m-15 7.501h15'
-              />
-            </svg>
+
+        <div className='mt-6 rounded-lg bg-gray-100 p-4'>
+          <div className='flex justify-between'>
+            <span className='text-gray-600'>예상 환율</span>
+            <span className='font-semibold'>1 달러 = {exchangeRate}원</span>
+          </div>
+          <div className='mt-2 flex justify-between'>
+            <span className='text-gray-600'>원화 예상 금액</span>
+            <span className='font-semibold'>
+              {Number(krwAmount).toLocaleString()}원
+            </span>
           </div>
         </div>
 
-        <Input
-          label='한국 KRW'
-          value={Number(krwAmount).toLocaleString()}
-          onClick={() => {
-            setKeyOpen(true);
-            setSelectedCurrency('KRW');
-          }}
-          isError={error !== ''}
-          onChange={(e) => {
-            setKrwAmount(e.target.value);
-            setError('');
-          }}
-          className='mb-5'
-        />
-      </div>
-
-      <div className='mt-6 rounded-lg bg-gray-100 p-4'>
-        <div className='flex justify-between'>
-          <span className='text-gray-600'>예상 환율</span>
-          <span className='font-semibold'>1 달러 = {exchangeRate}원</span>
+        <div className='mb-2 flex w-full items-center justify-center p-4'>
+          <Button
+            label='이전'
+            size='medium'
+            color='orange'
+            onClick={() => GoBack()}
+            className='mr-2'
+          />
+          <Button
+            label='다음'
+            size='medium'
+            color='orange'
+            onClick={() => OpenModal()}
+            className='ml-2'
+          />
         </div>
-        <div className='mt-2 flex justify-between'>
-          <span className='text-gray-600'>원화 예상 금액</span>
-          <span className='font-semibold'>
-            {Number(krwAmount).toLocaleString()}원
-          </span>
-        </div>
-      </div>
-
+      </MainWrapper>
       {keyOpen && (
         <Keypad
           onNumberClick={keyClick}
@@ -184,23 +196,6 @@ const ExchangeMoney = () => {
           isOpen={isBottomOpen}
         />
       )}
-
-      <div className='mb-2 flex w-full items-center justify-center p-4'>
-        <Button
-          label='이전'
-          size='medium'
-          color='orange'
-          onClick={() => GoBack()}
-          className='mr-2'
-        />
-        <Button
-          label='다음'
-          size='medium'
-          color='orange'
-          onClick={() => OpenModal()}
-          className='ml-2'
-        />
-      </div>
     </div>
   );
 };

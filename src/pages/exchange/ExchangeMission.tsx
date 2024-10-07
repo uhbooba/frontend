@@ -2,6 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const ExchangeMission = () => {
   const navigate = useNavigate();
@@ -11,11 +12,9 @@ const ExchangeMission = () => {
   };
 
   return (
-    <div className='min-h-screen bg-yellow-100'>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='환전' />
-      </div>
-      <div className='relative mt-8 flex flex-col items-center'>
+    <div className='flex min-h-screen flex-col bg-yellow-100'>
+      <TopBar title='환전' />
+      <MainWrapper className='flex flex-col items-center justify-center'>
         <TextBubble
           bubbleSize='w-11/12'
           content={
@@ -55,7 +54,7 @@ const ExchangeMission = () => {
             loading='lazy'
           />
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };
