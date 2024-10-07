@@ -25,7 +25,7 @@ public class ApiDescriptions {
         public static final String DEMAND_DEPOSIT_CREATE_REQUEST = """
             /n
             <b>DemandDepositCreateRequest</b>
-            
+                        
             | Name               | Type    | Description                          |
             |--------------------|---------|--------------------------------------|
             | bankCode           | String  | 은행 코드 (필수, 3자리)              |
@@ -48,14 +48,14 @@ public class ApiDescriptions {
             """;
 
         public static final String DEMAND_DEPOSIT_DEPOSIT_RESPONSE = """
-            
+                        
             <b>DemandDepositDepositResponse</b>
-            
+                        
             | Name               | Type    | Description                          |
             |--------------------|---------|--------------------------------------|
             | transactionUniqueNo           | String  | 거래 내역 식별자(외부 API 용)              |
             | transactionDate        | String  | 거래 일시(YYYYMMDD)             |
-            
+                        
             """;
 
         public static final String ACCOUNT_CREATE_RESPONSE = """
@@ -232,7 +232,7 @@ public class ApiDescriptions {
             |--------------------|---------|--------------------------------------|
             | currency | ExchangeEstimateCurrencyResponse |  기존 통화                        |
             | exchangeCurrency | ExchangeEstimateCurrencyResponse |  환전 통화               |
-            
+                        
             \n
             <b>ExchangeEstimateCurrencyResponse</b>
             \n
@@ -258,7 +258,7 @@ public class ApiDescriptions {
             |--------------------|---------|--------------------------------------|
             | exchangeCurrency | ExchangeCurrencyDto |  환전 정보                        |
             | accountInfo | AccountInfoDto |  계좌 정보             |
-            
+                        
             \n
             <b>ExchangeCurrencyDto</b>
             \n
@@ -268,7 +268,7 @@ public class ApiDescriptions {
             | exchangeRate | string |  환율               |
             | currency | string |  통화               |
             | currencyName | string |  통화 이름               |
-            
+                        
             \n
             <b>AccountInfoDto</b>
             \n
@@ -395,6 +395,10 @@ public class ApiDescriptions {
 
         public static final String CURRENCY = """
             | currency | String | 통화(예시: USD, JPY, KRW 등) |
+            """;
+
+        public static final String PASSWORD = """
+            | password | String |  비밀번호           |
             """;
     }
 
