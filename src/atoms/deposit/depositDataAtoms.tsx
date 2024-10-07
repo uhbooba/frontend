@@ -16,6 +16,7 @@ export const selectedDepositProductAtom = atom<SelectedDepositProduct | null>(
   null,
 );
 export const selectedKeywordAtom = atom('예금 상품');
+export const depositPasswordAtom = atom(''); // 사용자 입력 패스워드 저장 아톰
 
 // 생성한 예금 계좌 정보
 export const depositAccountAtom = atom<DepositAccountDetail | null>(null);

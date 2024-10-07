@@ -10,6 +10,7 @@ import {
   selectedDepositProductAtom,
   withdrawalAccountAtom,
   selectMoneyAtom,
+  depositPasswordAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 
 const DepositSuccess = () => {
@@ -21,6 +22,8 @@ const DepositSuccess = () => {
   const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
+  const [depositPassword] = useAtom(depositPasswordAtom); // 패스워드아톰
+  console.log('비번', depositPassword);
 
   // 예금상품전체조회api부터 해야함
   useEffect(() => {
@@ -59,23 +62,27 @@ const DepositSuccess = () => {
       }
 
       try {
-        // 금액버튼 문자열이니까 쉼표도 없애고 숫자로 바꿔줘야됨
         if (!selectMoney) {
           console.error('예치 금액이 없습니다.');
           return;
         }
+
+        // 금액버튼 문자열이니까 쉼표도 없애고 숫자로 바꿔줘야됨
         const depositBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
+
+        // 실제 API 호출
         const response = await createDepositAccount(
           withdrawalAccount!.accountNo,
           accountTypeUniqueNo!,
           depositBalance,
+          depositPassword,
         );
 
         if (response?.data?.result) {
           setDepositAccount(response.data.result);
         }
       } catch (error) {
-        console.log(error);
+        console.error('예금 계좌 생성 중 오류 발생:', error);
       }
     };
 
@@ -88,6 +95,7 @@ const DepositSuccess = () => {
     withdrawalAccount,
     selectMoney,
     accountTypeUniqueNo,
+    depositPassword,
   ]);
 
   const GoNext = () => {

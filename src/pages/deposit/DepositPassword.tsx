@@ -2,11 +2,16 @@ import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
+import { depositPasswordAtom } from '@/atoms/deposit/depositDataAtoms';
+import { useAtom } from 'jotai';
 
 const DepositPassword = () => {
   const navigate = useNavigate();
+  const [, setDepositPassword] = useAtom(depositPasswordAtom);
 
-  const passwordComplete = () => {
+  const passwordComplete = (password: string) => {
+    setDepositPassword(password);
+    console.log('패스워드 확인', password);
     navigate('/deposit/success');
   };
 

@@ -39,15 +39,13 @@ export const createSavingsAccount = async (
   withdrawalAccountNo: string,
   accountTypeUniqueNo: string,
   savingsBalance: number,
-  // password: string,
-  // 10월 7일 오후 4시, 인엽이형이 필드명 password, string 형식으로 사용자가 입력한 비밀번호도 예적금 가입 api에
-  // 호출할 때 보내야하는거 추가한다고 말해줬음. 추가되면 주석 해제하기
+  password: string,
 ) => {
   const bodyData = {
     withdrawalAccountNo,
     accountTypeUniqueNo,
     savingsBalance,
-    // password,
+    password,
   };
 
   const response = await axiosInstance.post(
