@@ -22,7 +22,7 @@ const AccountInfo: React.FC<AccountInfoProps> = ({
   const navigate = useNavigate();
 
   return (
-    <div className='mt-[20px] h-[128px] w-[320px] rounded-xl bg-[#FFAF2A]'>
+    <div className='mt-[20px] h-[170px] w-[320px] rounded-xl bg-[#FFAF2A]'>
       <div className='mb-[5px] ml-[20px] mt-[10px] font-bold'>
         <div className='mr-2 flex justify-between'>
           <div className='text-[24px] text-[#5A6A59]'>{accountType}</div>
