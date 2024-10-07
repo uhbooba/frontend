@@ -27,7 +27,7 @@ const TopBar: React.FC<TopBarProps> = ({
   };
 
   return (
-    <div className='relative flex items-center justify-center border-b-2 bg-white py-4'>
+    <div className='fixed left-1/2 top-0 z-10 flex h-20 w-full max-w-[430px] -translate-x-1/2 transform items-center justify-center border-b-2 bg-white py-4'>
       {showBackButton && (
         <div className='absolute left-0'>
           <BackButton className='ml-4' />
