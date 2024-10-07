@@ -1,10 +1,10 @@
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
   depositAccountNoAtom,
@@ -15,12 +15,21 @@ import { getFreeAcountHolder } from '@/services/account';
 
 const AccountTransferAccountInfo = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo, setDepositAccountNo] = useAtom(depositAccountNoAtom);
   const [, setDepositUsername] = useAtom(depositTransactionSummaryAtom);
 
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
+
+  useEffect(() => {
+    if (location.state !== 'back-navigation') {
+      setDepositAccountNo('');
+      setSelectedBank('');
+      setErrorMessage('');
+    }
+  }, [location.state, setDepositAccountNo, setSelectedBank]);
 
   const GoBack = () => {
     navigate(-1);
@@ -57,7 +66,9 @@ const AccountTransferAccountInfo = () => {
           navigate('/account/transfer/amount'); // 계좌 확인 후 다음 페이지로 이동
         } else {
           // 400 또는 404 등 오류 상태 코드 처리
-          setErrorMessage(response.data.message || '계좌 정보를 불러오지 못했습니다.');
+          setErrorMessage(
+            response.data.message || '계좌 정보를 불러오지 못했습니다.',
+          );
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
