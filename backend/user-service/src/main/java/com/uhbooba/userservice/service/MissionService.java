@@ -44,7 +44,7 @@ public class MissionService {
 
         for (int i = 0; i < 7; i++) {
             boolean isCleared = (status & (1 << i)) != 0;
-            missionStatusList.add(MissionStatusResponse.of(i + 1, isCleared));
+            missionStatusList.add(MissionStatusResponse.of(i, isCleared));
         }
 
         return missionStatusList;
