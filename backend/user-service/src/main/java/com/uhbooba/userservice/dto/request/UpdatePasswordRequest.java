@@ -2,14 +2,12 @@ package com.uhbooba.userservice.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public record UpdateUserRequest(
+public record UpdatePasswordRequest(
 
     @NotEmpty
     String phone,
 
-    String password,
-
-    Boolean isLoginFirst
+    String password
 
 ) {
 

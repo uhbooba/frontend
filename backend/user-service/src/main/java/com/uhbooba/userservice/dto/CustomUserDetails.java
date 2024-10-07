@@ -35,7 +35,14 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public Boolean isFirstLogin() {
-        return user.getIsFirstLogin();
+        int count = 0;
+        int status = user.getMissionStatus();
+        while (status != 0) {
+            count += (status & 1);
+            status >>= 1;
+        }
+
+        return count == 0 ? Boolean.TRUE : Boolean.FALSE;
     }
 
     @Override
