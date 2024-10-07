@@ -55,7 +55,10 @@ public class FinApiDepositService {
         DepositAccountCreateRequest dto
     ) {
         // 1. 요청 본문 생성
-        Map<String, Object> requestBody = objectMapper.convertValue(dto, Map.class);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("withdrawalAccountNo", dto.withdrawalAccountNo());
+        requestBody.put("accountTypeUniqueNo", dto.accountTypeUniqueNo());
+        requestBody.put("depositBalance", dto.depositBalance());
 
         // 2. api 요청
         HandlerParamWithHeader param = HandlerParamWithHeader.builder()
