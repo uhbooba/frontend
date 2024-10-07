@@ -3,9 +3,18 @@ import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { exchangeMissionAtom } from '@/atoms/exchangeAtoms';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
 const ExchangeMission = () => {
   const navigate = useNavigate();
+  const setIsMission = useSetAtom(exchangeMissionAtom);
+
+  useEffect(() => {
+    // 페이지에 들어오면 미션 상태 true
+    setIsMission(true);
+  }, []);
 
   const GoExplain = () => {
     navigate('/exchange/explain');
@@ -25,7 +34,7 @@ const ExchangeMission = () => {
                 경로당에서 해외여행을 <br />
                 준비 중입니다. <br />
                 해외에서 사용할 경비를 <br />
-                <span className='text-bold text-primary'>30달러</span>로
+                <span className='text-bold text-primary'>150달러</span>로
                 환전하려고
                 <br /> 합니다.
               </p>

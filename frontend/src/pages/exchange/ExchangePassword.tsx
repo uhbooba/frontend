@@ -25,9 +25,12 @@ const ExchangePassword = () => {
   const fetchExchange = async (password: string) => {
     try {
       const response = await postExchange(accountNo, 'USD', amount, password);
-      navigate('/exchange/complete', {
-        state: { exchangeResult: response.data?.result },
-      });
+
+      if (response?.data?.statusCode === 200) {
+        navigate('/exchange/complete', {
+          state: { exchangeResult: response.data?.result },
+        });
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error?.response?.data?.message === '비밀번호가 맞지 않습니다.') {

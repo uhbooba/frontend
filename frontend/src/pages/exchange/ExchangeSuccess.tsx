@@ -1,21 +1,46 @@
+import { exchangeMissionAtom } from '@/atoms/exchangeAtoms';
 import Button from '@/components/common/buttons/Button';
 import TextBubble from '@/components/common/TextBubble';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import TopBar from '@/components/layouts/TopBar';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
+import { setMissionClearStatus } from '@/services/mission';
+import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import useResetExchangeValues from '@/hooks/useResetExchangeValues';
 
 const ExchangeSuccess = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isMission = useAtomValue(exchangeMissionAtom);
+  const { amount } = location.state;
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const resetValues = useResetExchangeValues();
 
+  // 환전 미션 확인
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSuccessModalOpen(true);
-    }, 1000); // 1초 뒤 미션성공 뜨도록(미션 성공한 사람의 경우만 뜨도록 추후 수정)
+    const fetchExchangeMission = async () => {
+      try {
+        const response = await setMissionClearStatus(6);
 
-    return () => clearTimeout(timer);
+        if (response?.statusCode === 200) {
+          const timer = setTimeout(() => {
+            setIsSuccessModalOpen(true);
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (amount === '150' && isMission) {
+      fetchExchangeMission();
+    }
+
+    resetValues(); // 값 초기화
   }, []);
 
   return (
