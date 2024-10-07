@@ -20,3 +20,9 @@ export const setMissionClearStatus = async (
   );
   return response.data;
 };
+
+// 모든 미션 클리어 여부 확인
+export const getMissionsClearStatus = async (): Promise<MissionResponse> => {
+  const response = await axiosInstance<MissionResponse>(`/missions`);
+  return response.data;
+};
