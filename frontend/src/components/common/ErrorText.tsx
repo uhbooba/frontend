@@ -1,9 +1,21 @@
+import clsx from 'clsx';
+
 type ErrorTextProps = {
-  content: string;
+  children: React.ReactNode;
+  color?: 'red' | 'green';
 };
 
-const ErrorText: React.FC<ErrorTextProps> = ({ content }) => {
-  return <p className='mt-2 text-base text-red-500'>{content}</p>;
+const ErrorText: React.FC<ErrorTextProps> = ({ children, color = 'red' }) => {
+  return (
+    <p
+      className={clsx([
+        'mt-2 text-base',
+        color === 'red' ? 'text-red-main' : 'text-green-main',
+      ])}
+    >
+      {children}
+    </p>
+  );
 };
 
 export default ErrorText;

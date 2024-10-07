@@ -30,3 +30,8 @@ export const postUserFreeAccountAddCash = async (
   );
   return response;
 };
+
+// 입출금 계좌 입금
+export const postUserFreeAccount = async () => {
+  await axiosInstance.post('/finances/demand-deposits/accounts');
+};

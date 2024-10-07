@@ -5,8 +5,10 @@ import TopBar from '@/components/layouts/TopBar';
 import { postLogin } from '@/services/auth';
 import Keypad from '@/components/common/KeyPad';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,6 +31,8 @@ const Login = () => {
 
       const token = response?.headers['access'];
       localStorage.setItem('ACCESS_TOKEN', token);
+
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
@@ -60,10 +64,10 @@ const Login = () => {
             readOnly
             onClick={() => setKeyOpen(true)}
           />
-          {errorMessage && <ErrorText content={errorMessage} />}
+          {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
           <div className='mt-3 flex flex-col justify-center'>
             <Button label='로그인' className='mb-3' onClick={handleLogin} />
-            <Button label='회원가입' />
+            <Button label='회원가입' onClick={() => navigate('/signup')} />
           </div>
         </div>
         {keyOpen && (

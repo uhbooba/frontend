@@ -29,6 +29,12 @@ export const postSignup = async (
   return response;
 };
 
+// 아이디 중복 확인
+export const checkUsername = async (username: string) => {
+  const response = await axiosInstance(`/users/check-username/${username}`);
+  return response;
+};
+
 // 비밀번호 확인
 export const checkPassword = () => {};
 
@@ -43,4 +49,15 @@ export const postSms = async (phone: string) => {
 };
 
 // sms 인증
-export const postSmsVerify = () => {};
+export const postSmsVerify = async (phone: string, code: string) => {
+  const bodyData = {
+    phone,
+    code,
+  };
+
+  const response = await axiosInstance.post(
+    '/user-service/sms/verify',
+    bodyData,
+  );
+  return response;
+};
