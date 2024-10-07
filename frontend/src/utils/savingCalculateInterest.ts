@@ -8,19 +8,15 @@ export const savingCalculateInterest = (
 
     // 가입기간 문자열에서 숫자만 추출하고 숫자 형식으로 변환
     const periodMonthsNumber = Number(periodMonths.replace(/[^0-9]/g, ''));
-    console.log('가입기간', periodMonthsNumber);
 
     // 가입금액에서 쉼표 제거하고 숫자 형식으로 변환
     const selectMoneyNumber = Number(selectMoney.replace(/,/g, ''));
-    console.log('가입금액', selectMoneyNumber);
 
     // 이자율 백분율로 변환
     const rate = interestRate / 100;
-    console.log('이자 백분율', rate);
 
     // 총 납입 원금 계산
     const totalDeposit = selectMoneyNumber * periodMonthsNumber;
-    console.log('총 납입 원금', totalDeposit);
 
     // 평균 납입 기간
     const averagePeriod = (periodMonthsNumber + 1) / 2;
@@ -28,7 +24,6 @@ export const savingCalculateInterest = (
     // 예상 이자 계산
     const estimatedInterest =
       selectMoneyNumber * periodMonthsNumber * averagePeriod * (rate / 12);
-    console.log('예상 이자', estimatedInterest);
 
     // 예상 총 금액 계산
     const totalAmount = totalDeposit + estimatedInterest;

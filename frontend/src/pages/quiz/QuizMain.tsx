@@ -32,6 +32,7 @@ const QuizMain = () => {
             title={item.topic}
             icon={<img src='/assets/images/pig.png' className='h-16 w-16' />}
             onClick={() => moveQuiz(`${item.part}`)}
+            className='cursor-pointer'
           />
         ))}
       </div>

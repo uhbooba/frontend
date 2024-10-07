@@ -14,18 +14,19 @@ const BUTTON_COLORS = {
   green: 'bg-green-main',
   white: 'bg-white-500',
   blue: 'bg-blue-500',
-  lightOrange: 'bg-[#FFD362]'
+  lightOrange: 'bg-[#FFD362]',
 };
 
 export type ButtonConfigType = {
   label: string;
   route: string;
-  size: keyof typeof BUTTON_SIZES;
+  size?: keyof typeof BUTTON_SIZES;
   color?: keyof typeof BUTTON_COLORS;
-  className: string;
+  className?: string;
   img?: string;
   eduImg?: string;
   eduLabel?: string;
+  amount?: number;
 };
 
 type ButtonProps = {
