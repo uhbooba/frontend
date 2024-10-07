@@ -2,7 +2,7 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { deleteDepositAccount } from '@/services/deposit';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
