@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import {
   accountHolderNameAtomn,
-  accountNumberAtom,
-  amountAtom,
-  myAccountRecordAtom,
+  depositAccountNoAtom,
+  transactionBalanceAtom,
+  withdrawalTransactionSummaryAtom,
   selectedBankAtom,
-  yourAccountRecordAtom,
+  depositTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
@@ -18,20 +18,21 @@ import TopBar from '@/components/layouts/TopBar';
 
 const AccountTransferDepositName = () => {
   const navigate = useNavigate();
-  const [amount] = useAtom(amountAtom);
+  const [transactionBalance] = useAtom(transactionBalanceAtom);
   // const [keyOpen, setKeyOpen] = useState(false)
   const [selectedBank] = useAtom(selectedBankAtom);
-  const [accountNumber] = useAtom(accountNumberAtom);
+  const [depositAccountNo] = useAtom(depositAccountNoAtom);
   const [accountHolderName] = useAtom(accountHolderNameAtomn);
-  const [myAccountRecord, setMyAcoountRecord] = useAtom(myAccountRecordAtom);
-  const [yourAccountRecord, setYourAcoountRecord] = useAtom(
-    yourAccountRecordAtom,
+  const [withdrawalTransactionSummary, setWithdrawalTransactionSummary] =
+    useAtom(withdrawalTransactionSummaryAtom);
+  const [depositTransactionSummary, setDepositTransactionSummary] = useAtom(
+    depositTransactionSummaryAtom,
   );
 
   useEffect(() => {
     // 추후 사용자의 실제 이름을 변수로 받아서 이용
-    setMyAcoountRecord('예금주명');
-    setYourAcoountRecord('예금주명');
+    setWithdrawalTransactionSummary('예금주명');
+    setDepositTransactionSummary('예금주명');
   }, []);
 
   return (
@@ -46,25 +47,23 @@ const AccountTransferDepositName = () => {
 
       <div className='ml-4 mt-4'>
         <div>
-          {selectedBank} {accountNumber}
+          {selectedBank} {depositAccountNo}
         </div>
         {accountHolderName}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
-        <div className='mb-8'>{amount}원</div>
+        <div className='mb-8'>{transactionBalance}원</div>
 
         <Input
           label='내 통장 기록'
-          placeholder={myAccountRecord}
-          value={myAccountRecord}
-          onChange={(e) => setMyAcoountRecord(e.target.value)}
+          value={withdrawalTransactionSummary}
+          onChange={(e) => setWithdrawalTransactionSummary(e.target.value)}
         />
         <Input
           label='받는 분 통장 기록'
-          placeholder={yourAccountRecord}
-          value={yourAccountRecord}
-          onChange={(e) => setYourAcoountRecord(e.target.value)}
+          value={depositTransactionSummary}
+          onChange={(e) => setDepositTransactionSummary(e.target.value)}
         />
 
         <div className='mt-[30vh] w-full'>

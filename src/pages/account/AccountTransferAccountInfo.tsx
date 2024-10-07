@@ -7,7 +7,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import {
-  accountNumberAtom,
+  depositAccountNoAtom,
   selectedBankAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
@@ -15,7 +15,7 @@ const AccountTransferAccountInfo = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
-  const [accountNumber, setAccountNumber] = useAtom(accountNumberAtom);
+  const [accountNumber, setAccountNumber] = useAtom(depositAccountNoAtom);
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
   const GoBack = () => {
