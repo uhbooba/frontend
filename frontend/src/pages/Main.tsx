@@ -3,7 +3,10 @@ import Button, { ButtonConfigType } from '../components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
-import { setMissionClearStatus } from '@/services/mission';
+import {
+  getMissionsClearStatus,
+  setMissionClearStatus,
+} from '@/services/mission';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 interface AccountData {
@@ -12,8 +15,12 @@ interface AccountData {
   balance: string;
 }
 
-const ButtonConfig: ButtonConfigType[] = [
-  // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
+interface missionItem {
+  missionNumber: number;
+  isCleared: boolean;
+}
+
+const getButtonConfig = (missionStatus: missionItem[]): ButtonConfigType[] => [
   {
     label: '전체계좌 조회',
     route: '/account/list',
@@ -21,7 +28,6 @@ const ButtonConfig: ButtonConfigType[] = [
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
-
   {
     label: '계좌개설',
     route: '/account/products',
@@ -38,14 +44,16 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '환전',
-    route: 'exchange/explain',
+    route: missionStatus[6]?.isCleared
+      ? 'exchange/explain'
+      : 'exchange/mission',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/exchange.png',
   },
   {
     label: '공과금',
-    route: 'utility/mission',
+    route: missionStatus[5]?.isCleared ? 'utility/explain' : 'utility/mission',
     size: 'small',
     className: 'flex-grow h-32 bg-white rounded-3xl shadow',
     img: '/assets/images/tax.png',
@@ -61,10 +69,26 @@ const ButtonConfig: ButtonConfigType[] = [
 
 const Main = () => {
   const location = useLocation();
-  const { isFirstLogin } = location.state;
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [buttonConfig, setButtonConfig] = useState<ButtonConfigType[]>([]);
+
+  useEffect(() => {
+    const fetchMissionStatus = async () => {
+      try {
+        const response = await getMissionsClearStatus();
+
+        if (response?.statusCode === 200) {
+          setButtonConfig(getButtonConfig(response?.result));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMissionStatus();
+  }, []);
 
   // 로그인 미션 확인
   useEffect(() => {
@@ -84,8 +108,8 @@ const Main = () => {
       }
     };
 
-    if (location.state && location.state.isFirstLogin !== undefined) {
-      if (isFirstLogin) {
+    if (location?.state !== undefined) {
+      if (location?.state?.isFirstLogin) {
         fetchLoginMission();
       }
       navigate(location.pathname, { replace: true, state: {} });
@@ -178,7 +202,7 @@ const Main = () => {
 
       {/* 하단 그리드 버튼들 */}
       <div className='grid grid-cols-2 gap-4 p-4'>
-        {ButtonConfig.map((button, index) => (
+        {buttonConfig.map((button, index) => (
           <Button
             key={index}
             label={button.label}
