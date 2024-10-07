@@ -10,12 +10,24 @@ import {
   selectedAccountAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import { setMissionClearStatus } from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 const CancelDepositSuccess = () => {
   const navigate = useNavigate();
   const setDepositAccount = useSetAtom(depositAccountAtom);
   const selectedAccount = useAtomValue(selectedAccountAtom);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 미션 성공하면 뜨는 모달
 
+  // 미션 성공하면 1초 있다가 성공모달 뜨게 하기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSuccessModalOpen(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 이건 예금 계좌 삭제하는 api 호출
   useEffect(() => {
     const deleteAccount = async () => {
       try {
@@ -31,12 +43,11 @@ const CancelDepositSuccess = () => {
     deleteAccount();
   }, [setDepositAccount, selectedAccount]);
 
+  // 미션 성공 api 호출
   useEffect(() => {
     const clearMission = async () => {
       try {
         await setMissionClearStatus(5);
-        // const missionResponse = await setMissionClearStatus(5);
-        // console.log('미션 클리어 확인용', missionResponse);
       } catch (error) {
         console.error('setMissionClearStatus 에러', error);
       }
@@ -51,6 +62,14 @@ const CancelDepositSuccess = () => {
 
   return (
     <div>
+      {/* 미션 성공 모달 */}
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='예금 중도해지'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
+
       <div className='fixed left-0 top-0 w-full'>
         <TopBar title='예금 중도해지' showBackButton={false} />
       </div>
