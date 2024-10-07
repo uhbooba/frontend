@@ -9,7 +9,8 @@ import lombok.Builder;
 public record DepositAccountCreateRequest(
     @NotBlank(message = "출금할 수시입출금 계좌번호를 입력하세요") @Size(max = 20) String withdrawalAccountNo,
     @NotBlank(message = "가입할 예금 상품고유번호를 입력하세요") @Size(max = 20) String accountTypeUniqueNo,
-    @NotNull Long depositBalance
+    @NotNull Long depositBalance,
+    @NotBlank(message = "비밀번호는 필수입니다.") String password
 ) {
 
 }

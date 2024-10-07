@@ -1,6 +1,7 @@
 package com.uhbooba.userservice.controller;
 
 import com.uhbooba.userservice.dto.CommonResponse;
+import com.uhbooba.userservice.dto.request.PasswordCheckRequest;
 import com.uhbooba.userservice.dto.request.SignupRequest;
 import com.uhbooba.userservice.dto.request.UpdatePasswordRequest;
 import com.uhbooba.userservice.dto.response.UserResponse;
@@ -40,9 +41,11 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "회원 가입")
-    public CommonResponse<?> sighup(@Valid @RequestBody SignupRequest request,
-        BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
+    public CommonResponse<?> sighup(
+        @Valid @RequestBody SignupRequest request,
+        BindingResult bindingResult
+    ) throws Exception {
+        if(bindingResult.hasErrors()) {
             throw new SignupFormatException();
         }
         UserSignupMessageResponse data = userService.signup(request);
@@ -90,4 +93,11 @@ public class UserController {
         return CommonResponse.ok("유저 정보 수정 성공");
     }
 
+    @PostMapping("/password")
+    @Operation(summary = "서비스 통신용 : 비밀번호 확인")
+    public Boolean isValidPassword(
+        @RequestBody PasswordCheckRequest request
+    ) {
+        return userService.isValidPassword(request);
+    }
 }
