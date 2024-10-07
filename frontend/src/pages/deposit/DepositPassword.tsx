@@ -19,7 +19,7 @@ const DepositPassword = () => {
       const userInfo = await getUserInfo();
       const userId = userInfo.result.id;
 
-      // 빌밀번호 확인 api 요청
+      // 비밀번호 확인 api 요청
       const isPasswordCorrect = await checkPassword(userId, password);
 
       if (isPasswordCorrect) {
