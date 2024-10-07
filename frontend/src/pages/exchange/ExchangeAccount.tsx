@@ -1,7 +1,6 @@
 import Button from '@/components/common/buttons/Button';
 import { useLocation, useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import NoModal from '@/components/modals/NoModal';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
