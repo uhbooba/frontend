@@ -13,14 +13,14 @@ const AccountList = () => {
         {/* 지금은 하드 코딩으로 계좌 넣어둠. 추후 수정 예정 */}
         <AccountInfo
           accountType='자유 입출금 통장'
-          acconutNumber='3521263378183456'
+          accountNumber='3521263378183456'
           amount={26305219}
           buttonName='계좌 이체'
           moveTo='/account/transfer/account-info'
         />
         <AccountInfo
           accountType='정기 예금'
-          acconutNumber='1234567891011121'
+          accountNumber='1234567891011121'
           amount={30000000}
           buttonName='중도 해지'
           moveTo='/main'
