@@ -36,7 +36,7 @@ public class MissionService {
     }
 
     @Transactional(readOnly = true)
-    public List<MissionStatusResponse> getClearedMissionCount(String userId) {
+    public List<MissionStatusResponse> getClearedMissionStatus(String userId) {
         User user = getUserByUsername(userId);
 
         int status = user.getMissionStatus();

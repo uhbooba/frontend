@@ -26,12 +26,6 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
-    private Boolean isTwoFactorAuthEnabled;
-
-    @Column(nullable = false)
-    private Boolean isFirstLogin;
-
-    @Column(nullable = false)
     private Integer missionStatus;
 
     @Builder
@@ -40,8 +34,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.phone = phone;
-        this.isTwoFactorAuthEnabled = false;
-        this.isFirstLogin = true;
         this.missionStatus = 0;
     }
 

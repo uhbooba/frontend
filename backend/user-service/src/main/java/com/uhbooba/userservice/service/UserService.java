@@ -1,7 +1,7 @@
 package com.uhbooba.userservice.service;
 
 import com.uhbooba.userservice.dto.request.SignupRequest;
-import com.uhbooba.userservice.dto.request.UpdateUserRequest;
+import com.uhbooba.userservice.dto.request.UpdatePasswordRequest;
 import com.uhbooba.userservice.dto.response.UserSignupMessageResponse;
 import com.uhbooba.userservice.entity.User;
 import com.uhbooba.userservice.exception.DuplicateUserException;
@@ -58,16 +58,12 @@ public class UserService {
 
     }
 
-    public void updateUser(UpdateUserRequest request) {
+    public void updatePasswordUser(UpdatePasswordRequest request) {
 
         getUserByPhone(request.phone());
 
-        if (!Boolean.TRUE.equals(request.isLoginFirst())) {
-            userRepository.updatePasswordByPhone(request.phone(),
-                bCryptPasswordEncoder.encode(request.password()));
-        } else {
-            userRepository.updateFirstLoginByPhone(request.phone(), false);
-        }
+        userRepository.updatePasswordByPhone(request.phone(),
+            bCryptPasswordEncoder.encode(request.password()));
     }
 
 }

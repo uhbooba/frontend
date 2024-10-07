@@ -34,7 +34,7 @@ public class MissionController {
     public CommonResponse<?> getClearedMissionCount(@RequestHeader("access") String access) {
 
         String username = jwtUtil.getUsername(access);
-        List<MissionStatusResponse> response = missionService.getClearedMissionCount(username);
+        List<MissionStatusResponse> response = missionService.getClearedMissionStatus(username);
         return CommonResponse.ok("미션 진행 단계 조회 성공", response);
     }
 
