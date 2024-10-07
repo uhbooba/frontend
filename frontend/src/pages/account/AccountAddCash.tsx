@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import { postUserFreeAccountAddCash } from '@/services/account';
 
 const AddCash = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { accountNo } = location.state || {};
 
   const [selectedButton, setSelectedButton] = useState<number | null>(null);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -17,7 +20,7 @@ const AddCash = () => {
   };
 
   const handleNextStep = (
-    accountNo: string = '1',
+    accountNo: string,
     transactionBalance: number,
     transactionSummary: string,
   ) => {
@@ -35,7 +38,9 @@ const AddCash = () => {
       };
       addCash();
       const route = '/account/check';
-      navigate(route);
+      setTimeout(() => {
+        navigate(route);
+      }, 100);
     }
   };
 
@@ -94,8 +99,9 @@ const AddCash = () => {
       <div className='mt-[6vh] flex justify-center p-4'>
         <Button
           label='입금 하기'
-          // 임시 accountNo 하드 코딩
-          onClick={() => handleNextStep('1', selectedAmount!, '싸피 은행')}
+          onClick={() =>
+            handleNextStep(accountNo, selectedAmount!, '싸피 은행')
+          }
           className='w-full max-w-[calc(100%-60px)]'
           disabled={selectedButton === null}
         />
