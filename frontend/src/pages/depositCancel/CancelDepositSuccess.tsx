@@ -2,9 +2,48 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { deleteDepositAccount } from '@/services/deposit';
+import { useAtomValue, useSetAtom } from 'jotai';
+import {
+  depositAccountAtom,
+  selectedAccountAtom,
+} from '@/atoms/deposit/depositDataAtoms';
+import { setMissionClearStatus } from '@/services/mission';
 
 const CancelDepositSuccess = () => {
   const navigate = useNavigate();
+  const setDepositAccount = useSetAtom(depositAccountAtom);
+  const selectedAccount = useAtomValue(selectedAccountAtom);
+
+  useEffect(() => {
+    const deleteAccount = async () => {
+      try {
+        if (selectedAccount) {
+          await deleteDepositAccount(selectedAccount.accountNo); // 선택된 계좌 삭제
+          setDepositAccount(null);
+        }
+      } catch (error) {
+        console.error('getUserDepositAccounts 에러', error);
+      }
+    };
+
+    deleteAccount();
+  }, [setDepositAccount, selectedAccount]);
+
+  useEffect(() => {
+    const clearMission = async () => {
+      try {
+        await setMissionClearStatus(5);
+        // const missionResponse = await setMissionClearStatus(5);
+        // console.log('미션 클리어 확인용', missionResponse);
+      } catch (error) {
+        console.error('setMissionClearStatus 에러', error);
+      }
+    };
+
+    clearMission();
+  }, [selectedAccount]);
 
   const GoNext = () => {
     navigate('/');

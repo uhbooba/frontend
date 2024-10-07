@@ -9,12 +9,12 @@ import TopBar from '@/components/layouts/TopBar';
 import { accountNoAtom } from '@/atoms/exchangeAtoms';
 import AccountSelection from '@/components/common/AccountSelection';
 import { getUserFreeAccount } from '@/services/account';
-import { AccountDetail } from '@/types/deposit';
+import { DepositAccountDetail } from '@/types/deposit';
 
 const ExchangeAccount = () => {
   const navigate = useNavigate();
   const [selectAccount, setSelectAccount] = useAtom(accountNoAtom);
-  const [account, setAccount] = useState<AccountDetail>();
+  const [account, setAccount] = useState<DepositAccountDetail>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {

@@ -71,8 +71,8 @@ const DepositMoney = () => {
 
   // 얼마로 시작할까요? 버튼 클릭 함수
   const amountClick = (index: number, amount: string) => {
-    setAmountBtnColor(amount);
     console.log(index);
+    setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
       setSelectMoney(formatMoney(amount.replace('원', '')));
@@ -110,7 +110,7 @@ const DepositMoney = () => {
   ];
 
   // 기간 버튼 내용값
-  const periods = ['6개월', '12개월', '24개월', '36개월'];
+  const periods = ['3개월', '6개월', '12개월'];
 
   // 금액과 기간 선택 시 만기일 업데이트
   useEffect(() => {

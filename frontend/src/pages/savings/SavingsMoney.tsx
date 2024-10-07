@@ -49,7 +49,7 @@ const SavingsMoney = () => {
   const GoNext = () => {
     // 금액과 기간 선택 여부 확인
     if (!selectMoney || !selectPeriod) {
-      setIsModalOpen(true); // 금애기간 전부 고르지 않으면 모달 뜨게하기
+      setIsModalOpen(true); // 금액기간 전부 고르지 않으면 모달 뜨게하기
       console.log(selectPeriod);
     } else {
       navigate('/savings/account');
@@ -63,8 +63,8 @@ const SavingsMoney = () => {
 
   // 얼마씩 적금할까요? 버튼 클릭 함수
   const amountClick = (index: number, amount: string) => {
-    setAmountBtnColor(amount);
     console.log(index);
+    setAmountBtnColor(amount);
 
     if (amount !== '직접입력') {
       setSelectMoney(formatMoney(amount.replace('원', '')));
@@ -102,7 +102,7 @@ const SavingsMoney = () => {
   ];
 
   // 기간 버튼 내용값
-  const periods = ['6개월', '12개월', '24개월', '36개월'];
+  const periods = ['3개월', '6개월', '12개월'];
 
   // 나의 만기일 계산 함수
   const calculateMaturityDate = (months: string) => {

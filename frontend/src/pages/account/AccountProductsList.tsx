@@ -4,6 +4,7 @@ import AccountProduct from '@/components/common/AccountProduct';
 import { useSetAtom } from 'jotai';
 import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
+import { postUserFreeAccount } from '@/services/account';
 
 interface ProductItem {
   name: string;
@@ -19,7 +20,7 @@ const AccountProductsList = () => {
     {
       name: '자유입출금 통장',
       description: '돈을 자유롭게 입금하고 출금해요.',
-      moveTo: '',
+      moveTo: '/account/check',
     },
     {
       name: '정기 예금',
@@ -34,6 +35,17 @@ const AccountProductsList = () => {
   ];
 
   const handleProductClick = (product: ProductItem) => {
+    if (product.name === '자유입출금 통장') {
+      const createDemandDeposit = () => {
+        try {
+          postUserFreeAccount();
+        } catch (error) {
+          console.error('Error fetching answer:', error);
+        }
+      };
+      createDemandDeposit();
+      navigate(product.moveTo);
+    }
     setSelectedKeyword(
       product.name.includes('예금') ? '예금 상품' : '적금 상품',
       // 클릭한거에 예금이 있으면 예금상품 버튼을 보여주고, 아니면 적금상품 버튼을 보여줌

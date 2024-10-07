@@ -4,13 +4,34 @@ import { axiosInstance } from '@/utils/axiosInstance';
 export const getUserFreeAccount = async () => {
   const response = await axiosInstance(
     '/finances/demand-deposits/accounts/detail',
+  );
+  return response;
+};
+
+// 입출금 계좌 거래 내역 조회
+export const getUserFreeAccountTransactions = () => {
+  const response = axiosInstance('/finances/transactions');
+  return response;
+};
+
+// 입출금 계좌 입금
+export const postUserFreeAccountAddCash = async (
+  accountNo: string,
+  transactionBalance: number,
+  transactionSummary: string,
+) => {
+  const response = await axiosInstance.post(
+    '/finances/demand-deposits/accounts/deposit',
     {
-      headers: {
-        access:
-          // 유효기간 10월 3일 24시까지
-          'eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJ0ZXN0IiwibmFtZSI6IuydtO2VmOyjvSIsImlhdCI6MTcyNzk1NDk2NSwiZXhwIjoxNzI3OTY5MzY1fQ.uCzzlS41Hs57gSLIxeCnHRnqs6nKobzVep-4U6y2VBc',
-      },
+      accountNo,
+      transactionBalance,
+      transactionSummary,
     },
   );
   return response;
+};
+
+// 입출금 계좌 입금
+export const postUserFreeAccount = async () => {
+  await axiosInstance.post('/finances/demand-deposits/accounts');
 };

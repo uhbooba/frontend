@@ -25,10 +25,6 @@ const SavingsSignup = () => {
   });
 
   useEffect(() => {
-    console.log("사인업페이지에서 체크 잘 기억하나 확인용ㅌ", check);
-  }, [check]);
-
-  useEffect(() => {
     return () => {
       setName('');
       setIdNumber('');

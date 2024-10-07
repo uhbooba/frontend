@@ -4,71 +4,73 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import BigModal from '@/components/modals/BigModal';
 import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import {
-  selectAccountAtom,
-  selectMoneyAtom,
-  selectPeriodAtom,
+  selectedSavingsAccountAtom,
   selectedSavingsProductAtom,
-  maturityDateAtom,
 } from '@/atoms/savings/savingsDataAtoms';
 import TopBar from '@/components/layouts/TopBar';
-import {
-  getUserSavingsAccounts,
-  getEarlyTerminationInterest,
-} from '@/services/saving';
-import { CancelProductData } from '@/types/saving';
-import { savingCalculateInterest } from '@/utils/savingCalculateInterest';
-import {
-  calculatePaymentMonths,
-  calculatePaidAmount,
-} from '@/utils/paymentCalculate';
+import { getEarlyTerminationInterest } from '@/services/saving';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectAccount] = useAtom(selectAccountAtom);
-  const [selectMoney] = useAtom(selectMoneyAtom);
-  const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [productData, setProductData] = useState<CancelProductData | null>(
-    null,
-  );
-  const [selectedProduct] = useAtom(selectedSavingsProductAtom);
-  const [maturityDate] = useAtom(maturityDateAtom);
+  const [loading, setLoading] = useState(true);
+
+  //   // 사용자가 해지하려고 선택한 계좌정보 가져오기
+  const selectedSavingsAccount = useAtomValue(selectedSavingsAccountAtom);
+  const selectedProduct = useAtomValue(selectedSavingsProductAtom);
+
+  // api 데이터 상태관리하기
+  const [accountName, setAccountName] = useState('');
+  const [accountNo, setAccountNo] = useState('');
+  const [depositBalance, setDepositBalance] = useState(0);
+  const [earlyTerminationInterest, setEarlyTerminationInterest] = useState<
+    number | null
+  >(null);
+  const [earlyTerminationBalance, setEarlyTerminationBalance] = useState<
+    number | null
+  >(null);
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState('');
 
   useEffect(() => {
-    setIsModalOpen(false);
+    // 선택된 계좌 정보가 있을 때만 상태 설정
+    if (selectedSavingsAccount) {
+      setAccountName(selectedSavingsAccount.accountName);
+      setAccountNo(selectedSavingsAccount.accountNo);
+      setDepositBalance(parseInt(selectedSavingsAccount.depositBalance, 10));
+      setSubscriptionPeriod(selectedSavingsAccount.subscriptionPeriod);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [selectedSavingsAccount]);
 
-    const fetchProductDetails = async () => {
-      try {
-        if (selectAccount) {
-          const response = await getUserSavingsAccounts(selectAccount);
-          if (response?.data?.result?.length > 0) {
-            const account = response.data.result[0];
-            // 중도해지 이자율 부르는 api
-            const earlyTerminationResponse = await getEarlyTerminationInterest(
-              selectAccount,
-              account.accountNo,
-            );
+  useEffect(() => {
+    if (accountNo) {
+      // 중도 해지 시 이자 조회
+      const fetchEarlyTerminationInterest = async () => {
+        try {
+          const response = await getEarlyTerminationInterest(accountNo);
+          // console.log('적금 중도 해지 이자 확인', response.data);
 
-            setProductData({
-              accountName: account.accountName,
-              accountNo: account.accountNo,
-              interestRate: account.interestRate,
-              earlyTerminationInterestRate:
-                earlyTerminationResponse.data.result.earlyTerminationInterest,
-            });
-          } else {
-            console.error('해당 계좌의 적금 상품 정보를 가져올 수 없습니다.');
-          }
+          const result = response.data.result;
+          setEarlyTerminationInterest(
+            parseFloat(result.earlyTerminationInterest),
+          );
+          setEarlyTerminationBalance(
+            parseInt(result.earlyTerminationBalance, 10),
+          );
+        } catch (error) {
+          console.error('getEarlyTerminationInterest 에러', error);
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        console.error('적금 계좌 정보 가져오는 중 에러 발생:', error);
-      }
-    };
+      };
 
-    fetchProductDetails();
-  }, [selectAccount]);
+      fetchEarlyTerminationInterest();
+    }
+  }, [accountNo]);
 
   const GoBack = () => {
     navigate(-1);
@@ -86,15 +88,9 @@ const CancelSavingsProduct = () => {
     setIsModalOpen(false);
   };
 
-  const paymentMonths = calculatePaymentMonths(maturityDate, selectPeriod);
-
-  const paidAmount = calculatePaidAmount(paymentMonths, selectMoney);
-
-  const { interest, totalAmount } = savingCalculateInterest(
-    selectMoney,
-    selectedProduct!.earlyInterestRate,
-    String(paymentMonths),
-  );
+  if (loading) {
+    return <p>로딩 중...</p>;
+  }
 
   return (
     <div>
@@ -111,8 +107,7 @@ const CancelSavingsProduct = () => {
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>
-              {/* {productData ? productData.accountName : '상품명 정보 없음'} */}
-              {selectedProduct ? selectedProduct.name : '상품명 정보 없음'}
+              {accountName || '상품명 정보 없음'}
             </span>
           </div>
         </div>
@@ -120,41 +115,25 @@ const CancelSavingsProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
           <div className='mt-2 text-xl font-bold'>
-            {productData ? productData.accountNo : '계좌번호 정보 없음'}
+            {accountNo || '계좌번호 정보 없음'}
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <div className='grid grid-cols-3 text-start'>
+          <div className='grid grid-cols-2 text-start'>
             <div>
-              <span className='text-2xl text-gray-500'>이자율</span>
+              <span className='text-2xl text-gray-500'>가입 금액</span>
               <div className='mt-2 text-xl font-bold'>
-                {/* {productData ? productData.interestRate : '정보 없음'} */}
-                {selectedProduct
-                  ? `${selectedProduct.interestRate}%`
-                  : '이자 정보 없음'}
+                {depositBalance
+                  ? `${depositBalance.toLocaleString()} 원`
+                  : '없음'}
               </div>
             </div>
             <div>
-              <span className='text-2xl text-gray-500'>월 납입액</span>
-              <div className='mt-2 text-xl font-bold'>{selectMoney}원</div>
-            </div>
-            <div>
               <span className='ml-3 text-2xl text-gray-500'>약정 기간</span>
-              <div className='ml-7 mt-2 text-xl font-bold'>{selectPeriod}</div>
-            </div>
-          </div>
-        </div>
-
-        <div className='border-b border-gray-300 py-4'>
-          <div className='flex space-x-20'>
-            <div>
-              <span className='text-2xl text-gray-500'>납입 금액</span>
-              <div className='mt-2 text-xl font-bold'>{paidAmount} 원</div>
-            </div>
-            <div className=''>
-              <span className='text-2xl text-gray-500'>납입 개월</span>
-              <div className='mt-2 text-xl font-bold'>{paymentMonths}개월</div>
+              <div className='ml-7 mt-2 text-xl font-bold'>
+                {subscriptionPeriod ? `${subscriptionPeriod} 일` : '없음'}
+              </div>
             </div>
           </div>
         </div>
@@ -164,18 +143,17 @@ const CancelSavingsProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>중도해지 이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {/* {productData
-                  ? productData.earlyTerminationInterestRate
-                  : '정보 없음'} */}
                 {selectedProduct
                   ? `${selectedProduct.earlyInterestRate} %`
                   : '없음'}
               </div>
             </div>
             <div className='ml-12 text-left'>
-              <span className='text-2xl text-gray-500'>이자 금액</span>
+              <span className='text-2xl text-gray-500'>받을 이자 금액</span>
               <div className='mt-2 text-xl font-bold'>
-                {interest.toLocaleString()}원
+                {earlyTerminationInterest !== null
+                  ? `${earlyTerminationInterest.toLocaleString()} 원`
+                  : '없음'}
               </div>
             </div>
           </div>
@@ -184,7 +162,9 @@ const CancelSavingsProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>받을 금액</span>
           <div className='mt-2 text-xl font-bold'>
-            {totalAmount.toLocaleString()}원
+            {earlyTerminationBalance !== null
+              ? `${earlyTerminationBalance.toLocaleString()} 원`
+              : '없음'}
           </div>
         </div>
 
