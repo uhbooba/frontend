@@ -9,6 +9,7 @@ import {
   selectedKeywordAtom,
 } from '@/atoms/deposit/depositDataAtoms';
 import { selectedSavingsProductAtom } from '@/atoms/savings/savingsDataAtoms';
+import { getMissionClearStatus } from '@/services/mission';
 
 const AccountDepositProducts = () => {
   const [selectedKeyword, setSelectedKeyword] = useAtom(selectedKeywordAtom);
@@ -26,8 +27,8 @@ const AccountDepositProducts = () => {
     {
       name: '정기예금 1번 상품',
       interestRate: 7,
-      minimumAmmount: 100000,
-      minimumPeriod: 6,
+      minimumAmount: 100000,
+      minimumPeriod: 3,
       moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
       earlyInterestRate: 1,
@@ -35,8 +36,8 @@ const AccountDepositProducts = () => {
     {
       name: '정기예금 2번 상품',
       interestRate: 10,
-      minimumAmmount: 500000,
-      minimumPeriod: 12,
+      minimumAmount: 500000,
+      minimumPeriod: 6,
       moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
       earlyInterestRate: 2,
@@ -44,8 +45,8 @@ const AccountDepositProducts = () => {
     {
       name: '정기예금 3번 상품',
       interestRate: 12,
-      minimumAmmount: 1000000,
-      minimumPeriod: 24,
+      minimumAmount: 1000000,
+      minimumPeriod: 12,
       moveTo: '/deposit/explain',
       selectedProduct: '예금 상품',
       earlyInterestRate: 3,
@@ -55,8 +56,8 @@ const AccountDepositProducts = () => {
     {
       name: '정기적금 1번 상품',
       interestRate: 5,
-      minimumAmmount: 10000,
-      minimumPeriod: 6,
+      minimumAmount: 10000,
+      minimumPeriod: 3,
       moveTo: '/savings/mission',
       selectedProduct: '적금 상품',
       earlyInterestRate: 1,
@@ -64,8 +65,8 @@ const AccountDepositProducts = () => {
     {
       name: '정기적금 2번 상품',
       interestRate: 7,
-      minimumAmmount: 100000,
-      minimumPeriod: 12,
+      minimumAmount: 100000,
+      minimumPeriod: 6,
       moveTo: '/savings/mission',
       selectedProduct: '적금 상품',
       earlyInterestRate: 2,
@@ -73,18 +74,18 @@ const AccountDepositProducts = () => {
     {
       name: '정기적금 3번 상품',
       interestRate: 10,
-      minimumAmmount: 500000,
-      minimumPeriod: 24,
+      minimumAmount: 500000,
+      minimumPeriod: 12,
       moveTo: '/savings/mission',
       selectedProduct: '적금 상품',
       earlyInterestRate: 3,
     },
   ];
 
-  const handleProductClick = (product: {
+  const handleProductClick = async (product: {
     name: string;
     interestRate: number;
-    minimumAmmount: number;
+    minimumAmount: number;
     moveTo: string;
     selectedProduct: string;
     earlyInterestRate: number;
@@ -93,19 +94,33 @@ const AccountDepositProducts = () => {
       setSelectedDepositProduct({
         name: product.name,
         interestRate: product.interestRate,
-        minimumAmount: product.minimumAmmount,
+        minimumAmount: product.minimumAmount,
         earlyInterestRate: product.earlyInterestRate,
       });
-    } else {
-      setSelectedSavingsProduct({
-        name: product.name,
-        interestRate: product.interestRate,
-        minimumAmount: product.minimumAmmount,
-        earlyInterestRate: product.earlyInterestRate,
-      });
-    }
 
-    navigate(product.moveTo);
+      navigate(product.moveTo);
+    } else {
+      try {
+        const response = await getMissionClearStatus(4); // 적금 가입은 4단계 미션
+
+        setSelectedSavingsProduct({
+          name: product.name,
+          interestRate: product.interestRate,
+          minimumAmount: product.minimumAmount,
+          earlyInterestRate: product.earlyInterestRate,
+        });
+
+        if (response?.result === true) {
+          // 4단계 미션 클리어했으면 바로 적금가입 페이지로 이동
+          navigate('/savings');
+        } else {
+          // 4단계 미션 클리어 안했으면 미션 페이지로 이동
+          navigate(product.moveTo);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -128,7 +143,7 @@ const AccountDepositProducts = () => {
                 key={index}
                 name={product.name}
                 interestRate={product.interestRate}
-                minimumAmount={product.minimumAmmount}
+                minimumAmount={product.minimumAmount}
                 minimumPeriod={product.minimumPeriod}
                 moveTo={product.moveTo}
                 selectedProduct={product.selectedProduct}
@@ -143,7 +158,7 @@ const AccountDepositProducts = () => {
                 key={index}
                 name={product.name}
                 interestRate={product.interestRate}
-                minimumAmount={product.minimumAmmount}
+                minimumAmount={product.minimumAmount}
                 minimumPeriod={product.minimumPeriod}
                 moveTo={product.moveTo}
                 selectedProduct={product.selectedProduct}
@@ -161,7 +176,6 @@ const AccountDepositProducts = () => {
                     moveTo={product.moveTo}
                 />                
             ))} */}
-        ={' '}
       </div>
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />

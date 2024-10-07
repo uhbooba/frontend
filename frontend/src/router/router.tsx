@@ -15,8 +15,8 @@ const DepositProduct = lazy(() => import('@/pages/deposit/DepositProduct'));
 const DepositAccount = lazy(() => import('@/pages/deposit/DepositAccount'));
 const DepositPassword = lazy(() => import('@/pages/deposit/DepositPassword'));
 const DepositSuccess = lazy(() => import('@/pages/deposit/DepositSuccess'));
-const DepositSuccessMission = lazy(
-  () => import('@/pages/deposit/DepositSuccessMission'),
+const CancelDepositMission = lazy(
+  () => import('@/pages/depositCancel/CancelDepositMission'),
 );
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Signup = lazy(() => import('@/pages/auth/Signup'));
@@ -53,6 +53,9 @@ const SavingsSignup = lazy(() => import('@/pages/savings/SavingsSignup'));
 const SavingsProduct = lazy(() => import('@/pages/savings/SavingsProduct'));
 const SavingsPassword = lazy(() => import('@/pages/savings/SavingsPassword'));
 const SavingsSuccess = lazy(() => import('@/pages/savings/SavingsSuccess'));
+const SavingsSuccessMission = lazy(
+  () => import('@/pages/savings/SavingsSuccessMission'),
+);
 const EducationVideo = lazy(
   () => import('@/pages/education/video/EducationVideoHard'),
 );
@@ -131,6 +134,9 @@ const AccountTransferSuccess = lazy(
   () => import('@/pages/account/AccountTransferSuccess'),
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
+const AccountDepositList = lazy(
+  () => import('@/pages/account/AccountDepositList'),
+);
 
 const SmishingAgree = lazy(
   () => import('@/pages/smishingPrevention/SmishingAgree'),
@@ -167,7 +173,6 @@ const router = createBrowserRouter([
       { path: 'deposit/product', element: <DepositProduct /> },
       { path: 'deposit/password', element: <DepositPassword /> },
       { path: 'deposit/success', element: <DepositSuccess /> },
-      { path: 'deposit/success2', element: <DepositSuccessMission /> },
       // 적금
       { path: 'savings', element: <SavingsExplain /> },
       { path: 'savings/mission', element: <SavingsMission /> },
@@ -178,11 +183,16 @@ const router = createBrowserRouter([
       { path: 'savings/product', element: <SavingsProduct /> },
       { path: 'savings/password', element: <SavingsPassword /> },
       { path: 'savings/success', element: <SavingsSuccess /> },
+      { path: 'savings/success/mission', element: <SavingsSuccessMission /> },
       // 예금 중도해지
       { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
       { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
       { path: 'cancel/deposit/password', element: <CancelDepositPassword /> },
       { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
+      {
+        path: 'cancel/deposit/mission',
+        element: <CancelDepositMission />,
+      },
       // 적금 중도해지
       { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
       { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
@@ -218,6 +228,7 @@ const router = createBrowserRouter([
       { path: 'utility/success', element: <UtilityPaySuccess /> },
       // 계좌 조회
       { path: 'account/list', element: <AccountList /> },
+      { path: 'account/deposit/list', element: <AccountDepositList /> },
       { path: 'account/check', element: <AccountCheck /> },
       { path: 'account/add-cash', element: <AccountAddCash /> },
       // 계좌 생성
