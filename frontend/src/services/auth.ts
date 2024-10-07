@@ -46,13 +46,9 @@ export const checkPassword = async (id: number, password: string) => {
 };
 
 // 토큰으로 유저 정보 조회
-export const getUserInfo = async (accessToken: string) => {
-  const response = await axiosInstance.get('/users', {
-    headers: {
-      access: accessToken,
-    },
-  });
-  return response.data; // 서버의 응답 데이터 반환
+export const getUserInfo = async () => {
+  const response = await axiosInstance.get('/users', {});
+  return response.data;
 };
 
 // sms 전송
