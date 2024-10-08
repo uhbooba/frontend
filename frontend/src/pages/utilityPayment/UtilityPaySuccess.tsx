@@ -3,16 +3,35 @@ import TextBubble from '@/components/common/TextBubble';
 import TopBar from '@/components/layouts/TopBar';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
+import { utilityMissionAtom } from '@/atoms/utilityAtoms';
+import { setMissionClearStatus } from '@/services/mission';
 
 const UtilityPaySuccess = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const isMission = useAtomValue(utilityMissionAtom);
 
+  // 공과금 미션 확인
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSuccessModalOpen(true);
-    }, 1000); // 1초 뒤 미션성공 뜨도록(미션 성공한 사람의 경우만 뜨도록 추후 수정)
+    const fetchExchangeMission = async () => {
+      try {
+        const response = await setMissionClearStatus(5);
 
-    return () => clearTimeout(timer);
+        if (response?.statusCode === 200) {
+          const timer = setTimeout(() => {
+            setIsSuccessModalOpen(true);
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (isMission) {
+      fetchExchangeMission();
+    }
   }, []);
 
   return (

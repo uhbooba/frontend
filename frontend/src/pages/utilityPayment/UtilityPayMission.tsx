@@ -1,10 +1,20 @@
-import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
+import { utilityMissionAtom } from '@/atoms/utilityAtoms';
+import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const UtilityPayMission = () => {
   const navigate = useNavigate();
+  const setIsMission = useSetAtom(utilityMissionAtom);
+
+  useEffect(() => {
+    // 페이지에 들어오면 미션 상태 true
+    setIsMission(true);
+  }, []);
 
   const GoExplain = () => {
     navigate('/utility/explain');
@@ -12,15 +22,13 @@ const UtilityPayMission = () => {
 
   return (
     <div className='min-h-screen bg-yellow-100'>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='환전' />
-      </div>
-      <div className='relative mt-8 flex flex-col items-center'>
+      <TopBar title='공과금 납부' />
+      <MainWrapper className='flex flex-col items-center justify-center'>
         <TextBubble
           bubbleSize='w-11/12'
           content={
             <>
-              <p className='text-4xl font-bold'>7단계 미션</p> <br />
+              <p className='text-4xl font-bold'>6단계 미션</p> <br />
               <p className='text-2xl'>
                 이수자 할아버지는 <br />
                 이번 달 전기 요금을 <br />
@@ -52,7 +60,7 @@ const UtilityPayMission = () => {
             className='mt-4 h-56 w-56'
           />
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };
