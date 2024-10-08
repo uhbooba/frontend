@@ -37,6 +37,34 @@ app.include_router(smishing_controller.router)
 def read_root():
     return {"Hello": "World"}
 
+######################################################################################
+# Prometheus 메트릭 설정
+REQUEST_COUNT = Counter('http_requests_total', 'Total number of HTTP requests', ['method', 'endpoint'])
+REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'Histogram for the duration in seconds', ['method', 'endpoint'])
+IN_PROGRESS = Gauge('http_inprogress_requests', 'Number of in progress HTTP requests')
+
+# 요청 타이머 데코레이터
+@app.middleware("http")
+async def add_prometheus_metrics(request, call_next):
+    method = request.method
+    endpoint = request.url.path
+
+    REQUEST_COUNT.labels(method=method, endpoint=endpoint).inc()  # 요청 카운터 증가
+    start_time = time.time()  # 요청 시작 시간
+
+    IN_PROGRESS.inc()  # 진행 중인 요청 증가
+    response = await call_next(request)  # 요청 처리
+    IN_PROGRESS.dec()  # 진행 중인 요청 감소
+
+    latency = time.time() - start_time  # 요청 처리 시간 계산
+    REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(latency)
+
+    return response
+
+# Prometheus /metrics 엔드포인트
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 #####################################################################################c
 @app.on_event("startup")
