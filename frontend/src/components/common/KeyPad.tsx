@@ -13,7 +13,7 @@ const Keypad: React.FC<KeypadProps> = ({
   onConfirmClick,
 }) => {
   return (
-    <div className='fixed bottom-0 z-50 w-full rounded-t-lg bg-white p-4'>
+    <div className='fixed bottom-0 z-50 w-full max-w-[430px] rounded-t-lg bg-white p-4'>
       <div className='flex justify-end'>
         <button
           className='mb-2 text-2xl font-bold text-gray-600'
