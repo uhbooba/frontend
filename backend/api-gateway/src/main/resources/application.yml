@@ -119,3 +119,10 @@ management:
     export:
       prometheus:
         enabled: true
+
+logging:
+  level:
+    org.springframework.web: "info"
+    org.hibernate: "info"
+  file:
+    name: /logs/api-gateway/application.log
