@@ -1,10 +1,15 @@
 import { axiosInstance } from '@/utils/axiosInstance';
 
 // 로그인
-export const postLogin = async (username: string, password: string) => {
+export const postLogin = async (
+  username: string,
+  password: string,
+  fcmToken: String,
+) => {
   const bodyData = {
     username,
     password,
+    fcmToken,
   };
 
   const response = await axiosInstance.post('/user-service/login', bodyData);

@@ -15,16 +15,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [keyOpen, setKeyOpen] = useState(false);
 
-  const handleNotification = async () => {
-    try {
-      const response = await requestNotificationPermission();
-      console.log('알림 권한 요청 응답:', response);
-    } catch (error) {
-      console.error('알림 권한 요청 중 오류 발생:', error);
-    }
-  };
-
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setErrorMessage('');
 
     if (userId.trim() === '' || password.trim() === '') {
@@ -32,12 +23,20 @@ const Login = () => {
       return;
     }
 
-    fetchLogin();
+    try {
+      const fcmToken = await requestNotificationPermission();
+
+      if (fcmToken) {
+        await fetchLogin(fcmToken);
+      }
+    } catch (error) {
+      console.error('로그인 중 오류 발생:', error);
+    }
   };
 
-  const fetchLogin = async () => {
+  const fetchLogin = async (fcmToken: string) => {
     try {
-      const response = await postLogin(userId, password);
+      const response = await postLogin(userId, password, fcmToken);
 
       const token = response?.headers['access'];
       localStorage.setItem('ACCESS_TOKEN', token);
@@ -78,7 +77,6 @@ const Login = () => {
           <div className='mt-3 flex flex-col justify-center'>
             <Button label='로그인' className='mb-3' onClick={handleLogin} />
             <Button label='회원가입' onClick={() => navigate('/signup')} />
-            <Button label='알람테스트' onClick={handleNotification} />
           </div>
         </div>
         {keyOpen && (
