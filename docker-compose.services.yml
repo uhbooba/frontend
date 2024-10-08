@@ -67,9 +67,12 @@ services:
     restart: on-failure
     volumes:
       - /logs:/logs
+      - ./backend/external-service/app:/code/app
     depends_on:
-      eureka-server:
-        condition: service_started
+      - eureka-server
+    working_dir: /code
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8083 --reload
+
 
   api-gateway:
     container_name: api-gateway

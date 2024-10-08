@@ -12,3 +12,4 @@ jsonpickle
 
 requests
 python-dotenv
+prometheus_client
