@@ -125,4 +125,4 @@ logging:
     org.springframework.web: "info"
     org.hibernate: "info"
   file:
-    name: logs/api-gateway/application.log
+    name: /logs/api-gateway/application.log
