@@ -3,6 +3,8 @@ interface QuizModalProps {
   isCorrect: boolean;
   onNext?: () => void;
   onRetry?: () => void;
+  retryText?: string;
+  nextText?: string;
 }
 
 const QuizModal: React.FC<QuizModalProps> = ({
@@ -10,6 +12,8 @@ const QuizModal: React.FC<QuizModalProps> = ({
   isCorrect,
   onNext,
   onRetry,
+  retryText = '다시 풀기',
+  nextText = '다음 문제',
 }) => {
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
@@ -64,7 +68,7 @@ const QuizModal: React.FC<QuizModalProps> = ({
             onClick={isCorrect ? onNext : onRetry}
             type='button'
           >
-            {isCorrect ? '다음 문제' : '다시 풀기'}
+            {isCorrect ? nextText : retryText}
           </button>
         </div>
       </div>

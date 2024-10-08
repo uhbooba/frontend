@@ -4,32 +4,63 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import BigModal from '@/components/modals/BigModal';
 import { useEffect, useState } from 'react';
-import {
-  selectMoneyAtom,
-  selectPeriodAtom,
-  selectedDepositProductAtom,
-  depositAccountAtom,
-} from '@/atoms/deposit/depositDataAtoms';
-import { useAtom } from 'jotai';
 import TopBar from '@/components/layouts/TopBar';
-import { depositCalculateInterest } from '@/utils/depositCalculateInterest';
+import { getEarlyTerminationInterest } from '@/services/deposit';
+import { useAtomValue } from 'jotai';
+import { selectedAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 
 const CancelDepositProduct = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectMoney] = useAtom(selectMoneyAtom);
-  const [selectPeriod] = useAtom(selectPeriodAtom);
-  const [selectedProduct] = useAtom(selectedDepositProductAtom);
-  const [depositAccount] = useAtom(depositAccountAtom);
+  const [loading, setLoading] = useState(true);
+
+  const selectedAccount = useAtomValue(selectedAccountAtom);
+  const [accountName, setAccountName] = useState('');
+  const [accountNo, setAccountNo] = useState('');
+  const [depositBalance, setDepositBalance] = useState(0);
+  const [interestRate, setInterestRate] = useState<number | null>(null);
+  const [earlyTerminationBalance, setEarlyTerminationBalance] = useState<
+    number | null
+  >(null);
+  const [earlyTerminationInterest, setEarlyTerminationInterest] = useState<
+    number | null
+  >(null);
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState('');
 
   useEffect(() => {
-    setIsModalOpen(false);
-  }, [depositAccount]);
+    if (selectedAccount) {
+      setAccountName(selectedAccount.accountName);
+      setAccountNo(selectedAccount.accountNo);
+      setDepositBalance(parseInt(selectedAccount.depositBalance, 10));
+      setSubscriptionPeriod(selectedAccount.subscriptionPeriod);
+    }
+  }, [selectedAccount]);
 
-  const { interest, totalAmount } = depositCalculateInterest(
-    selectMoney,
-    selectedProduct!.earlyInterestRate,
-  );
+  useEffect(() => {
+    if (accountNo) {
+      const fetchEarlyTerminationInterest = async () => {
+        try {
+          const response = await getEarlyTerminationInterest(accountNo);
+          console.log(response.data);
+
+          const result = response.data.result;
+          setInterestRate(parseFloat(result.interestRate));
+          setEarlyTerminationInterest(
+            parseFloat(result.earlyTerminationInterest),
+          );
+          setEarlyTerminationBalance(
+            parseInt(result.earlyTerminationBalance, 10),
+          );
+        } catch (error) {
+          console.error('getEarlyTerminationInterest 에러', error);
+        }
+      };
+
+      fetchEarlyTerminationInterest();
+    } else {
+      setLoading(false);
+    }
+  }, [accountNo]);
 
   const GoBack = () => {
     navigate(-1);
@@ -47,6 +78,10 @@ const CancelDepositProduct = () => {
     setIsModalOpen(false);
   };
 
+  if (loading) {
+    return <p>로딩 중...</p>;
+  }
+
   return (
     <div>
       <div className='fixed left-0 top-0 w-full'>
@@ -61,9 +96,7 @@ const CancelDepositProduct = () => {
           <span className='text-gray-500'>상품명</span>
           <div className='mt-2 flex items-center justify-between'>
             <span className='text-xl font-bold'>
-              {selectedProduct
-                ? selectedProduct.name
-                : '아직 상품명 정보가 없음'}
+              {accountName || '아직 상품명 정보가 없음'}
             </span>
           </div>
         </div>
@@ -71,32 +104,24 @@ const CancelDepositProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>계좌번호</span>
           <div className='mt-2 text-xl font-bold'>
-            {depositAccount
-              ? depositAccount.accountNo
-              : '아직 생성된 예금 계좌 정보가 없음'}
+            {accountNo || '아직 생성된 예금 계좌 정보가 없음'}
           </div>
         </div>
 
         <div className='border-b border-gray-300 py-4'>
-          <div className='grid grid-cols-3 text-start'>
+          <div className='grid grid-cols-2 text-start'>
             <div>
-              <span className='text-2xl text-gray-500'>연 이자율</span>
-              <div className='mt-2 text-xl font-bold'>
-                {selectedProduct
-                  ? `${selectedProduct.interestRate} %`
-                  : '아직 없음'}
-              </div>
-            </div>
-            <div className=''>
               <span className='text-2xl text-gray-500'>가입 금액</span>
               <div className='mt-2 w-40 text-xl font-bold'>
-                {selectMoney ? `${selectMoney} 원` : '아직 없음'}
+                {depositBalance
+                  ? `${depositBalance.toLocaleString()} 원`
+                  : '아직 없음'}
               </div>
             </div>
             <div>
               <span className='ml-5 text-2xl text-gray-500'>약정 기간</span>
               <div className='ml-5 mt-2 text-xl font-bold'>
-                {selectPeriod ? `${selectPeriod}` : '아직 없음'}
+                {subscriptionPeriod} 일
               </div>
             </div>
           </div>
@@ -107,15 +132,15 @@ const CancelDepositProduct = () => {
             <div>
               <span className='text-2xl text-gray-500'>중도해지 이자율</span>
               <div className='mt-2 text-xl font-bold'>
-                {selectedProduct
-                  ? `${selectedProduct.earlyInterestRate} %`
-                  : '없음'}
+                {interestRate !== null ? `${interestRate} %` : '없음'}
               </div>
             </div>
             <div className='ml-12 text-left'>
               <span className='text-2xl text-gray-500'>받을 이자 금액</span>
               <div className='mt-2 text-xl font-bold'>
-                {interest.toLocaleString()} 원
+                {earlyTerminationInterest !== null
+                  ? `${earlyTerminationInterest.toLocaleString()} 원`
+                  : '없음'}
               </div>
             </div>
           </div>
@@ -123,7 +148,9 @@ const CancelDepositProduct = () => {
         <div className='border-b border-gray-300 py-4'>
           <span className='text-2xl text-gray-500'>받을 금액</span>
           <div className='mt-2 text-xl font-bold'>
-            {totalAmount.toLocaleString()} 원
+            {earlyTerminationBalance !== null
+              ? `${earlyTerminationBalance.toLocaleString()} 원`
+              : '없음'}
           </div>
         </div>
 

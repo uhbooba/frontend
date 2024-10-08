@@ -1,9 +1,13 @@
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '../components/common/buttons/Button';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
+import {
+  getMissionsClearStatus,
+  setMissionClearStatus,
+} from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 interface AccountData {
   accountName: string;
@@ -11,8 +15,12 @@ interface AccountData {
   balance: string;
 }
 
-const ButtonConfig: ButtonConfigType[] = [
-  // 괄호 있는 label은 괄호 안 내용이 나중에 해당 페이지 완성되면 바꿀 진짜 이름입니다.
+interface missionItem {
+  missionNumber: number;
+  isCleared: boolean;
+}
+
+const getButtonConfig = (missionStatus: missionItem[]): ButtonConfigType[] => [
   {
     label: '전체계좌 조회',
     route: '/account/list',
@@ -20,7 +28,6 @@ const ButtonConfig: ButtonConfigType[] = [
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/search.png',
   },
-
   {
     label: '계좌개설',
     route: '/account/products',
@@ -30,21 +37,23 @@ const ButtonConfig: ButtonConfigType[] = [
   },
   {
     label: '예적금',
-    route: '/account/list',
+    route: '/account/deposit/list',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/deposave.png',
   },
   {
     label: '환전',
-    route: 'exchange/explain',
+    route: missionStatus[6]?.isCleared
+      ? 'exchange/explain'
+      : 'exchange/mission',
     size: 'small',
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/exchange.png',
   },
   {
     label: '공과금',
-    route: 'utility/mission',
+    route: missionStatus[5]?.isCleared ? 'utility/explain' : 'utility/mission',
     size: 'small',
     className: 'flex-grow h-32 bg-white rounded-3xl shadow',
     img: '/assets/images/tax.png',
@@ -56,27 +65,56 @@ const ButtonConfig: ButtonConfigType[] = [
     className: 'flex-grow h-32 bg-white shadow rounded-3xl',
     img: '/assets/images/money_pig.png',
   },
-
-  {
-    label: '예금 중도 해지 (추후 삭제 예정)',
-    route: '/cancel/deposit/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
-  },
-
-  {
-    label: '적금 중도해지(추후 삭제 예정)',
-    route: '/cancel/savings/explain',
-    size: 'small',
-    className: 'flex-grow h-32 bg-white shadow rounded-3xl',
-    img: '/assets/icons/warning.png',
-  },
 ];
 
 const Main = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState<AccountData | null>(null);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [buttonConfig, setButtonConfig] = useState<ButtonConfigType[]>([]);
+
+  useEffect(() => {
+    const fetchMissionStatus = async () => {
+      try {
+        const response = await getMissionsClearStatus();
+
+        if (response?.statusCode === 200) {
+          setButtonConfig(getButtonConfig(response?.result));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMissionStatus();
+  }, []);
+
+  // 로그인 미션 확인
+  useEffect(() => {
+    const fetchLoginMission = async () => {
+      try {
+        const response = await setMissionClearStatus(1);
+
+        if (response?.statusCode === 200) {
+          const timer = setTimeout(() => {
+            setIsSuccessModalOpen(true);
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (location?.state !== undefined) {
+      if (location?.state?.isFirstLogin) {
+        fetchLoginMission();
+      }
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, []);
 
   useEffect(() => {
     const fetchAccountDetails = async () => {
@@ -113,13 +151,15 @@ const Main = () => {
 
   return (
     <div className='min-h-screen bg-orange-100/40'>
-      <TopBar
-        title=''
-        showBackButton={false}
-        showXButton={false}
-        showMainButton={true}
-      />
-
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar
+          title=''
+          showBackButton={false}
+          showXButton={false}
+          showMainButton={true}
+        />
+      </div>
+      <div className='h-2' />
       {/* 메인계좌 디브 */}
       <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
         <div className='flex pt-2'>
@@ -162,7 +202,7 @@ const Main = () => {
 
       {/* 하단 그리드 버튼들 */}
       <div className='grid grid-cols-2 gap-4 p-4'>
-        {ButtonConfig.map((button, index) => (
+        {buttonConfig.map((button, index) => (
           <Button
             key={index}
             label={button.label}
@@ -174,11 +214,12 @@ const Main = () => {
           />
         ))}
       </div>
-
-      {/* 바텀탭 */}
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='로그인'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

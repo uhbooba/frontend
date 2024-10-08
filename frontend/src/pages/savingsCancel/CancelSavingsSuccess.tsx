@@ -2,30 +2,29 @@ import { BottomTab } from '@/components/layouts/BottomTab';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
-import { useSetAtom } from 'jotai';
-import { savingAccountAtom } from '@/atoms/savings/savingsDataAtoms';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
-  deleteSavingsAccount,
-  getUserSavingsAccounts,
-} from '@/services/saving';
+  savingAccountAtom,
+  selectedSavingsAccountAtom,
+} from '@/atoms/savings/savingsDataAtoms';
+import { deleteSavingsAccount } from '@/services/saving';
 import { useEffect } from 'react';
 
 const CancelSavingsSuccess = () => {
   const navigate = useNavigate();
   const setSavingAccount = useSetAtom(savingAccountAtom);
+  const selectedSavingsAccount = useAtomValue(selectedSavingsAccountAtom);
 
   const GoNext = () => {
     navigate('/');
   };
 
+  // 적금 계좌 삭제 api 보내는 로직
   useEffect(() => {
     const deleteAccount = async () => {
       try {
-        // 적금 계좌 목록 조회하기
-        const response = await getUserSavingsAccounts();
-        if (response?.data?.result?.length > 0) {
-          const account = response.data.result[0]; // 계좌 가져오기
-          await deleteSavingsAccount(account.accountNo); // 가져온 계좌 삭제
+        if (selectedSavingsAccount) {
+          await deleteSavingsAccount(selectedSavingsAccount.accountNo);
           setSavingAccount(null);
         }
       } catch (error) {
@@ -34,7 +33,7 @@ const CancelSavingsSuccess = () => {
     };
 
     deleteAccount();
-  }, [setSavingAccount]);
+  }, [setSavingAccount, selectedSavingsAccount]);
 
   return (
     <div>

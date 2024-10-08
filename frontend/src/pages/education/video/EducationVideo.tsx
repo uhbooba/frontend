@@ -30,7 +30,6 @@ const EducationVideo = () => {
       try {
         const response = await getVideoByKeyword(keyword);
         setVideoData(response.data.data);
-        console.log('키워드 뭐있나보자', response.data.data);
       } catch (error) {
         console.log('keywordClick 에러', error);
       }
@@ -52,7 +51,6 @@ const EducationVideo = () => {
     try {
       const response = await getKeyword();
       setKeywords(response.data.data);
-      console.log('가져온 전체 키워드:', response.data.data);
     } catch (error) {
       console.log('fetchKeywords 에러', error);
     }

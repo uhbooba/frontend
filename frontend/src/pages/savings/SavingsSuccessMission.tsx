@@ -12,8 +12,10 @@ import {
   selectMoneyAtom,
   savingPasswordAtom,
 } from '@/atoms/savings/savingsDataAtoms';
+import { setMissionClearStatus } from '@/services/mission';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
-const SavingsSuccess = () => {
+const SavingsSuccessMission = () => {
   const navigate = useNavigate();
   const [selectedSavingProduct] = useAtom(selectedSavingsProductAtom); // 예금상품명 가져오기
   const setSavingAccount = useSetAtom(savingAccountAtom); // 예금 계좌정보 저장할곳
@@ -22,7 +24,17 @@ const SavingsSuccess = () => {
   const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
     null,
   ); // 사용자가 고른 상품과 동일한 이름의 예금상품 유니크이름 저장하기
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 미션 성공하면 뜨는 모달
   const [savingPassword] = useAtom(savingPasswordAtom);
+
+  // 미션 성공하면 1초 있다가 성공모달 뜨게 하기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSuccessModalOpen(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // 적금상품전체조회api부터 해야함
   useEffect(() => {
@@ -94,6 +106,19 @@ const SavingsSuccess = () => {
     savingPassword,
   ]);
 
+  // 4단계 미션 성공했다고 api 보내기
+  useEffect(() => {
+    const clearMission = async () => {
+      try {
+        await setMissionClearStatus(4); // 적금가입 4단계 미션 성공 보내기
+      } catch (error) {
+        console.error('setMissionClearStatus 에러', error);
+      }
+    };
+
+    clearMission();
+  }, []);
+
   const GoNext = () => {
     navigate('/');
   };
@@ -103,6 +128,14 @@ const SavingsSuccess = () => {
       <div className='fixed left-0 top-0 z-10 w-full'>
         <TopBar title='적금 가입' showBackButton={false} />
       </div>
+
+      {/* 미션 성공 모달 */}
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='적금 가입'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
 
       {/* 배경 이미지 설정 */}
       <div
@@ -125,13 +158,13 @@ const SavingsSuccess = () => {
           <div className='relative rounded-lg border-2 border-gray-300 bg-gray-100 p-6'>
             <p className='text-start text-xl text-black'>축하합니다~~</p>
             <p className='mt-2 text-start text-xl text-black'>
-              적금 가입을 완료했어요!
+              4단계 미션을 성공했어요!
             </p>
             <p className='mt-4 text-start text-xl text-black'>
-              차곡차곡 적금을 들면
+              다음 미션에서는 가입한
             </p>
             <p className='text-start text-xl text-black'>
-              나중에 목돈이 될거에요!
+              예금 중도해지를 해봐요!
             </p>
 
             {/* 말풍선 꼬리 부분 */}
@@ -178,4 +211,4 @@ const SavingsSuccess = () => {
   );
 };
 
-export default SavingsSuccess;
+export default SavingsSuccessMission;

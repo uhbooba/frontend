@@ -39,12 +39,13 @@ export const createSavingsAccount = async (
   withdrawalAccountNo: string,
   accountTypeUniqueNo: string,
   savingsBalance: number,
+  password: string,
 ) => {
   const bodyData = {
     withdrawalAccountNo,
     accountTypeUniqueNo,
-    depositBalance: savingsBalance,
-    // 스웨거에 디포짓밸런스로되어있어서 이렇게 일단 함, 인엽형이 수정해주면 다시 세이빙밸런스 보내는거로 변경하기
+    savingsBalance,
+    password,
   };
 
   const response = await axiosInstance.post(

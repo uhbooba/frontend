@@ -28,7 +28,7 @@ const TextBubble: React.FC<TextBubbleProps> = ({
         : 'text-center';
 
   return (
-    <div className={`relative mt-24 ${bubbleSize}`}>
+    <div className={`relative ${bubbleSize}`}>
       <div className='relative rounded-lg border-2 border-gray-100 bg-gray-50 p-6 shadow-lg'>
         {Array.isArray(content) ? (
           content.map((line, index) => (
