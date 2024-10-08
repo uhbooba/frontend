@@ -1,35 +1,57 @@
+import { useState, useEffect } from 'react';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import Stamp from '@/components/gamification/MissionStamp';
 
+import { getMissionClearStatus } from '@/services/mission';
+
 const MissionStamp = () => {
   const stampsInfo = [
     {
-      isCompleted: true,
-      missionName: '계좌 생성 \n 마스터'
+      missionName: '로그인',
     },
     {
-      isCompleted: false,
-      missionName: '계좌 이체 \n 마스터'
+      missionName: '계좌 생성',
     },
     {
-      isCompleted: false,
-      missionName: '자동 납부 \n 마스터'
+      missionName: '계좌 이체',
     },
     {
-      isCompleted: false,
-      missionName: '정기 예금 \n 마스터'
+      missionName: '적금 가입 \n (자동 납부)',
     },
     {
-      isCompleted: false,
-      missionName: '공과금 납부 \n 마스터'
+      missionName: '예금 해지',
     },
     {
-      isCompleted: false,
-      missionName: '환전 \n 마스터'
+      missionName: '공과금 납부',
     },
-  ]
+    {
+      missionName: '환전',
+    },
+  ];
+
+  const [missionStatus, setMissionStatus] = useState<boolean[]>(
+    new Array(stampsInfo.length).fill(false),
+  );
+
+  useEffect(() => {
+    const fetchMissionResults = async () => {
+      const results: boolean[] = [];
+      for (let i = 0; i < stampsInfo.length; i++) {
+        try {
+          const response = await getMissionClearStatus(i + 1); // assuming mission numbers are 1-based
+          results.push(response.result); // store the completion status
+        } catch (error) {
+          console.error('Error fetching mission status:', error);
+          results.push(false); // handle error by marking it as incomplete
+        }
+      }
+      setMissionStatus(results); // update state after all results are fetched
+    };
+
+    fetchMissionResults();
+  }, []);
 
   return (
     <div className='flex h-screen flex-col bg-yellow-100'>
@@ -57,12 +79,12 @@ const MissionStamp = () => {
           <p className='mb-4'>내가 모은 스탬프</p>
           <div className='grid grid-cols-3 gap-4'>
             {stampsInfo.map((stamp, index) => (
-                <Stamp
-                  key={index}
-                  isCompleted={stamp.isCompleted}
-                   missionName={stamp.missionName}
-                />
-              ))}
+              <Stamp
+                key={index}
+                isCompleted={missionStatus[index]}
+                missionName={stamp.missionName}
+              />
+            ))}
           </div>
         </div>
       </div>
