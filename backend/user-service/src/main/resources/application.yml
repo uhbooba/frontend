@@ -66,3 +66,7 @@ logging:
     org.hibernate: "info"
   file:
     name: app/logs/application.log
+
+fcm:
+  config:
+    path: ${FCM_CONFIG_PATH}
