@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StreamUtils;
 
+@Slf4j
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -36,12 +38,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JWTUtil jwtUtil;
     private final RefreshService refreshService;
 
+    // loginRequest를 필드에 저장하여 재사용
+    private LoginRequest loginRequest;
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
         HttpServletResponse response) throws AuthenticationException {
         try {
-            LoginRequest loginRequest = parseLoginRequest(request);
-            return authenticateUser(loginRequest);
+            this.loginRequest = parseLoginRequest(request); // 파싱한 값을 필드에 저장
+            System.out.println("===================================================");
+            return authenticateUser(this.loginRequest);
         } catch (IOException | AuthenticationException e) {
             try {
                 handleException(response, e);
@@ -62,8 +68,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String username = userDetails.getUsername();
         String name = userDetails.getName();
 
-        LoginRequest loginRequest = parseLoginRequest(request);
-        String fcmToken = loginRequest.fcmToken();
+        log.info("id: {}, username: {}", id, username);
+
+        // 저장된 loginRequest를 재사용하여 fcmToken을 추출
+        String fcmToken = this.loginRequest.fcmToken();
 
         kafkaProducerService.sendFcmToken("fcm-topic", FcmTokenMessageResponse.of(id, fcmToken));
 
@@ -95,6 +103,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private LoginRequest parseLoginRequest(HttpServletRequest request) throws IOException {
         String messageBody = StreamUtils.copyToString(request.getInputStream(),
             StandardCharsets.UTF_8);
+        log.info("messageBody: {}", messageBody);
         return objectMapper.readValue(messageBody, LoginRequest.class);
     }
 
