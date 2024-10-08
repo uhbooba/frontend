@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
-import Button, { ButtonConfigType } from '../components/common/buttons/Button';
-import { BottomTab } from '@/components/layouts/BottomTab';
+import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const ButtonConfig: ButtonConfigType[] = [
   {
@@ -54,31 +54,31 @@ const Education = () => {
   };
 
   return (
-    <div className='h-[840px] bg-orange-100/40'>
-      <TopBar
-        title=''
-        showBackButton={false}
-        showXButton={false}
-        showMainButton={true}
-      />
-
-      <div className='grid gap-4 p-4'>
-        {ButtonConfig.map((button, index) => (
-          <Button
-            key={index}
-            label={button.label}
-            size={button.size}
-            color={button.color}
-            onClick={() => handleButtonClick(button.route)}
-            className={button.className}
-            eduImg={button.eduImg}
-            eduLabel={button.eduLabel}
-          />
-        ))}
+    <div className='bg-orange-100/40'>
+      <div className='fixed left-0 top-0 z-10 w-full'>
+        <TopBar
+          title=''
+          showBackButton={false}
+          showXButton={false}
+          showMainButton={true}
+        />
       </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      <MainWrapper>
+        <div className='grid gap-4'>
+          {ButtonConfig.map((button, index) => (
+            <Button
+              key={index}
+              label={button.label}
+              size={button.size}
+              color={button.color}
+              onClick={() => handleButtonClick(button.route)}
+              className={button.className}
+              eduImg={button.eduImg}
+              eduLabel={button.eduLabel}
+            />
+          ))}
+        </div>
+      </MainWrapper>
     </div>
   );
 };
