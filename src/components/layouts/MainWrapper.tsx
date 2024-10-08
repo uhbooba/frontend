@@ -8,7 +8,9 @@ interface MainWrapperProps {
 
 const MainWrapper: React.FC<MainWrapperProps> = ({ children, className }) => {
   return (
-    <div className={clsx(['w-full px-4 py-3', className])}>{children}</div>
+    <div className={clsx(['h-full w-full px-4 py-3', className])}>
+      {children}
+    </div>
   );
 };
 
