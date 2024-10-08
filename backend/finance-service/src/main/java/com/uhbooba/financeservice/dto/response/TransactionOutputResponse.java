@@ -2,6 +2,7 @@ package com.uhbooba.financeservice.dto.response;
 
 import com.uhbooba.financeservice.entity.TransactionStatus;
 import com.uhbooba.financeservice.entity.TransactionType;
+import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
@@ -12,5 +13,6 @@ public record TransactionOutputResponse(
     TransactionType type,
     Long transactionBalance,
     Long transactionAfterBalance,
-    String transactionSummary
+    String transactionSummary,
+    LocalDateTime updatedAt
 ) {}
