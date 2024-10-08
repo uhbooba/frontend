@@ -5,6 +5,7 @@ import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.UtilityPaymentRequest;
 import com.uhbooba.financeservice.service.UtilityPaymentService;
 import com.uhbooba.financeservice.util.CommonUtil;
+import com.uhbooba.financeservice.util.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UtilityPaymentController {
 
     private final UtilityPaymentService utilityPaymentService;
+    private final PasswordService passwordService;
 
     @PostMapping("/payment")
     @Operation(summary = "공과금 납부")
@@ -33,6 +35,9 @@ public class UtilityPaymentController {
         @Valid @RequestBody UtilityPaymentRequest request
     ) {
         UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+
+        passwordService.validatePassword(userHeaderInfo.userId(), request.password());
+
         utilityPaymentService.payUtilities(userHeaderInfo, request);
         return CommonResponse.ok("공과금 납부 성공");
     }
