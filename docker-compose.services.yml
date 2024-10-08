@@ -34,7 +34,7 @@ services:
       - uhbooba-net
     restart: on-failure
     volumes:
-      - ./logs/user-service:/app/logs
+      - ./logs:/logs
     depends_on:
       - eureka-server
 
@@ -50,7 +50,7 @@ services:
       - uhbooba-net
     restart: on-failure
     volumes:
-      - ./logs/finance-service:/app/logs
+      - ./logs:/logs
     depends_on:
       - eureka-server
 
@@ -66,7 +66,7 @@ services:
       - uhbooba-net
     restart: on-failure
     volumes:
-      - ./logs/external-service:/app/logs
+      - ./logs:/logs
     depends_on:
       eureka-server:
         condition: service_started
@@ -83,7 +83,7 @@ services:
       - uhbooba-net
     restart: on-failure
     volumes:
-      - ./logs/gateway-service:/app/logs
+      - ./logs:/logs
     depends_on:
       - eureka-server
       - user-service
@@ -92,3 +92,5 @@ services:
 
 networks:
   uhbooba-net:
+    name: s11p21a402_uhbooba-net
+    external: true
