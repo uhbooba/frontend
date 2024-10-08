@@ -6,6 +6,7 @@ import { postLogin } from '@/services/auth';
 import Keypad from '@/components/common/KeyPad';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { requestNotificationPermission } from '@/services/notification';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +14,15 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [keyOpen, setKeyOpen] = useState(false);
+
+  const handleNotification = async () => {
+    try {
+      const response = await requestNotificationPermission();
+      console.log('알림 권한 요청 응답:', response);
+    } catch (error) {
+      console.error('알림 권한 요청 중 오류 발생:', error);
+    }
+  };
 
   const handleLogin = () => {
     setErrorMessage('');
@@ -68,6 +78,7 @@ const Login = () => {
           <div className='mt-3 flex flex-col justify-center'>
             <Button label='로그인' className='mb-3' onClick={handleLogin} />
             <Button label='회원가입' onClick={() => navigate('/signup')} />
+            <Button label='알람테스트' onClick={handleNotification} />
           </div>
         </div>
         {keyOpen && (
