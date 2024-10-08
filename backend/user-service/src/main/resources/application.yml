@@ -67,4 +67,4 @@ logging:
     org.apache.kafka: WARN
     org.springframework.kafka: WARN
   file:
-    name: /logs/user-service/application.log
+    name: logs/user-service/application.log
