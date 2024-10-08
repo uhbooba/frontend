@@ -57,7 +57,7 @@ logging:
     org.apache.kafka: WARN
     org.springframework.kafka: WARN
   file:
-    name: /logs/finance-service/application.log
+    name: logs/finance-service/application.log
 
 finopenapi:
   key: ${FINOPENAPI_KEY}
