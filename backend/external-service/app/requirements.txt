@@ -9,6 +9,7 @@ alembic
 langchain_community
 langchain
 jsonpickle
-
+kafka-python
+firebase-admin
 requests
 python-dotenv
