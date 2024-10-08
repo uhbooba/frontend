@@ -76,7 +76,6 @@ const Education = () => {
           />
         ))}
       </div>
-
       <div className='fixed bottom-0 left-0 w-full'>
         <BottomTab />
       </div>

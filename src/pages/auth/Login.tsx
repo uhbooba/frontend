@@ -41,7 +41,9 @@ const Login = () => {
       const token = response?.headers['access'];
       localStorage.setItem('ACCESS_TOKEN', token);
 
-      navigate('/');
+      const isFirstLogin = response?.data?.result?.isFirstLogin;
+
+      navigate('/', { state: { isFirstLogin } });
     } catch (error) {
       console.error(error);
     }

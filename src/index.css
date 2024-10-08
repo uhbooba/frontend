@@ -14,3 +14,11 @@
 body {
   font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
