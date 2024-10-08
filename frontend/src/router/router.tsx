@@ -107,6 +107,8 @@ const UtilityPaySuccess = lazy(
   () => import('@/pages/utilityPayment/UtilityPaySuccess'),
 );
 
+
+const AccountOpenMission = lazy(() => import('@/pages/account/AccountOpenMission'));
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
 const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
 const AccountProductsList = lazy(
@@ -234,6 +236,7 @@ const router = createBrowserRouter([
       // 계좌 생성
       { path: 'account/products', element: <AccountProductsList /> },
       { path: 'account/products/deposit', element: <AccountDepositProducts /> },
+      { path: 'account/products/mission', element: <AccountOpenMission /> },
       // 계좌 이체
       {
         path: 'account/transfer/account-info',
