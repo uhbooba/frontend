@@ -3,11 +3,11 @@ import LevelBar from '@/components/common/LevelBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import { useAtom } from 'jotai';
 import {
-  accountNumberAtom,
-  amountAtom,
-  myAccountRecordAtom,
+  depositAccountNoAtom,
+  transactionBalanceAtom,
   selectedBankAtom,
-  yourAccountRecordAtom,
+  depositTransactionSummaryAtom,
+  withdrawalTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import InfoRow from '@/components/common/InfoRow';
 import Button from '@/components/common/buttons/Button';
@@ -15,10 +15,12 @@ import { useNavigate } from 'react-router';
 
 const AccountTransferInfoCheck = () => {
   const [selectedBank] = useAtom(selectedBankAtom);
-  const [accountNumber] = useAtom(accountNumberAtom);
-  const [amount] = useAtom(amountAtom);
-  const [myAccountRecord] = useAtom(myAccountRecordAtom);
-  const [yourAccountRecord] = useAtom(yourAccountRecordAtom);
+  const [depositAccountNo] = useAtom(depositAccountNoAtom);
+  const [transactionBalance] = useAtom(transactionBalanceAtom);
+  const [withdrawalTransactionSummary] = useAtom(
+    withdrawalTransactionSummaryAtom,
+  );
+  const [depositTransactionSummary] = useAtom(depositTransactionSummaryAtom);
   const navigate = useNavigate();
 
   const time = new Date();
@@ -36,10 +38,10 @@ const AccountTransferInfoCheck = () => {
     .trim(); // 날짜 사이 공백 추가
 
   const infoRows = [
-    { title: '받는 계좌', content: `${selectedBank} ${accountNumber}` },
-    { title: '보낸 금액', content: `${amount}원` },
-    { title: '받는 분 통장 기록', content: yourAccountRecord },
-    { title: '보낸 분 통장 기록', content: myAccountRecord },
+    { title: '받는 계좌', content: `${selectedBank} ${depositAccountNo}` },
+    { title: '보낸 금액', content: `${transactionBalance}원` },
+    { title: '받는 분 통장 기록', content: depositTransactionSummary },
+    { title: '보낸 분 통장 기록', content: withdrawalTransactionSummary },
     { title: '거래 일시', content: formattedTime },
   ];
 

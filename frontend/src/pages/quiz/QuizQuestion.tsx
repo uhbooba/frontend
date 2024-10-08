@@ -4,7 +4,7 @@ import TopBar from '@/components/layouts/TopBar';
 import QuizLevelBar from '@/components/quiz/QuizLevelBar';
 import QuizModal from '@/components/quiz/QuizModal';
 import { getQuizItem } from '@/services/education';
-import { QuizItem } from '@/types/quiz';
+import { QuizItem } from '@/types/education';
 
 const QuizQuestion = () => {
   const navigate = useNavigate();

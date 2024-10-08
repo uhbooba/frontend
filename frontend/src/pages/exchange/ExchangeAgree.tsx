@@ -6,6 +6,7 @@ import CheckButton from '@/components/common/buttons/CheckButton';
 import NoModal from '@/components/modals/NoModal';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const ExchangeAgree = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,41 +41,36 @@ const ExchangeAgree = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='환전' />
-      </div>
-
-      <div className='mb-6 mt-20'>
-        <LevelBar currentLevel={1} totalLevel={3} />
-      </div>
-
-      <div className='m-4'>
-        <p className='mb-2 text-2xl font-bold'>약관 동의서</p>
-        <div className='mb-2 border-2 border-black'>
-          <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-          <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+      <TopBar title='환전' />
+      <MainWrapper>
+        <LevelBar currentLevel={1} totalLevel={4} />
+        <div className='m-4'>
+          <p className='mb-2 text-2xl font-bold'>약관 동의서</p>
+          <div className='mb-2 border-2 border-black'>
+            <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
+            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+          </div>
+          <div className='flex justify-end'>
+            <CheckButton
+              name='agree1'
+              selected={agree1}
+              setSelected={setAgree1}
+            />
+          </div>
         </div>
-        <div className='flex justify-end'>
-          <CheckButton
-            name='agree1'
-            selected={agree1}
-            setSelected={setAgree1}
+
+        <div className='mb-2 flex w-full items-center justify-center p-4'>
+          <Button
+            label='다음'
+            size='medium'
+            color='orange'
+            onClick={() => OpenModal()}
+            className='ml-2'
           />
         </div>
-      </div>
-
-      <div className='mb-2 flex w-full items-center justify-center p-4'>
-        <Button
-          label='다음'
-          size='medium'
-          color='orange'
-          onClick={() => OpenModal()}
-          className='ml-2'
-        />
-      </div>
-
+      </MainWrapper>
       <BigModal
         isOpen={isModalOpen}
         ModalClose={ModalClose}
