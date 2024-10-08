@@ -16,14 +16,7 @@ const DepositPassword = () => {
 
   const passwordComplete = async (password: string) => {
     try {
-      const accessToken = window.localStorage.getItem('ACCESS_TOKEN');
-
-      if (!accessToken) {
-        console.error('토큰이 없음.');
-        return;
-      }
-
-      const userInfo = await getUserInfo(accessToken);
+      const userInfo = await getUserInfo();
       const userId = userInfo.result.id;
 
       // 빌밀번호 확인 api 요청
