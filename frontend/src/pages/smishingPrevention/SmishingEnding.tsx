@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { smishingData } from '@/constants/SmishingData';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
+import { postSmishingStatus } from '@/services/education';
 
 const SmishingEnding = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { messageType } = useParams(); // 시작 타입
   const [data] = useState(smishingData); // 피싱 데이터
   const { endingId } = location.state;
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -16,7 +18,14 @@ const SmishingEnding = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = 0;
     }
+
+    fetchEnding();
   }, []);
+
+  const fetchEnding = async () => {
+    if (!messageType) return;
+    await postSmishingStatus(endingId);
+  };
 
   const formattedModalTitle = useFormattedContent(
     endingData?.ending?.title ?? '',
