@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import { getMessaging } from 'firebase/messaging';
 
+// 환경 변수에서 Firebase 설정 값 가져오기
 const {
   VITE_FIREBASE_API_KEY,
   VITE_FIREBASE_AUTH_DOMAIN,
@@ -9,9 +9,9 @@ const {
   VITE_FIREBASE_STORAGE_BUCKET,
   VITE_FIREBASE_MESSAGING_SENDER_ID,
   VITE_FIREBASE_APP_ID,
-  VITE_FIREBASE_MEASUREMENT_ID,
 } = import.meta.env;
 
+// Firebase 초기화 설정
 const firebaseConfig = {
   apiKey: VITE_FIREBASE_API_KEY,
   authDomain: VITE_FIREBASE_AUTH_DOMAIN,
@@ -19,13 +19,13 @@ const firebaseConfig = {
   storageBucket: VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: VITE_FIREBASE_APP_ID,
-  measurementId: VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Firebase 앱 초기화
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Messaging 객체 가져오기
 const messaging = getMessaging(app);
 
-console.log(firebaseConfig.projectId);
-
-export { app, analytics, messaging };
+// Firebase 관련 객체 내보내기
+export { app, messaging };
