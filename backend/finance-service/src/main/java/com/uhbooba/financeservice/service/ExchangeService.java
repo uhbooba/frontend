@@ -125,7 +125,7 @@ public class ExchangeService {
         } catch(Exception ex) {
             // 트랜잭션 실패 처리
             transactionService.updateTransactionForFail(transaction, ex);
-            throw new ExchangeFailedException();
+            throw new ExchangeFailedException(ex.getMessage());
         }
     }
 

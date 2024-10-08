@@ -1,5 +1,15 @@
 package com.uhbooba.financeservice.controller.finance;
 
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_ACCOUNT_CREATE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_ACCOUNT_LIST_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_ACCOUNT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_EXPIRE_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_PRODUCT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.EARLY_DEPOSIT_EXPIRE_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
+
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
@@ -52,13 +62,14 @@ public class DepositController {
     }
 
     @GetMapping("/products")
-    @Operation(summary = "예금 상품 전체 조회")
+    @Operation(summary = "예금 상품 전체 조회", description = INPUT + OUTPUT + DEPOSIT_PRODUCT_RESPONSE)
     public CommonResponse<List<DepositResponse>> getDepositProducts() {
         return CommonResponse.ok("예금 상품 조회 완료", depositService.getAllDeposits());
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "예금 계좌 생성")
+    @Operation(summary = "예금 계좌 생성", description = INPUT + DEPOSIT_ACCOUNT_CREATE + OUTPUT
+        + DEPOSIT_ACCOUNT_RESPONSE)
     public CommonResponse<DepositAccountResponse> createDepositAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DepositAccountCreateRequest dto
@@ -69,7 +80,8 @@ public class DepositController {
     }
 
     @GetMapping("/accounts/expiry-interests")
-    @Operation(summary = "예금 만기 이자 조회")
+    @Operation(summary = "예금 만기 이자 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + DEPOSIT_EXPIRE_RESPONSE)
     public CommonResponse<DepositExpiryInterestResponse> getDepositExpiryInterest(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -81,7 +93,8 @@ public class DepositController {
     }
 
     @GetMapping("/accounts/early-termination-interest")
-    @Operation(summary = "예금 중도 해지 시 이자 조회")
+    @Operation(summary = "예금 중도 해지 시 이자 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + EARLY_DEPOSIT_EXPIRE_RESPONSE)
     public CommonResponse<DepositEarlyTerminationInterestResponse> getDepositEarlyTerminationInterest(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -93,7 +106,7 @@ public class DepositController {
     }
 
     @DeleteMapping("/accounts")
-    @Operation(summary = "[사용 X] 입출금 계좌 삭제")
+    @Operation(summary = "입출금 계좌 삭제", description = INPUT + ACCOUNT_NO + OUTPUT)
     public CommonResponse<DepositAccountDeleteResponse> deleteDepositAccount(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -104,7 +117,8 @@ public class DepositController {
     }
 
     @GetMapping("/accounts/detail")
-    @Operation(summary = "예금 계좌 상세 조회")
+    @Operation(summary = "예금 계좌 상세 조회", description = INPUT + ACCOUNT_NO + OUTPUT
+        + DEPOSIT_ACCOUNT_RESPONSE)
     public CommonResponse<DepositAccountResponse> getDepositAccount(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -115,7 +129,8 @@ public class DepositController {
     }
 
     @GetMapping("/accounts")
-    @Operation(summary = "사용자의 예금 계좌 목록 조회")
+    @Operation(summary = "사용자의 예금 계좌 목록 조회", description = INPUT + OUTPUT
+        + DEPOSIT_ACCOUNT_LIST_RESPONSE)
     public CommonResponse<List<DepositAccountResponse>> getDepositAccounts(
         @RequestHeader HttpHeaders headers
     ) {

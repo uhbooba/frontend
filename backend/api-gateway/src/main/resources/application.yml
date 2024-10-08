@@ -9,7 +9,7 @@ eureka:
 
 spring:
   jwt:
-    secret: 1kDPS1KxEX~BF2SAv66A=m!!B|Anx9{^$5x9oyO7]=MG&I.|CI:Xj|ZA(51KGOXY
+    secret: ${JWT_SECRET}
   application:
     name: api-gateway
   #  security:
@@ -46,7 +46,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/env/**, /env/**
+            - Path=/user-service/env/**, /env/**, /user-service/missions/**, /missions/**
           filters:
             - AuthorizationHeaderFilter
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
