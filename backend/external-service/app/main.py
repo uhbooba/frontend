@@ -1,6 +1,3 @@
-# import os
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-#####################################################################################
 import sys
 
 from fastapi import FastAPI
@@ -14,8 +11,10 @@ from .controllers import (
     video_controller,
     redis_controller,
     smishing_controller,
+    kafka_controller,
 )
 from .eureka_register import register_with_eureka
+from .services.signal_service import consume_notifications, consume_tokens
 
 #####################################################################################
 Base.metadata.create_all(bind=engine)
@@ -31,11 +30,22 @@ app.include_router(redis_controller.router)
 app.include_router(tts_controller.router)
 app.include_router(video_controller.router)
 app.include_router(smishing_controller.router)
+app.include_router(kafka_controller.router)
 
 
 @app.get("/health-check")
 def read_root():
     return {"Hello": "World"}
+
+
+import threading
+
+# 병렬실행
+notification_thread = threading.Thread(target=consume_notifications, daemon=True)
+token_thread = threading.Thread(target=consume_tokens, daemon=True)
+
+notification_thread.start()
+token_thread.start()
 
 
 #####################################################################################c
