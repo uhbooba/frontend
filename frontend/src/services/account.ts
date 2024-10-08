@@ -9,8 +9,12 @@ export const getUserFreeAccount = async () => {
 };
 
 // 입출금 계좌 거래 내역 조회
-export const getUserFreeAccountTransactions = () => {
-  const response = axiosInstance('/finances/transactions');
+export const getUserFreeAccountTransactions = (accountNo: string) => {
+  const response = axiosInstance('/finances/transactions', {
+    params: {
+      accountNo,
+    },
+  });
   return response;
 };
 
@@ -38,7 +42,7 @@ export const postUserFreeAccount = async () => {
 
 // 입출금 계좌 이체
 export const postUserFreeAccountTransfer = async (
-  depostiAccountNo: string,
+  depositAccountNo: string,
   depositTransactionSummary: string,
   transactionBalance: number,
   withdrawalAccountNo: string,
@@ -46,12 +50,12 @@ export const postUserFreeAccountTransfer = async (
   password: string,
 ) => {
   await axiosInstance.post('/finances/demand-deposits/accounts/transfer', {
-    depostiAccountNo,
+    depositAccountNo,
     depositTransactionSummary,
     transactionBalance,
     withdrawalAccountNo,
     withdrawalTransactionSummary,
-    password
+    password,
   });
 };
 
