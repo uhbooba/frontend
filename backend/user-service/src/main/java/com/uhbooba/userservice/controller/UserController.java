@@ -50,7 +50,7 @@ public class UserController {
         }
         UserSignupMessageResponse data = userService.signup(request);
 
-        kafkaProducerService.send("user-signup-topic", data);
+        kafkaProducerService.sendAccountUser("user-signup-topic", data);
 
         return CommonResponse.created("회원가입 성공");
     }
