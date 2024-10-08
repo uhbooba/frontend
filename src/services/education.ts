@@ -23,3 +23,32 @@ export const getQuizItem = (part: string) => {
   const response = axiosInstance(`/external-service/quiz/${part}`);
   return response;
 };
+
+// 금융 사기 TTS
+export const getSmishingTTS = (ttsKey: string) => {
+  const response = axiosInstance(`/external-service/tts/${ttsKey}`, {
+    responseType: 'blob',
+  });
+
+  return response;
+};
+
+// 금융 사기 시나리오 가져오기
+export const getSmishing = () => {
+  const response = axiosInstance(`/external-service/smishing`);
+
+  return response;
+};
+
+// 금융 사기 시나리오 완료
+export const postSmishingStatus = async (scenario: string) => {
+  const bodyData = {
+    scenario,
+  };
+
+  const response = await axiosInstance.post(
+    '/external-service/smishing',
+    bodyData,
+  );
+  return response;
+};
