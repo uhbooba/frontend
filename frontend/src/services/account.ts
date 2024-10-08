@@ -35,3 +35,33 @@ export const postUserFreeAccountAddCash = async (
 export const postUserFreeAccount = async () => {
   await axiosInstance.post('/finances/demand-deposits/accounts');
 };
+
+// 입출금 계좌 이체
+export const postUserFreeAccountTransfer = async (
+  depostiAccountNo: string,
+  depositTransactionSummary: string,
+  transactionBalance: number,
+  withdrawalAccountNo: string,
+  withdrawalTransactionSummary: string,
+  password: string,
+) => {
+  await axiosInstance.post('/finances/demand-deposits/accounts/transfer', {
+    depostiAccountNo,
+    depositTransactionSummary,
+    transactionBalance,
+    withdrawalAccountNo,
+    withdrawalTransactionSummary,
+    password
+  });
+};
+
+// 입출금 계좌 소유자 이름 조회
+export const getFreeAcountHolder = async (accountNo: string) => {
+  const response = await axiosInstance(
+    'finances/demand-deposits/accounts/holder',
+    {
+      params: { accountNo },
+    },
+  );
+  return response;
+};

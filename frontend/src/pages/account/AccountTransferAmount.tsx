@@ -4,26 +4,33 @@ import { useNavigate } from 'react-router';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MoneyInput from '@/components/common/MoneyInput';
 import Keypad from '@/components/common/KeyPad';
+import { getUserFreeAccount } from '@/services/account';
 import { useAtom } from 'jotai';
 import {
-  accountHolderNameAtomn,
-  accountNumberAtom,
-  amountAtom,
+  depositAccountNoAtom,
+  transactionBalanceAtom,
   selectedBankAtom,
+  depositTransactionSummaryAtom,
+  withdrawalTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAmount = () => {
   const navigate = useNavigate();
-  const [amount, setAmount] = useAtom(amountAtom);
+  const [transactionBalance, setTransactionBalance] = useAtom(
+    transactionBalanceAtom,
+  );
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedBank] = useAtom(selectedBankAtom);
-  const [accountNumber] = useAtom(accountNumberAtom);
-  const [accountHolderName] = useAtom(accountHolderNameAtomn);
+  const [depositAccountNo] = useAtom(depositAccountNoAtom);
+  const [depositUsername] = useAtom(depositTransactionSummaryAtom);
+  const [, setWithdrawalUsername] = useAtom(withdrawalTransactionSummaryAtom);
+  const [balance, setBalance] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const amountLabels = [
+  const transactionBalanceLabels = [
     '+1만원',
     '+5만원',
     '+10만원',
@@ -32,45 +39,83 @@ const AccountTransferAmount = () => {
     '직접 입력',
   ];
 
-  const amountValues = [10000, 50000, 100000, 1000000, Infinity, 0];
+  const amountValues = [10000, 50000, 100000, 1000000, balance, 0];
 
   const GoBack = () => {
-    navigate(-1);
+    navigate('/account/transfer/account-info', { state: 'back-navigation' });
   };
 
   const handleAmountSelect = (index: number) => {
     const selectedAmount = amountValues[index];
     if (selectedAmount > 0) {
-      setAmount((prevAmount) => prevAmount + selectedAmount);
+      const newTransactionBalance = transactionBalance + selectedAmount;
+      if (newTransactionBalance > balance) {
+        setErrorMessage('잔액을 초과할 수 없습니다.');
+        setTransactionBalance(balance); // 잔액으로 한정
+      } else {
+        setTransactionBalance(newTransactionBalance);
+        setErrorMessage(null); // 오류 메시지 초기화
+      }
       setKeyOpen(false);
     } else if (selectedAmount == 0) {
-      setAmount(0);
+      setTransactionBalance(0);
       setKeyOpen(true);
     } else {
       console.log('전액 처리나 직접 입력 로직을 찾아보자');
     }
-    // setModalOpen(false);
   };
 
   // 키패드 숫자 클릭할 때 함수
   const keyClick = (num: string) => {
-    setAmount((prev) => Number(String(prev) + num));
+    const newTransactionBalance = Number(String(transactionBalance) + num);
+    if (newTransactionBalance > balance) {
+      setErrorMessage('잔액을 초과할 수 없습니다.');
+    } else {
+      setTransactionBalance(newTransactionBalance);
+      setErrorMessage(null);
+    }
   };
 
   // 키패트 지우기 버튼 클릭할 때 함수
   const handleDelete = () => {
-    setAmount((prev) => Math.floor(prev / 10));
+    setTransactionBalance((prev) => Math.floor(prev / 10));
+  };
+
+  const setAmountToZero = () => {
+    setTransactionBalance(0);
   };
 
   const handleSubmit = () => {
-    if (!amount) {
-      alert('입금할 금액을 선택해주세요.');
+    if (!transactionBalance) {
+      setErrorMessage('입금할 금액을 선택해주세요.');
       return;
     }
+    if (transactionBalance > balance) {
+      setErrorMessage('잔액을 초과할 수 없습니다.');
+      return;
+    }
+
     navigate('/account/transfer/deposit-name', {
-      state: { accountNumber, selectedBank },
+      state: { depositAccountNo, selectedBank },
     });
   };
+
+  useEffect(() => {
+    const fetchAccountBalance = async () => {
+      try {
+        const response = await getUserFreeAccount();
+        if (response?.data?.result) {
+          const account = response.data.result;
+          setBalance(account.balance);
+          setWithdrawalUsername(account.username);
+        }
+      } catch (error) {
+        console.error('계좌 정보 API 호출 중 오류 발생:', error);
+      }
+    };
+
+    fetchAccountBalance();
+  }, []);
 
   return (
     <div className='flex h-screen flex-col'>
@@ -84,23 +129,37 @@ const AccountTransferAmount = () => {
 
       <div className='ml-4 mt-4'>
         <div>
-          {selectedBank} {accountNumber}
+          {selectedBank} {depositAccountNo}
         </div>
-        {accountHolderName}님께
+        {depositUsername}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
-        <Input
-          label='얼마를 보낼까요?'
-          variant='full'
-          placeholder='금액을 입력해 주세요.'
-          value={`${amount}원`}
-          onChange={(e) => setAmount(Number(e.target.value))}
-        />
+        <div className='relative'>
+          <Input
+            label='얼마를 보낼까요?'
+            variant='full'
+            placeholder='금액을 입력해 주세요.'
+            value={`${transactionBalance}원`}
+            onChange={(e) => setTransactionBalance(Number(e.target.value))}
+            className='pr-20'
+          />
 
-        <div className='relative mt-4 flex'>
+          <Button
+            label='지우기'
+            size='customMedium'
+            className='absolute right-2 top-14 -translate-y-1/2 transform'
+            onClick={setAmountToZero}
+          />
+        </div>
+
+        {errorMessage && (
+          <div className='mt-2 text-red-500'>{errorMessage}</div>
+        )}
+
+        <div className='mt-4'>
           <MoneyInput
-            amounts={amountLabels}
+            amounts={transactionBalanceLabels}
             onAmountClick={(index) => handleAmountSelect(index)}
             amountBtnColor='None'
           />

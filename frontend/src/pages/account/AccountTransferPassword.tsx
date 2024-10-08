@@ -1,14 +1,74 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
+import NoModal from '@/components/modals/NoModal';
+import { getUserInfo, checkPassword } from '@/services/auth';
+import { postUserFreeAccountTransfer } from '@/services/account';
+import { useAtom } from 'jotai';
+import {
+  transactionBalanceAtom,
+  depositAccountNoAtom,
+  depositTransactionSummaryAtom,
+  withdrawalAccountNoAtom,
+  withdrawalTransactionSummaryAtom,
+} from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferPassword = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputKey, setInputKey] = useState(0);
 
-  const passwordComplete = (password: string) => {
-    console.log('비밀번호 확인용 :', password);
-    navigate('/account/transfer/success');
+  const [depositAccountNo] = useAtom(depositAccountNoAtom);
+  const [depositTransactionSummary] = useAtom(depositTransactionSummaryAtom);
+  const [transactionBalance] = useAtom(transactionBalanceAtom);
+  const [withdrawalAccountNo] = useAtom(withdrawalAccountNoAtom);
+  const [withdrawalTransactionSummary] = useAtom(
+    withdrawalTransactionSummaryAtom,
+  );
+
+  const passwordComplete = async (password: string) => {
+    try {
+      const userInfo = await getUserInfo();
+      const userId = userInfo.result.id;
+
+      const isPasswordCorrect = await checkPassword(userId, password);
+
+      if (isPasswordCorrect) {
+        const transfer = () => {
+          try {
+            postUserFreeAccountTransfer(
+              // 이체받을 계좌번호
+              depositAccountNo,
+              // 이체받을 계좌기록
+              depositTransactionSummary,
+              // 이체 금액
+              transactionBalance,
+              // 출금할 계좌 번호
+              withdrawalAccountNo,
+              // 출금할 계좌 기록
+              withdrawalTransactionSummary,
+              // 비밀번호
+              password,
+            );
+          } catch (error) {
+            console.error('Error fetching answer:', error);
+          }
+        };
+        transfer();
+        navigate('/account/transfer/success');
+      } else {
+        setIsModalOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setInputKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -21,7 +81,15 @@ const AccountTransferPassword = () => {
         <LevelBar currentLevel={5} totalLevel={5} />
       </div>
 
-      <PasswordInput onComplete={passwordComplete} />
+      <PasswordInput key={inputKey} onComplete={passwordComplete} />
+
+      <NoModal
+        isOpen={isModalOpen}
+        ModalClose={closeModal}
+        imageSrc='/assets/icons/warning.png'
+        title='비밀번호 오류'
+        description='비밀번호가 틀립니다.'
+      />
     </div>
   );
 };
