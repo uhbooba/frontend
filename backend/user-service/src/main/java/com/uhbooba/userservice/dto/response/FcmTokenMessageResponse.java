@@ -6,14 +6,14 @@ import lombok.Builder;
 public record FcmTokenMessageResponse(
 
     Integer id,
-    String token
+    String fcmToken
 
 ) {
 
-    public static FcmTokenMessageResponse of(Integer id, String token) {
+    public static FcmTokenMessageResponse of(Integer id, String fcmToken) {
         return FcmTokenMessageResponse.builder()
             .id(id)
-            .token(token)
+            .fcmToken(fcmToken)
             .build();
     }
 }
