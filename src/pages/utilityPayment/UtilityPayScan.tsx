@@ -52,9 +52,7 @@ const UtilityPayScan = () => {
 
   return (
     <div className='max-h-screen'>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='공과금 납부' />
-      </div>
+      <TopBar title='공과금 납부' />
       <div className='relative mt-36 flex h-3/4 w-full flex-col items-center justify-center'>
         <p className='my-4 text-center text-3xl'>
           종이 고지서에 있는 <br />
@@ -65,15 +63,6 @@ const UtilityPayScan = () => {
             ref={videoRef}
             className='absolute inset-0 h-full w-full object-cover'
           />
-        </div>
-        <div className='fixed bottom-0 flex w-full flex-col items-center bg-white p-4 shadow-md'>
-          <p className='mb-2 text-2xl text-gray-500'>종이고지서 납부</p>
-          <button
-            onClick={() => alert('사용 방법 안내')}
-            className='w-11/12 rounded-md bg-black py-3 text-center text-white'
-          >
-            사용 방법
-          </button>
         </div>
       </div>
     </div>
