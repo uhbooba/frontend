@@ -15,7 +15,7 @@ public class KafkaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, UserSignupMessageResponse data) {
+    public void sendAccountUser(String topic, UserSignupMessageResponse data) {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = "";
 
@@ -27,4 +27,17 @@ public class KafkaProducerService {
 
         kafkaTemplate.send(topic, jsonInString);
     }
+
+//    public void sendAccountUser(String topic, UserSignupMessageResponse data) {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String jsonInString = "";
+//
+//        try {
+//            jsonInString = mapper.writeValueAsString(data);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        kafkaTemplate.send(topic, jsonInString);
+//    }
 }
