@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { Input } from '@/components/common/Input';
 import Button from '@/components/common/buttons/Button';
+import TitleText from '@/components/common/TitleText';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const ExchangeComplete = () => {
   const navigate = useNavigate();
@@ -18,13 +20,9 @@ const ExchangeComplete = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='환전' />
-      </div>
-      <div className='mb-6 mt-20'>
-        <div className='mb-8 text-3xl font-bold'>
-          <span>환전 내역</span>
-        </div>
+      <TopBar title='환전' showBackButton={false} />
+      <MainWrapper>
+        <TitleText>환전 내역</TitleText>
         <div>
           <Input
             label='출금 계좌'
@@ -54,10 +52,14 @@ const ExchangeComplete = () => {
         <div>
           <Button
             label='확인했어요'
-            onClick={() => navigate('/exchange/success')}
+            onClick={() =>
+              navigate('/exchange/success', {
+                state: { amount: exchangeData?.exchangeAmount },
+              })
+            }
           />
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };

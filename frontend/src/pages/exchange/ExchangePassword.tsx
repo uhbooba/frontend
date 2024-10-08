@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
@@ -5,40 +6,60 @@ import TopBar from '@/components/layouts/TopBar';
 import { postExchange } from '@/services/exchange';
 import { useAtom } from 'jotai';
 import { accountNoAtom, exchangeAmountAtom } from '@/atoms/exchangeAtoms';
+import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
+import axios from 'axios';
+import NoModal from '@/components/modals/NoModal';
 
 const ExchangePassword = () => {
   const navigate = useNavigate();
   const [accountNo] = useAtom(accountNoAtom);
   const [amount] = useAtom(exchangeAmountAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputKey, setInputKey] = useState(0);
 
   const passwordComplete = (password: string) => {
-    console.log('비밀번호 확인용 :', password);
-
-    fetchExchange(); // 추후 비밀번호 확인 추가 예정
+    fetchExchange(password);
   };
 
-  const fetchExchange = async () => {
+  const fetchExchange = async (password: string) => {
     try {
-      const response = await postExchange(accountNo, 'USD', amount);
-      navigate('/exchange/complete', {
-        state: { exchangeResult: response.data?.result },
-      });
+      const response = await postExchange(accountNo, 'USD', amount, password);
+
+      if (response?.data?.statusCode === 200) {
+        navigate('/exchange/complete', {
+          state: { exchangeResult: response.data?.result },
+        });
+      }
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message === '비밀번호가 맞지 않습니다.') {
+          setIsModalOpen(true);
+          setInputKey((prevKey) => prevKey + 1);
+        }
+      }
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='환전' />
-      </div>
-
-      <div className='mb-12 mt-20'>
+      <TopBar title='환전' />
+      <MainWrapper>
         <LevelBar currentLevel={4} totalLevel={4} />
-      </div>
-
-      <PasswordInput onComplete={passwordComplete} />
+        <TitleText className='text-center'>비밀번호 입력</TitleText>
+        <PasswordInput onComplete={passwordComplete} key={inputKey} />
+      </MainWrapper>
+      <NoModal
+        isOpen={isModalOpen}
+        ModalClose={closeModal}
+        imageSrc='/assets/icons/warning.png'
+        title='비밀번호 오류'
+        description='비밀번호가 틀립니다.'
+      />
     </div>
   );
 };
