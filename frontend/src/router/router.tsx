@@ -97,6 +97,9 @@ const UtilityPayScan = lazy(
 const UtilityPayMoney = lazy(
   () => import('@/pages/utilityPayment/UtilityPayMoney'),
 );
+const UtilityPayAccount = lazy(
+  () => import('@/pages/utilityPayment/UtilityPayAccount'),
+);
 const UtilityPayPassword = lazy(
   () => import('@/pages/utilityPayment/UtilityPayPassword'),
 );
@@ -238,6 +241,7 @@ const router = createBrowserRouter([
           { path: 'utility/input', element: <UtilityPayInfoInput /> },
           { path: 'utility/scan', element: <UtilityPayScan /> },
           { path: 'utility/money', element: <UtilityPayMoney /> },
+          { path: 'utility/account', element: <UtilityPayAccount /> },
           { path: 'utility/password', element: <UtilityPayPassword /> },
           { path: 'utility/success', element: <UtilityPaySuccess /> },
           // 계좌 조회
