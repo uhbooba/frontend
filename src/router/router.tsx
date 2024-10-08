@@ -116,22 +116,22 @@ const AccountDepositProducts = lazy(
   () => import('@/pages/account/AccountDepositProducts'),
 );
 const AccountTransferAccountInfo = lazy(
-  () => import('@/pages/account/AccountTransferAccountInfo'),
+  () => import('@/pages/account/transfer/AccountTransferAccountInfo'),
 );
 const AccountTransferAmount = lazy(
-  () => import('@/pages/account/AccountTransferAmount'),
+  () => import('@/pages/account/transfer/AccountTransferAmount'),
 );
 const AccountTransferDepositName = lazy(
-  () => import('@/pages/account/AccountTransferDepositName'),
+  () => import('@/pages/account/transfer/AccountTransferDepositName'),
 );
 const AccountTransferInfoCheck = lazy(
-  () => import('@/pages/account/AccountTransferInfoCheck'),
+  () => import('@/pages/account/transfer/AccountTransferInfoCheck'),
 );
 const AccountTransferPassword = lazy(
-  () => import('@/pages/account/AccountTransferPassword'),
+  () => import('@/pages/account/transfer/AccountTransferPassword'),
 );
 const AccountTransferSuccess = lazy(
-  () => import('@/pages/account/AccountTransferSuccess'),
+  () => import('@/pages/account/transfer/AccountTransferSuccess'),
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
 const AccountDepositList = lazy(
