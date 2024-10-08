@@ -22,6 +22,7 @@ export const errorsAtom = atom({
   phoneNumber: '',
   accountNumber: '',
 });
+export const savingPasswordAtom = atom(''); // 사용자 입력 패스워드 저장 아톰
 
 // 생성한 적금 계좌 정보
 export const savingAccountAtom = atom<SavingAccountDetail | null>(null);

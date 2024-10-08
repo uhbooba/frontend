@@ -5,12 +5,14 @@ export const postExchange = async (
   accountNo: string,
   exchangeCurrency: string,
   amount: string,
+  password: string,
 ) => {
   const exchangeAmount = Number(amount);
   const bodyData = {
     accountNo,
     exchangeCurrency,
     exchangeAmount,
+    password,
   };
 
   const response = await axiosInstance.post(
