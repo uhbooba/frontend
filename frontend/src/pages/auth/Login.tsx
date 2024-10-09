@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import { requestNotificationPermission } from '@/services/notification';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,6 +47,12 @@ const Login = () => {
       navigate('/', { state: { isFirstLogin } });
     } catch (error) {
       console.error(error);
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        if (error.response && error.response.status === 400) {
+          setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
+        }
+      }
     }
   };
 
@@ -58,8 +65,8 @@ const Login = () => {
   };
 
   return (
-    <MainWrapper className='flex items-center'>
-      <div className='flex flex-1 flex-col items-center justify-center'>
+    <MainWrapper className='flex'>
+      <div className='mt-10 flex flex-1 flex-col items-center justify-center'>
         <h1 className='text-5xl font-semibold'>어부바</h1>
         <img
           src={'https://s3.youm.me/uhbooba/icons%2Fpig.png'}
@@ -77,6 +84,7 @@ const Login = () => {
             value={password}
             type='password'
             readOnly
+            inputMode='none'
             onClick={() => setKeyOpen(true)}
           />
           {errorMessage && <ErrorText>{errorMessage}</ErrorText>}

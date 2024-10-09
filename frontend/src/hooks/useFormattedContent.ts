@@ -4,6 +4,10 @@ import { formatContent } from '@/utils/formatContent';
 export const useFormattedContent = (
   content: string,
   fontSize: string = 'text-2xl',
+  onLinkClick?: () => void,
 ) => {
-  return useMemo(() => formatContent(content, fontSize), [content, fontSize]);
+  return useMemo(
+    () => formatContent(content, fontSize, onLinkClick),
+    [content, fontSize, onLinkClick],
+  );
 };
