@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { getUserDepositAccounts } from '@/services/deposit';
 import NoModal from '@/components/modals/NoModal';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const CancelDepositExplain = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const CancelDepositExplain = () => {
       <MainWrapper>
         <div className='flex-grow overflow-y-auto px-4'>
           <div className='text-center'>
-            <p className='text-3xl font-bold'>예금 중도해지</p>
+            <TitleText>예금 중도해지</TitleText>
           </div>
           <div className='mt-4 text-lg font-bold'>
             <p>예금 중도해지는 정해진 기간이 끝나기 전에</p>

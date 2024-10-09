@@ -14,6 +14,7 @@ import {
 import TopBar from '@/components/layouts/TopBar';
 import { depositCalculateInterest } from '@/utils/depositCalculateInterest';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const DepositProduct = () => {
   const navigate = useNavigate();
@@ -53,8 +54,8 @@ const DepositProduct = () => {
       <TopBar title='예금 가입' />
       <MainWrapper>
         <LevelBar currentLevel={4} totalLevel={5} />
-        <div className='p-4'>
-          <div className='text-3xl font-bold'>가입 상품 안내</div>
+        <div className='px-4'>
+          <TitleText>가입 상품 안내</TitleText>
 
           <div className='border-b border-gray-300 py-4 text-2xl'>
             <span className='text-gray-500'>상품명</span>

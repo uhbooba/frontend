@@ -1,10 +1,10 @@
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountProduct from '@/components/common/AccountProduct';
 import { useSetAtom } from 'jotai';
 import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
 import { postUserFreeAccount } from '@/services/account';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 interface ProductItem {
   name: string;
@@ -57,20 +57,19 @@ const AccountProductsList = () => {
   return (
     <div>
       <TopBar title='계좌 개설' showXButton={false} />
-      <div className='flex flex-col items-center justify-center'>
-        {ProductsList.map((product, index) => (
-          <AccountProduct
-            key={index}
-            name={product.name}
-            description={product.description}
-            moveTo={product.moveTo}
-            onClick={() => handleProductClick(product)}
-          />
-        ))}
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      <MainWrapper>
+        <div className='flex flex-col items-center justify-center'>
+          {ProductsList.map((product, index) => (
+            <AccountProduct
+              key={index}
+              name={product.name}
+              description={product.description}
+              moveTo={product.moveTo}
+              onClick={() => handleProductClick(product)}
+            />
+          ))}
+        </div>
+      </MainWrapper>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { getEarlyTerminationInterest } from '@/services/deposit';
 import { useAtomValue } from 'jotai';
 import { selectedAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const CancelDepositProduct = () => {
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ const CancelDepositProduct = () => {
       <MainWrapper>
         <LevelBar currentLevel={1} totalLevel={2} />
         <div className=''>
+          <TitleText>중도해지 예금상품 정보</TitleText>
           <div className='border-b border-gray-300 py-4 text-2xl'>
             <span className='text-gray-500'>상품명</span>
             <div className='mt-2 flex items-center justify-between'>

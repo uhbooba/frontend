@@ -61,7 +61,7 @@ const AccountDepositList = () => {
     <div>
       <TopBar title='계좌 목록' showXButton={false} />
       <MainWrapper>
-        <div className='mt-8 flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center'>
           {loading ? (
             <p>로딩 중...</p>
           ) : depositAccounts.length === 0 && savingsAccounts.length === 0 ? (

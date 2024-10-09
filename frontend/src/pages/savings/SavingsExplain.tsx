@@ -1,4 +1,5 @@
 import Button from '@/components/common/buttons/Button';
+import TitleText from '@/components/common/TitleText';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
@@ -16,7 +17,7 @@ const Savings = () => {
       <MainWrapper>
         <div>
           <div className='text-center'>
-            <p className='text-3xl font-bold'>적금이란?</p>
+            <TitleText>적금이란?</TitleText>
           </div>
           <div className=''>
             <p className='ml-4 mt-2 text-start text-lg font-bold'>

@@ -13,6 +13,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { SavingAccountDetail } from '@/types/saving';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const SavingsAccount = () => {
   const navigate = useNavigate();
@@ -69,10 +70,7 @@ const SavingsAccount = () => {
       <TopBar title='적금 가입' />
       <MainWrapper>
         <LevelBar currentLevel={3} totalLevel={5} />
-
-        <div className='pb-4 pl-4 text-2xl font-bold'>
-          <span>어떤 계좌에서 출금할까요?</span>
-        </div>
+        <TitleText>어떤 계좌에서 출금할까요</TitleText>
 
         <div className='mt-4 pb-4 pl-4 text-lg font-bold'>
           <span>출금계좌 선택</span>

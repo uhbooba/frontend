@@ -5,6 +5,7 @@ import { getUserSavingsAccounts } from '@/services/saving';
 import { useState } from 'react';
 import NoModal from '@/components/modals/NoModal';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const CancelSavingsExplain = () => {
   const navigate = useNavigate();
@@ -40,8 +41,9 @@ const CancelSavingsExplain = () => {
       <MainWrapper>
         <div className='flex-grow overflow-y-auto px-4'>
           <div className='text-center'>
-            <p className='text-3xl font-bold'>적금 중도해지</p>
+            <TitleText>적금 중도해지</TitleText>
           </div>
+
           <div className='mt-4 text-lg font-bold'>
             <p>적금 중도해지는 정해진 기간이 끝나기 전에</p>
             <p className='mb-4'>적금을 해지하는 것입니다.</p>
