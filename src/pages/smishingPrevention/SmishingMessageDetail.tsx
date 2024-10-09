@@ -29,6 +29,7 @@ const SmishingMessageDetail = () => {
   const [modalData, setModalData] = useState({
     title: '',
     detail: '',
+    retryText: '다시 선택',
   });
 
   // 스미싱 데이터
@@ -103,6 +104,7 @@ const SmishingMessageDetail = () => {
     setModalData({
       title: '',
       detail: '',
+      retryText: '다시 선택',
     });
   };
 
@@ -125,6 +127,7 @@ const SmishingMessageDetail = () => {
       setModalData({
         title: selectedData.alert_message.title,
         detail: selectedData.alert_message.detail,
+        retryText: '다시 선택',
       });
       setIsModalOpen(true);
     } else {
@@ -147,6 +150,16 @@ const SmishingMessageDetail = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleLinkClick = () => {
+    setModalData({
+      title: '출처를 알 수 없는 링크를 누르지 마세요',
+      detail:
+        '출처를 알 수 없는 인터넷주소(URL)은 절대 클릭하지 말고 한국인터넷진흥원(118)에 즉시 신고하시기 바랍니다.',
+      retryText: '확인',
+    });
+    setIsModalOpen(true);
   };
 
   const scrollToBottom = useCallback(() => {
@@ -232,6 +245,7 @@ const SmishingMessageDetail = () => {
               time={message.time}
               isUser={message.is_reply}
               onTTSClick={() => handleTTS(message.tts_key)}
+              onLinkClick={handleLinkClick}
             />
           ))}
         </div>
@@ -253,7 +267,7 @@ const SmishingMessageDetail = () => {
           }
           isCorrect={false}
           onRetry={closeModal}
-          retryText='다시 선택'
+          retryText={modalData.retryText}
         />
       )}
     </div>

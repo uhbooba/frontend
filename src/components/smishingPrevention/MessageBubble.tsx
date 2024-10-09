@@ -7,6 +7,7 @@ type MessageBubbleProps = {
   isUser: boolean;
   imgUrl?: string | null;
   onTTSClick?: () => void;
+  onLinkClick?: () => void;
 };
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({
@@ -15,8 +16,13 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
   isUser,
   imgUrl,
   onTTSClick,
+  onLinkClick,
 }) => {
-  const formattedContent = useFormattedContent(content, 'text-2xl');
+  const formattedContent = useFormattedContent(
+    content,
+    'text-2xl',
+    onLinkClick,
+  );
 
   return (
     <div
