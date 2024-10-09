@@ -60,7 +60,7 @@ const EducationCertificate = () => {
   return (
     <div>
       <TopBar title='교육 이수증' onXButtonClick={GoEdu} />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <TitleText>
           스탬프를 다 모았다면 <br /> 이수증을 발급해봐요!{' '}
         </TitleText>
