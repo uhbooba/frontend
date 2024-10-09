@@ -17,7 +17,7 @@ const EducationWriting = () => {
     <div>
       <TopBar title='교육 이수증' showXButton={false} showBackButton={false} />
       <MainWrapper>
-        <div className='mt-60 flex flex-col items-center text-3xl font-bold'>
+        <div className='mt-40 flex flex-col items-center text-3xl font-bold'>
           <p> 귀여운 꿀꿀이가 </p>
           <p>이수증 제작하는 중...</p>
         </div>

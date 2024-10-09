@@ -40,7 +40,7 @@ const CancelSavingsSuccess = () => {
       <TopBar title='적금 중도해지' showBackButton={false} />
       <MainWrapper>
         <div className='text-center'>
-          <p className='mt-32 text-5xl font-bold'>적금 상품</p>
+          <p className='mt-4 text-5xl font-bold'>적금 상품</p>
           <p className='mt-4 text-5xl font-bold'>중도해지 완료</p>
         </div>
 

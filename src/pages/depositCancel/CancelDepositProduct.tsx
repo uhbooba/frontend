@@ -87,7 +87,7 @@ const CancelDepositProduct = () => {
       <TopBar title='예금 중도해지' />
       <MainWrapper>
         <LevelBar currentLevel={1} totalLevel={2} />
-        <div className='p-4'>
+        <div className=''>
           <div className='border-b border-gray-300 py-4 text-2xl'>
             <span className='text-gray-500'>상품명</span>
             <div className='mt-2 flex items-center justify-between'>
@@ -131,7 +131,7 @@ const CancelDepositProduct = () => {
                   {interestRate !== null ? `${interestRate} %` : '없음'}
                 </div>
               </div>
-              <div className='ml-12 text-left'>
+              <div className='ml-6 text-left'>
                 <span className='text-2xl text-gray-500'>받을 이자 금액</span>
                 <div className='mt-2 text-xl font-bold'>
                   {earlyTerminationInterest !== null

@@ -14,7 +14,7 @@ const DepositExplain = () => {
       <TopBar title='예금 가입' />
       <MainWrapper>
         <div>
-          <div className='mt-20 text-center'>
+          <div className='text-center'>
             <p className='text-3xl font-bold'>예금이란?</p>
           </div>
           <div className='text-center'>
