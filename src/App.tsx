@@ -6,7 +6,9 @@ import ScrollToTop from './components/layouts/ScrollTopTop';
 
 function App() {
   const location = useLocation();
-  const isBottomTab = ['/login', '/signup'].includes(location.pathname);
+  const isBottomTab =
+    ['/'].includes(location.pathname) ||
+    /\/education(\/.*)?/.test(location.pathname);
 
   return (
     <div>
@@ -15,7 +17,7 @@ function App() {
           <Outlet />
         </ScrollToTop>
       </Layout>
-      {!isBottomTab && <BottomTab />}
+      {isBottomTab && <BottomTab />}
     </div>
   );
 }

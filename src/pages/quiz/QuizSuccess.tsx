@@ -10,7 +10,7 @@ const QuizSuccess = () => {
   const navigate = useNavigate();
 
   const moveQuizMainPage = () => {
-    navigate('/quiz');
+    navigate('/education/quiz');
   };
 
   useEffect(() => {
@@ -24,7 +24,10 @@ const QuizSuccess = () => {
   return (
     <div className='flex flex-col'>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <MainWrapper className='felx h-full items-center justify-center'>
+      <MainWrapper
+        className='felx h-full items-center justify-center'
+        isBottomTab={true}
+      >
         <div className='mt-16 flex flex-col items-center justify-center'>
           <TextBubble
             content={['모든 문제를', '해결하셨습니다!']}
