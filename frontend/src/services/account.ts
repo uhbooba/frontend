@@ -51,7 +51,7 @@ export const postUserFreeAccountTransfer = async (
     transactionBalance,
     withdrawalAccountNo,
     withdrawalTransactionSummary,
-    password
+    password,
   });
 };
 

@@ -2,45 +2,105 @@ import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
-import { getMissionClearStatus } from '@/services/mission';
-import { savingPasswordAtom } from '@/atoms/savings/savingsDataAtoms';
+import {
+  selectedSavingsProductAtom,
+  withdrawalAccountAtom,
+  selectMoneyAtom,
+} from '@/atoms/savings/savingsDataAtoms';
 import { useAtom } from 'jotai';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getUserInfo, checkPassword } from '@/services/auth';
+import { getMissionClearStatus } from '@/services/mission';
 import NoModal from '@/components/modals/NoModal';
+import MainWrapper from '@/components/layouts/MainWrapper';
+import { createSavingsAccount, getSavingsProducts } from '@/services/saving';
 
-const Savingspassword = () => {
+const SavingsPassword = () => {
   const navigate = useNavigate();
-  const [, setSavingPassword] = useAtom(savingPasswordAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputKey, setInputKey] = useState(0); // PasswordInput 리렌더링을 위한 고유 키값
+  const [inputKey, setInputKey] = useState(0); // PasswordInput 리렌더링을 위한 고유 키값 설정
+  const [selectedSavingProduct] = useAtom(selectedSavingsProductAtom);
+  const [withdrawalAccount] = useAtom(withdrawalAccountAtom);
+  const [selectMoney] = useAtom(selectMoneyAtom);
+  const [accountTypeUniqueNo, setAccountTypeUniqueNo] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    // 적금 상품 고유번호를 가져오는 API 호출
+    const fetchAccountTypeUniqueNo = async () => {
+      if (!selectedSavingProduct) {
+        console.error('선택된 적금 상품이 없습니다.');
+        return;
+      }
+
+      try {
+        const response = await getSavingsProducts();
+        const products = response?.data?.result || [];
+
+        // 선택된 상품명과 일치하는 상품 정보 찾기
+        const selectedProductInfo = products.find(
+          (product: any) => product.accountName === selectedSavingProduct.name,
+        );
+
+        if (selectedProductInfo) {
+          setAccountTypeUniqueNo(selectedProductInfo.accountTypeUniqueNo); // 선택된 상품의 고유 번호 저장
+        }
+      } catch (error) {
+        console.error('API 호출 중 에러', error);
+      }
+    };
+
+    fetchAccountTypeUniqueNo();
+  }, [selectedSavingProduct]);
 
   const passwordComplete = async (password: string) => {
     try {
-      // 사용자 정보 조회하는 api 부르기
       const userInfo = await getUserInfo();
       const userId = userInfo.result.id;
-      // 비밀번호 확인 api 부르기
+
+      // 비밀번호 확인 API 요청
       const isPasswordCorrect = await checkPassword(userId, password);
 
       if (isPasswordCorrect) {
-        // 적금 가입 미션(4단계) 클리어 했는지 확인
-        const response = await getMissionClearStatus(4);
-        if (response.result === true) {
-          // 클리어했으면 SavingsSuccess로 이동 (여긴 그냥 적금가입 성공 페이지)
-          setSavingPassword(password); // 비밀번호도 전달
+        // 미션 클리어 여부 확인 (미션은 4단계 미션임)
+        const missionResponse = await getMissionClearStatus(4);
+        await handleCreateSavingsAccount(password); // 적금 계좌 생성
+
+        if (missionResponse.result === true) {
+          // 미션 이미 성공했으면 기본 가입 성공 페이지리ㅗ
           navigate('/savings/success');
         } else {
-          // 아직 미션 클리어 안했으면 SavingsSuccessMission로 이동 (여기는 미션+적금가입 성공페이지)
-          setSavingPassword(password); // 비밀번호도 전달
+          // 미션 성공 안했으면 미션 및 가입 성공 페이지로
           navigate('/savings/success/mission');
         }
       } else {
+        setIsModalOpen(true); // 비밀번호가 틀린 경우 모달 표시
         setInputKey((prevKey) => prevKey + 1); // PasswordInput 리렌더링
-        setIsModalOpen(true);
       }
     } catch (error) {
-      console.error('getMissionClearStatus 에러', error);
+      console.error('비밀번호 오류 또는 API 호출 오류', error);
+    }
+  };
+
+  const handleCreateSavingsAccount = async (password: string) => {
+    try {
+      // 금액에서 쉼표 제거하고 숫자로 변환
+      const savingBalance = parseInt(selectMoney.replace(/,/g, ''), 10);
+
+      // 적금 계좌 생성 API 호출
+      const response = await createSavingsAccount(
+        withdrawalAccount!.accountNo,
+        accountTypeUniqueNo!,
+        savingBalance,
+        password,
+      );
+
+      if (response?.data?.statusCode !== 200) {
+        throw new Error('적금 계좌 생성에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('적금 계좌 생성 오류', error);
     }
   };
 
@@ -50,25 +110,24 @@ const Savingspassword = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입' />
-      </div>
+      <TopBar title='적금 가입' />
+      <MainWrapper>
+        <div className='mb-2 mt-20'>
+          <LevelBar currentLevel={5} totalLevel={5} />
+        </div>
 
-      <div className='mb-12 mt-20'>
-        <LevelBar currentLevel={5} totalLevel={5} />
-      </div>
+        <PasswordInput key={inputKey} onComplete={passwordComplete} />
 
-      <PasswordInput onComplete={passwordComplete} key={inputKey} />
-
-      <NoModal
-        isOpen={isModalOpen}
-        ModalClose={closeModal}
-        imageSrc='/assets/icons/warning.png'
-        title='비밀번호 오류'
-        description='비밀번호가 틀립니다.'
-      />
+        <NoModal
+          isOpen={isModalOpen}
+          ModalClose={closeModal}
+          imageSrc='/assets/icons/warning.png'
+          title='비밀번호 오류'
+          description='비밀번호가 틀립니다.'
+        />
+      </MainWrapper>
     </div>
   );
 };
 
-export default Savingspassword;
+export default SavingsPassword;
