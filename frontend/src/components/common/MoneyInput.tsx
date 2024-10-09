@@ -24,7 +24,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
             size='small'
             onClick={() => onAmountClick(index, amount)}
             className={clsx(
-              'border-2',
+              'border-2 flex-grow',
               amountBtnColor === amount
                 ? 'border-blue-400 text-blue-400'
                 : 'border-gray-200',
@@ -42,7 +42,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
             size='small'
             onClick={() => onAmountClick(index+3, amount)}
             className={clsx(
-              'border-2',
+              'border-2 flex-grow',
               amountBtnColor === amount
                 ? 'border-blue-400 text-blue-400'
                 : 'border-gray-200',

@@ -1,5 +1,14 @@
 package com.uhbooba.financeservice.controller.finance;
 
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_ESTIMATE_REQ;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_ESTIMATE_RES;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_RATE_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_REQ;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Exchange.EXCHANGE_RES;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.CURRENCY;
+
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeGetEstimateRequest;
@@ -44,7 +53,7 @@ public class ExchangeController {
     }
 
     @GetMapping("/rates/detail")
-    @Operation(summary = "환율 조회")
+    @Operation(summary = "환율 조회", description = INPUT + CURRENCY + OUTPUT + EXCHANGE_RATE_RESPONSE)
     public CommonResponse<ExchangeRateResponse> getExchangeRate(
         @RequestParam("currency") String currency
     ) {
@@ -52,7 +61,8 @@ public class ExchangeController {
     }
 
     @PostMapping("/estimates")
-    @Operation(summary = "환전 예상 금액 조회")
+    @Operation(summary = "환전 예상 금액 조회", description = INPUT + EXCHANGE_ESTIMATE_REQ + OUTPUT
+        + EXCHANGE_ESTIMATE_RES)
     public CommonResponse<ExchangeEstimateResponse> getExchangeEstimate(
         @Valid @RequestBody ExchangeGetEstimateRequest exchangeGetEstimateRequest
     ) {
@@ -61,7 +71,7 @@ public class ExchangeController {
     }
 
     @PostMapping("/exchange")
-    @Operation(summary = "환전")
+    @Operation(summary = "환전", description = INPUT + EXCHANGE_REQ + OUTPUT + EXCHANGE_RES)
     public CommonResponse<ExchangeResponse> exchangeCurrency(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody ExchangeRequest dto

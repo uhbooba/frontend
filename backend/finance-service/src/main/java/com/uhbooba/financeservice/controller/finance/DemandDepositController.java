@@ -2,7 +2,12 @@ package com.uhbooba.financeservice.controller.finance;
 
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.ACCOUNT_CREATE_RESPONSE;
 import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.ACCOUNT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.DEMAND_DEPOSIT_DEPOSIT_RESPONSE;
+import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.DEPOSIT_INPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.TRANSFER_INPUT;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
@@ -62,7 +67,8 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "입출금 계좌 생성", description = "입출금 계좌를 생성합니다.")
+    @Operation(summary = "입출금 계좌 생성", description = "입출금 계좌를 생성합니다." + INPUT + OUTPUT
+        + ACCOUNT_CREATE_RESPONSE)
     public CommonResponse<DemandDepositAccountResponse> createDemandDepositAccount(
         @RequestHeader HttpHeaders headers
     ) {
@@ -85,9 +91,8 @@ public class DemandDepositController {
     }
 
     @GetMapping("/accounts/holder")
-    @Operation(summary = "입출금계좌 소유자 이름 조회", description = """
-            해당 계좌의 소유자 정보를 확인합니다. \n
-        """)
+    @Operation(summary = "입출금계좌 소유자 이름 조회", description = "해당 계좌의 소유자 정보를 확인합니다." + INPUT
+        + ACCOUNT_NO + OUTPUT + ACCOUNT_RESPONSE)
     public CommonResponse<AccountResponse> getAccountHolderName(
         @RequestHeader HttpHeaders headers,
         @RequestParam("accountNo") String accountNo
@@ -118,7 +123,8 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts/deposit")
-    @Operation(summary = "입출금계좌에 입금")
+    @Operation(summary = "입출금계좌에 입금", description = INPUT + DEPOSIT_INPUT + OUTPUT
+        + DEMAND_DEPOSIT_DEPOSIT_RESPONSE)
     public CommonResponse<DemandDepositDepositResponse> depositAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DemandDepositDepositAccountRequest accountRequest
@@ -131,7 +137,7 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts/transfer")
-    @Operation(summary = "입출금계좌에서 이체")
+    @Operation(summary = "입출금계좌에서 이체", description = INPUT + TRANSFER_INPUT + OUTPUT)
     public CommonResponse<List<DemandDepositTransferResponse>> transferAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DemandDepositTransferAccountRequest transferAccountRequest

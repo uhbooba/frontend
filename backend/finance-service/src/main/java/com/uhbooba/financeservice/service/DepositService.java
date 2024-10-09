@@ -120,7 +120,7 @@ public class DepositService {
                                                         ex);
             transactionService.updateTransactionForFail(transactionRequests.senderTransaction(),
                                                         ex);
-            throw new DepositFailedException("예금 가입을 실패했습니다.");
+            throw new DepositFailedException(ex.getMessage());
         }
     }
 

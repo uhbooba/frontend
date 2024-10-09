@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Layout from './components/layouts/Layout';
+import './firebase-message.ts';
 import { BottomTab } from './components/layouts/BottomTab';
 import ScrollToTop from './components/layouts/ScrollTopTop';
 
