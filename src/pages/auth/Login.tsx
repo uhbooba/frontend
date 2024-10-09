@@ -58,8 +58,8 @@ const Login = () => {
   };
 
   return (
-    <MainWrapper className='flex items-center'>
-      <div className='flex flex-1 flex-col items-center justify-center'>
+    <MainWrapper className='flex'>
+      <div className='mt-10 flex flex-1 flex-col items-center justify-center'>
         <h1 className='text-5xl font-semibold'>어부바</h1>
         <img
           src={'https://s3.youm.me/uhbooba/icons%2Fpig.png'}
@@ -77,6 +77,7 @@ const Login = () => {
             value={password}
             type='password'
             readOnly
+            inputMode='none'
             onClick={() => setKeyOpen(true)}
           />
           {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
