@@ -6,6 +6,7 @@ import Keypad from '@/components/common/KeyPad';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { requestNotificationPermission } from '@/services/notification';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [keyOpen, setKeyOpen] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setErrorMessage('');
 
     if (userId.trim() === '' || password.trim() === '') {
@@ -22,12 +23,20 @@ const Login = () => {
       return;
     }
 
-    fetchLogin();
+    try {
+      const fcmToken = await requestNotificationPermission();
+
+      if (fcmToken) {
+        await fetchLogin(fcmToken);
+      }
+    } catch (error) {
+      console.error('로그인 중 오류 발생:', error);
+    }
   };
 
-  const fetchLogin = async () => {
+  const fetchLogin = async (fcmToken: string) => {
     try {
-      const response = await postLogin(userId, password);
+      const response = await postLogin(userId, password, fcmToken);
 
       const token = response?.headers['access'];
       localStorage.setItem('ACCESS_TOKEN', token);
