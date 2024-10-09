@@ -24,8 +24,6 @@ const createAxiosInstance = () => {
         return config;
       }
 
-      console.log(config?.url);
-
       if (accessToken) {
         config.headers['access'] = `${accessToken}`;
       }

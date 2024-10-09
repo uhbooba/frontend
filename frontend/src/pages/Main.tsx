@@ -158,7 +158,7 @@ const Main = () => {
         showXButton={false}
         showMainButton={true}
       />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         {/* 메인계좌 디브 */}
         <div className='my-4 rounded-md bg-white p-4 shadow'>
           <div className='flex items-center pt-2'>
