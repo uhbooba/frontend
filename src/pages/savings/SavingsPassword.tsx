@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { getUserInfo, checkPassword } from '@/services/auth';
 import NoModal from '@/components/modals/NoModal';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const Savingspassword = () => {
   const navigate = useNavigate();
@@ -50,23 +51,20 @@ const Savingspassword = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='적금 가입' />
-      </div>
-
-      <div className='mb-12 mt-20'>
+      <TopBar title='적금 가입' />
+      <MainWrapper>
         <LevelBar currentLevel={5} totalLevel={5} />
-      </div>
 
-      <PasswordInput onComplete={passwordComplete} key={inputKey} />
+        <PasswordInput onComplete={passwordComplete} key={inputKey} />
 
-      <NoModal
-        isOpen={isModalOpen}
-        ModalClose={closeModal}
-        imageSrc='/assets/icons/warning.png'
-        title='비밀번호 오류'
-        description='비밀번호가 틀립니다.'
-      />
+        <NoModal
+          isOpen={isModalOpen}
+          ModalClose={closeModal}
+          imageSrc='/assets/icons/warning.png'
+          title='비밀번호 오류'
+          description='비밀번호가 틀립니다.'
+        />
+      </MainWrapper>
     </div>
   );
 };

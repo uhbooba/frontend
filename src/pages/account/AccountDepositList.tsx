@@ -1,5 +1,4 @@
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountInfo from '@/components/common/AccountInfo';
 import { useEffect, useState } from 'react';
 import { getUserSavingsAccounts } from '@/services/saving';
@@ -9,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useSetAtom } from 'jotai';
 import { selectedAccountAtom } from '@/atoms/deposit/depositDataAtoms';
 import { selectedSavingsAccountAtom } from '@/atoms/savings/savingsDataAtoms';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const AccountDepositList = () => {
   const [depositAccounts, setDepositAccounts] = useState<any[]>([]);
@@ -60,48 +60,47 @@ const AccountDepositList = () => {
   return (
     <div>
       <TopBar title='계좌 목록' showXButton={false} />
-      <div className='mt-8 flex flex-col items-center justify-center'>
-        {loading ? (
-          <p>로딩 중...</p>
-        ) : depositAccounts.length === 0 && savingsAccounts.length === 0 ? (
-          <div className='text-center text-xl font-bold'>
-            가입한 예금 & 적금이 없습니다.
-          </div>
-        ) : (
-          <>
-            {depositAccounts.map((account, index) => (
-              <AccountInfo
-                key={`deposit-${index}`}
-                accountType='예금 계좌'
-                accountNumber={account.accountNo}
-                amount={parseInt(account.depositBalance, 10)}
-                buttonName='중도 해지'
-                moveTo=''
-                onClick={() => {
-                  handleCancelClick('예금 계좌', account);
-                }}
-              />
-            ))}
-            {savingsAccounts.map((account, index) => (
-              <AccountInfo
-                key={`savings-${index}`}
-                accountType='적금 계좌'
-                accountNumber={account.accountNo}
-                amount={parseInt(account.depositBalance, 10)}
-                buttonName='중도 해지'
-                moveTo=''
-                onClick={() => {
-                  setSelectedSavingsAccount(account); // 적금 계좌 정보 저장
-                  navigate('/cancel/savings/explain');
-                }}
-              />
-            ))}
-          </>
-        )}
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      <MainWrapper>
+        <div className='mt-8 flex flex-col items-center justify-center'>
+          {loading ? (
+            <p>로딩 중...</p>
+          ) : depositAccounts.length === 0 && savingsAccounts.length === 0 ? (
+            <div className='text-center text-xl font-bold'>
+              가입한 예금 & 적금이 없습니다.
+            </div>
+          ) : (
+            <>
+              {depositAccounts.map((account, index) => (
+                <AccountInfo
+                  key={`deposit-${index}`}
+                  accountType='예금 계좌'
+                  accountNumber={account.accountNo}
+                  amount={parseInt(account.depositBalance, 10)}
+                  buttonName='중도 해지'
+                  moveTo=''
+                  onClick={() => {
+                    handleCancelClick('예금 계좌', account);
+                  }}
+                />
+              ))}
+              {savingsAccounts.map((account, index) => (
+                <AccountInfo
+                  key={`savings-${index}`}
+                  accountType='적금 계좌'
+                  accountNumber={account.accountNo}
+                  amount={parseInt(account.depositBalance, 10)}
+                  buttonName='중도 해지'
+                  moveTo=''
+                  onClick={() => {
+                    setSelectedSavingsAccount(account); // 적금 계좌 정보 저장
+                    navigate('/cancel/savings/explain');
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </MainWrapper>
     </div>
   );
 };
