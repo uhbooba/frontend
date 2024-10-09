@@ -8,8 +8,8 @@ import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
   depositAccountNoAtom,
-  depositTransactionSummaryAtom,
   selectedBankAtom,
+  withdrawalTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import { getFreeAcountHolder } from '@/services/account';
 
@@ -19,7 +19,7 @@ const AccountTransferAccountInfo = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo, setDepositAccountNo] = useAtom(depositAccountNoAtom);
-  const [, setDepositUsername] = useAtom(depositTransactionSummaryAtom);
+  const [, setDepositUsername] = useAtom(withdrawalTransactionSummaryAtom);
 
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
