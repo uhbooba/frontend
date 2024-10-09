@@ -14,7 +14,6 @@ import {
   transactionBalanceAtom,
   selectedBankAtom,
   depositTransactionSummaryAtom,
-  withdrawalTransactionSummaryAtom,
   withdrawalAccountNoAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
@@ -27,7 +26,7 @@ const AccountTransferAmount = () => {
   const [selectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo] = useAtom(depositAccountNoAtom);
   const [depositUsername] = useAtom(depositTransactionSummaryAtom);
-  const [, setWithdrawalUsername] = useAtom(withdrawalTransactionSummaryAtom);
+  const [, setWithdrawalUsername] = useAtom(depositTransactionSummaryAtom);
   const [, setWithdrawalAccountNo] = useAtom(withdrawalAccountNoAtom);
   const [balance, setBalance] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -103,6 +102,8 @@ const AccountTransferAmount = () => {
   };
 
   useEffect(() => {
+    setTransactionBalance(0);
+
     const fetchAccountBalance = async () => {
       try {
         const response = await getUserFreeAccount();
@@ -110,7 +111,7 @@ const AccountTransferAmount = () => {
           const account = response.data.result;
           setBalance(account.balance);
           setWithdrawalUsername(account.username);
-          setWithdrawalAccountNo(account.accountNo)
+          setWithdrawalAccountNo(account.accountNo);
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);

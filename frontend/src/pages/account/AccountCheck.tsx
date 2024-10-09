@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountHistory from '@/components/common/AccountHistory';
 import { getUserFreeAccount } from '@/services/account';
 
@@ -334,9 +333,6 @@ const AccountCheck = () => {
               />
             )}
           </div>
-        </div>
-        <div className='fixed bottom-0 left-0 w-full'>
-          <BottomTab />
         </div>
       </div>
 
