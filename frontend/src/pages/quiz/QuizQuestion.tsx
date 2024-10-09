@@ -5,6 +5,8 @@ import QuizLevelBar from '@/components/quiz/QuizLevelBar';
 import QuizModal from '@/components/quiz/QuizModal';
 import { getQuizItem } from '@/services/education';
 import { QuizItem } from '@/types/education';
+import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const QuizQuestion = () => {
   const navigate = useNavigate();
@@ -58,42 +60,44 @@ const QuizQuestion = () => {
   return (
     <div>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <QuizLevelBar
-        currentQuestion={currentQuestionIndex}
-        totalQuestions={totalQuestions}
-      />
-      <div className='my-8 flex flex-col px-4'>
-        <h2 className='mb-6 text-4xl font-bold'>모바일뱅킹</h2>
-        <p className='mb-8 text-3xl'>
-          {quizData[currentQuestionIndex]?.question}
-        </p>
-      </div>
-      <div>
-        <button
-          className='mb-12 w-full rounded-lg bg-green-main py-10 text-6xl font-bold text-white shadow-lg'
-          onClick={() => handleAnswer('O')}
-        >
-          O
-        </button>
-        <button
-          className='w-full rounded-lg bg-red-main py-10 text-6xl font-bold text-white shadow-lg'
-          onClick={() => handleAnswer('X')}
-        >
-          X
-        </button>
-      </div>
-      {showModal && (
-        <QuizModal
-          content={
-            userAnswers === quizData[currentQuestionIndex].answer
-              ? quizData[currentQuestionIndex].comment
-              : WRONG_TEXT
-          }
-          isCorrect={userAnswers === quizData[currentQuestionIndex].answer}
-          onNext={handleNextQuestions}
-          onRetry={handleRetry}
+      <MainWrapper>
+        <QuizLevelBar
+          currentQuestion={currentQuestionIndex}
+          totalQuestions={totalQuestions}
         />
-      )}
+        <div className='mb-8 flex h-52 flex-col px-4'>
+          <TitleText>모바일뱅킹</TitleText>
+          <p className='mb-8 text-3xl'>
+            {quizData[currentQuestionIndex]?.question}
+          </p>
+        </div>
+        <div>
+          <button
+            className='mb-8 w-full rounded-lg bg-green-main py-10 text-6xl font-bold text-white shadow-lg'
+            onClick={() => handleAnswer('O')}
+          >
+            O
+          </button>
+          <button
+            className='w-full rounded-lg bg-red-main py-10 text-6xl font-bold text-white shadow-lg'
+            onClick={() => handleAnswer('X')}
+          >
+            X
+          </button>
+        </div>
+        {showModal && (
+          <QuizModal
+            content={
+              userAnswers === quizData[currentQuestionIndex].answer
+                ? quizData[currentQuestionIndex].comment
+                : WRONG_TEXT
+            }
+            isCorrect={userAnswers === quizData[currentQuestionIndex].answer}
+            onNext={handleNextQuestions}
+            onRetry={handleRetry}
+          />
+        )}
+      </MainWrapper>
     </div>
   );
 };

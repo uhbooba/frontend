@@ -15,11 +15,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ children }) => {
     }
   }, [pathname]);
 
-  return (
-    <div ref={scrollRef} className='flex-1 overflow-y-auto overflow-x-hidden'>
-      {children}
-    </div>
-  );
+  return <div ref={scrollRef}>{children}</div>;
 };
 
 export default ScrollToTop;

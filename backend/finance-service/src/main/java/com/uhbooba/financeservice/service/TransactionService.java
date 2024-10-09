@@ -251,7 +251,7 @@ public class TransactionService {
         SavingsAccountCreateRequest request,
         Account sourceAccount
     ) {
-        Long transactionBalance = request.depositBalance();
+        Long transactionBalance = request.savingsBalance();
         // 이체받는 transaction 생성
         TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
                                                                            .status(
