@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import { requestNotificationPermission } from '@/services/notification';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,6 +47,12 @@ const Login = () => {
       navigate('/', { state: { isFirstLogin } });
     } catch (error) {
       console.error(error);
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        if (error.response && error.response.status === 400) {
+          setErrorMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
+        }
+      }
     }
   };
 
