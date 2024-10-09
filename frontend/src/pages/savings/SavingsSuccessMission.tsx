@@ -42,7 +42,7 @@ const SavingsSuccessMission = () => {
       <MainWrapper>
         {/* 배경 이미지 설정 */}
         <div
-          className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
+          className='relative flex flex-grow flex-col justify-between px-4 pt-8'
           style={{
             backgroundImage: `url("/assets/images/money_rain.png")`,
             backgroundSize: '420px auto',
