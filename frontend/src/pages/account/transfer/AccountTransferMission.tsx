@@ -1,13 +1,17 @@
 import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
+import { useAtom } from 'jotai';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { isTransferMissionProgressingAtom } from '@/atoms/account/accountTransferAtoms';
 
 const AccountOpenMission = () => {
   const navigate = useNavigate();
+  const [, setIsMissionProgressing] = useAtom(isTransferMissionProgressingAtom)
 
   const GoExplain = () => {
+    setIsMissionProgressing(true)
     navigate('/account/transfer/account-info');
   };
 
