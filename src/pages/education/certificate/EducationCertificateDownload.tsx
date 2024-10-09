@@ -81,7 +81,7 @@ const EducationDownload = () => {
         onXButtonClick={GoEdu}
         showBackButton={false}
       />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div className='flex justify-center'>
           <canvas ref={canvasRef} className='border'></canvas>
         </div>

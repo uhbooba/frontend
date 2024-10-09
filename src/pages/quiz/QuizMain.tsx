@@ -7,7 +7,7 @@ const QuizMain = () => {
   const navigate = useNavigate();
 
   const moveQuiz = (path: string) => {
-    navigate(`/quiz/${path}`);
+    navigate(`/education/quiz/${path}`);
   };
 
   const quizItems = [
@@ -26,7 +26,7 @@ const QuizMain = () => {
   return (
     <div>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div>
           {quizItems.map((item) => (
             <QuizItem
