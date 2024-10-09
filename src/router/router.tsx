@@ -1,8 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import App from '@/App';
-import SmishingEnding from '@/pages/smishingPrevention/SmishingEnding';
-import ExchangeAccount from '@/pages/exchange/ExchangeAccount';
+import PrivateRoute from '@/components/common/PrivateRoute';
 
 const Main = lazy(() => import('@/pages/Main'));
 const Education = lazy(() => import('@/pages/Education'));
@@ -76,6 +75,7 @@ const EducationDownload = lazy(
 );
 const ExchangeAgree = lazy(() => import('@/pages/exchange/ExchangeAgree'));
 const ExchangeMoney = lazy(() => import('@/pages/exchange/ExchangeMoney'));
+const ExchangeAccount = lazy(() => import('@/pages/exchange/ExchangeAccount'));
 const ExchangePassword = lazy(
   () => import('@/pages/exchange/ExchangePassword'),
 );
@@ -96,6 +96,9 @@ const UtilityPayScan = lazy(
 );
 const UtilityPayMoney = lazy(
   () => import('@/pages/utilityPayment/UtilityPayMoney'),
+);
+const UtilityPayAccount = lazy(
+  () => import('@/pages/utilityPayment/UtilityPayAccount'),
 );
 const UtilityPayPassword = lazy(
   () => import('@/pages/utilityPayment/UtilityPayPassword'),
@@ -147,6 +150,9 @@ const SmishingMessageList = lazy(
 const SmishingMessageDetail = lazy(
   () => import('@/pages/smishingPrevention/SmishingMessageDetail'),
 );
+const SmishingEnding = lazy(
+  () => import('@/pages/smishingPrevention/SmishingEnding'),
+);
 const MissionStamps = lazy(() => import('@/pages/gamification/MissionStamps'));
 const ChatBotPage = lazy(() => import('@/pages/chatBot/ChatBotPage'));
 
@@ -158,122 +164,147 @@ const router = createBrowserRouter([
         <App />
       </Suspense>
     ),
+    // 인증이 필요한 페이지
     children: [
-      { path: '', element: <Main /> },
-      { path: 'education', element: <Education /> },
+      {
+        element: <PrivateRoute />,
+        children: [
+          { path: '', element: <Main /> },
+          { path: 'education', element: <Education /> },
+          // 예금
+          { path: 'deposit', element: <DepositMission /> },
+          { path: 'deposit/explain', element: <DepositExplain /> },
+          { path: 'deposit/signup', element: <DepositSignup /> },
+          { path: 'deposit/agree', element: <DepositAgree /> },
+          { path: 'deposit/money', element: <DepositMoney /> },
+          { path: 'deposit/account', element: <DepositAccount /> },
+          { path: 'deposit/product', element: <DepositProduct /> },
+          { path: 'deposit/password', element: <DepositPassword /> },
+          { path: 'deposit/success', element: <DepositSuccess /> },
+          // 적금
+          { path: 'savings', element: <SavingsExplain /> },
+          { path: 'savings/mission', element: <SavingsMission /> },
+          { path: 'savings/agree', element: <SavingsAgree /> },
+          { path: 'savings/signup', element: <SavingsSignup /> },
+          { path: 'savings/money', element: <SavingsMoney /> },
+          { path: 'savings/account', element: <SavingsAccount /> },
+          { path: 'savings/product', element: <SavingsProduct /> },
+          { path: 'savings/password', element: <SavingsPassword /> },
+          { path: 'savings/success', element: <SavingsSuccess /> },
+          {
+            path: 'savings/success/mission',
+            element: <SavingsSuccessMission />,
+          },
+          // 예금 중도해지
+          { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
+          { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
+          {
+            path: 'cancel/deposit/password',
+            element: <CancelDepositPassword />,
+          },
+          { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
+          {
+            path: 'cancel/deposit/mission',
+            element: <CancelDepositMission />,
+          },
+          // 적금 중도해지
+          { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
+          { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
+          {
+            path: 'cancel/savings/password',
+            element: <CancelSavingsPassword />,
+          },
+          { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
+          // 금융 교육 영상
+          { path: 'education/video/hard', element: <EducationVideo /> },
+          { path: 'education/video', element: <EducationVideo2 /> },
+          // 이수증
+          { path: 'education/certificate', element: <EducationCertificate /> },
+          { path: 'education/writing', element: <EducationWriting /> },
+          { path: 'education/download', element: <EducationDownload /> },
+          // 퀴즈
+          { path: 'quiz', element: <QuizMain /> },
+          { path: 'quiz/:part', element: <QuizQuestion /> },
+          { path: 'quiz/:part/success', element: <QuizSuccess /> },
+          // 환전
+          { path: 'exchange/mission', element: <ExchangeMission /> },
+          { path: 'exchange/explain', element: <ExchangeExplain /> },
+          { path: 'exchange/agree', element: <ExchangeAgree /> },
+          { path: 'exchange/money', element: <ExchangeMoney /> },
+          { path: 'exchange/account', element: <ExchangeAccount /> },
+          { path: 'exchange/password', element: <ExchangePassword /> },
+          { path: 'exchange/complete', element: <ExchangeComplete /> },
+          { path: 'exchange/success', element: <ExchangeSuccess /> },
+          // 공과금 납부
+          { path: 'utility/mission', element: <UtilityPayMission /> },
+          { path: 'utility/explain', element: <UtilityPayExplain /> },
+          { path: 'utility/input', element: <UtilityPayInfoInput /> },
+          { path: 'utility/scan', element: <UtilityPayScan /> },
+          { path: 'utility/money', element: <UtilityPayMoney /> },
+          { path: 'utility/account', element: <UtilityPayAccount /> },
+          { path: 'utility/password', element: <UtilityPayPassword /> },
+          { path: 'utility/success', element: <UtilityPaySuccess /> },
+          // 계좌 조회
+          { path: 'account/list', element: <AccountList /> },
+          { path: 'account/deposit/list', element: <AccountDepositList /> },
+          { path: 'account/check', element: <AccountCheck /> },
+          { path: 'account/add-cash', element: <AccountAddCash /> },
+          // 계좌 생성
+          { path: 'account/products', element: <AccountProductsList /> },
+          {
+            path: 'account/products/deposit',
+            element: <AccountDepositProducts />,
+          },
+          // 계좌 이체
+          {
+            path: 'account/transfer/account-info',
+            element: <AccountTransferAccountInfo />,
+          },
+          {
+            path: 'account/transfer/amount',
+            element: <AccountTransferAmount />,
+          },
+          {
+            path: 'account/transfer/deposit-name',
+            element: <AccountTransferDepositName />,
+          },
+          {
+            path: 'account/transfer/info-check',
+            element: <AccountTransferInfoCheck />,
+          },
+          {
+            path: 'account/transfer/password',
+            element: <AccountTransferPassword />,
+          },
+          {
+            path: 'account/transfer/success',
+            element: <AccountTransferSuccess />,
+          },
+          // 금융 사기 예방
+          {
+            path: 'prevention/agree',
+            element: <SmishingAgree />,
+          },
+          {
+            path: 'prevention/messages',
+            element: <SmishingMessageList />,
+          },
+          {
+            path: 'prevention/messages/:messageType',
+            element: <SmishingMessageDetail />,
+          },
+          {
+            path: 'prevention/messages/:messageType/ending',
+            element: <SmishingEnding />,
+          },
+          // 게이미피케이션
+          { path: 'stamp', element: <MissionStamps /> },
+          // 챗봇
+          { path: 'chatbot', element: <ChatBotPage /> },
+        ],
+      },
       { path: 'signup', element: <Signup /> },
       { path: 'login', element: <Login /> },
-      // 예금
-      { path: 'deposit', element: <DepositMission /> },
-      { path: 'deposit/explain', element: <DepositExplain /> },
-      { path: 'deposit/signup', element: <DepositSignup /> },
-      { path: 'deposit/agree', element: <DepositAgree /> },
-      { path: 'deposit/money', element: <DepositMoney /> },
-      { path: 'deposit/account', element: <DepositAccount /> },
-      { path: 'deposit/product', element: <DepositProduct /> },
-      { path: 'deposit/password', element: <DepositPassword /> },
-      { path: 'deposit/success', element: <DepositSuccess /> },
-      // 적금
-      { path: 'savings', element: <SavingsExplain /> },
-      { path: 'savings/mission', element: <SavingsMission /> },
-      { path: 'savings/agree', element: <SavingsAgree /> },
-      { path: 'savings/signup', element: <SavingsSignup /> },
-      { path: 'savings/money', element: <SavingsMoney /> },
-      { path: 'savings/account', element: <SavingsAccount /> },
-      { path: 'savings/product', element: <SavingsProduct /> },
-      { path: 'savings/password', element: <SavingsPassword /> },
-      { path: 'savings/success', element: <SavingsSuccess /> },
-      { path: 'savings/success/mission', element: <SavingsSuccessMission /> },
-      // 예금 중도해지
-      { path: 'cancel/deposit/explain', element: <CancelDepositExplain /> },
-      { path: 'cancel/deposit/product', element: <CancelDepositProduct /> },
-      { path: 'cancel/deposit/password', element: <CancelDepositPassword /> },
-      { path: 'cancel/deposit/success', element: <CancelDepositSuccess /> },
-      {
-        path: 'cancel/deposit/mission',
-        element: <CancelDepositMission />,
-      },
-      // 적금 중도해지
-      { path: 'cancel/savings/explain', element: <CancelSavingsExplain /> },
-      { path: 'cancel/savings/product', element: <CancelSavingsProduct /> },
-      { path: 'cancel/savings/password', element: <CancelSavingsPassword /> },
-      { path: 'cancel/savings/success', element: <CancelSavingsSuccess /> },
-      // 금융 교육 영상
-      { path: 'education/video/hard', element: <EducationVideo /> },
-      { path: 'education/video', element: <EducationVideo2 /> },
-      // 이수증
-      { path: 'education/certificate', element: <EducationCertificate /> },
-      { path: 'education/writing', element: <EducationWriting /> },
-      { path: 'education/download', element: <EducationDownload /> },
-      // 퀴즈
-      { path: 'quiz', element: <QuizMain /> },
-      { path: 'quiz/:part', element: <QuizQuestion /> },
-      { path: 'quiz/:part/success', element: <QuizSuccess /> },
-      // 환전
-      { path: 'exchange/mission', element: <ExchangeMission /> },
-      { path: 'exchange/explain', element: <ExchangeExplain /> },
-      { path: 'exchange/agree', element: <ExchangeAgree /> },
-      { path: 'exchange/money', element: <ExchangeMoney /> },
-      { path: 'exchange/account', element: <ExchangeAccount /> },
-      { path: 'exchange/password', element: <ExchangePassword /> },
-      { path: 'exchange/complete', element: <ExchangeComplete /> },
-      { path: 'exchange/success', element: <ExchangeSuccess /> },
-      // 공과금 납부
-      { path: 'utility/mission', element: <UtilityPayMission /> },
-      { path: 'utility/explain', element: <UtilityPayExplain /> },
-      { path: 'utility/input', element: <UtilityPayInfoInput /> },
-      { path: 'utility/scan', element: <UtilityPayScan /> },
-      { path: 'utility/money', element: <UtilityPayMoney /> },
-      { path: 'utility/password', element: <UtilityPayPassword /> },
-      { path: 'utility/success', element: <UtilityPaySuccess /> },
-      // 계좌 조회
-      { path: 'account/list', element: <AccountList /> },
-      { path: 'account/deposit/list', element: <AccountDepositList /> },
-      { path: 'account/check', element: <AccountCheck /> },
-      { path: 'account/add-cash', element: <AccountAddCash /> },
-      // 계좌 생성
-      { path: 'account/products', element: <AccountProductsList /> },
-      { path: 'account/products/deposit', element: <AccountDepositProducts /> },
-      // 계좌 이체
-      {
-        path: 'account/transfer/account-info',
-        element: <AccountTransferAccountInfo />,
-      },
-      { path: 'account/transfer/amount', element: <AccountTransferAmount /> },
-      {
-        path: 'account/transfer/deposit-name',
-        element: <AccountTransferDepositName />,
-      },
-      {
-        path: 'account/transfer/info-check',
-        element: <AccountTransferInfoCheck />,
-      },
-      {
-        path: 'account/transfer/password',
-        element: <AccountTransferPassword />,
-      },
-      { path: 'account/transfer/success', element: <AccountTransferSuccess /> },
-      // 금융 사기 예방
-      {
-        path: 'prevention/agree',
-        element: <SmishingAgree />,
-      },
-      {
-        path: 'prevention/messages',
-        element: <SmishingMessageList />,
-      },
-      {
-        path: 'prevention/messages/:messageType',
-        element: <SmishingMessageDetail />,
-      },
-      {
-        path: 'prevention/messages/:messageType/ending',
-        element: <SmishingEnding />,
-      },
-      // 게이미피케이션
-      { path: 'stamp', element: <MissionStamps /> },
-      // 챗봇
-      { path: 'chatbot', element: <ChatBotPage /> },
     ],
   },
 ]);
