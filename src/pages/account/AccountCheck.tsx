@@ -360,7 +360,7 @@ const AccountCheck = () => {
       <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
       {isSuccessModalOpen && (
         <MissionSuccessModal
-          name='로그인'
+          name='계좌 생성'
           onConfirm={() => setIsSuccessModalOpen(false)}
         />
       )}
