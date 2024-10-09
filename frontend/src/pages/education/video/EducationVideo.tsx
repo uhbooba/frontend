@@ -98,7 +98,7 @@ const EducationVideo = () => {
   return (
     <div>
       <TopBar title='교육영상' />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div className='border-b-2'>
           <KeywordButtons
             keywords={['모두 보기', ...keywords]}

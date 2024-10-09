@@ -27,7 +27,7 @@ const EducationVideo = () => {
   return (
     <div>
       <TopBar title='교육영상' onXButtonClick={GoEdu} />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div className='mt-20 border-b-2'>
           <KeywordButtons
             keywords={keywords}

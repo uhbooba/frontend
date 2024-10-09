@@ -60,7 +60,7 @@ const QuizQuestion = () => {
   return (
     <div>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <QuizLevelBar
           currentQuestion={currentQuestionIndex}
           totalQuestions={totalQuestions}
