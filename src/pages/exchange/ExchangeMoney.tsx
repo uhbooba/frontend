@@ -7,7 +7,11 @@ import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
 import ExchangeConfirm from '@/components/exchange/ExchangeConfirm';
 import { useAtom, useAtomValue } from 'jotai';
-import { exchangeAmountAtom, exchangeMissionAtom } from '@/atoms/exchangeAtoms';
+import {
+  exchangeAmountAtom,
+  exchangeKrwAmountAtom,
+  exchangeMissionAtom,
+} from '@/atoms/exchangeAtoms';
 import { getExchangeRate } from '@/services/exchange';
 import ErrorText from '@/components/common/ErrorText';
 import TitleText from '@/components/common/TitleText';
@@ -16,7 +20,7 @@ import MainWrapper from '@/components/layouts/MainWrapper';
 const ExchangeMoney = () => {
   const navigate = useNavigate();
   const [usdAmount, setUsdAmount] = useAtom(exchangeAmountAtom);
-  const [krwAmount, setKrwAmount] = useState('');
+  const [krwAmount, setKrwAmount] = useAtom(exchangeKrwAmountAtom);
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<
     'USD' | 'KRW' | null
@@ -111,6 +115,7 @@ const ExchangeMoney = () => {
               setKeyOpen(true);
               setSelectedCurrency('USD');
             }}
+            inputMode='none'
             isError={error !== ''}
             onChange={(e) => {
               setUsdAmount(e.target.value);
@@ -150,6 +155,7 @@ const ExchangeMoney = () => {
               setError('');
             }}
             className='mb-5'
+            inputMode='none'
           />
         </div>
 
