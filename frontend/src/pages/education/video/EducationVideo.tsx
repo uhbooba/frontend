@@ -60,7 +60,7 @@ const EducationVideo = () => {
           }, 1300); // 1.3초 뒤 나머지 영상을 가져옴
         }
       } catch (error) {
-        console.log('fetchAllVideo 에러', error);
+        console.log('keywordClick 에러', error);
       }
     }
   };
