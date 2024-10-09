@@ -15,7 +15,7 @@ const UtilityPayExplain = () => {
     <div className='bg-yellow-100'>
       <TopBar title='공과금 납부' />
       <MainWrapper>
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center justify-center'>
           <TextBubble
             bubbleSize='w-10/12'
             content={

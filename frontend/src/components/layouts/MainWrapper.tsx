@@ -4,14 +4,19 @@ import { ReactNode } from 'react';
 interface MainWrapperProps {
   children?: ReactNode;
   className?: string;
+  isBottomTab?: boolean;
 }
 
-const MainWrapper: React.FC<MainWrapperProps> = ({ children, className }) => {
+const MainWrapper: React.FC<MainWrapperProps> = ({
+  children,
+  className,
+  isBottomTab = false,
+}) => {
   return (
     <div
       className={clsx([
         'flex flex-col overflow-y-auto',
-        'h-[calc(100vh-5rem-5rem)]',
+        isBottomTab ? 'h-[calc(100vh-5rem-5rem)]' : 'h-[calc(100vh-5rem)]',
         'mt-20',
         className,
       ])}

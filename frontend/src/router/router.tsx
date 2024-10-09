@@ -229,9 +229,9 @@ const router = createBrowserRouter([
           { path: 'education/writing', element: <EducationWriting /> },
           { path: 'education/download', element: <EducationDownload /> },
           // 퀴즈
-          { path: 'quiz', element: <QuizMain /> },
-          { path: 'quiz/:part', element: <QuizQuestion /> },
-          { path: 'quiz/:part/success', element: <QuizSuccess /> },
+          { path: 'education/quiz', element: <QuizMain /> },
+          { path: 'education/quiz/:part', element: <QuizQuestion /> },
+          { path: 'education/quiz/:part/success', element: <QuizSuccess /> },
           // 환전
           { path: 'exchange/mission', element: <ExchangeMission /> },
           { path: 'exchange/explain', element: <ExchangeExplain /> },
@@ -309,9 +309,9 @@ const router = createBrowserRouter([
             element: <SmishingEnding />,
           },
           // 게이미피케이션
-          { path: 'stamp', element: <MissionStamps /> },
+          { path: 'education/stamp', element: <MissionStamps /> },
           // 챗봇
-          { path: 'chatbot', element: <ChatBotPage /> },
+          { path: 'education/chatbot', element: <ChatBotPage /> },
         ],
       },
       { path: 'signup', element: <Signup /> },

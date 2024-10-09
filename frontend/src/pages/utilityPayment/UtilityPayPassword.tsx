@@ -19,8 +19,6 @@ const UtilityPayPassword = () => {
   const [inputKey, setInputKey] = useState(0);
 
   const passwordComplete = (password: string) => {
-    navigate('/utility/success');
-
     // 환전 시작
     fetchPayUtility(password);
   };
@@ -34,7 +32,7 @@ const UtilityPayPassword = () => {
       );
 
       if (response?.data?.statusCode === 200) {
-        navigate('/utility/complete');
+        navigate('/utility/success');
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
