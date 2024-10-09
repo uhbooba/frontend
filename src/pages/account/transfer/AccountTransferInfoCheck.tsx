@@ -40,8 +40,8 @@ const AccountTransferInfoCheck = () => {
   const infoRows = [
     { title: '받는 계좌', content: `${selectedBank} ${depositAccountNo}` },
     { title: '보낸 금액', content: `${transactionBalance}원` },
-    { title: '받는 분 통장 기록', content: depositTransactionSummary },
-    { title: '보낸 분 통장 기록', content: withdrawalTransactionSummary },
+    { title: '받는 분 통장 기록', content: withdrawalTransactionSummary },
+    { title: '보낸 분 통장 기록', content: depositTransactionSummary },
     { title: '거래 일시', content: formattedTime },
   ];
 
