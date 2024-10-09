@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import KeywordButtons from '@/components/common/KeywordButtons';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import {
   getEducationVideos,
   getKeyword,
   getVideoByKeyword,
 } from '@/services/education';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 // 비디오에 있는 속성들 타입 정해주기
 interface Video {
@@ -70,45 +70,44 @@ const EducationVideo = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='교육영상' />
-      </div>
+      <TopBar title='교육영상' />
+      <MainWrapper>
+        <div className='mt-16 border-b-2'>
+          <KeywordButtons
+            keywords={['모두 보기', ...keywords]}
+            onKeywordClick={keywordClick}
+            keywordBtnColor={selectKeyword}
+          />
+        </div>
 
-      <div className='mt-16 border-b-2'>
-        <KeywordButtons
-          keywords={['모두 보기', ...keywords]}
-          onKeywordClick={keywordClick}
-          keywordBtnColor={selectKeyword}
-        />
-      </div>
-
-      <div className='mt-4 px-4'>
-        {filteredVideos.length === 0 ? (
-          <p>유튜브 영상이 없습니다.</p>
-        ) : (
-          filteredVideos.map((video) => (
-            <div
-              key={video.id}
-              className='mb-8 rounded-lg border bg-white p-4 shadow-md'
-            >
-              <h3 className='mb-2 text-xl font-bold'>{video.title}</h3>
-              <iframe
-                width='100%'
-                height='315'
-                src={video.url}
-                title={video.title}
-                className='mb-4 rounded-lg border-2 border-gray-300'
-                allow='accelerometer; gyroscope; picture-in-picture'
-                allowFullScreen
-              />
+        <div className='mt-4 px-4'>
+          {filteredVideos.length === 0 ? (
+            <div className='flex items-center justify-center'>
+              {/* 문구 대신 로딩중 아이콘(animate-spin) 사용하기 반영 */}
+              <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-gray-900'></div>
             </div>
-          ))
-        )}
-      </div>
-
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+          ) : (
+            filteredVideos.map((video) => (
+              <div
+                key={video.id}
+                className='mb-8 rounded-lg border bg-white p-4 shadow-md'
+              >
+                <h3 className='mb-2 text-xl font-bold'>{video.title}</h3>
+                <iframe
+                  // width='100%'
+                  // height='315'
+                  loading='lazy'
+                  src={video.url}
+                  title={video.title}
+                  className='mb-4 aspect-video rounded-lg border-2 border-gray-300'
+                  allow='accelerometer; gyroscope; picture-in-picture'
+                  allowFullScreen
+                />
+              </div>
+            ))
+          )}
+        </div>
+      </MainWrapper>
     </div>
   );
 };
