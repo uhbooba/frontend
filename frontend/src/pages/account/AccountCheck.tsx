@@ -5,6 +5,7 @@ import TopBar from '@/components/layouts/TopBar';
 import AccountHistory from '@/components/common/AccountHistory';
 import { getUserFreeAccount } from '@/services/account';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
+import { getMissionClearStatus } from '@/services/mission';
 
 interface AccountData {
   accountName: string;
@@ -212,7 +213,7 @@ const AccountCheck = () => {
           });
         }
       } catch (error) {
-        console.error('계좌 정 보 API 호출 중 오류 발생:', error);
+        console.error('계좌 정보 API 호출 중 오류 발생:', error);
       }
     };
 
@@ -223,7 +224,19 @@ const AccountCheck = () => {
     }
   }, [isMissionCleared]);
 
-  const handleButtonClick = (route: string) => {
+  const handleButtonClick = async (route: string) => {
+    if (route === '/account/transfer/account-info') {
+      try {
+        const missionStatus = await getMissionClearStatus(3);
+        if (!missionStatus?.result) {
+          navigate('/account/transfer/mission');
+          return;
+        }
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+    }
+
     if (accountData && accountData.accountNo) {
       navigate(route, { state: { accountNo: accountData.accountNo } });
     } else {
