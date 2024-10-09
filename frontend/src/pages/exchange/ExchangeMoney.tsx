@@ -188,14 +188,14 @@ const ExchangeMoney = () => {
             className='ml-2'
           />
         </div>
+        {keyOpen && (
+          <Keypad
+            onNumberClick={keyClick}
+            onDeleteClick={handleDelete}
+            onConfirmClick={() => setKeyOpen(false)}
+          />
+        )}
       </MainWrapper>
-      {keyOpen && (
-        <Keypad
-          onNumberClick={keyClick}
-          onDeleteClick={handleDelete}
-          onConfirmClick={() => setKeyOpen(false)}
-        />
-      )}
 
       {isBottomOpen && (
         <ExchangeConfirm
