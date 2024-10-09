@@ -1,11 +1,11 @@
 import Button from '@/components/common/buttons/Button';
 import ErrorText from '@/components/common/ErrorText';
 import { Input } from '@/components/common/Input';
-import TopBar from '@/components/layouts/TopBar';
 import { postLogin } from '@/services/auth';
 import Keypad from '@/components/common/KeyPad';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import MainWrapper from '@/components/layouts/MainWrapper';
 import { requestNotificationPermission } from '@/services/notification';
 
 const Login = () => {
@@ -58,10 +58,14 @@ const Login = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col'>
-      <TopBar title='로그인' />
-      <div className='flex flex-1 items-center justify-center'>
-        <div className='w-full max-w-md p-6'>
+    <MainWrapper className='flex items-center'>
+      <div className='flex flex-1 flex-col items-center justify-center'>
+        <h1 className='text-5xl font-semibold'>어부바</h1>
+        <img
+          src={'https://s3.youm.me/uhbooba/icons%2Fpig.png'}
+          className='h-40 w-40 p-2'
+        />
+        <div className='w-full max-w-md p-4'>
           <Input
             label='아이디'
             value={userId}
@@ -76,7 +80,7 @@ const Login = () => {
             onClick={() => setKeyOpen(true)}
           />
           {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
-          <div className='mt-3 flex flex-col justify-center'>
+          <div className='mt-5 flex flex-col justify-center'>
             <Button label='로그인' className='mb-3' onClick={handleLogin} />
             <Button label='회원가입' onClick={() => navigate('/signup')} />
           </div>
@@ -89,7 +93,7 @@ const Login = () => {
           />
         )}
       </div>
-    </div>
+    </MainWrapper>
   );
 };
 

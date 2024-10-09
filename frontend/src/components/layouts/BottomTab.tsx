@@ -7,7 +7,7 @@ const NAV_ITEMS = [
 
 export const BottomTab = () => {
   return (
-    <nav className='fixed bottom-0 left-1/2 flex w-full max-w-[430px] -translate-x-1/2 transform items-center justify-around border-t border-gray-200 bg-white px-8 py-3 shadow-xl'>
+    <nav className='fixed bottom-0 left-1/2 flex h-20 w-full max-w-[430px] -translate-x-1/2 transform items-center justify-around border-t border-gray-200 bg-white px-8 py-3 shadow-xl'>
       {NAV_ITEMS.map((item) => (
         <NavLink
           key={item.path}

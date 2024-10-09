@@ -21,7 +21,7 @@ const ExchangeMission = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col bg-yellow-100'>
+    <div className='flex flex-col bg-yellow-100'>
       <TopBar title='환전' />
       <MainWrapper className='flex flex-col items-center justify-center'>
         <TextBubble
