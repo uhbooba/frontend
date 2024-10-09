@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/utils/axiosInstance';
+import { AxiosResponse } from 'axios';
 
 // 입출금 계좌 조회
 export const getUserFreeAccount = async () => {
@@ -41,15 +42,15 @@ export const postUserFreeAccount = async () => {
 };
 
 // 입출금 계좌 이체
-export const postUserFreeAccountTransfer = async (
+export const postUserFreeAccountTransfer = (
   depositAccountNo: string,
   depositTransactionSummary: string,
   transactionBalance: number,
   withdrawalAccountNo: string,
   withdrawalTransactionSummary: string,
   password: string,
-) => {
-  await axiosInstance.post('/finances/demand-deposits/accounts/transfer', {
+): Promise<AxiosResponse<{ statusCode: number; message: string }>> => {
+  return axiosInstance.post('/finances/demand-deposits/accounts/transfer', {
     depositAccountNo,
     depositTransactionSummary,
     transactionBalance,
