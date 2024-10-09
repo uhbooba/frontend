@@ -82,7 +82,7 @@ const EducationDownload = () => {
         showBackButton={false}
       />
       <MainWrapper>
-        <div className='mt-20 flex justify-center'>
+        <div className='flex justify-center'>
           <canvas ref={canvasRef} className='border'></canvas>
         </div>
 

@@ -72,7 +72,7 @@ const EducationVideo = () => {
     <div>
       <TopBar title='교육영상' />
       <MainWrapper>
-        <div className='mt-16 border-b-2'>
+        <div className='border-b-2'>
           <KeywordButtons
             keywords={['모두 보기', ...keywords]}
             onKeywordClick={keywordClick}

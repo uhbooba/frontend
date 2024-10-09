@@ -108,7 +108,7 @@ const DepositSuccess = () => {
       <MainWrapper>
         {/* 배경 이미지 설정 */}
         <div
-          className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
+          className='relative flex flex-grow flex-col justify-between px-4 pt-8'
           style={{
             backgroundImage: `url("/assets/images/money_rain.png")`,
             backgroundSize: '420px auto',
@@ -117,7 +117,7 @@ const DepositSuccess = () => {
             // backgroundRepeat: "no-repeat",
           }}
         >
-          <div className='mt-4 text-center'>
+          <div className='text-center'>
             <p className='text-5xl font-bold'>예금 상품</p>
             <p className='mt-2 text-5xl font-bold'>가입 성공</p>
           </div>

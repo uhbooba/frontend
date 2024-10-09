@@ -39,8 +39,8 @@ const CancelDepositExplain = () => {
       <TopBar title='예금 중도해지' />
 
       <MainWrapper>
-        <div className='mt-16 flex-grow overflow-y-auto px-4'>
-          <div className='mt-8 text-center'>
+        <div className='flex-grow overflow-y-auto px-4'>
+          <div className='text-center'>
             <p className='text-3xl font-bold'>예금 중도해지</p>
           </div>
           <div className='mt-4 text-lg font-bold'>
@@ -93,7 +93,7 @@ const CancelDepositExplain = () => {
             </div>
           </div>
         </div>
-        \
+
         <NoModal
           isOpen={isModalOpen}
           ModalClose={closeModal}
