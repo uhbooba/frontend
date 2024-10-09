@@ -18,7 +18,7 @@ const AccountProductsList = () => {
 
   const ProductsList = [
     {
-      name: '자유입출금 통장',
+      name: '수시입출금 통장',
       description: '돈을 자유롭게 입금하고 출금해요.',
       moveTo: '/account/check',
     },

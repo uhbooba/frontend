@@ -209,8 +209,7 @@ const AccountCheck = () => {
           });
         }
       } catch (error) {
-        console.error('계좌 정보 API 호출 중 오류 발생:', error);
-        console.log();
+        console.error('계좌 정 보 API 호출 중 오류 발생:', error);
       }
     };
 
@@ -281,7 +280,7 @@ const AccountCheck = () => {
   ];
 
   return (
-    <div className=''>
+    <div className='h-screen'>
       {/* 상단바 */}
       <TopBar title='계좌 조회' />
       <div className='mt-[20px] flex justify-center'>
@@ -328,7 +327,12 @@ const AccountCheck = () => {
             <div className='text-[24px]'>{filter.sort}</div>
           </div>
           <div>
-            <AccountHistory filter={filter} />
+            {accountData && (
+              <AccountHistory
+                accountNo={accountData?.accountNo || ''}
+                filter={filter}
+              />
+            )}
           </div>
         </div>
         <div className='fixed bottom-0 left-0 w-full'>
