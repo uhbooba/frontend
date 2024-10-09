@@ -282,19 +282,19 @@ const router = createBrowserRouter([
           },
           // 금융 사기 예방
           {
-            path: 'education/prevention/agree',
+            path: 'prevention/agree',
             element: <SmishingAgree />,
           },
           {
-            path: 'education/prevention/messages',
+            path: 'prevention/messages',
             element: <SmishingMessageList />,
           },
           {
-            path: 'education/prevention/messages/:messageType',
+            path: 'prevention/messages/:messageType',
             element: <SmishingMessageDetail />,
           },
           {
-            path: 'education/prevention/messages/:messageType/ending',
+            path: 'prevention/messages/:messageType/ending',
             element: <SmishingEnding />,
           },
           // 게이미피케이션
