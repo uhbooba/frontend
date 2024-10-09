@@ -3,65 +3,88 @@ import TextBubble from '@/components/common/TextBubble';
 import TopBar from '@/components/layouts/TopBar';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
+import { utilityMissionAtom } from '@/atoms/utilityAtoms';
+import { setMissionClearStatus } from '@/services/mission';
+import MainWrapper from '@/components/layouts/MainWrapper';
+import { useNavigate } from 'react-router';
 
 const UtilityPaySuccess = () => {
+  const navigate = useNavigate();
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const isMission = useAtomValue(utilityMissionAtom);
 
+  // 공과금 미션 확인
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSuccessModalOpen(true);
-    }, 1000); // 1초 뒤 미션성공 뜨도록(미션 성공한 사람의 경우만 뜨도록 추후 수정)
+    const fetchExchangeMission = async () => {
+      try {
+        const response = await setMissionClearStatus(5);
 
-    return () => clearTimeout(timer);
+        if (response?.statusCode === 200) {
+          const timer = setTimeout(() => {
+            setIsSuccessModalOpen(true);
+          }, 1000);
+
+          return () => clearTimeout(timer);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (isMission) {
+      fetchExchangeMission();
+    }
   }, []);
 
   return (
     <div>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='공과금 납부' showBackButton={false} />
-      </div>
-      {isSuccessModalOpen && (
-        <MissionSuccessModal
-          name='공과금 납부'
-          onConfirm={() => setIsSuccessModalOpen(false)}
-        />
-      )}
-
-      {/* 배경 이미지 설정 */}
-      <div
-        className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
-        style={{
-          backgroundImage: `url("/assets/images/coin_rain.png")`,
-          backgroundSize: '440px auto',
-          backgroundPosition: 'center -50px',
-        }}
-      >
-        <div className='mt-4 text-center'>
-          <p className='text-5xl font-bold'>공과금 납부 성공</p>
-        </div>
-
-        {/* 말풍선 부분 */}
-        <TextBubble content={['공과금 납부 성공', '축하합니다!']} />
-
-        {/* 돼지 이미지 */}
-        <div className='mb-4 flex justify-end'>
-          <img
-            src='/assets/images/finish_j_pig.png'
-            alt='Pig'
-            className='h-60 w-60'
+      <TopBar title='공과금 납부' showBackButton={false} />
+      <MainWrapper>
+        {isSuccessModalOpen && (
+          <MissionSuccessModal
+            name='공과금 납부'
+            onConfirm={() => setIsSuccessModalOpen(false)}
           />
-        </div>
+        )}
 
-        {/* 버튼 */}
-        <div>
-          <Button
-            label='나의 계좌로 이동하기'
-            size='large'
-            color='orange'
-            className='w-full py-4'
-          />
+        {/* 배경 이미지 설정 */}
+        <div
+          className='relative mt-16 flex flex-grow flex-col justify-between px-4 pt-8'
+          style={{
+            backgroundImage: `url("/assets/images/coin_rain.png")`,
+            backgroundSize: '440px auto',
+            backgroundPosition: 'center -50px',
+          }}
+        >
+          <div className='mt-4 text-center'>
+            <p className='text-5xl font-bold'>공과금 납부 성공</p>
+          </div>
+
+          {/* 말풍선 부분 */}
+          <TextBubble content={['공과금 납부 성공', '축하합니다!']} />
+
+          {/* 돼지 이미지 */}
+          <div className='mb-4 flex justify-end'>
+            <img
+              src='/assets/images/finish_j_pig.png'
+              alt='Pig'
+              className='h-60 w-60'
+            />
+          </div>
+
+          {/* 버튼 */}
+          <div>
+            <Button
+              label='나의 계좌로 이동하기'
+              size='large'
+              color='orange'
+              className='w-full py-4'
+              onClick={() => navigate('/account/check')}
+            />
+          </div>
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };
