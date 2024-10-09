@@ -5,6 +5,11 @@ import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
 import { postUserFreeAccount } from '@/services/account';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import {
+  getMissionClearStatus,
+  setMissionClearStatus,
+} from '@/services/mission';
+import { useState } from 'react';
 
 interface ProductItem {
   name: string;
@@ -15,6 +20,7 @@ interface ProductItem {
 const AccountProductsList = () => {
   const setSelectedKeyword = useSetAtom(selectedKeywordAtom);
   const navigate = useNavigate();
+  const [isMissionCleared, setIsMissionCleared] = useState(false);
 
   const ProductsList = [
     {
@@ -34,17 +40,24 @@ const AccountProductsList = () => {
     },
   ];
 
-  const handleProductClick = (product: ProductItem) => {
-    if (product.name === '자유입출금 통장') {
-      const createDemandDeposit = () => {
-        try {
-          postUserFreeAccount();
-        } catch (error) {
-          console.error('Error fetching answer:', error);
+  const handleProductClick = async (product: ProductItem) => {
+    if (product.name === '수시입출금 통장') {
+      try {
+        const missionStatus = await getMissionClearStatus(2);
+        if (!missionStatus?.result?.isCleared) {
+          await setMissionClearStatus(2);
+          setIsMissionCleared(true);
         }
-      };
-      createDemandDeposit();
-      navigate(product.moveTo);
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+      try {
+        postUserFreeAccount();
+      } catch (error) {
+        console.error('Error fetching answer:', error);
+      }
+
+      navigate(product.moveTo, { state: { isMissionCleared } });
     }
     setSelectedKeyword(
       product.name.includes('예금') ? '예금 상품' : '적금 상품',

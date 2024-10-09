@@ -3,18 +3,9 @@ import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import MainWrapper from '@/components/layouts/MainWrapper';
-import { exchangeMissionAtom } from '@/atoms/exchangeAtoms';
-import { useSetAtom } from 'jotai';
-import { useEffect } from 'react';
 
 const AccountOpenMission = () => {
   const navigate = useNavigate();
-  const setIsMission = useSetAtom(exchangeMissionAtom);
-
-  useEffect(() => {
-    // 페이지에 들어오면 미션 상태 true
-    setIsMission(true);
-  }, []);
 
   const GoExplain = () => {
     navigate('/account/products');
