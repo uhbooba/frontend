@@ -23,7 +23,7 @@ const ButtonConfig: ButtonConfigType[] = [
   {
     label: '',
     eduLabel: '금융 사기',
-    route: '/education/prevention/agree',
+    route: '/prevention/agree',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
     eduImg: '/assets/images/fraud.png',
