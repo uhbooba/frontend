@@ -36,7 +36,7 @@ const CancelDepositSuccess = () => {
           setDepositAccount(null);
         }
       } catch (error) {
-        console.error('getUserDepositAccounts 에러', error);
+        console.error('deleteDepositAccount 에러', error);
       }
     };
 
@@ -64,8 +64,8 @@ const CancelDepositSuccess = () => {
     <div>
       <TopBar title='예금 중도해지' showBackButton={false} />
       <MainWrapper>
-        <div className='mt-24 text-center'>
-          <p className='mt-16 text-5xl font-bold'>예금 상품</p>
+        <div className='text-center'>
+          <p className='mt-8 text-5xl font-bold'>예금 상품</p>
           <p className='mt-4 text-5xl font-bold'>중도해지 완료</p>
         </div>
 

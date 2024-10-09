@@ -115,8 +115,8 @@ const CancelDepositProduct = () => {
                 </div>
               </div>
               <div>
-                <span className='ml-5 text-2xl text-gray-500'>약정 기간</span>
-                <div className='ml-5 mt-2 text-xl font-bold'>
+                <span className='text-2xl text-gray-500'>약정 기간</span>
+                <div className='mt-2 text-xl font-bold'>
                   {subscriptionPeriod} 일
                 </div>
               </div>
