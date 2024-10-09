@@ -110,8 +110,9 @@ const UtilityPaySuccess = lazy(
   () => import('@/pages/utilityPayment/UtilityPaySuccess'),
 );
 
-
-const AccountOpenMission = lazy(() => import('@/pages/account/AccountOpenMission'));
+const AccountOpenMission = lazy(
+  () => import('@/pages/account/AccountOpenMission'),
+);
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
 const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
 const AccountProductsList = lazy(
@@ -119,6 +120,9 @@ const AccountProductsList = lazy(
 );
 const AccountDepositProducts = lazy(
   () => import('@/pages/account/AccountDepositProducts'),
+);
+const AccountTransferMission = lazy(
+  () => import('@/pages/account/transfer/AccountTransferMission'),
 );
 const AccountTransferAccountInfo = lazy(
   () => import('@/pages/account/transfer/AccountTransferAccountInfo'),
@@ -258,7 +262,11 @@ const router = createBrowserRouter([
             element: <AccountDepositProducts />,
           },
           { path: 'account/products/mission', element: <AccountOpenMission /> },
-      // 계좌 이체
+          // 계좌 이체
+          {
+            path: 'account/transfer/mission',
+            element: <AccountTransferMission />,
+          },
           {
             path: 'account/transfer/account-info',
             element: <AccountTransferAccountInfo />,
