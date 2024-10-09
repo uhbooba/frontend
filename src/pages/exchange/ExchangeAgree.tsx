@@ -45,12 +45,16 @@ const ExchangeAgree = () => {
       <MainWrapper>
         <LevelBar currentLevel={1} totalLevel={4} />
         <div className='m-4'>
-          <p className='mb-2 text-2xl font-bold'>약관 동의서</p>
+          <p className='mb-2 text-2xl font-bold'>
+            전자금융거래 이용 약관 동의서
+          </p>
           <div className='mb-2 border-2 border-black'>
-            <p className='mb-1 mt-1'>개인정보 수집 및 이용 동의하세요?</p>
-            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
-            <p className='mb-1'>개인정보 수집 및 이용 동의하세요?</p>
+            <p className='mb-1 ml-1 mt-1'>
+              본인은 인터넷뱅킹, 모바일뱅킹 등 전자금융거래 서비스의 이용 약관을
+              충분히 이해하였으며, 관련된 이용 조건과 책임 사항에 동의합니다. 본
+              서비스 이용 중 발생할 수 있는 모든 전자 금융 거래는 본 약관에 따라
+              처리됩니다.
+            </p>
           </div>
           <div className='flex justify-end'>
             <CheckButton
