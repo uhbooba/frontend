@@ -3,7 +3,6 @@ import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
 import {
-  savingPasswordAtom,
   selectedSavingsProductAtom,
   withdrawalAccountAtom,
   selectMoneyAtom,
@@ -18,7 +17,6 @@ import { createSavingsAccount, getSavingsProducts } from '@/services/saving';
 
 const SavingsPassword = () => {
   const navigate = useNavigate();
-  const [, setSavingPassword] = useAtom(savingPasswordAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputKey, setInputKey] = useState(0); // PasswordInput 리렌더링을 위한 고유 키값 설정
   const [selectedSavingProduct] = useAtom(selectedSavingsProductAtom);

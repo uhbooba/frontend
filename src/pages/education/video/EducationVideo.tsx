@@ -26,15 +26,42 @@ const EducationVideo = () => {
   const keywordClick = async (keyword: string) => {
     setSelectKeyword(keyword);
 
+    // 키워드 버튼을 클릭하면 처음에는 2개만 가져와서 먼저보여주기
     if (keyword !== '모두 보기') {
       try {
         const response = await getVideoByKeyword(keyword);
-        setVideoData(response.data.data);
+        const videos = response.data.data;
+
+        // 처음 2개만 가져오기
+        setVideoData(videos.slice(0, 2));
+
+        // 2개가 다 나오면 나머지 영상도 가져오기
+        if (videos.length > 1) {
+          setTimeout(() => {
+            setVideoData(videos); // 전체 영상 가져오기
+          }, 1300); // 1.3초 뒤 나머지 영상을 가져옴
+        }
       } catch (error) {
         console.log('keywordClick 에러', error);
       }
     } else {
-      fetchAllVideo();
+      // 모두보기일때도 2개만 먼저보여주고 나머지 가져오기
+      try {
+        const response = await getEducationVideos();
+        const videos = response.data.data;
+
+        // 처음 2개만 가져오기
+        setVideoData(videos.slice(0, 2));
+
+        // 2개가 다 나오면 나머지 영상도 가져오기
+        if (videos.length > 1) {
+          setTimeout(() => {
+            setVideoData(videos); // 전체 영상 가져오기
+          }, 1300); // 1.3초 뒤 나머지 영상을 가져옴
+        }
+      } catch (error) {
+        console.log('fetchAllVideo 에러', error);
+      }
     }
   };
 
@@ -94,8 +121,6 @@ const EducationVideo = () => {
               >
                 <h3 className='mb-2 text-xl font-bold'>{video.title}</h3>
                 <iframe
-                  // width='100%'
-                  // height='315'
                   loading='lazy'
                   src={video.url}
                   title={video.title}

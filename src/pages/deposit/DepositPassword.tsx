@@ -8,7 +8,7 @@ import {
   withdrawalAccountAtom,
   selectMoneyAtom,
 } from '@/atoms/deposit/depositDataAtoms';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useState, useEffect } from 'react';
 import { getUserInfo, checkPassword } from '@/services/auth';
 import NoModal from '@/components/modals/NoModal';
@@ -17,7 +17,7 @@ import { createDepositAccount, getDepositProducts } from '@/services/deposit';
 
 const DepositPassword = () => {
   const navigate = useNavigate();
-  const [, setDepositPassword] = useAtom(depositPasswordAtom);
+  const setDepositPassword = useSetAtom(depositPasswordAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputKey, setInputKey] = useState(0); // PasswordInput 리렌더링을 위한 고유 키값 설정
   const [selectedDepositProduct] = useAtom(selectedDepositProductAtom);
