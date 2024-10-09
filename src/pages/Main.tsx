@@ -4,6 +4,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
 import {
+  getMissionClearStatus,
   getMissionsClearStatus,
   setMissionClearStatus,
 } from '@/services/mission';
@@ -161,7 +162,16 @@ const Main = () => {
     navigate('account/check');
   };
 
-  const GoAccountTransfer = () => {
+  const GoAccountTransfer = async () => {
+    try {
+      const missionStatus = await getMissionClearStatus(3);
+      if (!missionStatus?.result) {
+        navigate('/account/transfer/mission');
+        return;
+      }
+    } catch (error) {
+      console.error('미션 상태 확인 중 오류 발생:', error);
+    }
     navigate('account/transfer/account-info');
   };
 
