@@ -7,6 +7,10 @@ import { useState, useEffect } from 'react';
 import { getMissionsClearStatus } from '@/services/mission';
 import NoModal from '@/components/modals/NoModal';
 
+interface Mission {
+  isCleared: boolean;
+}
+
 const EducationCertificate = () => {
   const navigate = useNavigate();
   const [clearedMissions, setClearedMissions] = useState(0);
@@ -19,10 +23,10 @@ const EducationCertificate = () => {
       try {
         const response = await getMissionsClearStatus();
         const completedMissions = response.result.filter(
-          (mission) => mission.isCleared,
+          (mission: Mission) => mission.isCleared,
         ).length;
         const incompleteMissions = response.result.filter(
-          (mission) => !mission.isCleared,
+          (mission: Mission) => !mission.isCleared,
         ).length;
 
         setClearedMissions(completedMissions); // true 미션 개수
