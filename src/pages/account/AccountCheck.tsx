@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import AccountHistory from '@/components/common/AccountHistory';
 import { getUserFreeAccount } from '@/services/account';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 
 interface AccountData {
   accountName: string;
@@ -187,6 +188,9 @@ const AccountCheck = () => {
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const location = useLocation();
+  const { isMissionCleared } = location.state || {};
   const [filter, setFilter] = useState<Filter>({
     date: '전체 기간',
     type: '전체',
@@ -213,7 +217,11 @@ const AccountCheck = () => {
     };
 
     fetchAccountDetails();
-  }, []);
+
+    if (isMissionCleared) {
+      setIsSuccessModalOpen(true);
+    }
+  }, [isMissionCleared]);
 
   const handleButtonClick = (route: string) => {
     if (accountData && accountData.accountNo) {
@@ -337,6 +345,12 @@ const AccountCheck = () => {
       </div>
 
       <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='로그인'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
