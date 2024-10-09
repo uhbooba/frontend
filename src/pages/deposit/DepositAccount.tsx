@@ -72,11 +72,7 @@ const DepositAccount = () => {
       <TopBar title='예금 가입' />
       <MainWrapper>
         <LevelBar currentLevel={3} totalLevel={5} />
-        <TitleText>어떤 계좌에서 출금할까요?</TitleText>
-
-        {/* <div className='pb-4 pl-4 text-2xl font-bold'>
-          <span>어떤 계좌에서 출금할까요?</span>
-        </div> */}
+        <TitleText>어떤 계좌에서 출금할까요</TitleText>
 
         <div className='mt-4 pb-4 pl-4 text-lg font-bold'>
           <span>출금계좌 선택</span>

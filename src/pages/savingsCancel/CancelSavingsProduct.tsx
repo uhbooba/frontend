@@ -11,6 +11,7 @@ import {
 import TopBar from '@/components/layouts/TopBar';
 import { getEarlyTerminationInterest } from '@/services/saving';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const CancelSavingsProduct = () => {
   const navigate = useNavigate();
@@ -97,7 +98,7 @@ const CancelSavingsProduct = () => {
       <TopBar title='적금 중도해지' />
       <MainWrapper>
         <LevelBar currentLevel={1} totalLevel={2} />
-
+        <TitleText>중도해지 적금상품 정보</TitleText>
         <div className=''>
           <div className='border-b border-gray-300 py-4 text-2xl'>
             <span className='text-gray-500'>상품명</span>

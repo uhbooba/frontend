@@ -16,6 +16,7 @@ import {
 import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const SavingsMoney = () => {
   const navigate = useNavigate();
@@ -163,7 +164,7 @@ const SavingsMoney = () => {
 
         <div>
           <div className='pb-4 pl-4 text-3xl font-bold'>
-            <span>얼마씩 적금할까요?</span>
+            <TitleText>얼마로 시작할까요?</TitleText>
           </div>
 
           <MoneyInput
@@ -188,7 +189,7 @@ const SavingsMoney = () => {
 
         <div>
           <div className='mt-16 pb-4 pl-4 text-3xl font-bold'>
-            <span>언제까지 모아볼까요?</span>
+            <TitleText>언제까지 모아볼까요?</TitleText>
           </div>
 
           <PeriodInput

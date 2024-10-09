@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { getMissionsClearStatus } from '@/services/mission';
 import NoModal from '@/components/modals/NoModal';
+import TitleText from '@/components/common/TitleText';
 
 interface Mission {
   isCleared: boolean;
@@ -60,6 +61,9 @@ const EducationCertificate = () => {
     <div>
       <TopBar title='교육 이수증' onXButtonClick={GoEdu} />
       <MainWrapper>
+        <TitleText>
+          스탬프를 다 모았다면 <br /> 이수증을 발급해봐요!{' '}
+        </TitleText>
         <div className='ml-4'>
           <TextBubble
             content={[

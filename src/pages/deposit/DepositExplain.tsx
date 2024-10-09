@@ -2,6 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import TitleText from '@/components/common/TitleText';
 
 const DepositExplain = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const DepositExplain = () => {
       <MainWrapper>
         <div>
           <div className='text-center'>
-            <p className='text-3xl font-bold'>예금이란?</p>
+            <TitleText>예금이란?</TitleText>
           </div>
           <div className='text-center'>
             <p className='mt-2 text-xl'>
