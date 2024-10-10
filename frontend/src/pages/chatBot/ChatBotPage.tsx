@@ -1,5 +1,4 @@
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import Chatbot from '@/components/chatbot/ChatBot';
 
 const ChatBotPage = () => {
@@ -11,10 +10,6 @@ const ChatBotPage = () => {
       </div>
       <div className='flex-1 overflow-hidden pb-2 pt-16'>
         <Chatbot />
-      </div>
-      {/* 하단탭 */}
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
       </div>
     </div>
   );
