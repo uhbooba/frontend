@@ -48,12 +48,14 @@ const SmishingMessageDetail = () => {
 
   useEffect(() => {
     if (isEndingCase) {
+      // 엔딩일 경우 모든 메시지 보여주기
       setCurrentMessageList(smishing?.message_list || []);
       setShowEndingOnClick(true);
-    } else {
+    } else if (currentMessageList.length === 1) {
+      // 메시지가 하나일 경우에만 초기 메시지 설정
       setCurrentMessageList([smishing?.message_list[0]]);
     }
-  }, [messageType, smishing, isEndingCase]);
+  }, [messageType, smishing, isEndingCase, currentMessageList.length]);
 
   // 문자 메세지 추가 딜레이 -> 3초 뒤에 보내도록
   const addMessagesWithDelay = useCallback(
@@ -218,7 +220,13 @@ const SmishingMessageDetail = () => {
         onClick={handleScreenClick}
       >
         <div
-          className={`scrollbar-none overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-24'}`}
+          className={`scrollbar-none overflow-y-auto p-4 ${
+            buttons?.length === 0
+              ? 'mb-24'
+              : buttons?.length === 2
+                ? 'mb-64'
+                : 'mb-96'
+          }`}
           ref={messagesContainerRef}
         >
           {currentMessageList.map((message, index) => (

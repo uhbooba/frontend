@@ -96,7 +96,7 @@ const Main = () => {
   useEffect(() => {
     const fetchLoginMission = async () => {
       try {
-        const response = await setMissionClearStatus(0);
+        const response = await setMissionClearStatus(1);
 
         if (response?.statusCode === 200) {
           const timer = setTimeout(() => {
@@ -191,7 +191,7 @@ const Main = () => {
               <img
                 src='/assets/images/small_logo.png'
                 alt='로고'
-                className='h-16 w-16 pt-1'
+                className='h-14 w-16 pt-1'
               ></img>
             </div>
             <div className='pb-0 pl-3 pr-4 text-xl font-bold'>

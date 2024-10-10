@@ -361,7 +361,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -381,7 +381,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -397,7 +397,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -405,7 +405,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -425,7 +425,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C00000',
@@ -449,7 +449,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -457,7 +457,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -465,7 +465,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -485,7 +485,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -501,7 +501,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -509,7 +509,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -533,7 +533,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -549,7 +549,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -557,7 +557,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -580,7 +580,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -596,7 +596,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -604,7 +604,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -618,7 +618,7 @@ export const smishingData: SmishingDataType = {
     alert_message: {
       title: '모르는 번호로 전화걸지 마세요',
       detail:
-        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \\n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
+        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
     },
     ending: null,
   },
@@ -628,7 +628,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -636,7 +636,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -644,7 +644,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -668,7 +668,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -676,7 +676,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -684,7 +684,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -707,7 +707,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 출발\\n\\n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 출발\n \n고객님의 물건이 배송을 시작했습니다! 빠르고 안전하게 도착할 수 있도록 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 1:37',
         tts_key: 'C1',
@@ -715,7 +715,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 지연\\n\\n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\\n\\n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
+        text: '[안심택배] 배송 지연\n \n예상치 못한 배송 중 문제로 오늘 도착 예정이었던 상품이 내일 배송될 예정입니다. 불편을 드려 죄송합니다. 빠른 배송을 위해 최선을 다하겠습니다.\n \n실시간 배송정보 : https://safedelivery.com/NjQ2ODU',
         day: 20240923,
         time: '오후 4:56',
         tts_key: 'C2',
@@ -723,7 +723,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '[안심택배] 배송 주소 오류\\n\\n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\\n\\n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\\n\\n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
+        text: '[안심택배] 배송 주소 오류\n \n고객님의 상품이 배송 중이나, 주소 확인이 불가능하여 배송이 일시 중단되었습니다. 빠른 처리를 위해 세부 주소를 입력해 주시기 바랍니다.\n \n배송 주소 확인 : https://safedelivery.com/NjQ25IZ\n \n더 궁금한 사항이 있으면 고객센터(123-4567)로 문의해 주세요.',
         day: 20240924,
         time: '오전 9:00',
         tts_key: 'C3',
@@ -737,7 +737,7 @@ export const smishingData: SmishingDataType = {
     alert_message: {
       title: '모르는 번호로 전화걸지 마세요',
       detail:
-        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \\n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
+        '모르는 번호로 전화가 오거나 전화를 걸게 될 경우, 상대방이 금전 요구를 할 수 있습니다. \n 의심스러운 번호는 국번 없이 112 또는 한국인터넷진흥원(118)에 신고하세요.',
     },
     ending: null,
   },
@@ -770,7 +770,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n\n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n \n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 1:24',
         tts_key: 'E1',
@@ -789,7 +789,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n\n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n \n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 1:24',
         tts_key: 'E1',
@@ -797,7 +797,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 3:17',
         tts_key: 'E2',
@@ -816,7 +816,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n\n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n \n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 1:24',
         tts_key: 'E1',
@@ -839,7 +839,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n\n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n \n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 1:24',
         tts_key: 'E1',
@@ -847,7 +847,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 3:17',
         tts_key: 'E2',
@@ -870,7 +870,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n\n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'S사 상한가 포착!\n수익률 보장, 투자 황금 기회!\n \n오늘 정보방 이용해 주신 분들에 한하여 다음주 급등 종목 전달 드립니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 1:24',
         tts_key: 'E1',
@@ -878,7 +878,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n\n무료방 입장\nhttps://band.us/n/af3gouEX',
+        text: 'N사는 이차전지 확장팩을 출시하고 북미와 유럽에 진출했습니다. 관련 선택 종목도 저희는 보유중입니다.\n \n무료방 입장\nhttps://band.us/n/af3gouEX',
         day: 20240923,
         time: '오후 3:17',
         tts_key: 'E2',
@@ -924,7 +924,7 @@ export const smishingData: SmishingDataType = {
       {
         is_reply: false,
         img: null,
-        text: '은행 방문없이 전화 상담만으로 빠르고 간편하게 대출이 가능합니다.\n\n나무은행 특별 신규우대금리\n신용 등급 무관, 최대 1억 원\n\n진행을 원하시면 신분증(주민등록증, 운전면허, 여권가능)사진과 계좌번호를 보내 주세요.\n상담원 연결 : 010-9876-5432',
+        text: '은행 방문없이 전화 상담만으로 빠르고 간편하게 대출이 가능합니다.\n \n나무은행 특별 신규우대금리\n신용 등급 무관, 최대 1억 원\n \n진행을 원하시면 신분증(주민등록증, 운전면허, 여권가능)사진과 계좌번호를 보내 주세요.\n상담원 연결 : 010-9876-5432',
         day: 20240920,
         time: '오후 2:34',
         tts_key: 'G1',
