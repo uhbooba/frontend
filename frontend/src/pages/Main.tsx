@@ -4,6 +4,7 @@ import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
 import {
+  getMissionClearStatus,
   getMissionsClearStatus,
   setMissionClearStatus,
 } from '@/services/mission';
@@ -138,15 +139,39 @@ const Main = () => {
     fetchAccountDetails();
   }, []);
 
-  const handleButtonClick = (route: string) => {
-    navigate(route);
+  // 버튼 클릭 시 미션 상태를 확인하는 함수 추가
+  const handleButtonClick = async (route: string, label: string) => {
+    if (label === '계좌개설') {
+      try {
+        const response = await getMissionsClearStatus();
+        const missionStatus = response?.result?.find(
+          (mission: missionItem) => mission.missionNumber === 2,
+        );
+        if (!missionStatus?.isCleared) {
+          navigate('/account/products/mission'); // 미션이 완료되지 않았을 경우 mission 페이지로 이동
+          return;
+        }
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+    }
+    navigate(route); // 미션 완료되었거나 다른 버튼일 경우 해당 route로 이동
   };
 
   const GoAccountCheck = () => {
     navigate('account/check');
   };
 
-  const GoAccountTransfer = () => {
+  const GoAccountTransfer = async () => {
+    try {
+      const missionStatus = await getMissionClearStatus(3);
+      if (!missionStatus?.result) {
+        navigate('/account/transfer/mission');
+        return;
+      }
+    } catch (error) {
+      console.error('미션 상태 확인 중 오류 발생:', error);
+    }
     navigate('account/transfer/account-info');
   };
 
@@ -205,7 +230,7 @@ const Main = () => {
               label={button.label}
               size={button.size}
               color={button.color}
-              onClick={() => handleButtonClick(button.route)}
+              onClick={() => handleButtonClick(button.route, button.label)} // 버튼 클릭 시 handleButtonClick 호출
               className={button.className}
               img={button.img}
             />

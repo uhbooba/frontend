@@ -110,6 +110,9 @@ const UtilityPaySuccess = lazy(
   () => import('@/pages/utilityPayment/UtilityPaySuccess'),
 );
 
+const AccountOpenMission = lazy(
+  () => import('@/pages/account/AccountOpenMission'),
+);
 const AccountCheck = lazy(() => import('@/pages/account/AccountCheck'));
 const AccountAddCash = lazy(() => import('@/pages/account/AccountAddCash'));
 const AccountProductsList = lazy(
@@ -118,23 +121,26 @@ const AccountProductsList = lazy(
 const AccountDepositProducts = lazy(
   () => import('@/pages/account/AccountDepositProducts'),
 );
+const AccountTransferMission = lazy(
+  () => import('@/pages/account/transfer/AccountTransferMission'),
+);
 const AccountTransferAccountInfo = lazy(
-  () => import('@/pages/account/AccountTransferAccountInfo'),
+  () => import('@/pages/account/transfer/AccountTransferAccountInfo'),
 );
 const AccountTransferAmount = lazy(
-  () => import('@/pages/account/AccountTransferAmount'),
+  () => import('@/pages/account/transfer/AccountTransferAmount'),
 );
 const AccountTransferDepositName = lazy(
-  () => import('@/pages/account/AccountTransferDepositName'),
+  () => import('@/pages/account/transfer/AccountTransferDepositName'),
 );
 const AccountTransferInfoCheck = lazy(
-  () => import('@/pages/account/AccountTransferInfoCheck'),
+  () => import('@/pages/account/transfer/AccountTransferInfoCheck'),
 );
 const AccountTransferPassword = lazy(
-  () => import('@/pages/account/AccountTransferPassword'),
+  () => import('@/pages/account/transfer/AccountTransferPassword'),
 );
 const AccountTransferSuccess = lazy(
-  () => import('@/pages/account/AccountTransferSuccess'),
+  () => import('@/pages/account/transfer/AccountTransferSuccess'),
 );
 const AccountList = lazy(() => import('@/pages/account/AccountList'));
 const AccountDepositList = lazy(
@@ -255,7 +261,12 @@ const router = createBrowserRouter([
             path: 'account/products/deposit',
             element: <AccountDepositProducts />,
           },
+          { path: 'account/products/mission', element: <AccountOpenMission /> },
           // 계좌 이체
+          {
+            path: 'account/transfer/mission',
+            element: <AccountTransferMission />,
+          },
           {
             path: 'account/transfer/account-info',
             element: <AccountTransferAccountInfo />,
