@@ -1,23 +1,23 @@
-import Button from '@/components/common/buttons/Button';
-import ErrorText from '@/components/common/ErrorText';
-import { Input } from '@/components/common/Input';
-import Keypad from '@/components/common/KeyPad';
-import MainWrapper from '@/components/layouts/MainWrapper';
-import TopBar from '@/components/layouts/TopBar';
-import NoModal from '@/components/modals/NoModal';
-import { useNumberInput } from '@/hooks/useNumberInput';
+import Button from '@/components/common/buttons/Button.tsx';
+import ErrorText from '@/components/common/ErrorText.tsx';
+import { Input } from '@/components/common/Input.tsx';
+import Keypad from '@/components/common/KeyPad.tsx';
+import MainWrapper from '@/components/layouts/MainWrapper.tsx';
+import TopBar from '@/components/layouts/TopBar.tsx';
+import NoModal from '@/components/modals/NoModal.tsx';
+import { useNumberInput } from '@/hooks/useNumberInput.ts';
 import {
   checkUsername,
   postSignup,
   postSms,
   postSmsVerify,
-} from '@/services/auth';
+} from '@/services/auth.ts';
 import {
   validateName,
   validatePassword,
   validatePhoneNumber,
   validateUserId,
-} from '@/utils/validation';
+} from '@/utils/validation.ts';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
