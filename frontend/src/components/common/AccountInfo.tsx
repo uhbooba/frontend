@@ -33,7 +33,7 @@ const AccountInfo: React.FC<AccountInfoProps> = ({
           <Button
             label={buttonName}
             color='lightOrange'
-            size='customMedium'
+            size='large'
             onClick={onClick ? onClick : () => navigate(moveTo)}
           />
         </div>
