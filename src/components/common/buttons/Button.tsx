@@ -2,10 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 
 const BUTTON_SIZES = {
-  large: 'py-2 w-full text-lg',
-  medium: 'py-2 w-full text-md',
-  small: 'py-2 w-full text-sm',
-  customMedium: 'py-2 w-24 text-md',
+  large: 'py-4 w-full text-2xl',
+  medium: 'py-2 w-full text-xl',
+  small: 'py-2 w-full text-lg',
+  customMedium: 'py-2 w-24 text-xl',
 };
 
 const BUTTON_COLORS = {
