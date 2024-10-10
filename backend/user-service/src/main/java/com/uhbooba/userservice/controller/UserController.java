@@ -1,8 +1,9 @@
 package com.uhbooba.userservice.controller;
 
 import com.uhbooba.userservice.dto.CommonResponse;
+import com.uhbooba.userservice.dto.request.PasswordCheckRequest;
 import com.uhbooba.userservice.dto.request.SignupRequest;
-import com.uhbooba.userservice.dto.request.UpdateUserRequest;
+import com.uhbooba.userservice.dto.request.UpdatePasswordRequest;
 import com.uhbooba.userservice.dto.response.UserResponse;
 import com.uhbooba.userservice.dto.response.UserSignupMessageResponse;
 import com.uhbooba.userservice.exception.SignupFormatException;
@@ -40,14 +41,16 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "회원 가입")
-    public CommonResponse<?> sighup(@Valid @RequestBody SignupRequest request,
-        BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
+    public CommonResponse<?> sighup(
+        @Valid @RequestBody SignupRequest request,
+        BindingResult bindingResult
+    ) throws Exception {
+        if(bindingResult.hasErrors()) {
             throw new SignupFormatException();
         }
         UserSignupMessageResponse data = userService.signup(request);
 
-        kafkaProducerService.send("user-signup-topic", data);
+        kafkaProducerService.sendAccountUser("user-signup-topic", data);
 
         return CommonResponse.created("회원가입 성공");
     }
@@ -83,11 +86,18 @@ public class UserController {
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "유저 정보 수정(isFirstLogin, password)")
-    public CommonResponse<?> updateUser(@Valid @RequestBody UpdateUserRequest request) {
+    public CommonResponse<?> updatePasswordUser(@Valid @RequestBody UpdatePasswordRequest request) {
 
-        userService.updateUser(request);
+        userService.updatePasswordUser(request);
 
         return CommonResponse.ok("유저 정보 수정 성공");
     }
 
+    @PostMapping("/password")
+    @Operation(summary = "서비스 통신용 : 비밀번호 확인")
+    public Boolean isValidPassword(
+        @RequestBody PasswordCheckRequest request
+    ) {
+        return userService.isValidPassword(request);
+    }
 }

@@ -11,7 +11,8 @@ public record DemandDepositTransferAccountRequest(
     @Size(max = 255, message = "최대 255자입니다.") String depositTransactionSummary,
     @NotNull(message = "거래금액은 필수입니다.") Long transactionBalance,
     @NotBlank(message = "출금 계좌번호는 필수입니다.") @Size(max = 16, message = "계좌번호는 16글자입니다.") String withdrawalAccountNo,
-    @Size(max = 255, message = "최대 255자입니다.") String withdrawalTransactionSummary
+    @Size(max = 255, message = "최대 255자입니다.") String withdrawalTransactionSummary,
+    @NotBlank(message = "간편비밀번호는 필수입니다.") String password
 ) {
 
 }

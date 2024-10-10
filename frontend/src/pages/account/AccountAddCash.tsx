@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import { BottomTab } from '@/components/layouts/BottomTab';
 import { postUserFreeAccountAddCash } from '@/services/account';
+import { getUserFreeAccount } from '@/services/account';
 
 const AddCash = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const { accountNo } = location.state || {};
 
   const [selectedButton, setSelectedButton] = useState<number | null>(null);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [accountNo, setAccountNo] = useState('');
 
   const handleButtonClick = (index: number, amount: number) => {
     setSelectedButton(index);
@@ -43,6 +42,22 @@ const AddCash = () => {
       }, 100);
     }
   };
+
+  useEffect(() => {
+    const fetchAccountNumber = async () => {
+      try {
+        const response = await getUserFreeAccount();
+        if (response?.data?.result) {
+          const account = response.data.result;
+          setAccountNo(account.accountNo);
+        }
+      } catch (error) {
+        console.error('계좌 정보 API 호출 중 오류 발생:', error);
+      }
+    };
+
+    fetchAccountNumber();
+  });
 
   const ButtonConfig: ButtonConfigType[] = [
     {

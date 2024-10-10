@@ -8,13 +8,16 @@ import { useEffect, useState } from 'react';
 import MoneyInput from '@/components/common/MoneyInput';
 import Keypad from '@/components/common/KeyPad';
 import { getUserFreeAccount } from '@/services/account';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import {
   depositAccountNoAtom,
   transactionBalanceAtom,
   selectedBankAtom,
   depositTransactionSummaryAtom,
-  withdrawalTransactionSummaryAtom,
+  withdrawalAccountNoAtom,
+  isTransferMissionProgressingAtom,
+  withdrawalUsernameAtom,
+  depositUsernameAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAmount = () => {
@@ -25,10 +28,15 @@ const AccountTransferAmount = () => {
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo] = useAtom(depositAccountNoAtom);
-  const [depositUsername] = useAtom(depositTransactionSummaryAtom);
-  const [, setWithdrawalUsername] = useAtom(withdrawalTransactionSummaryAtom);
+  const [depositUsername] = useAtom(depositUsernameAtom);
+  const setWithdrawalUsername = useSetAtom(withdrawalUsernameAtom);
+  const setWithdrawalAccountNo = useSetAtom(withdrawalAccountNoAtom);
+  const setDepositTransactionSummary = useSetAtom(
+    depositTransactionSummaryAtom,
+  );
   const [balance, setBalance] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isMissionProgressing] = useAtom(isTransferMissionProgressingAtom);
 
   const transactionBalanceLabels = [
     '+1만원',
@@ -65,7 +73,6 @@ const AccountTransferAmount = () => {
     }
   };
 
-  // 키패드 숫자 클릭할 때 함수
   const keyClick = (num: string) => {
     const newTransactionBalance = Number(String(transactionBalance) + num);
     if (newTransactionBalance > balance) {
@@ -76,7 +83,6 @@ const AccountTransferAmount = () => {
     }
   };
 
-  // 키패트 지우기 버튼 클릭할 때 함수
   const handleDelete = () => {
     setTransactionBalance((prev) => Math.floor(prev / 10));
   };
@@ -95,12 +101,20 @@ const AccountTransferAmount = () => {
       return;
     }
 
+    // 미션 진행 중일 때 금액 검증
+    if (isMissionProgressing && transactionBalance !== 50000) {
+      setErrorMessage('손주에게 보낼 금액 50,000원을 정확히 입력해 주세요.');
+      return;
+    }
+
     navigate('/account/transfer/deposit-name', {
       state: { depositAccountNo, selectedBank },
     });
   };
 
   useEffect(() => {
+    setTransactionBalance(0);
+
     const fetchAccountBalance = async () => {
       try {
         const response = await getUserFreeAccount();
@@ -108,6 +122,8 @@ const AccountTransferAmount = () => {
           const account = response.data.result;
           setBalance(account.balance);
           setWithdrawalUsername(account.username);
+          setWithdrawalAccountNo(account.accountNo);
+          setDepositTransactionSummary(account.username)
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);

@@ -1,10 +1,15 @@
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountProduct from '@/components/common/AccountProduct';
 import { useSetAtom } from 'jotai';
 import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
 import { postUserFreeAccount } from '@/services/account';
+import MainWrapper from '@/components/layouts/MainWrapper';
+import {
+  getMissionClearStatus,
+  setMissionClearStatus,
+} from '@/services/mission';
+import { useState } from 'react';
 
 interface ProductItem {
   name: string;
@@ -15,10 +20,11 @@ interface ProductItem {
 const AccountProductsList = () => {
   const setSelectedKeyword = useSetAtom(selectedKeywordAtom);
   const navigate = useNavigate();
+  const [isMissionCleared, setIsMissionCleared] = useState(false);
 
   const ProductsList = [
     {
-      name: '자유입출금 통장',
+      name: '수시입출금 통장',
       description: '돈을 자유롭게 입금하고 출금해요.',
       moveTo: '/account/check',
     },
@@ -34,17 +40,24 @@ const AccountProductsList = () => {
     },
   ];
 
-  const handleProductClick = (product: ProductItem) => {
-    if (product.name === '자유입출금 통장') {
-      const createDemandDeposit = () => {
-        try {
-          postUserFreeAccount();
-        } catch (error) {
-          console.error('Error fetching answer:', error);
+  const handleProductClick = async (product: ProductItem) => {
+    if (product.name === '수시입출금 통장') {
+      try {
+        const missionStatus = await getMissionClearStatus(2);
+        if (!missionStatus?.result?.isCleared) {
+          await setMissionClearStatus(2);
+          setIsMissionCleared(true);
         }
-      };
-      createDemandDeposit();
-      navigate(product.moveTo);
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+      try {
+        postUserFreeAccount();
+      } catch (error) {
+        console.error('Error fetching answer:', error);
+      }
+
+      navigate(product.moveTo, { state: { isMissionCleared } });
     }
     setSelectedKeyword(
       product.name.includes('예금') ? '예금 상품' : '적금 상품',
@@ -57,20 +70,19 @@ const AccountProductsList = () => {
   return (
     <div>
       <TopBar title='계좌 개설' showXButton={false} />
-      <div className='flex flex-col items-center justify-center'>
-        {ProductsList.map((product, index) => (
-          <AccountProduct
-            key={index}
-            name={product.name}
-            description={product.description}
-            moveTo={product.moveTo}
-            onClick={() => handleProductClick(product)}
-          />
-        ))}
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      <MainWrapper>
+        <div className='flex flex-col items-center justify-center'>
+          {ProductsList.map((product, index) => (
+            <AccountProduct
+              key={index}
+              name={product.name}
+              description={product.description}
+              moveTo={product.moveTo}
+              onClick={() => handleProductClick(product)}
+            />
+          ))}
+        </div>
+      </MainWrapper>
     </div>
   );
 };

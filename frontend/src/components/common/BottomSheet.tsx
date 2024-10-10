@@ -15,7 +15,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
   return (
     <div
-      className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'
+      className='fixed inset-0 left-1/2 z-50 flex w-full -translate-x-1/2 transform items-end justify-center bg-black bg-opacity-50'
       onClick={onClose}
     >
       <div

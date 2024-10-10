@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import Button from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const SmishingAgree = () => {
   const navigate = useNavigate();
@@ -11,12 +12,10 @@ const SmishingAgree = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 w-full'>
-        <TopBar title='약관 동의' onXButtonClick={GoEdu} />
-      </div>
+      <TopBar title='약관 동의' onXButtonClick={GoEdu} />
 
-      <div className='mb-6 mt-24 p-5'>
-        <h3 className='mb-4 text-4xl font-bold'>모의 상황 안내</h3>
+      <MainWrapper>
+        <h3 className='mb-4 mt-5 text-4xl font-bold'>모의 상황 안내</h3>
         <ul className='space-y-2 text-2xl'>
           <li>
             • 본 서비스에서 제공되는 모든 자료 및 콘텐츠는 가상의 시나리오에
@@ -26,7 +25,7 @@ const SmishingAgree = () => {
           </li>
           <li>
             • 모든 시나리오, 이벤트, 데이터는
-            <span className='font-bold text-primary'>가상의 사례</span>를
+            <span className='font-bold text-primary'> 가상의 사례</span>를
             기반으로 제공됩니다.
           </li>
           <li>
@@ -48,7 +47,7 @@ const SmishingAgree = () => {
             className='ml-2'
           />
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import {
   withdrawalTransactionSummaryAtom,
   selectedBankAtom,
   depositTransactionSummaryAtom,
+  depositUsernameAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
@@ -25,6 +26,7 @@ const AccountTransferDepositName = () => {
   const [depositTransactionSummary, setDepositTransactionSummary] = useAtom(
     depositTransactionSummaryAtom,
   );
+  const [depositUsername] = useAtom(depositUsernameAtom);
 
   return (
     <div className='flex h-screen flex-col'>
@@ -40,7 +42,7 @@ const AccountTransferDepositName = () => {
         <div>
           {selectedBank} {depositAccountNo}
         </div>
-        {depositTransactionSummary}님께
+        {depositUsername}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>

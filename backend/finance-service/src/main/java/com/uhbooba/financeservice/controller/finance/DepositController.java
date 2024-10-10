@@ -9,6 +9,7 @@ import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_EX
 import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.DEPOSIT_PRODUCT_RESPONSE;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Deposit.EARLY_DEPOSIT_EXPIRE_RESPONSE;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.PASSWORD;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
@@ -21,6 +22,7 @@ import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositExpiryInter
 import com.uhbooba.financeservice.dto.finapi.response.deposit.DepositResponse;
 import com.uhbooba.financeservice.service.DepositService;
 import com.uhbooba.financeservice.util.CommonUtil;
+import com.uhbooba.financeservice.util.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -45,6 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepositController {
 
     private final DepositService depositService;
+    private final PasswordService passwordService;
 
     @PostMapping("/products")
     @Operation(summary = "[사용 X] 예금 상품 만들기")
@@ -68,13 +71,16 @@ public class DepositController {
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "예금 계좌 생성", description = INPUT + DEPOSIT_ACCOUNT_CREATE + OUTPUT
-        + DEPOSIT_ACCOUNT_RESPONSE)
+    @Operation(summary = "예금 계좌 생성", description = INPUT + DEPOSIT_ACCOUNT_CREATE + PASSWORD
+        + OUTPUT + DEPOSIT_ACCOUNT_RESPONSE)
     public CommonResponse<DepositAccountResponse> createDepositAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DepositAccountCreateRequest dto
     ) {
         UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+
+        passwordService.validatePassword(userHeaderInfo.userId(), dto.password());
+
         return CommonResponse.ok("예금 계좌 생성 완료",
                                  depositService.createDepositAccount(userHeaderInfo, dto));
     }

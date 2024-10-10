@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { getSmishing } from '@/services/education';
 import { SmishingMessage } from '@/types/education';
 import { useFormattedContent } from '@/hooks/useFormattedContent';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const SmishingMessageList = () => {
   const navigate = useNavigate();
   const [messageList, setMessageList] = useState<SmishingMessage[]>([]);
   const [remain, setRemain] = useState('');
-  const formattedRemain = useFormattedContent(remain, 'text-2xl');
+  const formattedRemain = useFormattedContent(remain, 'text-3xl');
 
   const fetchSmishing = async () => {
     const response = await getSmishing();
@@ -21,14 +22,16 @@ const SmishingMessageList = () => {
     fetchSmishing();
   }, []);
 
+  const GoEdu = () => {
+    navigate('/education');
+  };
+
   return (
     <div>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='금융 사기 예방' />
-      </div>
+      <TopBar title='금융 사기 예방' onXButtonClick={GoEdu} />
 
-      <div className='mb-6 mt-20 p-5'>
-        <h3 className='mb-4 text-center text-3xl font-bold leading-10'>
+      <MainWrapper>
+        <h3 className='my-6 text-center text-3xl font-bold leading-10'>
           {formattedRemain}
         </h3>
         <ul className='space-y-4'>
@@ -70,7 +73,7 @@ const SmishingMessageList = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </MainWrapper>
     </div>
   );
 };

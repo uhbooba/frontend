@@ -4,10 +4,12 @@ import TopBar from '@/components/layouts/TopBar';
 import { getUserFreeAccount } from '@/services/account';
 import { useEffect, useState } from 'react';
 import {
+  getMissionClearStatus,
   getMissionsClearStatus,
   setMissionClearStatus,
 } from '@/services/mission';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 interface AccountData {
   accountName: string;
@@ -94,7 +96,7 @@ const Main = () => {
   useEffect(() => {
     const fetchLoginMission = async () => {
       try {
-        const response = await setMissionClearStatus(1);
+        const response = await setMissionClearStatus(0);
 
         if (response?.statusCode === 200) {
           const timer = setTimeout(() => {
@@ -137,89 +139,110 @@ const Main = () => {
     fetchAccountDetails();
   }, []);
 
-  const handleButtonClick = (route: string) => {
-    navigate(route);
+  // 버튼 클릭 시 미션 상태를 확인하는 함수 추가
+  const handleButtonClick = async (route: string, label: string) => {
+    if (label === '계좌개설') {
+      try {
+        const response = await getMissionsClearStatus();
+        const missionStatus = response?.result?.find(
+          (mission: missionItem) => mission.missionNumber === 2,
+        );
+        if (!missionStatus?.isCleared) {
+          navigate('/account/products/mission'); // 미션이 완료되지 않았을 경우 mission 페이지로 이동
+          return;
+        }
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+    }
+    navigate(route); // 미션 완료되었거나 다른 버튼일 경우 해당 route로 이동
   };
 
   const GoAccountCheck = () => {
     navigate('account/check');
   };
 
-  const GoAccountTransfer = () => {
+  const GoAccountTransfer = async () => {
+    try {
+      const missionStatus = await getMissionClearStatus(3);
+      if (!missionStatus?.result) {
+        navigate('/account/transfer/mission');
+        return;
+      }
+    } catch (error) {
+      console.error('미션 상태 확인 중 오류 발생:', error);
+    }
     navigate('account/transfer/account-info');
   };
 
   return (
     <div className='min-h-screen bg-orange-100/40'>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar
-          title=''
-          showBackButton={false}
-          showXButton={false}
-          showMainButton={true}
-        />
-      </div>
-      <div className='h-2' />
-      {/* 메인계좌 디브 */}
-      <div className='m-4 mt-8 h-56 rounded-2xl bg-white shadow'>
-        <div className='flex pt-2'>
-          <div className='flex items-center pl-2'>
-            <img
-              src='/assets/images/small_logo.png'
-              alt='로고'
-              className='h-16 w-16 pt-1'
-            ></img>
+      <TopBar
+        title=''
+        showBackButton={false}
+        showXButton={false}
+        showMainButton={true}
+      />
+      <MainWrapper isBottomTab={true}>
+        {/* 메인계좌 디브 */}
+        <div className='my-4 rounded-md bg-white p-4 shadow'>
+          <div className='flex items-center pt-2'>
+            <div className='flex'>
+              <img
+                src='/assets/images/small_logo.png'
+                alt='로고'
+                className='h-14 w-16 pt-1'
+              ></img>
+            </div>
+            <div className='pb-0 pl-3 pr-4 text-xl font-bold'>
+              <p className='pb-1'>
+                {accountData ? accountData.accountName : '자유입출금 계좌'}
+              </p>
+              <p>{accountData ? accountData.accountNo : '111-222-333333'}</p>
+            </div>
           </div>
-          <div className='pb-0 pl-3 pr-4 pt-4 text-xl font-bold'>
-            <p className='pb-1'>
-              {accountData ? accountData.accountName : '자유입출금 계좌'}
-            </p>
-            <p>{accountData ? accountData.accountNo : '111-222-333333'}</p>
+          <div className='py-5 pr-4 text-3xl font-bold'>
+            {accountData && accountData.balance
+              ? `${accountData.balance.toLocaleString()}원`
+              : '11,000,000원'}
+          </div>
+          <div className='flex justify-around'>
+            <Button
+              label='돈 보내기'
+              size='small'
+              className='mr-2 flex h-10 w-40 items-center justify-center bg-primary/75'
+              onClick={() => GoAccountTransfer()}
+            />
+            <Button
+              label='계좌내역 조회'
+              size='small'
+              className='ml-2 flex h-10 w-40 items-center justify-center bg-primary/75'
+              onClick={() => GoAccountCheck()}
+            />
           </div>
         </div>
 
-        <div className='pb-2 pl-4 pr-4 pt-4 text-3xl font-bold'>
-          {accountData && accountData.balance
-            ? `${accountData.balance.toLocaleString()}원`
-            : '11,000,000원'}
+        {/* 하단 그리드 버튼들 */}
+        <div className='my-3 grid grid-cols-2 gap-4'>
+          {buttonConfig.map((button, index) => (
+            <Button
+              key={index}
+              label={button.label}
+              size={button.size}
+              color={button.color}
+              onClick={() => handleButtonClick(button.route, button.label)} // 버튼 클릭 시 handleButtonClick 호출
+              className={button.className}
+              img={button.img}
+            />
+          ))}
         </div>
-
-        <div className='flex justify-around pt-4'>
-          <Button
-            label='돈 보내기'
-            size='small'
-            className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
-            onClick={() => GoAccountTransfer()}
+        {isSuccessModalOpen && (
+          <MissionSuccessModal
+            name='로그인'
+            onConfirm={() => setIsSuccessModalOpen(false)}
           />
-          <Button
-            label='계좌내역 조회'
-            size='small'
-            className='ml-4 mr-4 flex h-10 w-40 items-center justify-center bg-primary/75'
-            onClick={() => GoAccountCheck()}
-          />
-        </div>
-      </div>
-
-      {/* 하단 그리드 버튼들 */}
-      <div className='grid grid-cols-2 gap-4 p-4'>
-        {buttonConfig.map((button, index) => (
-          <Button
-            key={index}
-            label={button.label}
-            size={button.size}
-            color={button.color}
-            onClick={() => handleButtonClick(button.route)}
-            className={button.className}
-            img={button.img}
-          />
-        ))}
-      </div>
-      {isSuccessModalOpen && (
-        <MissionSuccessModal
-          name='로그인'
-          onConfirm={() => setIsSuccessModalOpen(false)}
-        />
-      )}
+        )}
+      </MainWrapper>
     </div>
   );
 };

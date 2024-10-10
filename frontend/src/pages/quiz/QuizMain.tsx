@@ -1,3 +1,4 @@
+import MainWrapper from '@/components/layouts/MainWrapper';
 import TopBar from '@/components/layouts/TopBar';
 import { QuizItem } from '@/components/quiz/QuizItem';
 import { useNavigate } from 'react-router';
@@ -6,7 +7,7 @@ const QuizMain = () => {
   const navigate = useNavigate();
 
   const moveQuiz = (path: string) => {
-    navigate(`/quiz/${path}`);
+    navigate(`/education/quiz/${path}`);
   };
 
   const quizItems = [
@@ -25,17 +26,19 @@ const QuizMain = () => {
   return (
     <div>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <div>
-        {quizItems.map((item) => (
-          <QuizItem
-            key={item.part}
-            title={item.topic}
-            icon={<img src='/assets/images/pig.png' className='h-16 w-16' />}
-            onClick={() => moveQuiz(`${item.part}`)}
-            className='cursor-pointer'
-          />
-        ))}
-      </div>
+      <MainWrapper isBottomTab={true}>
+        <div>
+          {quizItems.map((item) => (
+            <QuizItem
+              key={item.part}
+              title={item.topic}
+              icon={<img src='/assets/images/pig.png' className='h-16 w-16' />}
+              onClick={() => moveQuiz(`${item.part}`)}
+              className='cursor-pointer'
+            />
+          ))}
+        </div>
+      </MainWrapper>
     </div>
   );
 };

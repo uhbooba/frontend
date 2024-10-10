@@ -4,12 +4,13 @@ import { useEffect } from 'react';
 import { runConfetti } from '@/utils/confetti';
 import TextBubble from '@/components/common/TextBubble';
 import Button from '@/components/common/buttons/Button';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const QuizSuccess = () => {
   const navigate = useNavigate();
 
   const moveQuizMainPage = () => {
-    navigate('/quiz');
+    navigate('/education/quiz');
   };
 
   useEffect(() => {
@@ -23,8 +24,8 @@ const QuizSuccess = () => {
   return (
     <div className='flex flex-col'>
       <TopBar title='금융 퀴즈' onXButtonClick={GoEdu} />
-      <div className='h-full'>
-        <div className='flex flex-col items-center justify-center'>
+      <MainWrapper className='felx h-full justify-center' isBottomTab={true}>
+        <div className='mt-16 flex flex-col items-center justify-center'>
           <TextBubble
             content={['모든 문제를', '해결하셨습니다!']}
             tailPosition='center'
@@ -42,7 +43,7 @@ const QuizSuccess = () => {
             />
           </div>
         </div>
-      </div>
+      </MainWrapper>
     </div>
   );
 };

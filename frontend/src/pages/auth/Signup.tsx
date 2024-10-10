@@ -2,6 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import ErrorText from '@/components/common/ErrorText';
 import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
+import MainWrapper from '@/components/layouts/MainWrapper';
 import TopBar from '@/components/layouts/TopBar';
 import { useNumberInput } from '@/hooks/useNumberInput';
 import {
@@ -25,7 +26,7 @@ const Signup = () => {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const [isIdConfirmed, setIsIdConfirmed] = useState(false);
+  const [isIdConfirmed, setIsIdConfirmed] = useState<boolean | null>(null);
   const [isPhoneConfirmed, setTsPhoneConfirmed] = useState<boolean | null>(
     null,
   );
@@ -110,7 +111,6 @@ const Signup = () => {
 
   // 아이디 중복확인
   const handleIdVerificationClick = () => {
-    if (userId === '') return;
     if (validateUserId(userId)) {
       setErrors((prev) => ({
         ...prev,
@@ -187,12 +187,12 @@ const Signup = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col'>
+    <div className='flex flex-col'>
       <TopBar title='회원가입' />
-      <div className='h-full w-full max-w-md justify-center'>
+      <MainWrapper>
         <form
           onSubmit={handleSignup}
-          className='mt-12 flex flex-col justify-center'
+          className='mt-8 flex flex-col justify-center'
         >
           <Input
             label='성함'
@@ -202,29 +202,28 @@ const Signup = () => {
           />
           {errors.userName && <ErrorText>{errors.userName}</ErrorText>}
           <div className='mt-5 flex flex-col'>
-            <div className='flex flex-row'>
-              <Input
-                label='아이디'
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-                isError={errors.userId !== ''}
-                pattern='[a-zA-Z0-9]*'
-              />
-              <Button
-                label='중복 확인'
-                onClick={handleIdVerificationClick}
-                size='small'
-                className='ml-2 w-4/12'
-                type='button'
-              />
-            </div>
+            <Input
+              label='아이디'
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              isError={errors.userId !== ''}
+              pattern='[a-zA-Z0-9]*'
+            />
             {errors.userId ? (
               <ErrorText>{errors.userId}</ErrorText>
             ) : isIdConfirmed ? (
               <ErrorText color='green'>사용 가능한 아이디입니다.</ErrorText>
-            ) : null}{' '}
+            ) : null}
           </div>
-          <div className='mt-5 flex flex-col'>
+          <Button
+            label='중복 확인'
+            onClick={handleIdVerificationClick}
+            size='small'
+            className='my-5'
+            type='button'
+            color='lightOrange'
+          />
+          <div className='flex flex-col'>
             <Input
               label='핸드폰 인증'
               value={phoneNumber}
@@ -241,6 +240,7 @@ const Signup = () => {
             size='small'
             type='button'
             className='my-5'
+            color='lightOrange'
           />
           {isPhoneClicked && (
             <div className='mb-5 flex flex-col'>
@@ -257,6 +257,7 @@ const Signup = () => {
                   size='small'
                   className='ml-2 w-4/12'
                   type='button'
+                  color='lightOrange'
                 />
               </div>
               <div className='mt-2 flex flex-row items-center justify-between'>
@@ -299,7 +300,7 @@ const Signup = () => {
             />
           )}
         </form>
-      </div>
+      </MainWrapper>
     </div>
   );
 };

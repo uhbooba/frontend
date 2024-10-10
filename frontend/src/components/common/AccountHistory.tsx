@@ -3,133 +3,147 @@ import { getUserFreeAccountTransactions } from '@/services/account'; // API 함�
 
 type Transaction = {
   id: number;
-  name: string;
-  time: string; // API에서 시간의 형식이 문자열일 경우 string으로 변경
-  amount: number;
-  balance: number;
-  type: string; // 거래 유형 추가
+  transactionUniqueNo: string;
+  status: string;
+  type: string;
+  transactionBalance: number;
+  transactionAfterBalance: number;
+  transactionSummary: string;
+  updatedAt: Date;
 };
 
-type AccountHistoryProps = {
-  filter: {
-    date: string; // 필터 조건
-    type: string;
-    sort: string;
-    startDate?: string; // 시작일
-    endDate?: string; // 종료일
+type GroupedTransactions = {
+  [year: string]: {
+    [monthAndDay: string]: Transaction[];
   };
 };
 
-// 시간 형식 변환 함수
-const formatTime = (date: string) => {
-  const newDate = new Date(date);
-  const hours = newDate.getHours();
-  const minutes = newDate.getMinutes();
-  const isAM = hours < 12;
-  const formattedHours = hours % 12 === 0 ? 12 : hours % 12; // 12시간 형식으로 변환
-  const period = isAM ? '오전' : '오후';
-  return `${period} ${formattedHours}시 ${minutes}분`;
+type AccountHistoryProps = {
+  accountNo: string;
+  filter: {
+    date: string;
+    type: string;
+    sort: string;
+    startDate?: string;
+    endDate?: string;
+  };
 };
 
-const AccountHistory: React.FC<AccountHistoryProps> = ({ filter }) => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [filteredTransactions, setFilteredTransactions] = useState<
-    Transaction[]
-  >([]);
+const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
+  // 날짜별로 그룹화된 거래 내역을 담기 위한 변수
+  const [groupedTransactions, setGroupedTransactions] = useState<{
+    [year: string]: {
+      [monthAndDay: string]: Transaction[];
+    };
+  }>({});
 
-  // API로부터 거래 내역을 가져오기
+  // 날짜 포맷 함수: "오전/오후 시:분"
+  const formatTime = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+    return new Intl.DateTimeFormat('ko-KR', options).format(new Date(date));
+  };
+
+  // 날짜 포맷 함수: "년. 월. 일"
+  const formatDate = (date: Date) => {
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth() + 1;
+    const day = new Date(date).getDate();
+    return { year, monthAndDay: `${month}월 ${day}일` };
+  };
+
+  // 거래 내역을 API로부터 가져오기
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await getUserFreeAccountTransactions();
-        setTransactions(response.data.content);
+        const response = await getUserFreeAccountTransactions(accountNo);
+        const fetchedTransactions = response.data.result.content;
+
+        // 거래 내역을 년, 월, 일 기준으로 그룹화
+        const grouped = fetchedTransactions.reduce(
+          (acc: GroupedTransactions, transaction: Transaction) => {
+            const { year, monthAndDay } = formatDate(transaction.updatedAt);
+
+            if (!acc[year]) {
+              acc[year] = {};
+            }
+            if (!acc[year][monthAndDay]) {
+              acc[year][monthAndDay] = [];
+            }
+            acc[year][monthAndDay].push(transaction);
+
+            return acc;
+          },
+          {},
+        );
+
+        setGroupedTransactions(grouped);
       } catch (error) {
         console.error('Failed to fetch transactions:', error);
       }
     };
 
     fetchTransactions();
-  }, []);
-
-  // 거래 내역 필터링
-  useEffect(() => {
-    const applyFilter = () => {
-      const now = new Date();
-      let filtered = transactions;
-
-      // 날짜 필터링
-      if (filter.date === '1주일') {
-        const weekAgo = new Date(now.setDate(now.getDate() - 7));
-        filtered = filtered.filter(
-          (transaction) => new Date(transaction.time) >= weekAgo,
-        );
-      } else if (filter.date === '1개월') {
-        const monthAgo = new Date(now.setMonth(now.getMonth() - 1));
-        filtered = filtered.filter(
-          (transaction) => new Date(transaction.time) >= monthAgo,
-        );
-      } else if (filter.date === '전체 기간') {
-        // 전체 기간은 필터링하지 않음
-      } else if (filter.date === '직접 설정') {
-        const startDate = new Date(filter.startDate!); // '!'는 필수 속성이므로 null이 아님을 보장
-        const endDate = new Date(filter.endDate!); // '!'는 필수 속성이므로 null이 아님을 보장
-        filtered = filtered.filter((transaction) => {
-          const transactionDate = new Date(transaction.time);
-          return transactionDate >= startDate && transactionDate <= endDate;
-        });
-      }
-
-      // 유형 필터링
-      if (filter.type !== '전체') {
-        filtered = filtered.filter(
-          (transaction) => transaction.type === filter.type,
-        );
-      }
-
-      // 정렬
-      if (filter.sort === '최신순') {
-        filtered.sort(
-          (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime(),
-        );
-      } else if (filter.sort === '오래된순') {
-        filtered.sort(
-          (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime(),
-        );
-      }
-
-      setFilteredTransactions(filtered);
-    };
-
-    applyFilter();
-  }, [transactions, filter]); // transactions와 filter가 변경될 때마다 필터 적용
+  }, [accountNo]);
 
   return (
-    <div>
-      {filteredTransactions.length > 0 ? (
-        filteredTransactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className='flex justify-evenly space-x-10 font-bold'
-          >
-            <div>
-              <div className='text-[24px]'>{transaction.name}</div>
-              <div className='text-[16px] text-[#AEAEB2]'>
-                {formatTime(transaction.time)}
-              </div>
+    <div className='mt-4 flex flex-col items-center space-y-4 font-bold'>
+      {Object.keys(groupedTransactions).length > 0 ? (
+        Object.entries(groupedTransactions).map(([year, monthsAndDays]) => (
+          <div key={year}>
+            {/* 년도 표시 */}
+            <div className='mb-2 text-[24px] font-semibold text-gray-500'>
+              {year}년
             </div>
-            <div>
-              <div
-                className={`text-[24px] ${transaction.amount > 0 ? 'text-blue-500' : 'text-red-500'}`}
-              >
-                {transaction.amount > 0
-                  ? `+${transaction.amount}`
-                  : transaction.amount}
-                원
-              </div>
-              <div className='text-[18px] text-[#AEAEB2]'>
-                {transaction.balance.toLocaleString()}원
-              </div>
-            </div>
+            {Object.entries(monthsAndDays).map(
+              ([monthAndDay, transactions]) => (
+                <div key={monthAndDay} className='w-full'>
+                  {/* 월/일 표시 */}
+                  <div className='mb-2 text-[20px] font-medium text-gray-700'>
+                    {monthAndDay}
+                  </div>
+                  {transactions.map((transaction) => (
+                    <div
+                      key={transaction.id}
+                      className='flex w-full justify-between border-b p-4'
+                    >
+                      <div>
+                        <div className='text-[24px]'>
+                          {transaction.transactionSummary}
+                        </div>
+                        {/* 시간 표시 */}
+                        <div className='text-[16px] text-[#AEAEB2]'>
+                          {formatTime(transaction.updatedAt)}
+                        </div>
+                      </div>
+                      <div className='ml-6'>
+                        <div
+                          className={`text-[24px] ${
+                            transaction.type == 'DEPOSIT'
+                              ? 'text-blue-500'
+                              : transaction.type == 'WITHDRAWAL_TRANSFER'
+                                ? 'text-red-500'
+                                : ''
+                          }`}
+                        >
+                          {transaction.type == 'DEPOSIT'
+                            ? `+${transaction.transactionBalance.toLocaleString()}`
+                            : `-${transaction.transactionBalance.toLocaleString()}`}
+                          원
+                        </div>
+                        <div className='text-right text-[18px] text-[#AEAEB2]'>
+                          {transaction.transactionAfterBalance.toLocaleString()}
+                          원
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ),
+            )}
           </div>
         ))
       ) : (

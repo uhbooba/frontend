@@ -19,7 +19,9 @@ import com.uhbooba.financeservice.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,7 +71,14 @@ public class TransactionService {
         Pageable pageable
     ) {
         Account account = accountService.findByAccountNo(accountNo);
-        return getAllTransactionsByAccountId(account.getId(), pageable);
+
+        // 기본적으로 createdAt을 기준으로 최신순으로 정렬된 pageable 생성
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                                                 Sort.by(Sort.Direction.DESC, "updatedAt")
+                                                 // "updatedAt" 필드를 기준으로 정렬
+        );
+
+        return getAllTransactionsByAccountId(account.getId(), sortedPageable);
     }
 
     @Transactional

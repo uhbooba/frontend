@@ -8,6 +8,7 @@ import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositContr
 import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.DEPOSIT_INPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.DemandDepositController.TRANSFER_INPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.PASSWORD;
 
 import com.uhbooba.financeservice.dto.CommonResponse;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
@@ -26,6 +27,7 @@ import com.uhbooba.financeservice.dto.finapi.response.transaction.TransactionRes
 import com.uhbooba.financeservice.dto.response.AccountResponse;
 import com.uhbooba.financeservice.service.DemandDepositService;
 import com.uhbooba.financeservice.util.CommonUtil;
+import com.uhbooba.financeservice.util.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -49,6 +51,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemandDepositController {
 
     private final DemandDepositService demandDepositService;
+    private final PasswordService passwordService;
 
     @PostMapping("/products")
     @Operation(summary = "[사용 X] 입출금 상품 생성")
@@ -137,12 +140,15 @@ public class DemandDepositController {
     }
 
     @PostMapping("/accounts/transfer")
-    @Operation(summary = "입출금계좌에서 이체", description = INPUT + TRANSFER_INPUT + OUTPUT)
+    @Operation(summary = "입출금계좌에서 이체", description = INPUT + TRANSFER_INPUT + PASSWORD + OUTPUT)
     public CommonResponse<List<DemandDepositTransferResponse>> transferAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody DemandDepositTransferAccountRequest transferAccountRequest
     ) {
         UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+
+        passwordService.validatePassword(userHeaderInfo.userId(),
+                                         transferAccountRequest.password());
 
         return CommonResponse.ok("완료",
                                  demandDepositService.transferDemandDepositAccount(userHeaderInfo,

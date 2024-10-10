@@ -74,7 +74,7 @@ def get_message_list(
     except Exception as e:
         error_response = {
             "status": "error",
-            "data": f"Failed to get smishing status : {str(e)}",
+            "message": f"Failed to get smishing status : {str(e)}",
         }
         return JSONResponse(status_code=500, content=error_response)
 
@@ -92,7 +92,7 @@ def set_user_smishing_status(
     if request.scenario not in valid_scenarios:
         error_response = {
             "status": "error",
-            "data": f"Invalid scenario. Must be one of the predefined scenarios",
+            "message": f"Invalid scenario. Must be one of the predefined scenarios",
         }
         return JSONResponse(
             status_code=400,
@@ -109,6 +109,6 @@ def set_user_smishing_status(
     except Exception as e:
         error_response = {
             "status": "error",
-            "data": f"Failed to set smishing status : {str(e)}",
+            "message": f"Failed to set smishing status : {str(e)}",
         }
         return JSONResponse(status_code=500, content=error_response)
