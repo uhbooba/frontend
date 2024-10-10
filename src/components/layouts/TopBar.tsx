@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BackButton from '@/components/common/buttons/BackButton';
 import XButton from '@/components/common/buttons/XButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TbMessageChatbot } from 'react-icons/tb';
 import { postLogout } from '@/services/auth';
 import { MdLogout } from 'react-icons/md';
@@ -32,6 +32,7 @@ const TopBar: React.FC<TopBarProps> = ({
   onXButtonClick,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // 현재 경로 확인
   const [accountData, setAccountData] = useState<AccountData | null>(null);
 
   const handleGoHome = () => {
@@ -50,6 +51,9 @@ const TopBar: React.FC<TopBarProps> = ({
   };
 
   useEffect(() => {
+    if (location.pathname === '/login' || location.pathname === '/signup') {
+      return;
+    }
     const fetchAccountDetails = async () => {
       try {
         const response = await getUserFreeAccount();
@@ -63,7 +67,7 @@ const TopBar: React.FC<TopBarProps> = ({
           });
         }
       } catch (error) {
-        console.error('계좌 정보 API 호출 중 오류 발생:', error);
+        console.error('탑바에서 계좌정보 불러오기', error);
         console.log();
       }
     };

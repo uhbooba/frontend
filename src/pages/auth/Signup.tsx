@@ -4,6 +4,7 @@ import { Input } from '@/components/common/Input';
 import Keypad from '@/components/common/KeyPad';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import TopBar from '@/components/layouts/TopBar';
+import NoModal from '@/components/modals/NoModal';
 import { useNumberInput } from '@/hooks/useNumberInput';
 import {
   checkUsername,
@@ -48,6 +49,20 @@ const Signup = () => {
     phoneNumber: '',
     password: '',
   });
+
+  const [warningModal, setWarningModal] = useState(false);
+
+  useEffect(() => {
+    setWarningModal(false);
+  }, [setWarningModal]);
+
+  const OpenModal = () => {
+    setWarningModal(true);
+  };
+
+  const ModalClose = () => {
+    setWarningModal(false);
+  };
 
   // 핸드폰 인증 타이머
   useEffect(() => {
@@ -180,8 +195,16 @@ const Signup = () => {
         console.log('회원가입 성공');
 
         navigate('/login');
-      } catch (error) {
-        console.error(error);
+      } catch (error: any) {
+        if (
+          error.response &&
+          error.response.data.message === '이미 가입한 회원입니다.'
+        ) {
+          console.error('이미 가입한 회원입니다.');
+          OpenModal();
+        } else {
+          console.error(error);
+        }
       }
     }
   };
@@ -300,6 +323,14 @@ const Signup = () => {
             />
           )}
         </form>
+
+        <NoModal
+          isOpen={warningModal}
+          ModalClose={ModalClose}
+          imageSrc='/assets/icons/warning.png'
+          title='중복 가입 불가능'
+          description='이미 가입한 회원 정보입니다.'
+        />
       </MainWrapper>
     </div>
   );
