@@ -13,16 +13,16 @@ self.addEventListener('push', function (e) {
   const resultData = e.data.json().notification;
   // const resultURL = e.data.json().data.click_action;
 
-  console.log('result', resultData);
-
   const notificationTitle = resultData.title;
-  const notificationoptions = {
+  const notificationOptions = {
     body: resultData.body,
-    // icon: resultData.image,
+    icon: 'https://s3.youm.me/uhbooba/icons/pig_face.png',
     // data: { click_action: resultURL },
   };
 
-  self.registration.showNotification(notificationTitle, notificationoptions);
+  console.log('notificationTitle', notificationTitle);
+  console.log('notificationOptions', notificationOptions);
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 // self.addEventListener('notificationclick', function (event) {
