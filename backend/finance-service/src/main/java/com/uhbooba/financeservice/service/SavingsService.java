@@ -3,6 +3,7 @@ package com.uhbooba.financeservice.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
+import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDepositDepositAccountRequest;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsAccountDeleteResponse;
@@ -36,6 +37,7 @@ public class SavingsService {
     private final UserAccountService userAccountService;
     private final AccountService accountService;
     private final TransactionService transactionService;
+    private final DemandDepositService demandDepositService;
 
     private final JsonToDtoConverter jsonToDtoConverter;
 
@@ -190,14 +192,43 @@ public class SavingsService {
         UserAccount userAccount = getUserAccountByUserId(userHeaderInfo.userId());
         String userKey = userAccount.getUserKey();
 
-        // 2. 삭제하기
-        JsonNode deletedSavings = finApiSavingsService.deleteSavingsAccount(userKey, accountNo)
-                                                      .block();
-        // 3. db 내에도 삭제하기
-        accountService.deleteAccount(accountNo);
+        // 1.1 사용자 입출금 계좌 찾기
+        Account demandDepositAccount = demandDepositService.getDemandDepositAccountInInternal(
+            userAccount);
 
-        return jsonToDtoConverter.convertToObject(deletedSavings,
-                                                  SavingsAccountDeleteResponse.class);
+        // 1.2 해지 금액 알아내기
+        JsonNode earlyTermination = finApiSavingsService.getSavingsEarlyTerminationInterest(userKey,
+                                                                                            accountNo)
+                                                        .block();
+        SavingsEarlyTerminationInterestResponse savingsEarlyTerminationInterestResponse = jsonToDtoConverter.convertToObject(
+            earlyTermination, SavingsEarlyTerminationInterestResponse.class);
+
+        String terminationBalanceString = savingsEarlyTerminationInterestResponse.earlyTerminationBalance();
+        Long terminationBalance = Long.parseLong(terminationBalanceString);
+
+        try {
+            // 2. 삭제하기
+            JsonNode deletedSavings = finApiSavingsService.deleteSavingsAccount(userKey, accountNo)
+                                                          .block();
+            // 3. db 내에도 삭제하기
+            accountService.deleteAccount(accountNo);
+
+            // 4. 입출금 계좌에 넣어놓기
+            DemandDepositDepositAccountRequest request = DemandDepositDepositAccountRequest.builder()
+                                                                                           .accountNo(
+                                                                                               demandDepositAccount.getAccountNo())
+                                                                                           .transactionBalance(
+                                                                                               terminationBalance)
+                                                                                           .transactionSummary(
+                                                                                               "적금 해지")
+                                                                                           .build();
+            demandDepositService.depositDemandDepositAccount(userHeaderInfo, request);
+
+            return jsonToDtoConverter.convertToObject(deletedSavings,
+                                                      SavingsAccountDeleteResponse.class);
+        } catch(Exception ex) {
+            throw new SavingsFailedException("적금 해지 실패 : " + ex.getMessage());
+        }
     }
 
     @Transactional

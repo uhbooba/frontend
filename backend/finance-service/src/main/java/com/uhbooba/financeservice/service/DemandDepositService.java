@@ -131,7 +131,7 @@ public class DemandDepositService {
                                                   DemandDepositAccountResponse.class);
     }
 
-    private Account getDemandDepositAccountInInternal(
+    public Account getDemandDepositAccountInInternal(
         UserAccount userAccount
     ) {
         List<Account> accountList = accountService.getAccountsByCondition(ACCOUNT_TYPE,

@@ -326,4 +326,31 @@ public class TransactionService {
 
         return createTransaction(receiverRequest);
     }
+
+    @Transactional
+    public Transaction createTransactionRequest(
+        Account demandDepositAccount,
+        Long terminationBalance,
+        String summary
+    ) {
+        // 환전 transaction 생성
+        TransactionCreateRequest receiverRequest = TransactionCreateRequest.builder()
+                                                                           .transactionAfterBalance(
+                                                                               demandDepositAccount.getBalance()
+                                                                                   + terminationBalance)
+                                                                           .account(
+                                                                               demandDepositAccount)
+                                                                           .transactionSummary(
+                                                                               summary)
+                                                                           .status(
+                                                                               TransactionStatus.PENDING)
+                                                                           .transactionBalance(
+                                                                               terminationBalance)
+                                                                           .type(
+                                                                               TransactionType.DEPOSIT)
+                                                                           .build();
+
+        return createTransaction(receiverRequest);
+    }
+
 }
