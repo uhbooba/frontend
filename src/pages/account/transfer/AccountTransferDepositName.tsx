@@ -48,12 +48,12 @@ const AccountTransferDepositName = () => {
 
         <Input
           label='내 통장 기록'
-          value={withdrawalTransactionSummary}
+          value={depositTransactionSummary}
           onChange={(e) => setWithdrawalTransactionSummary(e.target.value)}
         />
         <Input
           label='받는 분 통장 기록'
-          value={depositTransactionSummary}
+          value={withdrawalTransactionSummary}
           onChange={(e) => setDepositTransactionSummary(e.target.value)}
         />
 
