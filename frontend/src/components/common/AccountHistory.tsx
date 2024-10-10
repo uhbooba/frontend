@@ -117,7 +117,7 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
                   {transactions.map((transaction) => (
                     <div
                       key={transaction.id}
-                      className='flex w-full justify-between border-b py-4'
+                      className='flex w-[340px] justify-between border-b py-4 \\\gap-18'
                     >
                       <div>
                         <div className='text-[24px]'>

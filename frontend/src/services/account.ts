@@ -38,7 +38,10 @@ export const postUserFreeAccountAddCash = async (
 
 // 입출금 계좌 입금
 export const postUserFreeAccount = async () => {
-  await axiosInstance.post('/finances/demand-deposits/accounts');
+  const response = await axiosInstance.post(
+    '/finances/demand-deposits/accounts',
+  );
+  return response;
 };
 
 // 입출금 계좌 이체

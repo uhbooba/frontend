@@ -10,6 +10,9 @@ import {
   getMissionClearStatus,
   setMissionClearStatus,
 } from '@/services/mission';
+import TitleText from '@/components/common/TitleText';
+import Button from '@/components/common/buttons/Button';
+import { useState } from 'react';
 
 interface ProductItem {
   name: string;
@@ -21,6 +24,7 @@ const AccountProductsList = () => {
   const setSelectedKeyword = useSetAtom(selectedKeywordAtom);
   const setIsMissionCleared = useSetAtom(createAccountMissionAtom);
   const navigate = useNavigate();
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
 
   const ProductsList = [
     {
@@ -43,27 +47,35 @@ const AccountProductsList = () => {
   const handleProductClick = async (product: ProductItem) => {
     if (product.name === '수시입출금 통장') {
       try {
-        const missionStatus = await getMissionClearStatus(2);
-        if (!missionStatus?.result?.isCleared) {
-          await setMissionClearStatus(2);
-          setIsMissionCleared(true);
+        // 계좌 생성 요청
+        const response = await postUserFreeAccount();
+        console.log(response);
+
+        if (response?.status === 200) {
+          // 계좌 생성 성공 후 미션 상태 확인
+          const missionStatus = await getMissionClearStatus(2);
+          if (!missionStatus?.result) {
+            await setMissionClearStatus(2);
+            setIsMissionCleared(true);
+          }
+
+          // 계좌 조회 페이지로 이동
+          navigate(product.moveTo);
         }
-      } catch (error) {
-        console.error('미션 상태 확인 중 오류 발생:', error);
+      } catch (error: any) {
+        // 400 Bad Request 에러 처리
+        if (error.response?.status === 400) {
+          setErrorModalVisible(true); // 경고 모달 표시
+        } else {
+          console.error('계좌 생성 중 오류 발생:', error);
+        }
       }
-      try {
-        postUserFreeAccount();
-      } catch (error) {
-        console.error('Error fetching answer:', error);
-      }
+    } else {
+      setSelectedKeyword(
+        product.name.includes('예금') ? '예금 상품' : '적금 상품',
+      );
       navigate(product.moveTo);
     }
-    setSelectedKeyword(
-      product.name.includes('예금') ? '예금 상품' : '적금 상품',
-      // 클릭한거에 예금이 있으면 예금상품 버튼을 보여주고, 아니면 적금상품 버튼을 보여줌
-      // 다음 페이지 들어가서 예금상품과 적금상품 버튼 무엇 클릭할지 결정하는거임
-    );
-    navigate(product.moveTo);
   };
 
   return (
@@ -82,6 +94,22 @@ const AccountProductsList = () => {
           ))}
         </div>
       </MainWrapper>
+      {errorModalVisible && (
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+          <div className='w-[320px] rounded bg-white p-6 text-center shadow-md'>
+            <TitleText>
+              이미 계좌가 <br /> 존재합니다.
+            </TitleText>
+            <Button
+              label='닫기'
+              color='red'
+              size='customMedium'
+              className='text-white'
+              onClick={() => setErrorModalVisible(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
