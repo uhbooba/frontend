@@ -11,7 +11,7 @@ const DepositMission = () => {
   };
 
   return (
-    <div className='min-h-screen bg-yellow-100'>
+    <div className='bg-yellow-100'>
       <TopBar title='예금 가입' />
       <MainWrapper>
         {/* 돼지 말풍선 부분 */}
@@ -53,7 +53,7 @@ const DepositMission = () => {
             <img
               src='assets/images/pig.png'
               alt='Pig'
-              className='mt-4 h-56 w-56'
+              className='mt-20 h-56 w-56'
             />
           </div>
         </div>

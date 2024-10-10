@@ -68,7 +68,7 @@ const SavingsSuccess = () => {
             </div>
 
             {/* 버튼 */}
-            <div className='mb-3'>
+            <div className='mb-10 mt-12'>
               <Button
                 label='메인화면으로 이동하기'
                 size='large'

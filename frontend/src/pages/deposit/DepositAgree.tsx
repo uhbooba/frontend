@@ -96,7 +96,7 @@ const DepositAgree = () => {
           </div>
         </div>
 
-        <div className='m-4 mt-4'>
+        <div className='m-4 mb-2 mt-4'>
           <p className='mb-2 text-2xl font-bold'>금융거래 정보 제공 동의서</p>
           <div className='mb-2 border-2 border-black'>
             <p className='mb-1 ml-1 mt-1'>

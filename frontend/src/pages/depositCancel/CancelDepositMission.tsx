@@ -11,13 +11,13 @@ const CancelDepositMission = () => {
   };
 
   return (
-    <div className='min-h-screen bg-yellow-100'>
+    <div className='bg-yellow-100'>
       <TopBar title='예금 중도해지' />
       <MainWrapper>
         {/* 돼지 말풍선 부분 */}
-        <div className='relative mt-8 flex flex-col items-center'>
+        <div className='relative flex flex-col items-center'>
           {/* 말풍선 스타일 적용 */}
-          <div className='relative mt-20 h-[440px] w-[360px] rounded-lg bg-white'>
+          <div className='relative mt-8 h-[440px] w-[360px] rounded-lg bg-white'>
             <div className='mt-8 text-center'>
               <p className='text-4xl font-bold'>5단계 미션</p> <br />
               <p className='text-2xl'>
