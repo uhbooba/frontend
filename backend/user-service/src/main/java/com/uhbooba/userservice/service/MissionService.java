@@ -42,7 +42,7 @@ public class MissionService {
         int status = user.getMissionStatus();
         List<MissionStatusResponse> missionStatusList = new ArrayList<>();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i <= 7; i++) {
             boolean isCleared = (status & (1 << i)) != 0;
             missionStatusList.add(MissionStatusResponse.of(i, isCleared));
         }
