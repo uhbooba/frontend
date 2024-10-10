@@ -15,7 +15,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
 }) => {
   return (
     <div>
-      <div className='flex justify-between space-x-4 px-4'>
+      <div className='flex justify-between space-x-4 px-2'>
         {amounts.slice(0, 3).map((amount, index) => (
           <Button
             key={index}
@@ -24,7 +24,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
             size='small'
             onClick={() => onAmountClick(index, amount)}
             className={clsx(
-              'border-2 flex-grow',
+              'flex-grow border-2',
               amountBtnColor === amount
                 ? 'border-blue-400 text-blue-400'
                 : 'border-gray-200',
@@ -33,16 +33,16 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
         ))}
       </div>
 
-      <div className='flex justify-between space-x-4 px-4 py-4'>
+      <div className='flex justify-between space-x-4 px-2 py-4'>
         {amounts.slice(3, 6).map((amount, index) => (
           <Button
-            key={index+3}
+            key={index + 3}
             label={amount}
             color='white'
             size='small'
-            onClick={() => onAmountClick(index+3, amount)}
+            onClick={() => onAmountClick(index + 3, amount)}
             className={clsx(
-              'border-2 flex-grow',
+              'flex-grow border-2',
               amountBtnColor === amount
                 ? 'border-blue-400 text-blue-400'
                 : 'border-gray-200',

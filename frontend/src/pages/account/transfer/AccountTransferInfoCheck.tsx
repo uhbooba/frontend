@@ -47,7 +47,7 @@ const AccountTransferInfoCheck = () => {
 
   return (
     <div>
-      <TopBar title='계좌 이체' showXButton={false} />
+      <TopBar title='계좌 이체' />
       <MainWrapper>
         <LevelBar currentLevel={4} totalLevel={5} />
 
