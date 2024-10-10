@@ -13,7 +13,10 @@ public record LoginRequest(
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Size(min = 6, max = 6, message = "비밀번호는 6자리여야 합니다.")
-    String password
+    String password,
+
+    @NotBlank(message = "fcm 토큰을 입력해주세요")
+    String fcmToken
 
 ) {
 

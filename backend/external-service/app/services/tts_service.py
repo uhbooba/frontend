@@ -72,8 +72,7 @@ class TtsService:
         logger.info(f"TTS 음성이 없어 원격 저장소에서 가져옵니다")
 
         try:
-            response = requests.get(f"{S3_URL}/smishing/test.mp3")
-            # response = requests.get(f"{S3_URL}/smishing/{tts_key}.mp3")
+            response = requests.get(f"{S3_URL}/smishing/{tts_key}.mp3")
             response.raise_for_status()
             audio_data = response.content
             r_tts_ai.set(tts_key, audio_data)
