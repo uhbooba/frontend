@@ -4,7 +4,7 @@ import { axiosInstance } from '@/utils/axiosInstance';
 export const postLogin = async (
   username: string,
   password: string,
-  fcmToken: String,
+  fcmToken: string,
 ) => {
   const bodyData = {
     username,
@@ -13,6 +13,20 @@ export const postLogin = async (
   };
 
   const response = await axiosInstance.post('/user-service/login', bodyData);
+  return response;
+};
+
+// 로그아웃
+export const postLogout = async (ACCESS_TOKEN: string) => {
+  const response = await axiosInstance.post(
+    `/user-service/logout`,
+    {},
+    {
+      headers: {
+        Authorization: `${ACCESS_TOKEN}`,
+      },
+    },
+  );
   return response;
 };
 
