@@ -315,9 +315,11 @@ const AccountCheck = () => {
                 {accountData ? accountData.accountNo : '111-222-333333'}
               </div>
               <div className='text-[28px]'>
-                {accountData && accountData.balance
+                {accountData &&
+                accountData.balance !== null &&
+                accountData.balance !== undefined
                   ? `${accountData.balance.toLocaleString()}원`
-                  : '11,000,000원'}
+                  : '잔액 정보를 불러오고 있습니다.'}
               </div>
             </div>
             <div className='flex justify-between space-x-4 p-4 pt-1'>
