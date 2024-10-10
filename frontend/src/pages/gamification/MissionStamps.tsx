@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import Stamp from '@/components/gamification/MissionStamp';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 import { getMissionClearStatus } from '@/services/mission';
 
@@ -58,39 +58,38 @@ const MissionStamp = () => {
       <div className='w-full'>
         <TopBar title='나의 스탬프' showXButton={false} />
       </div>
-      <div className='relative flex flex-col items-center'>
-        <TextBubble
-          bubbleSize='w-10/12'
-          content={
-            <>
-              <p className='text-2xl font-bold'>미션을 해결하면</p>
-              <p className='text-2xl font-bold'>스탬프가 찍혀요.</p>
-            </>
-          }
-        />
-        <div className='flex items-center justify-center'>
-          <img
-            src='/assets/images/pig.png'
-            alt='Pig'
-            className='mt-4 h-32 w-32'
+      <MainWrapper>
+        <div className='relative flex flex-col items-center'>
+          <TextBubble
+            bubbleSize='w-10/12'
+            content={
+              <>
+                <p className='text-2xl font-bold'>미션을 해결하면</p>
+                <p className='text-2xl font-bold'>스탬프가 찍혀요.</p>
+              </>
+            }
           />
-        </div>
-        <div className='mt-4 w-10/12 rounded-lg bg-white p-6 text-center text-2xl shadow-md'>
-          <p className='mb-4'>내가 모은 스탬프</p>
-          <div className='grid grid-cols-3 gap-4'>
-            {stampsInfo.map((stamp, index) => (
-              <Stamp
-                key={index}
-                isCompleted={missionStatus[index]}
-                missionName={stamp.missionName}
-              />
-            ))}
+          <div className='flex items-center justify-center'>
+            <img
+              src='/assets/images/pig.png'
+              alt='Pig'
+              className='w-d32 mt-4 h-32'
+            />
+          </div>
+          <div className='mt-4 w-10/12 rounded-lg bg-white p-6 text-center text-2xl shadow-md'>
+            <p className='mb-4'>내가 모은 스탬프</p>
+            <div className='grid grid-cols-3 gap-4'>
+              {stampsInfo.map((stamp, index) => (
+                <Stamp
+                  key={index}
+                  isCompleted={missionStatus[index]}
+                  missionName={stamp.missionName}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      </MainWrapper>
     </div>
   );
 };
