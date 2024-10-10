@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import TopBar from '@/components/layouts/TopBar';
 import MainWrapper from '@/components/layouts/MainWrapper';
-import TitleText from '@/components/common/TitleText';
 
 const AccountTransferDepositName = () => {
   const navigate = useNavigate();
