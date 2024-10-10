@@ -95,7 +95,7 @@ const Main = () => {
   useEffect(() => {
     const fetchLoginMission = async () => {
       try {
-        const response = await setMissionClearStatus(0);
+        const response = await setMissionClearStatus(1);
 
         if (response?.statusCode === 200) {
           const timer = setTimeout(() => {
