@@ -218,7 +218,7 @@ const SmishingMessageDetail = () => {
         onClick={handleScreenClick}
       >
         <div
-          className={`scrollbar-none overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-0'}`}
+          className={`scrollbar-none overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-24'}`}
           ref={messagesContainerRef}
         >
           {currentMessageList.map((message, index) => (
@@ -228,8 +228,12 @@ const SmishingMessageDetail = () => {
               content={message.text}
               time={message.time}
               isUser={message.is_reply}
-              onTTSClick={() => handleTTS(message.tts_key)}
+              onTTSClick={(e) => {
+                e.stopPropagation();
+                handleTTS(message.tts_key);
+              }}
               onLinkClick={handleLinkClick}
+              isTTSPlaying={isTTSPlaying}
             />
           ))}
         </div>
