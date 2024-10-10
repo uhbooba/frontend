@@ -44,7 +44,7 @@ class TtsService:
 
         # 해쉬 충돌 확인
         cached_prefix = r_tts_hash.get(hashed_text)
-        if cached_prefix and cached_prefix.decode("utf-8") != text[:11]:
+        if cached_prefix and cached_prefix != text[:11]:
             # 해시 충돌 발생
             r_tts_hash.redis_client.delete(hashed_text)
             r_tts_audio.redis_client.delete(hashed_text)

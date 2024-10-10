@@ -94,7 +94,7 @@ class RedisHandler:
 
 
 #######################################################################
-RedisHandler.initialize([0, 1, 2, 3, 4, 5])
+RedisHandler.initialize([0, 1, 2, 3, 4, 5, 6, 7, 8])
 
 r_api_keys = RedisHandler.get_instance(0)
 r_api_data = RedisHandler.get_instance(1)

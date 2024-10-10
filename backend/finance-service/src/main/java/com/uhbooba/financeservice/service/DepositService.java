@@ -105,12 +105,14 @@ public class DepositService {
             // 기존 입출금 계좌에 대한 transaction 처리(transaction unique no 가 없음)
             transactionService.updateTransactionForSuccess(transactionRequests.senderTransaction(),
                                                            TransactionUpdateRequest.builder()
-                                                                                   .build());
+                                                                                   .build(),
+                                                           userHeaderInfo.userId());
             // 예금 계좌에 대한 transaction 처리
             transactionService.updateTransactionForSuccess(
                 transactionRequests.receiverTransaction(), TransactionUpdateRequest.builder()
                                                                                    .account(account)
-                                                                                   .build());
+                                                                                   .build(),
+                userHeaderInfo.userId());
 
             // 계좌 잔액 변경
             accountService.subtractAccountBalance(sourceAccount, dto.depositBalance());
