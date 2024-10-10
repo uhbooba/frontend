@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import { postUserFreeAccountAddCash } from '@/services/account';
 import { getUserFreeAccount } from '@/services/account';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 const AddCash = () => {
   const navigate = useNavigate();
@@ -99,31 +99,30 @@ const AddCash = () => {
       {/* 상단바 */}
       <TopBar title='계좌 입금' />
       {/* space-x-4 p-4 */}
-      <div className='mx-16 mt-[1vh]'>
-        {ButtonConfig.map((button, index) => (
+      <MainWrapper>
+        <div className='mx-16 mt-[1vh]'>
+          {ButtonConfig.map((button, index) => (
+            <Button
+              key={index}
+              label={button.label}
+              size={button.size}
+              color={selectedButton === index ? 'blue' : button.color}
+              onClick={() => handleButtonClick(index, button.amount!)}
+              className={button.className}
+            />
+          ))}
+        </div>
+        <div className='mt-[6vh] flex justify-center p-4'>
           <Button
-            key={index}
-            label={button.label}
-            size={button.size}
-            color={selectedButton === index ? 'blue' : button.color}
-            onClick={() => handleButtonClick(index, button.amount!)}
-            className={button.className}
+            label='입금 하기'
+            onClick={() =>
+              handleNextStep(accountNo, selectedAmount!, '싸피 은행')
+            }
+            className='w-full max-w-[calc(100%-60px)]'
+            disabled={selectedButton === null}
           />
-        ))}
-      </div>
-      <div className='mt-[6vh] flex justify-center p-4'>
-        <Button
-          label='입금 하기'
-          onClick={() =>
-            handleNextStep(accountNo, selectedAmount!, '싸피 은행')
-          }
-          className='w-full max-w-[calc(100%-60px)]'
-          disabled={selectedButton === null}
-        />
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+        </div>
+      </MainWrapper>
     </div>
   );
 };

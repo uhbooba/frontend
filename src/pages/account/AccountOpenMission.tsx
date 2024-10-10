@@ -12,9 +12,10 @@ const AccountOpenMission = () => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col bg-yellow-100'>
+    <div className='flex flex-col bg-yellow-100'>
       <TopBar title='계좌 개설' />
-      <MainWrapper className='flex flex-col items-center justify-center'>
+      <MainWrapper>
+      <div className='flex flex-col items-center justify-center'>
         <TextBubble
           bubbleSize='w-11/12'
           content={
@@ -35,7 +36,7 @@ const AccountOpenMission = () => {
                 수시 입출금 계좌를 <br />
                 만드세요!
               </p>
-              <div className='ml-8 mr-8'>
+              <div className='mx-8'>
                 <Button
                   label='계좌 만들러 가기'
                   size='small'
@@ -54,6 +55,7 @@ const AccountOpenMission = () => {
             className='mt-4 h-56 w-56'
             loading='lazy'
           />
+        </div>
         </div>
       </MainWrapper>
     </div>

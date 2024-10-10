@@ -6,6 +6,7 @@ import AccountHistory from '@/components/common/AccountHistory';
 import { getUserFreeAccount } from '@/services/account';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 import { getMissionClearStatus } from '@/services/mission';
+import MainWrapper from '@/components/layouts/MainWrapper';
 
 interface AccountData {
   accountName: string;
@@ -296,70 +297,72 @@ const AccountCheck = () => {
   ];
 
   return (
-    <div className='h-screen'>
+    <div className=''>
       {/* 상단바 */}
       <TopBar title='계좌 조회' />
-      <div className='mt-[20px] flex justify-center'>
-        <div className='h-[200px] w-[320px] rounded-xl bg-[#FFAF2A]'>
-          <div className='mb-[5px] ml-[20px] mt-[10px] font-bold'>
-            <div className='text-[24px] text-[#5A6A59]'>
-              {accountData ? accountData.accountName : '자유입출금 계좌'}
+      <MainWrapper>
+        <div className='mt-[20px] flex justify-center'>
+          <div className='h-[200px] w-[320px] rounded-xl bg-[#FFAF2A]'>
+            <div className='mb-[5px] ml-[20px] mt-[10px] font-bold'>
+              <div className='text-[24px] text-[#5A6A59]'>
+                {accountData ? accountData.accountName : '자유입출금 계좌'}
+              </div>
+              <div className='mb-[20px] text-[16px]'>
+                {accountData ? accountData.accountNo : '111-222-333333'}
+              </div>
+              <div className='text-[28px]'>
+                {accountData && accountData.balance
+                  ? `${accountData.balance.toLocaleString()}원`
+                  : '11,000,000원'}
+              </div>
             </div>
-            <div className='mb-[20px] text-[16px]'>
-              {accountData ? accountData.accountNo : '111-222-333333'}
+            <div className='flex justify-between space-x-4 p-4 pt-1'>
+              {ButtonConfig.map((button, index) => (
+                <Button
+                  key={index}
+                  label={button.label}
+                  size='customMedium'
+                  color='lightOrange'
+                  onClick={() => handleButtonClick(button.route)}
+                  className='flex-grow'
+                />
+              ))}
             </div>
-            <div className='text-[28px]'>
-              {accountData && accountData.balance
-                ? `${accountData.balance.toLocaleString()}원`
-                : '11,000,000원'}
-            </div>
-          </div>
-          <div className='flex justify-between space-x-4 p-4'>
-            {ButtonConfig.map((button, index) => (
-              <Button
-                key={index}
-                label={button.label}
-                size='customMedium'
-                color='lightOrange'
-                onClick={() => handleButtonClick(button.route)}
-                className='flex-grow'
-              />
-            ))}
-          </div>
-          <div
-            onClick={openModal}
-            className='mx-[10px] mt-[5px] flex justify-between text-[24px] font-bold'
-          >
             <div
-              className={`${
-                filter.date.length > 10
-                  ? 'whitespace-normal break-words text-[16px] leading-tight'
-                  : 'overflow-hidden text-ellipsis whitespace-nowrap text-[24px]'
-              } max-w-[120px]`} // Adjust max-width as needed
+              onClick={openModal}
+              className='mx-[10px] mt-[5px] flex justify-between text-[24px] font-bold'
             >
-              {filter.date}
+              <div
+                className={`${
+                  filter.date.length > 10
+                    ? 'whitespace-normal break-words text-[16px] leading-tight'
+                    : 'overflow-hidden text-ellipsis whitespace-nowrap text-[24px]'
+                } max-w-[120px]`} // Adjust max-width as needed
+              >
+                {filter.date}
+              </div>
+              <div className='text-[24px]'>{filter.type}</div>
+              <div className='text-[24px]'>{filter.sort}</div>
             </div>
-            <div className='text-[24px]'>{filter.type}</div>
-            <div className='text-[24px]'>{filter.sort}</div>
-          </div>
-          <div>
-            {accountData && (
-              <AccountHistory
-                accountNo={accountData?.accountNo || ''}
-                filter={filter}
-              />
-            )}
+            <div>
+              {accountData && (
+                <AccountHistory
+                  accountNo={accountData?.accountNo || ''}
+                  filter={filter}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
-      {isSuccessModalOpen && (
-        <MissionSuccessModal
-          name='계좌 생성'
-          onConfirm={() => setIsSuccessModalOpen(false)}
-        />
-      )}
+        <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
+        {isSuccessModalOpen && (
+          <MissionSuccessModal
+            name='계좌 생성'
+            onConfirm={() => setIsSuccessModalOpen(false)}
+          />
+        )}
+      </MainWrapper>
     </div>
   );
 };
