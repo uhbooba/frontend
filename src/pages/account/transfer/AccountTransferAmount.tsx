@@ -8,15 +8,16 @@ import { useEffect, useState } from 'react';
 import MoneyInput from '@/components/common/MoneyInput';
 import Keypad from '@/components/common/KeyPad';
 import { getUserFreeAccount } from '@/services/account';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import {
   depositAccountNoAtom,
   transactionBalanceAtom,
   selectedBankAtom,
   depositTransactionSummaryAtom,
   withdrawalAccountNoAtom,
-  withdrawalTransactionSummaryAtom,
   isTransferMissionProgressingAtom,
+  withdrawalUsernameAtom,
+  depositUsernameAtom,
 } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAmount = () => {
@@ -27,12 +28,15 @@ const AccountTransferAmount = () => {
   const [keyOpen, setKeyOpen] = useState(false);
   const [selectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo] = useAtom(depositAccountNoAtom);
-  const [depositUsername] = useAtom(depositTransactionSummaryAtom);
-  const [, setWithdrawalUsername] = useAtom(withdrawalTransactionSummaryAtom);
-  const [, setWithdrawalAccountNo] = useAtom(withdrawalAccountNoAtom);
+  const [depositUsername] = useAtom(depositUsernameAtom);
+  const setWithdrawalUsername = useSetAtom(withdrawalUsernameAtom);
+  const setWithdrawalAccountNo = useSetAtom(withdrawalAccountNoAtom);
+  const setDepositTransactionSummary = useSetAtom(
+    depositTransactionSummaryAtom,
+  );
   const [balance, setBalance] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isMissionProgressing] = useState(isTransferMissionProgressingAtom);
+  const [isMissionProgressing] = useAtom(isTransferMissionProgressingAtom);
 
   const transactionBalanceLabels = [
     '+1만원',
@@ -119,6 +123,7 @@ const AccountTransferAmount = () => {
           setBalance(account.balance);
           setWithdrawalUsername(account.username);
           setWithdrawalAccountNo(account.accountNo);
+          setDepositTransactionSummary(account.username)
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
