@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
 import AccountHistory from '@/components/common/AccountHistory';
@@ -7,6 +7,8 @@ import { getUserFreeAccount } from '@/services/account';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 import { getMissionClearStatus } from '@/services/mission';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { useAtom } from 'jotai';
+import { createAccountMissionAtom } from '@/atoms/account/accountCheckAtoms';
 
 interface AccountData {
   accountName: string;
@@ -191,8 +193,9 @@ const AccountCheck = () => {
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const location = useLocation();
-  const { isMissionCleared } = location.state || {};
+  const [isMissionCleared, setIsMissionCleared] = useAtom(
+    createAccountMissionAtom,
+  );
   const [filter, setFilter] = useState<Filter>({
     date: '전체 기간',
     type: '전체',
@@ -202,6 +205,11 @@ const AccountCheck = () => {
   });
 
   useEffect(() => {
+    console.log(isMissionCleared);
+    if (isMissionCleared) {
+      setIsSuccessModalOpen(true);
+    }
+
     const fetchAccountDetails = async () => {
       try {
         const response = await getUserFreeAccount();
@@ -219,10 +227,6 @@ const AccountCheck = () => {
     };
 
     fetchAccountDetails();
-
-    if (isMissionCleared) {
-      setIsSuccessModalOpen(true);
-    }
   }, [isMissionCleared]);
 
   const handleButtonClick = async (route: string) => {
@@ -359,7 +363,10 @@ const AccountCheck = () => {
         {isSuccessModalOpen && (
           <MissionSuccessModal
             name='계좌 생성'
-            onConfirm={() => setIsSuccessModalOpen(false)}
+            onConfirm={() => {
+              setIsSuccessModalOpen(false);
+              setIsMissionCleared(false);
+            }}
           />
         )}
       </MainWrapper>
