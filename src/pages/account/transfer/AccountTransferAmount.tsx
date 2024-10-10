@@ -136,12 +136,12 @@ const AccountTransferAmount = () => {
 
   return (
     <div>
-      <TopBar title='계좌 이체' showXButton={false} />
+      <TopBar title='계좌 이체' />
       <MainWrapper>
         <LevelBar currentLevel={2} totalLevel={5} />
 
         <div className='ml-4 mt-4 text-2xl'>
-          <div >
+          <div>
             {selectedBank} {depositAccountNo}
           </div>
           {depositUsername} 님께
