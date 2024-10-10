@@ -117,9 +117,9 @@ const EducationVideo = () => {
             filteredVideos.map((video) => (
               <div
                 key={video.id}
-                className='mb-8 rounded-lg border bg-white pt-4 shadow-md'
+                className='mb-8 rounded-lg border bg-white pl-2 pt-4 shadow-md'
               >
-                <h3 className='mb-2 pl-4 text-xl font-bold'>{video.title}</h3>
+                <h3 className='mb-2 pl-2 text-xl font-bold'>{video.title}</h3>
                 <iframe
                   loading='lazy'
                   src={video.url}
