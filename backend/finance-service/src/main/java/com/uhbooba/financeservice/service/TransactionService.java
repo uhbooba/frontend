@@ -77,8 +77,22 @@ public class TransactionService {
                                                  Sort.by(Sort.Direction.DESC, "updatedAt")
                                                  // "updatedAt" 필드를 기준으로 정렬
         );
+        return getAllTransactionsByAccountIdAndStatus(account.getId(), TransactionStatus.SUCCESS,
+                                                      sortedPageable);
+    }
 
-        return getAllTransactionsByAccountId(account.getId(), sortedPageable);
+    @Transactional(readOnly = true)
+    public Page<TransactionOutputResponse> getAllTransactionsByAccountIdAndStatus(
+        Integer accountId,
+        TransactionStatus status,
+        Pageable pageable
+    ) {
+        // Repository를 통해 데이터베이스에서 트랜잭션 조회
+        Page<Transaction> transactions = transactionRepository.findAllByAccountIdAndStatus(
+            accountId, status, pageable);
+
+        // 반환할 DTO로 변환 (TransactionOutputResponse는 예시)
+        return transactions.map(transactionMapper::toDto);
     }
 
     @Transactional
