@@ -7,6 +7,7 @@ import com.uhbooba.userservice.exception.CustomAccessDeniedHandler;
 import com.uhbooba.userservice.exception.CustomAuthenticationEntryPoint;
 import com.uhbooba.userservice.filter.CustomLogoutFilter;
 import com.uhbooba.userservice.filter.LoginFilter;
+import com.uhbooba.userservice.service.KafkaProducerService;
 import com.uhbooba.userservice.service.RefreshService;
 import com.uhbooba.userservice.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class SecurityConfig {
     private final RefreshService refreshService;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final KafkaProducerService kafkaProducerService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
@@ -79,7 +81,8 @@ public class SecurityConfig {
             )
 
             .addFilterAt(
-                new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,
+                new LoginFilter(kafkaProducerService,
+                    authenticationManager(authenticationConfiguration), jwtUtil,
                     refreshService),
                 UsernamePasswordAuthenticationFilter.class
             )

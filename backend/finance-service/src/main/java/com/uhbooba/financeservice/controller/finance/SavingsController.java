@@ -3,6 +3,7 @@ package com.uhbooba.financeservice.controller.finance;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.INPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Common.OUTPUT;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Input.ACCOUNT_NO;
+import static com.uhbooba.financeservice.util.ApiDescriptions.Input.PASSWORD;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.EARLY_SAVINGS_EXPIRE_RESPONSE;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_ACCOUNT_CREATE;
 import static com.uhbooba.financeservice.util.ApiDescriptions.Savings.SAVINGS_ACCOUNT_LIST_RESPONSE;
@@ -21,6 +22,7 @@ import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsExpiryInter
 import com.uhbooba.financeservice.dto.finapi.response.savings.SavingsResponse;
 import com.uhbooba.financeservice.service.SavingsService;
 import com.uhbooba.financeservice.util.CommonUtil;
+import com.uhbooba.financeservice.util.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -45,6 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SavingsController {
 
     private final SavingsService savingsService;
+    private final PasswordService passwordService;
 
     @PostMapping("/products")
     @Operation(summary = "[사용 X] 적금 상품 만들기")
@@ -69,13 +72,16 @@ public class SavingsController {
     }
 
     @PostMapping("/accounts")
-    @Operation(summary = "적금 계좌 생성", description = INPUT + SAVINGS_ACCOUNT_CREATE + OUTPUT
-        + SAVINGS_ACCOUNT_RESPONSE)
+    @Operation(summary = "적금 계좌 생성", description = INPUT + SAVINGS_ACCOUNT_CREATE + PASSWORD
+        + OUTPUT + SAVINGS_ACCOUNT_RESPONSE)
     public CommonResponse<SavingsAccountResponse> createSavingsAccount(
         @RequestHeader HttpHeaders headers,
         @Valid @RequestBody SavingsAccountCreateRequest dto
     ) {
         UserHeaderInfo userHeaderInfo = CommonUtil.getUserHeaderInfo(headers);
+
+        passwordService.validatePassword(userHeaderInfo.userId(), dto.password());
+
         return CommonResponse.ok("적금 계좌 생성 완료",
                                  savingsService.createSavingsAccount(userHeaderInfo, dto));
     }

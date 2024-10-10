@@ -7,7 +7,8 @@ import lombok.Builder;
 @Builder
 public record UtilityPaymentRequest(
     @NotBlank String corporation,
-    @NotNull Long amount
+    @NotNull Long amount,
+    @NotBlank(message = "패스워드는 필수입니다.") String password
 ) {
 
 }

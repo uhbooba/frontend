@@ -16,5 +16,7 @@ public record ExchangeRequest(
     @NotBlank(message = "환전 통화 코드는 필수입니다.") @Size(max = 8, message = "환전 통화 코드는 최대 8자리까지 입력 가능합니다.") String exchangeCurrency,
 
     // 환전 금액은 필수이며, 최소 10 이상
-    @NotNull(message = "환전 금액은 필수입니다.") @DecimalMin(value = "10.0", message = "달러는 최소 100달러 이상이어야 합니다.") Long exchangeAmount
+    @NotNull(message = "환전 금액은 필수입니다.") @DecimalMin(value = "10.0", message = "달러는 최소 100달러 이상이어야 합니다.") Long exchangeAmount,
+
+    @NotBlank(message = "비밀번호는 필수입니다.") String password
 ) {}
