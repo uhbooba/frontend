@@ -15,7 +15,7 @@ const SmishingAgree = () => {
       <TopBar title='약관 동의' onXButtonClick={GoEdu} />
 
       <MainWrapper>
-        <h3 className='mb-4 text-4xl font-bold'>모의 상황 안내</h3>
+        <h3 className='mb-4 mt-5 text-4xl font-bold'>모의 상황 안내</h3>
         <ul className='space-y-2 text-2xl'>
           <li>
             • 본 서비스에서 제공되는 모든 자료 및 콘텐츠는 가상의 시나리오에
