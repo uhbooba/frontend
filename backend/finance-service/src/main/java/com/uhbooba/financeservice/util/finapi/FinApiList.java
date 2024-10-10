@@ -77,7 +77,7 @@ public class FinApiList {
         public static final String GET_EXCHANGE_ESTIMATE_URL = EXCHANGE_URL + "/estimate";
         public static final String GET_EXCHANGE_RATE_SEARCH_URL = EXCHANGE_RATE_URL + "/search";
 
-        public static final String EXCHANGE_RATE_SEARCH_API_NAME = "exchangeRateSearch";
+        public static final String EXCHANGE_RATE_SEARCH_API_NAME = "search";
         public static final String EXCHANGE_RATE_API_NAME = "exchangeRate";
         public static final String ESTIMATE_EXCHANGE_API_NAME = "estimate";
         public static final String EXCHANGE_API_NAME = "exchange";
