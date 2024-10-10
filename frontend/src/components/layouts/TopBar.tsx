@@ -90,7 +90,7 @@ const TopBar: React.FC<TopBarProps> = ({
       {showUserName && (
         <div className='flex w-full justify-between p-6'>
           <div className='flex flex-row items-center justify-center'>
-            <p className='text-2xl font-bold'>
+            <p className='text-xl font-bold'>
               반갑습니다, {accountData?.username}님
             </p>
           </div>
@@ -104,7 +104,7 @@ const TopBar: React.FC<TopBarProps> = ({
               />
               <span>챗봇</span>
             </div>
-            <div className='ml-6 flex flex-col items-center'>
+            <div className='ml-4 flex flex-col items-center'>
               <MdLogout onClick={handleLogout} size={30} className='mb-2' />
               <span>로그아웃</span>
             </div>
