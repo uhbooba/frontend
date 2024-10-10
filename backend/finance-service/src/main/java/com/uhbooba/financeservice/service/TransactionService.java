@@ -123,7 +123,8 @@ public class TransactionService {
 
     private String makeBodyMessage(Transaction transaction) {
         return CommonUtil.formatWithCommas(transaction.getTransactionBalance()) + " 원 "
-            + transaction.getType() + "되었습니다.";
+            + transaction.getType()
+                         .getKoreanName() + "되었습니다.";
     }
 
     private NotificationMessageResponse makeNotificationMessage(
