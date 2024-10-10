@@ -15,7 +15,7 @@ const KeywordButtons: React.FC<KeywordButtonsProps> = ({
 }) => {
   return (
     <div>
-      <div className='flex justify-between space-x-4 px-4'>
+      <div className='flex justify-between space-x-4'>
         {keywords.slice(0, 3).map((keyword, index) => (
           <Button
             key={index}
@@ -33,7 +33,7 @@ const KeywordButtons: React.FC<KeywordButtonsProps> = ({
         ))}
       </div>
 
-      <div className='flex justify-between space-x-4 px-4 py-2'>
+      <div className='flex justify-between space-x-4 py-2'>
         {keywords.slice(3, 6).map((keyword, index) => (
           <Button
             key={index + 3}
@@ -51,7 +51,7 @@ const KeywordButtons: React.FC<KeywordButtonsProps> = ({
         ))}
       </div>
 
-      <div className='mb-2 flex justify-between space-x-4 px-4'>
+      <div className='mb-2 flex justify-between space-x-4'>
         {keywords.slice(6, 9).map((keyword, index) => (
           <Button
             key={index + 6}
