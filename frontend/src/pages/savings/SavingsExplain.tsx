@@ -76,15 +76,12 @@ const Savings = () => {
           </div>
         </div>
 
-        <div className=''>
-          {/* 돼지 이미지 */}
-          <div className='flex items-center justify-center'>
-            <img
-              src='assets/images/savings_pig.png'
-              alt='Pig'
-              className='ml-32 mt-4 h-56 w-56'
-            />
-          </div>
+        <div className='flex items-center justify-center'>
+          <img
+            src='assets/images/savings_pig.png'
+            alt='Pig'
+            className='ml-32 mt-4 h-56 w-56'
+          />
         </div>
 
         {/* 확인 버튼 */}
