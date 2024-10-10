@@ -15,6 +15,11 @@ interface AccountData {
   accountName: string;
   accountNo: string;
   balance: string;
+  username: string;
+}
+
+interface Mission {
+  isCleared: boolean;
 }
 
 interface missionItem {
@@ -75,6 +80,7 @@ const Main = () => {
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [buttonConfig, setButtonConfig] = useState<ButtonConfigType[]>([]);
+  const [clearedMissions, setClearedMissions] = useState(0);
 
   useEffect(() => {
     const fetchMissionStatus = async () => {
@@ -128,6 +134,7 @@ const Main = () => {
             accountName: account.accountName,
             accountNo: account.accountNo,
             balance: account.balance,
+            username: account.username,
           });
         }
       } catch (error) {
@@ -175,6 +182,24 @@ const Main = () => {
     navigate('account/transfer/account-info');
   };
 
+  useEffect(() => {
+    // 모든 미션 클리어 확인하는 api 부르기
+    const fetchMissionsStatus = async () => {
+      try {
+        const response = await getMissionsClearStatus();
+        const completedMissions = response.result.filter(
+          (mission: Mission) => mission.isCleared,
+        ).length;
+
+        setClearedMissions(completedMissions); // true 미션 개수
+      } catch (error) {
+        console.error('getMissionsClearStatus 에러', error);
+      }
+    };
+
+    fetchMissionsStatus();
+  }, []);
+
   return (
     <div className='min-h-screen bg-orange-100/40'>
       <TopBar
@@ -184,6 +209,12 @@ const Main = () => {
         showMainButton={true}
       />
       <MainWrapper isBottomTab={true}>
+        {/* <div className='rounded-md bg-white p-4 shadow'>
+          <div className='text-start'>
+            반갑습니다! {accountData?.username}님, 현재 모은 스탬프{' '}
+            {clearedMissions}개입니다.
+          </div>
+        </div> */}
         {/* 메인계좌 디브 */}
         <div className='my-4 rounded-md bg-white p-4 shadow'>
           <div className='flex items-center pt-2'>
@@ -196,15 +227,21 @@ const Main = () => {
             </div>
             <div className='pb-0 pl-3 pr-4 text-xl font-bold'>
               <p className='pb-1'>
-                {accountData ? accountData.accountName : '자유입출금 계좌'}
+                {accountData
+                  ? accountData.accountName
+                  : '계좌정보 불러오는 중...'}
               </p>
-              <p>{accountData ? accountData.accountNo : '111-222-333333'}</p>
+              <p>
+                {accountData
+                  ? accountData.accountNo
+                  : '계좌번호 불러오는 중...'}
+              </p>
             </div>
           </div>
           <div className='py-5 pr-4 text-3xl font-bold'>
             {accountData && accountData.balance
               ? `${accountData.balance.toLocaleString()}원`
-              : '11,000,000원'}
+              : '계좌잔액 불러오는 중...'}
           </div>
           <div className='flex justify-around'>
             <Button
@@ -236,6 +273,13 @@ const Main = () => {
             />
           ))}
         </div>
+        <div className='my-4 rounded-md bg-white p-4 shadow'>
+          <div className='text-start'>
+            반갑습니다! {accountData?.username}님, 현재 모은 스탬프{' '}
+            {clearedMissions}개입니다.
+          </div>
+        </div>
+
         {isSuccessModalOpen && (
           <MissionSuccessModal
             name='로그인'
