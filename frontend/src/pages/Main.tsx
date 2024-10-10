@@ -80,7 +80,7 @@ const Main = () => {
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [buttonConfig, setButtonConfig] = useState<ButtonConfigType[]>([]);
-  const [clearedMissions, setClearedMissions] = useState(0);
+  const [, setClearedMissions] = useState(0);
 
   useEffect(() => {
     const fetchMissionStatus = async () => {
@@ -206,17 +206,9 @@ const Main = () => {
         title=''
         showBackButton={false}
         showXButton={false}
-        showMainButton={true}
+        showUserName={true}
       />
       <MainWrapper isBottomTab={true}>
-        {/* 사용자 이름 및 스탬프 개수 디브 */}
-        <div className='rounded-md bg-white p-4 shadow'>
-          <div className='text-start'>
-            반갑습니다! {accountData?.username}님, 스탬프 {clearedMissions}개를
-            모았어요.
-          </div>
-        </div>
-
         {/* 메인계좌 디브 */}
         <div className='mt-2 rounded-md bg-white p-4 shadow'>
           <div className='flex items-center'>
@@ -233,6 +225,7 @@ const Main = () => {
                   ? accountData.accountName
                   : '계좌정보 불러오는 중...'}
               </p>
+
               <p>
                 {accountData
                   ? accountData.accountNo
@@ -241,10 +234,13 @@ const Main = () => {
             </div>
           </div>
           <div className='py-5 pr-4 text-3xl font-bold'>
-            {accountData && accountData.balance
-              ? `${accountData.balance.toLocaleString()}원`
+            {accountData && accountData.balance !== undefined
+              ? accountData.balance === '0'
+                ? '잔액이 없습니다.'
+                : `${accountData.balance.toLocaleString()}원`
               : '계좌잔액 불러오는 중...'}
           </div>
+
           <div className='flex justify-around'>
             <Button
               label='돈 보내기'
@@ -275,13 +271,6 @@ const Main = () => {
             />
           ))}
         </div>
-
-        {/* <div className='my-4 rounded-md bg-white p-4 shadow'>
-          <div className='text-start'>
-            반갑습니다! {accountData?.username}님, 현재 스탬프는
-            {clearedMissions}개입니다.
-          </div>
-        </div> */}
 
         {isSuccessModalOpen && (
           <MissionSuccessModal

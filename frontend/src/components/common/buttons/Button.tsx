@@ -5,7 +5,7 @@ const BUTTON_SIZES = {
   large: 'py-4 w-full text-2xl',
   medium: 'py-2 w-full text-xl',
   small: 'py-2 w-full text-lg',
-  customMedium: 'py-2 w-24 text-xl',
+  customMedium: 'py-2 w-24',
 };
 
 const BUTTON_COLORS = {
