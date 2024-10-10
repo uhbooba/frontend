@@ -216,8 +216,8 @@ const Main = () => {
           </div>
         </div> */}
         {/* 메인계좌 디브 */}
-        <div className='my-4 rounded-md bg-white p-4 shadow'>
-          <div className='flex items-center pt-2'>
+        <div className='rounded-md bg-white p-4 shadow'>
+          <div className='flex items-center'>
             <div className='flex'>
               <img
                 src='/assets/images/small_logo.png'
@@ -225,7 +225,7 @@ const Main = () => {
                 className='h-14 w-16 pt-1'
               ></img>
             </div>
-            <div className='pb-0 pl-3 pr-4 text-xl font-bold'>
+            <div className='pl-3 pr-4 text-xl font-bold'>
               <p className='pb-1'>
                 {accountData
                   ? accountData.accountName
@@ -275,7 +275,7 @@ const Main = () => {
         </div>
         <div className='my-4 rounded-md bg-white p-4 shadow'>
           <div className='text-start'>
-            반갑습니다! {accountData?.username}님, 현재 모은 스탬프{' '}
+            반갑습니다! {accountData?.username}님, 현재 스탬프는
             {clearedMissions}개입니다.
           </div>
         </div>
