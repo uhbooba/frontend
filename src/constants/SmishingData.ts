@@ -858,7 +858,7 @@ export const smishingData: SmishingDataType = {
       E0021_F: '욕을 보낸다',
     },
     alert_message: {
-      title: '의심스러운 정보는 먼저 확인gktpdy',
+      title: '의심스러운 정보는 먼저 확인하세요',
       detail:
         '지인에게 신뢰할 수 없는 내용을 공유하지 마세요. 이 문자는 주식 사기나 스미싱일 수 있습니다.',
     },
@@ -887,7 +887,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: 'https://s3.youm.me/uhbooba/smithing/case_e.png',
+      img: 'https://s3.youm.me/uhbooba/smithing/case_e.jpg',
       title: '쏟아지는 도박·주식투자 문자',
       detail:
         '허위 사실이 담긴 호재성 문자 메시지를 대량 살포해 주가 부양을 도모한 일당이 재판에 넘겨졌다.',
@@ -933,7 +933,7 @@ export const smishingData: SmishingDataType = {
     choice_list: null,
     alert_message: null,
     ending: {
-      img: 'https://s3.youm.me/uhbooba/smithing/case_g.png',
+      img: 'https://s3.youm.me/uhbooba/smithing/case_g.jpg',
       title: '‘신용등급 무관’·‘한시적 정책 상품’… 불법대출 문자 조심하세요',
       detail:
         '3일 금융감독원은 최근 공공기관이나 은행을 사칭한 불법대출 문자메시지가 급증했다며 소비자피해 주의 경보를 내렸다.',
