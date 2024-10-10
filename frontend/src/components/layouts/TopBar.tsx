@@ -44,27 +44,28 @@ const TopBar: React.FC<TopBarProps> = ({
 
       {/* 나중에 챗봇이랑 내정보 함수 해당 페이지로 가게 바꿔야함 */}
       {showMainButton && (
-        <div className='flex py-6'>
-          <div className='absolute left-3 top-1 flex'>
-            {/* <p className='text-2xl font-bold'>어부바</p> */}
+        <div className='flex w-full justify-between p-6'>
+          <div className='flex flex-row items-center justify-center'>
             <img
-              src='/assets/images/small_logo.png'
+              src='https://s3.youm.me/uhbooba/icons/pig_face.png'
               alt='로고'
-              className='h-16 w-16'
-            ></img>
-            <p className='pl-1 pt-4 text-2xl font-bold'>어부바</p>
-          </div>
-          <div className='absolute right-20 top-3 flex-col'>
-            <TbMessageChatbot
-              onClick={() => navigate('/chatbot')}
-              size={32}
-              className='mb-2'
+              className='mr-1 h-10 w-12'
             />
-            <p>챗봇</p>
+            <p className='text-2xl font-bold'>어부바</p>
           </div>
-          <div className='absolute right-2 top-3.5 flex-col'>
-            <FaUser onClick={handleGoHome} size={30} className='mb-2 ml-2' />
-            <span>내정보</span>
+          <div className='flex flex-row items-end justify-center'>
+            <div className='flex flex-col items-center'>
+              <TbMessageChatbot
+                onClick={() => navigate('/education/chatbot')}
+                size={32}
+                className='mb-2'
+              />
+              <span>챗봇</span>
+            </div>
+            <div className='ml-6 flex flex-col items-center'>
+              <FaUser onClick={handleGoHome} size={30} className='mb-2' />
+              <span>내정보</span>
+            </div>
           </div>
         </div>
       )}

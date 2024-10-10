@@ -208,33 +208,17 @@ const SmishingMessageDetail = () => {
       <TopBar
         title={
           <div className='flex flex-row items-center justify-center'>
-            <div className='mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-300'>
-              <span className='text-gray-600'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  fill='currentColor'
-                  className='size-6'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              </span>
-            </div>
             <p>{smishing?.sender}</p>
           </div>
         }
         showXButton={false}
       />
       <div
-        className='mt-6 flex flex-grow flex-col overflow-hidden px-5 pt-16'
+        className='mt-6 flex h-screen flex-grow flex-col overflow-hidden px-5 pt-16'
         onClick={handleScreenClick}
       >
         <div
-          className={`scrollbar-none h-full overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-0'}`}
+          className={`scrollbar-none overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-24'}`}
           ref={messagesContainerRef}
         >
           {currentMessageList.map((message, index) => (
@@ -244,8 +228,12 @@ const SmishingMessageDetail = () => {
               content={message.text}
               time={message.time}
               isUser={message.is_reply}
-              onTTSClick={() => handleTTS(message.tts_key)}
+              onTTSClick={(e) => {
+                e.stopPropagation();
+                handleTTS(message.tts_key);
+              }}
               onLinkClick={handleLinkClick}
+              isTTSPlaying={isTTSPlaying}
             />
           ))}
         </div>
