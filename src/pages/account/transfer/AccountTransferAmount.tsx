@@ -98,7 +98,7 @@ const AccountTransferAmount = () => {
     }
 
     // 미션 진행 중일 때 금액 검증
-    if (isMissionProgressing && transactionBalance !== 50000) {
+    if (isMissionProgressing.init && transactionBalance !== 50000) {
       setErrorMessage('손주에게 보낼 금액 50,000원을 정확히 입력해 주세요.');
       return;
     }
