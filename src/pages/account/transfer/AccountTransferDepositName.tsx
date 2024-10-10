@@ -5,6 +5,7 @@ import {
   withdrawalTransactionSummaryAtom,
   selectedBankAtom,
   depositTransactionSummaryAtom,
+  depositUsernameAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import Button from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/Input';
@@ -25,6 +26,7 @@ const AccountTransferDepositName = () => {
   const [depositTransactionSummary, setDepositTransactionSummary] = useAtom(
     depositTransactionSummaryAtom,
   );
+  const [depositUsername] = useAtom(depositUsernameAtom);
 
   return (
     <div className='flex h-screen flex-col'>
@@ -40,7 +42,7 @@ const AccountTransferDepositName = () => {
         <div>
           {selectedBank} {depositAccountNo}
         </div>
-        {depositTransactionSummary}님께
+        {depositUsername}님께
       </div>
 
       <div className='ml-4 mr-4 mt-6'>
@@ -48,12 +50,12 @@ const AccountTransferDepositName = () => {
 
         <Input
           label='내 통장 기록'
-          value={depositTransactionSummary}
+          value={withdrawalTransactionSummary}
           onChange={(e) => setWithdrawalTransactionSummary(e.target.value)}
         />
         <Input
           label='받는 분 통장 기록'
-          value={withdrawalTransactionSummary}
+          value={depositTransactionSummary}
           onChange={(e) => setDepositTransactionSummary(e.target.value)}
         />
 
