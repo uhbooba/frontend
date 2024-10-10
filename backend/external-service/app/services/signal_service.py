@@ -103,7 +103,7 @@ def set_fcm_token(message):
         if old_token is not None and old_token != fcm_token:
             fcm_message = messaging.Message(
                 notification=messaging.Notification(
-                    title="로그인", body="새로운 기기에서 로그인되었습니다"
+                    title="[어부바]로그인", body="새로운 기기에서 로그인되었습니다"
                 ),
                 token=old_token,
             )
