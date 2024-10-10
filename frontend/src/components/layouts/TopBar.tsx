@@ -2,8 +2,9 @@ import React from 'react';
 import BackButton from '@/components/common/buttons/BackButton';
 import XButton from '@/components/common/buttons/XButton';
 import { useNavigate } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
 import { TbMessageChatbot } from 'react-icons/tb';
+import { postLogout } from '@/services/auth';
+import { MdLogout } from 'react-icons/md';
 
 type TopBarProps = {
   title: string | React.ReactNode;
@@ -24,6 +25,17 @@ const TopBar: React.FC<TopBarProps> = ({
 
   const handleGoHome = () => {
     navigate('/');
+  };
+
+  const handleLogout = async () => {
+    try {
+      await postLogout();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    } finally {
+      localStorage.removeItem('ACCESS_TOKEN');
+      navigate('/login');
+    }
   };
 
   return (
@@ -63,8 +75,8 @@ const TopBar: React.FC<TopBarProps> = ({
               <span>챗봇</span>
             </div>
             <div className='ml-6 flex flex-col items-center'>
-              <FaUser onClick={handleGoHome} size={30} className='mb-2' />
-              <span>내정보</span>
+              <MdLogout onClick={handleLogout} size={30} className='mb-2' />
+              <span>로그아웃</span>
             </div>
           </div>
         </div>
