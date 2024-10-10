@@ -60,7 +60,7 @@ const Education = () => {
           title=''
           showBackButton={false}
           showXButton={false}
-          showMainButton={true}
+          showUserName={true}
         />
       </div>
       <MainWrapper isBottomTab={true}>
