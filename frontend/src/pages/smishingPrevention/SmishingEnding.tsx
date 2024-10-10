@@ -93,7 +93,7 @@ const SmishingEnding = () => {
             <div>
               <img
                 src={endingData?.ending?.img ?? ''}
-                className='mb-4 w-[600px]'
+                className='mb-4 w-[600px] min-w-24'
               />
             </div>
             <div className='mb-8 text-center font-bold'>
