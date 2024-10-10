@@ -205,7 +205,6 @@ const AccountCheck = () => {
   });
 
   useEffect(() => {
-    console.log(isMissionCleared);
     if (isMissionCleared) {
       setIsSuccessModalOpen(true);
     }
