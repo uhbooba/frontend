@@ -308,11 +308,10 @@
 
 ### 3.1.1 회원가입
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/ff2a3546-74dd-4d9b-946a-7c6b12413dc5/image.png)
 
 ### 3.1.1 로그인 ⭐
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/7ac937b6-6e29-4ad2-9d00-de95ff80087c/image.png)
+
 
 ## 3.2 모바일 뱅킹
 
@@ -328,95 +327,24 @@
 
 **1. 가입** 
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/a685a205-4dcf-426b-9a6e-09fbf40e6158/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/5bab8bb3-59d8-4a19-8222-0a878f133d6c/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/c015e10a-ce9d-4310-976d-c1c9aeff7f5c/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/78ab85bc-6bc0-46db-b49a-c191eb0e7122/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/36db60d7-5067-428d-8d4c-042015ca83a1/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/0a36451b-28d8-4d54-8208-4d9007f0e05b/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/f49d9438-3b97-4009-90ce-b09bf62c85b8/image.png)
 
 **2. 해지** ⭐
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/201c4f71-d42f-4270-8392-6e9f9d1c59bf/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/8bb62660-ba23-4e29-9467-38ab8d0685cd/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/0adba4b4-a7ad-4ce9-b1ae-09cb8de2fbbf/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/73b90503-94e6-4f67-a050-46222caebf0d/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/e8f1761a-5418-46f3-bd9d-16c95d89ca6c/image.png)
 
 ### 3.2.3 적금
 
 **1. 가입** ⭐
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/0d0af8c3-ba52-49d9-9af1-a28b4e993876/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/3a75ed55-61f5-4d8c-8279-c3177f9c42ed/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/bf0ee5ea-2f94-4606-9de7-8a9310fed018/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/f1378451-eef3-4bfb-a11b-322c83b2f55a/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/17b47ddd-143e-4141-ad0a-bb4aa014ee51/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/1c28f06d-0f85-4440-ac56-16bd5b96dc60/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/dfeb8a62-1165-4087-9957-713e9d0e90a2/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/157d2672-d805-46c6-a677-7e7a81208e08/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/92df8b03-82a3-4e5b-94d3-2fe31ff5acda/image.png)
 
 **2. 해지**
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/641004c2-f42b-41ee-9b09-4bd9742a576a/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/219ffb82-6686-47f8-a618-62f785643d7b/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/1580ffd3-b3e8-412d-a0b0-ae9d791ac597/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/f6975dc8-d560-4fe6-9086-3bb65604d361/image.png)
 
 ### 3.2.4 환전
 
 **1. 환전** ⭐
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/ed095504-eef6-42a8-aeea-0a706bf0ec06/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/cb3fc427-f0af-4e44-b5bf-27b759404b2a/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/74267e97-fd83-4880-ab80-85002b79e84b/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/8481b92c-5d3d-4cbe-a444-6c5de0b9468f/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/047c23e3-8bc9-4fe8-b3c2-97e7fc309766/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/ae52b888-53f8-4645-9c36-3bba062b607f/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/3c11d28d-6534-40f5-b83b-91b29f82e2b1/image.png)
-
 ### 3.2.5 공과금
 
 **1. 공과금 납부** ⭐
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/a98cdb27-fcc1-4934-ba43-f8e2a33524ea/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/092497a4-38ef-4690-a5b4-20fd3939cf0d/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/16edc2cd-1513-4640-9877-4d4c1dfb32f7/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/c8ff9e7e-15d3-4cf6-89ed-b30e08e68052/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/d7ffb295-cba8-4e9b-bdb5-2ce3cc884b1f/image.png)
 
 ---
 
@@ -424,13 +352,9 @@
 
 ### 3.3.1 교육 영상
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/ddc67ca9-e582-4018-886d-70e3038a6d00/image.png)
 
 ### 3.3.2 교육 퀴즈
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/d545e986-ba6a-42ae-bd5a-d8a385a0a5ef/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c3deefb-8fc0-4653-b74a-37ff7e05a156/453ee076-0d31-4177-89a2-a93cacbeab4e/image.png)
 
 ### 3.3.3 금융 사기 예방
 
