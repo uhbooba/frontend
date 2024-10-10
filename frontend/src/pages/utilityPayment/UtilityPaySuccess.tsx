@@ -18,7 +18,7 @@ const UtilityPaySuccess = () => {
   useEffect(() => {
     const fetchExchangeMission = async () => {
       try {
-        const response = await setMissionClearStatus(5);
+        const response = await setMissionClearStatus(6);
 
         if (response?.statusCode === 200) {
           const timer = setTimeout(() => {
