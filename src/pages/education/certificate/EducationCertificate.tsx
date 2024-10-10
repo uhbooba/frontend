@@ -65,17 +65,31 @@ const EducationCertificate = () => {
           스탬프를 다 모았다면 <br /> 이수증을 발급해봐요!{' '}
         </TitleText>
         <div className='ml-4'>
-          <TextBubble
-            content={[
-              '스탬프 7개를 모두 모으면',
-              '이수증을 발급할 수 있습니다.',
-              `현재 모은 스탬프는 ${clearedMissions}개입니다.`,
-              `스탬프 ${remainingMissions}개를 더 모아야합니다.`,
-            ]}
-            tailPosition='right'
-            textPosition='left'
-            bubbleSize='w-[340px]'
-          />
+          {clearedMissions !== 7 ? (
+            <TextBubble
+              content={[
+                '스탬프 7개를 모두 모으면',
+                '이수증을 발급할 수 있습니다.',
+                `현재 모은 스탬프는 ${clearedMissions}개입니다.`,
+                `스탬프 ${remainingMissions}개를 더 모아야합니다.`,
+              ]}
+              tailPosition='right'
+              textPosition='left'
+              bubbleSize='w-[340px]'
+            />
+          ) : (
+            // 스탬프를 다 모으면 문구가 변경되도록 수정
+            <TextBubble
+              content={[
+                '축하합니다! 모든 미션을 완료해',
+                `스탬프 ${clearedMissions}를 전부 모았습니다.`,
+                '이제 이수증을 발급할 수 있어요!',
+              ]}
+              tailPosition='right'
+              textPosition='left'
+              bubbleSize='w-[340px]'
+            />
+          )}
         </div>
 
         <div className=''>
