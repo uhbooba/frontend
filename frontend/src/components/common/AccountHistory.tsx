@@ -95,20 +95,18 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
         Object.entries(groupedTransactions).map(([year, monthsAndDays]) => (
           <div key={year}>
             {/* 년도 표시 */}
-            <div className='mb-2 text-[24px] font-semibold text-gray-500'>
-              {year}년
-            </div>
+            <div className='mb-2 text-[30px] font-semibold'>{year}년</div>
             {Object.entries(monthsAndDays).map(
               ([monthAndDay, transactions]) => (
-                <div key={monthAndDay} className='w-full'>
+                <div key={monthAndDay} className='mt-4 w-full'>
                   {/* 월/일 표시 */}
-                  <div className='mb-2 text-[20px] font-medium text-gray-700'>
+                  <div className='mb-2 border-b border-gray-600 text-[26px] font-semibold'>
                     {monthAndDay}
                   </div>
                   {transactions.map((transaction) => (
                     <div
                       key={transaction.id}
-                      className='flex w-full justify-between border-b p-4'
+                      className='flex w-full justify-between border-b py-4'
                     >
                       <div>
                         <div className='text-[24px]'>

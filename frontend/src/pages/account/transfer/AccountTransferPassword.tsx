@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
+import MainWrapper from '@/components/layouts/MainWrapper';
 import NoModal from '@/components/modals/NoModal';
 import { postUserFreeAccountTransfer } from '@/services/account';
 import { useAtom } from 'jotai';
@@ -67,23 +68,20 @@ const AccountTransferPassword = () => {
 
   return (
     <div>
-      <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='계좌 이체' showXButton={false} />
-      </div>
-
-      <div className='mb-2 mt-20'>
+      <TopBar title='계좌 이체' />
+      <MainWrapper>
         <LevelBar currentLevel={5} totalLevel={5} />
-      </div>
 
-      <PasswordInput key={inputKey} onComplete={passwordComplete} />
+        <PasswordInput key={inputKey} onComplete={passwordComplete} />
 
-      <NoModal
-        isOpen={isModalOpen}
-        ModalClose={closeModal}
-        imageSrc='/assets/icons/warning.png'
-        title='비밀번호 오류'
-        description='비밀번호가 틀립니다.'
-      />
+        <NoModal
+          isOpen={isModalOpen}
+          ModalClose={closeModal}
+          imageSrc='/assets/icons/warning.png'
+          title='비밀번호 오류'
+          description='비밀번호가 틀립니다.'
+        />
+      </MainWrapper>
     </div>
   );
 };
