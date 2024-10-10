@@ -28,9 +28,8 @@ const TopBar: React.FC<TopBarProps> = ({
   };
 
   const handleLogout = async () => {
-    const ACCESS_TOKEN = localStorage.getItem('ACCESS_TOKEN');
     try {
-      await postLogout(ACCESS_TOKEN!);
+      await postLogout();
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {

@@ -17,16 +17,8 @@ export const postLogin = async (
 };
 
 // 로그아웃
-export const postLogout = async (ACCESS_TOKEN: string) => {
-  const response = await axiosInstance.post(
-    `/user-service/logout`,
-    {},
-    {
-      headers: {
-        Authorization: `${ACCESS_TOKEN}`,
-      },
-    },
-  );
+export const postLogout = async () => {
+  const response = await axiosInstance.post(`/user-service/logout`);
   return response;
 };
 
