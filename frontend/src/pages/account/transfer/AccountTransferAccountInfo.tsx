@@ -37,8 +37,8 @@ const AccountTransferAccountInfo = () => {
 
       // isMissionProgressing이 true일 경우 특정 값으로 설정
       if (isMissionProgressing) {
-        // 그냥 기본 계좌번호로 지윤이꺼 해둠
-        setDepositAccountNo('9993091706201886');
+        // 이수자 할아버지 손주, 이주희
+        setDepositAccountNo('9997477652438537');
       }
     }
   }, [
