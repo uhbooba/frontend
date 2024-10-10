@@ -3,6 +3,8 @@ package com.uhbooba.financeservice.util;
 import com.uhbooba.financeservice.dto.UserHeaderInfo;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
+import java.util.Locale;
 import org.springframework.http.HttpHeaders;
 
 public class CommonUtil {
@@ -22,5 +24,10 @@ public class CommonUtil {
                              .userId(userId)
                              .name(name)
                              .build();
+    }
+
+    public static String formatWithCommas(long amount) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.KOREA);
+        return numberFormat.format(amount);
     }
 }
