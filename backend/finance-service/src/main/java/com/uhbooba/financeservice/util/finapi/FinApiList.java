@@ -80,7 +80,7 @@ public class FinApiList {
         public static final String EXCHANGE_RATE_SEARCH_API_NAME = "exchangeRateSearch";
         public static final String EXCHANGE_RATE_API_NAME = "exchangeRate";
         public static final String ESTIMATE_EXCHANGE_API_NAME = "estimate";
-        public static final String EXCHANGE_API_NAME = "updateDemandDepositAccountWithdrawal";
+        public static final String EXCHANGE_API_NAME = "exchange";
         public static final String INQUIRE_BANK_CURRENCY_API_NAME = "inquireBankCurrency";
 
         public static final String CREATE_FOREIGN_CURRENCY_DEMAND_DEPOSIT_API_NAME = "createForeignCurrencyDemandDeposit";
