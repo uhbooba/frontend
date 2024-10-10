@@ -13,7 +13,7 @@ import { useState } from 'react';
 const UtilityPayMission = () => {
   const navigate = useNavigate();
   const setIsMission = useSetAtom(utilityMissionAtom);
-  const [, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isTTSPlaying, setIsTTSPlaying] = useState(false);
 
   useEffect(() => {
@@ -26,24 +26,36 @@ const UtilityPayMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false);
     const text =
       '이번달 전기요금 15만원을 납부하라고 고지서가 왔습니다. 허리가 안좋아 은행에 직접 가기 어려워 모바일로 납부를 해보려고 합니다. 고지서에 있는 QR 코드를 촬영해 모바일로 납부해봅시다.';
 
     try {
       const blob = await makeTTS(text);
 
-      // Blob URL 생성
       const audioUrl = window.URL.createObjectURL(blob);
 
-      // Audio 객체 생성 및 재생
       const newAudio = new Audio(audioUrl);
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
+      setIsTTSPlaying(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='bg-yellow-100'>
@@ -80,7 +92,7 @@ const UtilityPayMission = () => {
                       'ml-3 mt-4 w-14 cursor-pointer rounded-full p-3',
                       isTTSPlaying ? 'bg-blue-700' : 'bg-blue-500',
                     ])}
-                    onClick={playTTS} // 스피커 아이콘 클릭 시 TTS 재생
+                    onClick={playTTS}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

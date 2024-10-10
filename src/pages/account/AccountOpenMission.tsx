@@ -5,11 +5,11 @@ import TextBubble from '@/components/common/TextBubble';
 import MainWrapper from '@/components/layouts/MainWrapper';
 import { makeTTS } from '@/services/education';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const AccountOpenMission = () => {
   const navigate = useNavigate();
-  const [, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isTTSPlaying, setIsTTSPlaying] = useState(false);
 
   const GoExplain = () => {
@@ -17,24 +17,35 @@ const AccountOpenMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false); // 재생 중이면 중단
+
     const text =
       '이번에 새로 옮긴 경로당에서 모임이 잦아 회비를 내야 할 일이 많아졌습니다. 자유로운 입출금이 가능하고 편리한 수시입출금 계좌를 만들어봅시다';
 
     try {
       const blob = await makeTTS(text);
 
-      // Blob URL 생성
       const audioUrl = window.URL.createObjectURL(blob);
-
-      // Audio 객체 생성 및 재생
       const newAudio = new Audio(audioUrl);
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='flex flex-col bg-yellow-100'>
@@ -76,7 +87,7 @@ const AccountOpenMission = () => {
                       'ml-3 mt-4 w-14 cursor-pointer rounded-full p-3',
                       isTTSPlaying ? 'bg-blue-700' : 'bg-blue-500',
                     ])}
-                    onClick={playTTS} // 스피커 아이콘 클릭 시 TTS 재생
+                    onClick={playTTS}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

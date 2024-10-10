@@ -13,7 +13,7 @@ import { useState } from 'react';
 const ExchangeMission = () => {
   const navigate = useNavigate();
   const setIsMission = useSetAtom(exchangeMissionAtom);
-  const [, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isTTSPlaying, setIsTTSPlaying] = useState(false);
 
   useEffect(() => {
@@ -26,24 +26,35 @@ const ExchangeMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false);
     const text =
       '경로당 모임에서 다음달에 해외여행을 가기로 했습니다. 현재 환율이 낮기 때문에 미리 환전을 해두어야 합니다. 해외여행 경비로 사용할 150달러를 환전해보세요.';
 
     try {
       const blob = await makeTTS(text);
 
-      // Blob URL 생성
       const audioUrl = window.URL.createObjectURL(blob);
 
-      // Audio 객체 생성 및 재생
       const newAudio = new Audio(audioUrl);
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
+      setIsTTSPlaying(false);
     }
   };
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='flex flex-col bg-yellow-100'>
