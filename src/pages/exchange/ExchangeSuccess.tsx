@@ -22,7 +22,7 @@ const ExchangeSuccess = () => {
   useEffect(() => {
     const fetchExchangeMission = async () => {
       try {
-        const response = await setMissionClearStatus(6);
+        const response = await setMissionClearStatus(7);
 
         if (response?.statusCode === 200) {
           const timer = setTimeout(() => {
