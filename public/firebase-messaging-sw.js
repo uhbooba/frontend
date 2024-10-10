@@ -11,20 +11,22 @@ self.addEventListener('push', function (e) {
   if (!e.data.json()) return;
 
   const resultData = e.data.json().notification;
-  const resultURL = e.data.json().data.click_action;
+  // const resultURL = e.data.json().data.click_action;
 
-  const notificationTitle = resultData.notificationTitle;
+  console.log('result', resultData);
+
+  const notificationTitle = resultData.title;
   const notificationoptions = {
     body: resultData.body,
-    icon: resultData.image,
-    data: { click_action: resultURL },
+    // icon: resultData.image,
+    // data: { click_action: resultURL },
   };
 
   self.registration.showNotification(notificationTitle, notificationoptions);
 });
 
-self.addEventListener('notificationclick', function (event) {
-  const resultURL = event.notification.data.click.action;
-  event.waitUntil(clients.openWindow(resultURL));
-  event.notification.close();
-});
+// self.addEventListener('notificationclick', function (event) {
+//   const resultURL = event.notification.data.click.action;
+//   event.waitUntil(clients.openWindow(resultURL));
+//   event.notification.close();
+// });
