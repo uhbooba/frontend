@@ -220,7 +220,13 @@ const SmishingMessageDetail = () => {
         onClick={handleScreenClick}
       >
         <div
-          className={`scrollbar-none overflow-y-auto p-4 ${buttons?.length > 0 ? 'mb-64' : 'mb-24'}`}
+          className={`scrollbar-none overflow-y-auto p-4 ${
+            buttons?.length === 0
+              ? 'mb-24'
+              : buttons?.length === 2
+                ? 'mb-64'
+                : 'mb-96'
+          }`}
           ref={messagesContainerRef}
         >
           {currentMessageList.map((message, index) => (
