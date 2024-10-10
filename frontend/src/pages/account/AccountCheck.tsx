@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import Button, { ButtonConfigType } from '@/components/common/buttons/Button';
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
 import AccountHistory from '@/components/common/AccountHistory';
 import { getUserFreeAccount } from '@/services/account';
+import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
+import { getMissionClearStatus } from '@/services/mission';
 
 interface AccountData {
   accountName: string;
@@ -188,6 +189,9 @@ const AccountCheck = () => {
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const location = useLocation();
+  const { isMissionCleared } = location.state || {};
   const [filter, setFilter] = useState<Filter>({
     date: '전체 기간',
     type: '전체',
@@ -210,14 +214,29 @@ const AccountCheck = () => {
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
-        console.log();
       }
     };
 
     fetchAccountDetails();
-  }, []);
 
-  const handleButtonClick = (route: string) => {
+    if (isMissionCleared) {
+      setIsSuccessModalOpen(true);
+    }
+  }, [isMissionCleared]);
+
+  const handleButtonClick = async (route: string) => {
+    if (route === '/account/transfer/account-info') {
+      try {
+        const missionStatus = await getMissionClearStatus(3);
+        if (!missionStatus?.result) {
+          navigate('/account/transfer/mission');
+          return;
+        }
+      } catch (error) {
+        console.error('미션 상태 확인 중 오류 발생:', error);
+      }
+    }
+
     if (accountData && accountData.accountNo) {
       navigate(route, { state: { accountNo: accountData.accountNo } });
     } else {
@@ -281,7 +300,7 @@ const AccountCheck = () => {
   ];
 
   return (
-    <div className=''>
+    <div className='h-screen'>
       {/* 상단바 */}
       <TopBar title='계좌 조회' />
       <div className='mt-[20px] flex justify-center'>
@@ -328,15 +347,23 @@ const AccountCheck = () => {
             <div className='text-[24px]'>{filter.sort}</div>
           </div>
           <div>
-            <AccountHistory filter={filter} />
+            {accountData && (
+              <AccountHistory
+                accountNo={accountData?.accountNo || ''}
+                filter={filter}
+              />
+            )}
           </div>
-        </div>
-        <div className='fixed bottom-0 left-0 w-full'>
-          <BottomTab />
         </div>
       </div>
 
       <Modal show={showModal} onClose={closeModal} onSave={saveFilter} />
+      {isSuccessModalOpen && (
+        <MissionSuccessModal
+          name='계좌 생성'
+          onConfirm={() => setIsSuccessModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

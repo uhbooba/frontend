@@ -4,7 +4,6 @@ import LevelBar from '@/components/common/LevelBar';
 import PasswordInput from '@/components/common/PasswordInput';
 import TopBar from '@/components/layouts/TopBar';
 import NoModal from '@/components/modals/NoModal';
-import { getUserInfo, checkPassword } from '@/services/auth';
 import { postUserFreeAccountTransfer } from '@/services/account';
 import { useAtom } from 'jotai';
 import {
@@ -30,45 +29,40 @@ const AccountTransferPassword = () => {
 
   const passwordComplete = async (password: string) => {
     try {
-      const userInfo = await getUserInfo();
-      const userId = userInfo.result.id;
+      // 이체 API 호출과 비밀번호 유효성 검사
+      const response = await postUserFreeAccountTransfer(
+        // 이체받을 계좌번호
+        depositAccountNo,
+        // 이체받을 계좌기록
+        depositTransactionSummary,
+        // 이체 금액
+        transactionBalance,
+        // 출금할 계좌 번호
+        withdrawalAccountNo,
+        // 출금할 계좌 기록
+        withdrawalTransactionSummary,
+        // 비밀번호
+        password,
+      );
 
-      const isPasswordCorrect = await checkPassword(userId, password);
-
-      if (isPasswordCorrect) {
-        const transfer = () => {
-          try {
-            postUserFreeAccountTransfer(
-              // 이체받을 계좌번호
-              depositAccountNo,
-              // 이체받을 계좌기록
-              depositTransactionSummary,
-              // 이체 금액
-              transactionBalance,
-              // 출금할 계좌 번호
-              withdrawalAccountNo,
-              // 출금할 계좌 기록
-              withdrawalTransactionSummary,
-              // 비밀번호
-              password,
-            );
-          } catch (error) {
-            console.error('Error fetching answer:', error);
-          }
-        };
-        transfer();
+      if (response?.data?.statusCode === 200) {
         navigate('/account/transfer/success');
+      } else if (response?.data?.statusCode === 401) {
+        // 비밀번호 오류 처리
+        setIsModalOpen(true);
       } else {
+        console.error('이체 오류 발생', response?.data);
         setIsModalOpen(true);
       }
     } catch (error) {
-      console.error(error);
+      console.error('이체 요청 중 오류:', error);
+      setIsModalOpen(true);
     }
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setInputKey((prevKey) => prevKey + 1);
+    setInputKey((prevKey) => prevKey + 1); // PasswordInput 컴포넌트 리렌더링
   };
 
   return (

@@ -8,10 +8,11 @@ import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import {
   depositAccountNoAtom,
-  depositTransactionSummaryAtom,
   selectedBankAtom,
+  depositTransactionSummaryAtom,
 } from '@/atoms/account/accountTransferAtoms';
 import { getFreeAcountHolder } from '@/services/account';
+import { isTransferMissionProgressingAtom } from '@/atoms/account/accountTransferAtoms';
 
 const AccountTransferAccountInfo = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const AccountTransferAccountInfo = () => {
   const [selectedBank, setSelectedBank] = useAtom(selectedBankAtom);
   const [depositAccountNo, setDepositAccountNo] = useAtom(depositAccountNoAtom);
   const [, setDepositUsername] = useAtom(depositTransactionSummaryAtom);
+  const [isMissionProgressing] = useAtom(isTransferMissionProgressingAtom);
 
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
@@ -28,8 +30,14 @@ const AccountTransferAccountInfo = () => {
       setDepositAccountNo('');
       setSelectedBank('');
       setErrorMessage('');
+
+      // isMissionProgressing이 true일 경우 특정 값으로 설정
+      if (isMissionProgressing) {
+        // 그냥 기본 계좌번호로 지윤이꺼 해둠
+        setDepositAccountNo('9993091706201886');
+      }
     }
-  }, [location.state, setDepositAccountNo, setSelectedBank]);
+  }, [location.state, setDepositAccountNo, setSelectedBank, isMissionProgressing]);
 
   const GoBack = () => {
     navigate(-1);
@@ -39,15 +47,6 @@ const AccountTransferAccountInfo = () => {
     setSelectedBank(bank);
     setModalOpen(false);
   };
-
-  interface AccountHolderResponse {
-    username: string;
-    accountNo: string;
-    accountName: string;
-    accountTypeCode: string;
-    accountTypeName: string;
-    balance: number;
-  }
 
   const handleSubmit = (accountNo: string) => {
     if (!depositAccountNo || !selectedBank) {
@@ -61,19 +60,15 @@ const AccountTransferAccountInfo = () => {
 
         // API 응답 상태 코드에 따라 처리
         if (response.data.statusCode === 200) {
-          const { username } = response.data.result as AccountHolderResponse;
+          const { username } = response.data.result;
           setDepositUsername(username);
           navigate('/account/transfer/amount'); // 계좌 확인 후 다음 페이지로 이동
         } else {
           // 400 또는 404 등 오류 상태 코드 처리
-          setErrorMessage(
-            response.data.message || '계좌 정보를 불러오지 못했습니다.',
-          );
+          setErrorMessage(response.data.message || '계좌 정보를 불러오지 못했습니다.');
         }
       } catch (error) {
         console.error('계좌 정보 API 호출 중 오류 발생:', error);
-
-        // 에러 메시지 설정
         setErrorMessage('계좌 정보를 불러오지 못했습니다. 다시 시도해 주세요.');
       }
     };
@@ -81,9 +76,7 @@ const AccountTransferAccountInfo = () => {
     fetchHolderInfo(accountNo);
   };
 
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*$/.test(value) && value.length <= 16) {
       setDepositAccountNo(value);
@@ -126,7 +119,7 @@ const AccountTransferAccountInfo = () => {
 
           {modalOpen && (
             <div className='absolute z-10 w-full rounded border border-gray-300 bg-white shadow-lg'>
-              <ul className='max-h4-48 overflow-auto'>
+              <ul className='max-h-48 overflow-auto'>
                 {['싸피은행'].map((bank) => (
                   <li
                     key={bank}
@@ -148,7 +141,7 @@ const AccountTransferAccountInfo = () => {
               size='large'
               color='orange'
               className='flex-grow'
-              onClick={() => GoBack()}
+              onClick={GoBack}
             />
             <Button
               label='다음'
