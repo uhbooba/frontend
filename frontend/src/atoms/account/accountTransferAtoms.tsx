@@ -5,9 +5,9 @@ export const depositAccountNoAtom = atom('');
 // 출금 계좌 번호
 export const withdrawalAccountNoAtom = atom('');
 // 입금 (대상) 계좌 예금주명
-export const depositUsername = atom('')
+export const depositUsernameAtom = atom('')
 // 출금 계좌 예금주명
-export const withdrawalUsername = atom('')
+export const withdrawalUsernameAtom = atom('')
 // 선택된 은행명
 export const selectedBankAtom = atom('');
 // 이체 금액
