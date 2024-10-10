@@ -10,6 +10,7 @@ import {
 } from '@/services/mission';
 import MissionSuccessModal from '@/components/modals/MissionSuccessModal';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { AxiosError } from 'axios';
 
 interface AccountData {
   accountName: string;
@@ -81,6 +82,7 @@ const Main = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [buttonConfig, setButtonConfig] = useState<ButtonConfigType[]>([]);
   const [, setClearedMissions] = useState(0);
+  const [isError404, setIsError404] = useState(false);
 
   useEffect(() => {
     const fetchMissionStatus = async () => {
@@ -138,14 +140,23 @@ const Main = () => {
           });
         }
       } catch (error) {
-        console.error('계좌 정보 API 호출 중 오류 발생:', error);
-        console.log();
+        const axiosError = error as AxiosError;
+        console.error('계좌 정보 API 호출 중 오류 발생:', axiosError);
+        if (axiosError.response?.status === 404) {
+          setIsError404(true); // 404 에러 발생 시 상태 업데이트
+        }
       }
     };
 
     fetchAccountDetails();
   }, []);
 
+  const handleModalConfirm = () => {
+    setIsSuccessModalOpen(false); // 모달 닫기
+    if (isError404) {
+      navigate('/account/products/mission'); // 404 에러 발생 시 이동
+    }
+  };
   // 버튼 클릭 시 미션 상태를 확인하는 함수 추가
   const handleButtonClick = async (route: string, label: string) => {
     if (label === '계좌개설') {
@@ -275,7 +286,7 @@ const Main = () => {
         {isSuccessModalOpen && (
           <MissionSuccessModal
             name='로그인'
-            onConfirm={() => setIsSuccessModalOpen(false)}
+            onConfirm={handleModalConfirm}
           />
         )}
       </MainWrapper>
