@@ -167,7 +167,7 @@ const AccountDepositProducts = () => {
             ))}
           </div>
         )}
-        ;
+
         {/* {ProductsList.map((product, index) => (
                 <AccountProduct 
                     key={index}
