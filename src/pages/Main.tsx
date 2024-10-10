@@ -212,8 +212,8 @@ const Main = () => {
         {/* 사용자 이름 및 스탬프 개수 디브 */}
         <div className='rounded-md bg-white p-4 shadow'>
           <div className='text-start'>
-            반갑습니다! {accountData?.username}님, 현재 스탬프는
-            {clearedMissions}개입니다.
+            반갑습니다! {accountData?.username}님, 스탬프 {clearedMissions}개를
+            모았어요.
           </div>
         </div>
 
