@@ -250,7 +250,8 @@ public class DemandDepositService {
                 } else { // 입금
                     transactionService.updateTransactionForSuccess(
                         transactions.receiverTransaction(), transferResponse.transactionUniqueNo(),
-                        userHeaderInfo.userId());
+                        transferAccount.getUserAccount()
+                                       .getUserId());
                 }
             }
 
