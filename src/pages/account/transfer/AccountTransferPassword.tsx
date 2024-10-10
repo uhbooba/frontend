@@ -68,7 +68,7 @@ const AccountTransferPassword = () => {
 
   return (
     <div>
-      <TopBar title='계좌 이체' showXButton={false} />
+      <TopBar title='계좌 이체' />
       <MainWrapper>
         <LevelBar currentLevel={5} totalLevel={5} />
 

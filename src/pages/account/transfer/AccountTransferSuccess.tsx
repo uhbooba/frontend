@@ -73,7 +73,7 @@ const AccountTransferSuccess = () => {
           </div>
 
           <div className='mt-auto'>
-            <div className='mb-4 flex justify-end'>
+            <div className='mb-20 flex justify-end'>
               <img
                 src='/assets/images/finish_pig.png'
                 alt='Pig'
@@ -86,7 +86,7 @@ const AccountTransferSuccess = () => {
                 label='나의 계좌로 이동하기'
                 size='large'
                 color='orange'
-                className='w-full py-4'
+                className='mt w-full'
                 onClick={() => navigate('/account/check')}
               />
             </div>
