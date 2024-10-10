@@ -7,12 +7,12 @@ import MainWrapper from '@/components/layouts/MainWrapper';
 import { isTransferMissionProgressingAtom } from '@/atoms/account/accountTransferAtoms';
 import { makeTTS } from '@/services/education';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const AccountOpenMission = () => {
   const navigate = useNavigate();
   const [, setIsMissionProgressing] = useAtom(isTransferMissionProgressingAtom);
-  const [, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isTTSPlaying, setIsTTSPlaying] = useState(false);
 
   const GoExplain = () => {
@@ -21,6 +21,7 @@ const AccountOpenMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false);
     const text =
       '귀여운 손주에게 용돈을 보내주려고 합니다. 이번에는 시험도 잘 봤다길래 5만원을 보내주려고 합니다. 5만원을 손주의 계좌로 보내봅시다.';
 
@@ -35,10 +36,22 @@ const AccountOpenMission = () => {
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='flex flex-col bg-yellow-100'>
@@ -78,7 +91,7 @@ const AccountOpenMission = () => {
                       'ml-3 mt-4 w-14 cursor-pointer rounded-full p-3',
                       isTTSPlaying ? 'bg-blue-700' : 'bg-blue-500',
                     ])}
-                    onClick={playTTS} // 스피커 아이콘 클릭 시 TTS 재생
+                    onClick={playTTS}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

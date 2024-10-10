@@ -2,7 +2,7 @@ import Button from '@/components/common/buttons/Button';
 import { useNavigate } from 'react-router';
 import TopBar from '@/components/layouts/TopBar';
 import MainWrapper from '@/components/layouts/MainWrapper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { makeTTS } from '@/services/education';
 import clsx from 'clsx';
 
@@ -16,24 +16,36 @@ const SavingsMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false); // 재생 중이면 중단
+
     const text =
       '내년에 손주와 손녀들과 해외여행을 가기로 했습니다. 여행경비 마련을 위해 지금부터 조금씩 돈을 모으고자 합니다. 매달 돈을 조금씩 모아 만기에 큰 돈을 받을 수 있는 적금 상품을 가입해보세요.';
 
     try {
       const blob = await makeTTS(text);
 
-      // Blob URL 생성
       const audioUrl = window.URL.createObjectURL(blob);
 
-      // Audio 객체 생성 및 재생
       const newAudio = new Audio(audioUrl);
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='bg-yellow-100'>
@@ -71,7 +83,7 @@ const SavingsMission = () => {
                     'ml-3 mt-4 w-14 cursor-pointer rounded-full p-3',
                     isTTSPlaying ? 'bg-blue-700' : 'bg-blue-500',
                   ])}
-                  onClick={playTTS} // 스피커 아이콘 클릭 시 TTS 재생
+                  onClick={playTTS}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'

@@ -4,11 +4,11 @@ import TopBar from '@/components/layouts/TopBar';
 import { useNavigate } from 'react-router';
 import { makeTTS } from '@/services/education';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const CancelDepositMission = () => {
   const navigate = useNavigate();
-  const [, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isTTSPlaying, setIsTTSPlaying] = useState(false);
 
   const GoNext = () => {
@@ -16,24 +16,37 @@ const CancelDepositMission = () => {
   };
 
   const playTTS = async () => {
+    if (isTTSPlaying) return setIsTTSPlaying(false); // 재생 중이면 중단
+
     const text =
       '갑자기 여행과 회비 등을 내기 위해 큰 돈이 많이 필요해졌습니다. 그래서 가입했던 예금 상품을 중도해지 하려고 합니다. 가입했던 예금 상품 중에서 한가지 상품을 중도해지 해보세요!';
 
     try {
       const blob = await makeTTS(text);
 
-      // Blob URL 생성
       const audioUrl = window.URL.createObjectURL(blob);
 
-      // Audio 객체 생성 및 재생
       const newAudio = new Audio(audioUrl);
       setAudio(newAudio);
       setIsTTSPlaying(true);
       newAudio.play();
+      newAudio.onended = () => {
+        setIsTTSPlaying(false);
+      };
     } catch (error) {
       console.error('TTS 오류', error);
+      setIsTTSPlaying(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
 
   return (
     <div className='bg-yellow-100'>
@@ -74,7 +87,7 @@ const CancelDepositMission = () => {
                     'ml-3 mt-4 w-14 cursor-pointer rounded-full p-3',
                     isTTSPlaying ? 'bg-blue-700' : 'bg-blue-500',
                   ])}
-                  onClick={playTTS} // 스피커 아이콘 클릭 시 TTS 재생
+                  onClick={playTTS}
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
