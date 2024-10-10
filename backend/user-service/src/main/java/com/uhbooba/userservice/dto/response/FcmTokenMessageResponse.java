@@ -5,15 +5,15 @@ import lombok.Builder;
 @Builder
 public record FcmTokenMessageResponse(
 
-    Integer id,
-    String fcmToken
+    Integer user_id,
+    String token
 
 ) {
 
-    public static FcmTokenMessageResponse of(Integer id, String fcmToken) {
+    public static FcmTokenMessageResponse of(Integer user_id, String token) {
         return FcmTokenMessageResponse.builder()
-            .id(id)
-            .fcmToken(fcmToken)
+            .user_id(user_id)
+            .token(token)
             .build();
     }
 }
