@@ -3,15 +3,10 @@ import TopBar from '@/components/layouts/TopBar';
 import TextBubble from '@/components/common/TextBubble';
 import Stamp from '@/components/gamification/MissionStamp';
 import MainWrapper from '@/components/layouts/MainWrapper';
-import { getMissionsClearStatus } from '@/services/mission';
 
-interface Mission {
-  isCleared: boolean;
-}
+import { getMissionClearStatus } from '@/services/mission';
 
 const MissionStamp = () => {
-  const [missionStatus, setMissionStatus] = useState<boolean[]>([]); // 미션 완료 여부 저장
-
   const stampsInfo = [
     {
       missionName: '로그인',
@@ -36,21 +31,26 @@ const MissionStamp = () => {
     },
   ];
 
+  const [missionStatus, setMissionStatus] = useState<boolean[]>(
+    new Array(stampsInfo.length).fill(false),
+  );
+
   useEffect(() => {
-    // 모든 미션 클리어 확인하는 API 호출
-    const fetchMissionsStatus = async () => {
-      try {
-        const response = await getMissionsClearStatus();
-        const missionStates = response.result.map(
-          (mission: Mission) => mission.isCleared,
-        );
-        setMissionStatus(missionStates); // 미션 완료 상태 배열로 설정
-      } catch (error) {
-        console.error('getMissionsClearStatus 에러', error);
+    const fetchMissionResults = async () => {
+      const results: boolean[] = [];
+      for (let i = 0; i < stampsInfo.length; i++) {
+        try {
+          const response = await getMissionClearStatus(i + 1); // assuming mission numbers are 1-based
+          results.push(response.result); // store the completion status
+        } catch (error) {
+          console.error('Error fetching mission status:', error);
+          results.push(false); // handle error by marking it as incomplete
+        }
       }
+      setMissionStatus(results); // update state after all results are fetched
     };
 
-    fetchMissionsStatus();
+    fetchMissionResults();
   }, []);
 
   return (
@@ -58,7 +58,7 @@ const MissionStamp = () => {
       <div className='w-full'>
         <TopBar title='나의 스탬프' showXButton={false} />
       </div>
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div className='relative flex flex-col items-center'>
           <TextBubble
             bubbleSize='w-10/12'
@@ -73,7 +73,7 @@ const MissionStamp = () => {
             <img
               src='/assets/images/pig.png'
               alt='Pig'
-              className='w-d32 mt-4 h-32'
+              className='mt-4 h-32 w-32'
             />
           </div>
           <div className='mt-4 w-10/12 rounded-lg bg-white p-6 text-center text-2xl shadow-md'>
@@ -82,7 +82,7 @@ const MissionStamp = () => {
               {stampsInfo.map((stamp, index) => (
                 <Stamp
                   key={index}
-                  isCompleted={missionStatus[index] || false} // 미션 상태가 없으면 false로 처리
+                  isCompleted={missionStatus[index]}
                   missionName={stamp.missionName}
                 />
               ))}
