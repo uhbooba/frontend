@@ -209,14 +209,16 @@ const Main = () => {
         showMainButton={true}
       />
       <MainWrapper isBottomTab={true}>
-        {/* <div className='rounded-md bg-white p-4 shadow'>
+        {/* 사용자 이름 및 스탬프 개수 디브 */}
+        <div className='rounded-md bg-white p-4 shadow'>
           <div className='text-start'>
-            반갑습니다! {accountData?.username}님, 현재 모은 스탬프{' '}
+            반갑습니다! {accountData?.username}님, 현재 스탬프는
             {clearedMissions}개입니다.
           </div>
-        </div> */}
+        </div>
+
         {/* 메인계좌 디브 */}
-        <div className='rounded-md bg-white p-4 shadow'>
+        <div className='mt-2 rounded-md bg-white p-4 shadow'>
           <div className='flex items-center'>
             <div className='flex'>
               <img
@@ -273,12 +275,13 @@ const Main = () => {
             />
           ))}
         </div>
-        <div className='my-4 rounded-md bg-white p-4 shadow'>
+
+        {/* <div className='my-4 rounded-md bg-white p-4 shadow'>
           <div className='text-start'>
             반갑습니다! {accountData?.username}님, 현재 스탬프는
             {clearedMissions}개입니다.
           </div>
-        </div>
+        </div> */}
 
         {isSuccessModalOpen && (
           <MissionSuccessModal
