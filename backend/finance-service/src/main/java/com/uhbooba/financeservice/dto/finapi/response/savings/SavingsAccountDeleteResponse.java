@@ -12,5 +12,6 @@ public record SavingsAccountDeleteResponse(
     String depositBalance,
     String earlyTerminationInterest,
     String earlyTerminationBalance,
-    String earlyTerminationDate
+    String earlyTerminationDate,
+    String totalBalance
 ) {}
