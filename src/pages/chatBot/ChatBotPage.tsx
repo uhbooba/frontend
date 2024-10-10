@@ -6,7 +6,7 @@ const ChatBotPage = () => {
     <div className='flex h-[calc(100vh-120px)] flex-col'>
       {/* 상단바 */}
       <div className='fixed left-0 top-0 z-10 w-full'>
-        <TopBar title='챗봇' />
+        <TopBar title='금융 도우미' />
       </div>
       <div className='flex-1 overflow-hidden pb-2 pt-16'>
         <Chatbot />
