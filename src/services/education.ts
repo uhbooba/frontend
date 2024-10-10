@@ -33,6 +33,21 @@ export const getSmishingTTS = (ttsKey: string) => {
   return response;
 };
 
+// TTS 생성
+export const makeTTS = async (text: string) => {
+  const bodyData = {
+    text,
+  };
+  const response = await axiosInstance.post(
+    '/external-service/tts/new',
+    bodyData,
+    {
+      responseType: 'blob',
+    },
+  );
+  return response.data;
+};
+
 // 금융 사기 시나리오 가져오기
 export const getSmishing = () => {
   const response = axiosInstance(`/external-service/smishing`);

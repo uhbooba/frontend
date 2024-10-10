@@ -65,7 +65,7 @@ const AddCash = () => {
       amount: 100000,
       route: '',
       size: 'large',
-      color: 'orange',
+      color: 'lightOrange',
       className: 'my-[2vh] flex-grow',
     },
     {
@@ -73,7 +73,7 @@ const AddCash = () => {
       amount: 300000,
       route: '',
       size: 'large',
-      color: 'orange',
+      color: 'lightOrange',
       className: 'my-[2vh] flex-grow',
     },
     {
@@ -81,7 +81,7 @@ const AddCash = () => {
       amount: 500000,
       route: '',
       size: 'large',
-      color: 'orange',
+      color: 'lightOrange',
       className: 'my-[2vh] flex-grow',
     },
     {
@@ -89,7 +89,7 @@ const AddCash = () => {
       amount: 1000000,
       route: '',
       size: 'large',
-      color: 'orange',
+      color: 'lightOrange',
       className: 'my-[2vh] flex-grow',
     },
   ];
@@ -106,7 +106,7 @@ const AddCash = () => {
               key={index}
               label={button.label}
               size={button.size}
-              color={selectedButton === index ? 'blue' : button.color}
+              color={selectedButton === index ? 'red' : button.color}
               onClick={() => handleButtonClick(index, button.amount!)}
               className={button.className}
             />
