@@ -5,6 +5,7 @@ import com.uhbooba.financeservice.dto.finapi.request.demand_deposit.DemandDeposi
 import com.uhbooba.financeservice.dto.finapi.request.deposit.DepositAccountCreateRequest;
 import com.uhbooba.financeservice.dto.finapi.request.exchange.ExchangeRequest;
 import com.uhbooba.financeservice.dto.finapi.request.savings.SavingsAccountCreateRequest;
+import com.uhbooba.financeservice.dto.kafka.NotificationMessageResponse;
 import com.uhbooba.financeservice.dto.request.TransactionCreateRequest;
 import com.uhbooba.financeservice.dto.request.TransactionUpdateRequest;
 import com.uhbooba.financeservice.dto.response.TransactionOutputResponse;
@@ -16,6 +17,8 @@ import com.uhbooba.financeservice.entity.TransactionType;
 import com.uhbooba.financeservice.exception.NotFoundException;
 import com.uhbooba.financeservice.mapper.TransactionMapper;
 import com.uhbooba.financeservice.repository.TransactionRepository;
+import com.uhbooba.financeservice.service.kafka.KafkaProducerService;
+import com.uhbooba.financeservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionService {
 
     private final AccountService accountService;
+    private final KafkaProducerService kafkaProducerService;
 
     private final TransactionRepository transactionRepository;
 
@@ -95,15 +99,21 @@ public class TransactionService {
         return transactions.map(transactionMapper::toDto);
     }
 
+
     @Transactional
     public Transaction updateTransactionForSuccess(
         Transaction transaction,
-        String transactionUniqueNo
+        String transactionUniqueNo,
+        Integer userId
     ) {
         try {
             log.info("[TRANSACTION SUCCESS] transactionId : {}", transaction.getId());
             transaction.setTransactionUniqueNo(transactionUniqueNo);
             transaction.setStatus(TransactionStatus.SUCCESS);
+
+            kafkaProducerService.sendNotification("notification-topic",
+                                                  makeNotificationMessage(transaction, userId));
+
             return transactionRepository.save(transaction);
         } catch(Exception ex) {
             updateTransactionForFail(transaction, ex);
@@ -111,10 +121,27 @@ public class TransactionService {
         }
     }
 
+    private String makeBodyMessage(Transaction transaction) {
+        return CommonUtil.formatWithCommas(transaction.getTransactionBalance()) + " 원 "
+            + transaction.getType() + "되었습니다.";
+    }
+
+    private NotificationMessageResponse makeNotificationMessage(
+        Transaction transaction,
+        Integer userId
+    ) {
+        return NotificationMessageResponse.builder()
+                                          .user_id(String.valueOf(userId))
+                                          .title("[어부바]")
+                                          .body(makeBodyMessage(transaction))
+                                          .build();
+    }
+
     @Transactional
     public Transaction updateTransactionForSuccess(
         Transaction transaction,
-        TransactionUpdateRequest updateRequest
+        TransactionUpdateRequest updateRequest,
+        Integer userId
     ) {
         try {
             log.info("[TRANSACTION SUCCESS] transactionId : {}", transaction.getId());
@@ -128,6 +155,10 @@ public class TransactionService {
                 transaction.setTransactionSummary(updateRequest.transactionSummary());
             }
             transaction.setStatus(TransactionStatus.SUCCESS);
+
+            kafkaProducerService.sendNotification("notification-topic",
+                                                  makeNotificationMessage(transaction, userId));
+
             return transactionRepository.save(transaction);
         } catch(Exception ex) {
             updateTransactionForFail(transaction, ex);

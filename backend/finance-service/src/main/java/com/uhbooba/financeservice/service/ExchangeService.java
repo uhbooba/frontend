@@ -113,7 +113,8 @@ public class ExchangeService {
                                                                                    .transactionSummary(
                                                                                        createExchangeSummary(
                                                                                            exchangeResponse))
-                                                                                   .build());
+                                                                                   .build(),
+                                                           userHeaderInfo.userId());
             String amountStr = exchangeResponse.accountInfo()
                                                .amount();
             double amountDouble = Double.parseDouble(amountStr);  // 문자열을 double로 변환

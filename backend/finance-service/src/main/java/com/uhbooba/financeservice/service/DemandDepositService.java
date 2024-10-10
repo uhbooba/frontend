@@ -198,7 +198,8 @@ public class DemandDepositService {
 
             // transaction 수정
             transactionService.updateTransactionForSuccess(transaction,
-                                                           depositDepositResponse.transactionUniqueNo());
+                                                           depositDepositResponse.transactionUniqueNo(),
+                                                           userHeaderInfo.userId());
 
             // 잔액 수정
             accountService.addAccountBalance(account, depositRequest.transactionBalance());
@@ -244,10 +245,12 @@ public class DemandDepositService {
                 if(transferResponse.transactionType()
                                    .equals("2")) { // 출금
                     transactionService.updateTransactionForSuccess(transactions.senderTransaction(),
-                                                                   transferResponse.transactionUniqueNo());
+                                                                   transferResponse.transactionUniqueNo(),
+                                                                   userHeaderInfo.userId());
                 } else { // 입금
                     transactionService.updateTransactionForSuccess(
-                        transactions.receiverTransaction(), transferResponse.transactionUniqueNo());
+                        transactions.receiverTransaction(), transferResponse.transactionUniqueNo(),
+                        userHeaderInfo.userId());
                 }
             }
 

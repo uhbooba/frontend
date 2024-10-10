@@ -15,13 +15,16 @@ public class KafkaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendNotification(String topic, NotificationMessageResponse data) {
+    public void sendNotification(
+        String topic,
+        NotificationMessageResponse data
+    ) {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = "";
 
         try {
             jsonInString = mapper.writeValueAsString(data);
-        } catch (JsonProcessingException e) {
+        } catch(JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
