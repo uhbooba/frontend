@@ -30,14 +30,11 @@ type AccountHistoryProps = {
 };
 
 const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
-  // 날짜별로 그룹화된 거래 내역을 담기 위한 변수
-  const [groupedTransactions, setGroupedTransactions] = useState<{
-    [year: string]: {
-      [monthAndDay: string]: Transaction[];
-    };
-  }>({});
+  const [groupedTransactions, setGroupedTransactions] =
+    useState<GroupedTransactions>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // 날짜 포맷 함수: "오전/오후 시:분"
   const formatTime = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
@@ -47,7 +44,6 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
     return new Intl.DateTimeFormat('ko-KR', options).format(new Date(date));
   };
 
-  // 날짜 포맷 함수: "년. 월. 일"
   const formatDate = (date: Date) => {
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth() + 1;
@@ -55,14 +51,20 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
     return { year, monthAndDay: `${month}월 ${day}일` };
   };
 
-  // 거래 내역을 API로부터 가져오기
   useEffect(() => {
     const fetchTransactions = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const response = await getUserFreeAccountTransactions(accountNo);
         const fetchedTransactions = response.data.result.content;
 
-        // 거래 내역을 년, 월, 일 기준으로 그룹화
+        if (!fetchedTransactions || fetchedTransactions.length === 0) {
+          setError('거래 내역이 없습니다.');
+          setLoading(false);
+          return;
+        }
+
         const grouped = fetchedTransactions.reduce(
           (acc: GroupedTransactions, transaction: Transaction) => {
             const { year, monthAndDay } = formatDate(transaction.updatedAt);
@@ -82,24 +84,33 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
 
         setGroupedTransactions(grouped);
       } catch (error) {
-        console.error('Failed to fetch transactions:', error);
+        console.log(error);
+        setError('거래 내역을 불러오는 중 오류가 발생했습니다.');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchTransactions();
   }, [accountNo]);
 
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className='mt-4 flex flex-col items-center space-y-4 font-bold'>
       {Object.keys(groupedTransactions).length > 0 ? (
         Object.entries(groupedTransactions).map(([year, monthsAndDays]) => (
           <div key={year}>
-            {/* 년도 표시 */}
             <div className='mb-2 text-[30px] font-semibold'>{year}년</div>
             {Object.entries(monthsAndDays).map(
               ([monthAndDay, transactions]) => (
                 <div key={monthAndDay} className='mt-4 w-full'>
-                  {/* 월/일 표시 */}
                   <div className='mb-2 border-b border-gray-600 text-[26px] font-semibold'>
                     {monthAndDay}
                   </div>
@@ -112,7 +123,6 @@ const AccountHistory: React.FC<AccountHistoryProps> = ({ accountNo }) => {
                         <div className='text-[24px]'>
                           {transaction.transactionSummary}
                         </div>
-                        {/* 시간 표시 */}
                         <div className='text-[16px] text-[#AEAEB2]'>
                           {formatTime(transaction.updatedAt)}
                         </div>
