@@ -1,5 +1,5 @@
 import TopBar from '@/components/layouts/TopBar';
-import { BottomTab } from '@/components/layouts/BottomTab';
+import MainWrapper from '@/components/layouts/MainWrapper';
 import AccountInfo from '@/components/common/AccountInfo';
 import { CiCirclePlus } from 'react-icons/ci';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ interface AccountData {
   accountName: string;
   accountNo: string;
   balance: string;
+  depositBalance: string;
 }
 
 const AccountList = () => {
@@ -81,59 +82,58 @@ const AccountList = () => {
   return (
     <div className=''>
       <TopBar title='계좌 목록' showXButton={false} />
-      <div className='flex flex-col items-center justify-center'>
-        {/* 자유 입출금 계좌 정보 */}
-        {accountData.freeAccounts.map((account, index) => (
-          <AccountInfo
-            key={`free-${index}`}
-            accountType={account.accountName}
-            accountNumber={account.accountNo}
-            amount={Number(account.balance)}
-            buttonName='계좌 이체'
-            moveTo='/account/transfer/account-info'
-            onClick={() => handleTransferClick(account.accountNo)}
-          />
-        ))}
+      <MainWrapper>
+        <div className='flex flex-col items-center justify-center'>
+          {/* 자유 입출금 계좌 정보 */}
+          {accountData.freeAccounts.map((account, index) => (
+            <AccountInfo
+              key={`free-${index}`}
+              accountType={account.accountName}
+              accountNumber={account.accountNo}
+              amount={Number(account.balance)}
+              buttonName='계좌 이체'
+              moveTo='/account/transfer/account-info'
+              onClick={() => handleTransferClick(account.accountNo)}
+            />
+          ))}
 
-        {/* 정기 예금 계좌 정보 */}
-        {accountData.depositAccounts.map((account, index) => (
-          <AccountInfo
-            key={`deposit-${index}`}
-            accountType={account.accountName}
-            accountNumber={account.accountNo}
-            amount={Number(account.balance)}
-            buttonName='중도 해지'
-            moveTo='/main'
-          />
-        ))}
+          {/* 정기 예금 계좌 정보 */}
+          {accountData.depositAccounts.map((account, index) => (
+            <AccountInfo
+              key={`deposit-${index}`}
+              accountType={account.accountName}
+              accountNumber={account.accountNo}
+              amount={Number(account.depositBalance)}
+              buttonName='중도 해지'
+              moveTo='/main'
+            />
+          ))}
 
-        {/* 정기 적금 계좌 정보 */}
-        {accountData.savingsAccounts.map((account, index) => (
-          <AccountInfo
-            key={`savings-${index}`}
-            accountType={account.accountName}
-            accountNumber={account.accountNo}
-            amount={Number(account.balance)}
-            buttonName='중도 해지'
-            moveTo='/main'
-          />
-        ))}
-        <div
-          className='mt-[20px] flex h-[128px] w-[320px] flex-col items-center justify-center rounded-xl bg-gray-200 text-center'
-          onClick={() => navigate('/account/products')}
-        >
-          <div className='text-[24px] text-[#5A6A59]'>
-            <span>계좌 개설</span>
+          {/* 정기 적금 계좌 정보 */}
+          {accountData.savingsAccounts.map((account, index) => (
+            <AccountInfo
+              key={`savings-${index}`}
+              accountType={account.accountName}
+              accountNumber={account.accountNo}
+              amount={Number(account.depositBalance)}
+              buttonName='중도 해지'
+              moveTo='/main'
+            />
+          ))}
+          <div
+            className='mt-[20px] flex h-[128px] w-[320px] flex-col items-center justify-center rounded-xl bg-gray-200 text-center'
+            onClick={() => navigate('/account/products')}
+          >
+            <div className='text-[24px] text-[#5A6A59]'>
+              <span>계좌 개설</span>
 
-            <div className='mt-2 flex justify-center'>
-              <CiCirclePlus size={44} />
+              <div className='mt-2 flex justify-center'>
+                <CiCirclePlus size={44} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='fixed bottom-0 left-0 w-full'>
-        <BottomTab />
-      </div>
+      </MainWrapper>
     </div>
   );
 };
