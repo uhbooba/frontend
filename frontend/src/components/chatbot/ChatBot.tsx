@@ -55,7 +55,7 @@ const Chatbot: React.FC = () => {
               {exampleQuestions.map((question, index) => (
                 <button
                   key={index}
-                  className='rounded bg-primary p-2 text-black hover:bg-blue-600'
+                  className='rounded bg-primary p-2 text-black hover:bg-red-600'
                   onClick={() => handleExampleClick(question)}
                 >
                   {question}
