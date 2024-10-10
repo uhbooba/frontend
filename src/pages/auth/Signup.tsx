@@ -111,7 +111,6 @@ const Signup = () => {
 
   // 아이디 중복확인
   const handleIdVerificationClick = () => {
-    if (userId === '') return;
     if (validateUserId(userId)) {
       setErrors((prev) => ({
         ...prev,
@@ -203,29 +202,28 @@ const Signup = () => {
           />
           {errors.userName && <ErrorText>{errors.userName}</ErrorText>}
           <div className='mt-5 flex flex-col'>
-            <div className='flex flex-row'>
-              <Input
-                label='아이디'
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-                isError={errors.userId !== ''}
-                pattern='[a-zA-Z0-9]*'
-              />
-              <Button
-                label='중복 확인'
-                onClick={handleIdVerificationClick}
-                size='small'
-                className='ml-2 w-[40%]'
-                type='button'
-              />
-            </div>
+            <Input
+              label='아이디'
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              isError={errors.userId !== ''}
+              pattern='[a-zA-Z0-9]*'
+            />
             {errors.userId ? (
               <ErrorText>{errors.userId}</ErrorText>
             ) : isIdConfirmed ? (
               <ErrorText color='green'>사용 가능한 아이디입니다.</ErrorText>
-            ) : null}{' '}
+            ) : null}
           </div>
-          <div className='mt-5 flex flex-col'>
+          <Button
+            label='중복 확인'
+            onClick={handleIdVerificationClick}
+            size='small'
+            className='my-5'
+            type='button'
+            color='lightOrange'
+          />
+          <div className='flex flex-col'>
             <Input
               label='핸드폰 인증'
               value={phoneNumber}
@@ -242,6 +240,7 @@ const Signup = () => {
             size='small'
             type='button'
             className='my-5'
+            color='lightOrange'
           />
           {isPhoneClicked && (
             <div className='mb-5 flex flex-col'>
@@ -258,6 +257,7 @@ const Signup = () => {
                   size='small'
                   className='ml-2 w-4/12'
                   type='button'
+                  color='lightOrange'
                 />
               </div>
               <div className='mt-2 flex flex-row items-center justify-between'>
