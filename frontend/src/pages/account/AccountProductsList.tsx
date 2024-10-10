@@ -1,6 +1,7 @@
 import TopBar from '@/components/layouts/TopBar';
 import AccountProduct from '@/components/common/AccountProduct';
 import { useSetAtom } from 'jotai';
+import { createAccountMissionAtom } from '@/atoms/account/accountCheckAtoms';
 import { selectedKeywordAtom } from '@/atoms/deposit/depositDataAtoms';
 import { useNavigate } from 'react-router';
 import { postUserFreeAccount } from '@/services/account';
@@ -9,7 +10,6 @@ import {
   getMissionClearStatus,
   setMissionClearStatus,
 } from '@/services/mission';
-import { useState } from 'react';
 
 interface ProductItem {
   name: string;
@@ -19,8 +19,8 @@ interface ProductItem {
 
 const AccountProductsList = () => {
   const setSelectedKeyword = useSetAtom(selectedKeywordAtom);
+  const setIsMissionCleared = useSetAtom(createAccountMissionAtom);
   const navigate = useNavigate();
-  const [isMissionCleared, setIsMissionCleared] = useState(false);
 
   const ProductsList = [
     {
@@ -56,8 +56,7 @@ const AccountProductsList = () => {
       } catch (error) {
         console.error('Error fetching answer:', error);
       }
-
-      navigate(product.moveTo, { state: { isMissionCleared } });
+      navigate(product.moveTo);
     }
     setSelectedKeyword(
       product.name.includes('예금') ? '예금 상품' : '적금 상품',
