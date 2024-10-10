@@ -316,7 +316,7 @@ const AccountCheck = () => {
                   : '11,000,000원'}
               </div>
             </div>
-            <div className='flex justify-between space-x-4 p-4'>
+            <div className='flex justify-between space-x-4 p-4 pt-1'>
               {ButtonConfig.map((button, index) => (
                 <Button
                   key={index}
