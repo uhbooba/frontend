@@ -15,7 +15,7 @@ const ButtonConfig: ButtonConfigType[] = [
   {
     label: '',
     eduLabel: '퀴즈',
-    route: '/quiz',
+    route: '/education/quiz',
     size: 'small',
     className: 'flex h-32 bg-white rounded-3xl shadow',
     eduImg: '/assets/images/quiz.png',
@@ -31,7 +31,7 @@ const ButtonConfig: ButtonConfigType[] = [
   {
     label: '',
     eduLabel: '미션 스탬프',
-    route: '/stamp',
+    route: '/education/stamp',
     size: 'small',
     className: 'flex h-32 bg-white shadow rounded-3xl',
     eduImg: '/assets/images/mission_stamp.png',
@@ -63,7 +63,7 @@ const Education = () => {
           showMainButton={true}
         />
       </div>
-      <MainWrapper>
+      <MainWrapper isBottomTab={true}>
         <div className='grid gap-4'>
           {ButtonConfig.map((button, index) => (
             <Button
