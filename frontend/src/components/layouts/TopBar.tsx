@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import BackButton from '@/components/common/buttons/BackButton';
-import XButton from '@/components/common/buttons/XButton';
+import BackButton from '@/components/common/buttons/BackButton.tsx';
+import XButton from '@/components/common/buttons/XButton.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TbMessageChatbot } from 'react-icons/tb';
-import { postLogout } from '@/services/auth';
+import { postLogout } from '@/services/auth.ts';
 import { MdLogout } from 'react-icons/md';
-import { getUserFreeAccount } from '@/services/account';
+import { getUserFreeAccount } from '@/services/account.ts';
 
 type TopBarProps = {
   title: string | React.ReactNode;
