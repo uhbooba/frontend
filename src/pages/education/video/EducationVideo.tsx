@@ -7,6 +7,7 @@ import {
   getVideoByKeyword,
 } from '@/services/education';
 import MainWrapper from '@/components/layouts/MainWrapper';
+import { useNavigate } from 'react-router';
 
 // 비디오에 있는 속성들 타입 정해주기
 interface Video {
@@ -22,6 +23,11 @@ const EducationVideo = () => {
   const [selectKeyword, setSelectKeyword] = useState('모두 보기');
   const [videoData, setVideoData] = useState<Video[]>([]);
   const [keywords, setKeywords] = useState<string[]>([]);
+  const navigate = useNavigate();
+
+  const GoEdu = () => {
+    navigate('/education');
+  };
 
   const keywordClick = async (keyword: string) => {
     setSelectKeyword(keyword);
@@ -97,7 +103,7 @@ const EducationVideo = () => {
 
   return (
     <div>
-      <TopBar title='교육영상' />
+      <TopBar title='교육영상' onXButtonClick={GoEdu} />
       <MainWrapper isBottomTab={true}>
         <div className='border-b-2'>
           <KeywordButtons
