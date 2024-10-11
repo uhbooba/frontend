@@ -56,7 +56,7 @@ const AccountTransferDepositName = () => {
             onChange={(e) => setDepositTransactionSummary(e.target.value)}
           />
 
-          <div className='mt-[30vh] w-full'>
+          <div className='mt-[8vh] w-full'>
             <div className='flex w-full justify-between space-x-4 px-4 pb-4'>
               <Button
                 label='이체하기'
