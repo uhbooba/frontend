@@ -1,3 +1,5 @@
+# [프로젝트 설명 Go](https://github.com/uhbooba)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
